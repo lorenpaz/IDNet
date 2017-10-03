@@ -12,7 +12,6 @@ namespace MainSolution
 {
     public partial class MainForm : Form
     {
-        private string salida;
 
         public MainForm()
         {

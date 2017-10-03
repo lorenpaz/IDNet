@@ -9,9 +9,14 @@ namespace PluginsLibrary
 {
     public class PluginMongo
     {
-        // python app to call  
-        private string myPythonPlugin = @"C:\Users\loren\Desktop\4Carrera\TFG\mezcla\NodoCliente\conexionMongo.py";
+        // plugin path 
+        private string myPythonPlugin = @"../../../PluginsLibrary/resources/conexionMongo.py";
+
+        //python.exe path
+        private string pythonpath = @"C:\Python27\python.exe";
+
         private string salida;
+
         public string Name
         {
             get {
@@ -20,6 +25,18 @@ namespace PluginsLibrary
             set
             {
                 myPythonPlugin = value;
+            }
+        }
+
+        public string PythonPath
+        {
+            get
+            {
+                return pythonpath;
+            }
+            set
+            {
+                pythonpath = value;
             }
         }
 
@@ -37,17 +54,16 @@ namespace PluginsLibrary
 
         public void CallScript()
         {
-            string args = myPythonPlugin;
+            string args = this.myPythonPlugin;
             Run_cmd(args);
-
         }
         private void Run_cmd(string args)
         {
             //Información del proceso
             ProcessStartInfo start = new ProcessStartInfo
             {
-                FileName = @"C:\Python27\python.exe",
-                Arguments = args,
+                FileName = this.pythonpath,
+                Arguments = args + " " + "selectall",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 CreateNoWindow = true // We don't need new window

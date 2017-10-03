@@ -9,8 +9,12 @@ namespace PluginsLibrary
 {
     public class PluginMySQL
     {
-        // python app to call  
-        private string myPythonPlugin = @"C:\Users\loren\source\repos\IDNet\PluginsLibrary\resources\conexionMySQL.py";
+        // plugin path  
+        private string myPythonPlugin = @"../../../PluginsLibrary/resources/conexionMySQL.py";
+
+        //python.exe path
+        private string pythonpath = @"C:\Python27\python.exe";
+
         private string salida;
 
         public string Name
@@ -18,6 +22,18 @@ namespace PluginsLibrary
             get;
             set;
         }
+        public string PythonPath
+        {
+            get
+            {
+                return pythonpath;
+            }
+            set
+            {
+                pythonpath = value;
+            }
+        }
+
         public string Salida
         {
             get
@@ -32,16 +48,15 @@ namespace PluginsLibrary
 
         public void CallScript()
         {
-            string args = myPythonPlugin;
+            string args = this.myPythonPlugin;
             Run_cmd(args);
-
         }
         private void Run_cmd(string args)
         {
             //Información del proceso
             ProcessStartInfo start = new ProcessStartInfo
             {
-                FileName = @"C:\Python27\python.exe",
+                FileName = this.pythonpath,
                 Arguments = args,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,

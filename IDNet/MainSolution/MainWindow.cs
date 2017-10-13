@@ -29,6 +29,7 @@ public partial class MainWindow : Gtk.Window
     {
         //PluginMySQL mysql = new PluginMySQL();
         //mysql.EstructureRequest();
-
+        Message m = new Message();
+        m.EstructureRequest("mysql","usuarios");
     }
 }

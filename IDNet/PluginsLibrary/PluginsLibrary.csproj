@@ -59,8 +59,6 @@
     <None Include="resources\MongoDB.Bson.dll" />
     <None Include="resources\MongoDB.Driver.Core.dll" />
     <None Include="resources\MongoDB.Driver.dll" />
-    <None Include="resources\databases.conf" />
-    <None Include="databases.conf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">

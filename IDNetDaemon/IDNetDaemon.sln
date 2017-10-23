@@ -3,6 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDNetDaemon", "IDNetDaemon\IDNetDaemon.csproj", "{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageLibrary", "..\..\Escritorio\Proyectos\IDNet\Sketches\MessageLibrary\MessageLibrary.csproj", "{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginsLibrary", "..\..\Escritorio\Proyectos\IDNet\Sketches\PluginsLibrary\PluginsLibrary.csproj", "{D06B6599-9951-4215-B50D-095AC39301D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostBoxLibrary", "PostBoxLibrary\PostBoxLibrary.csproj", "{42956A61-E8D5-47EE-8C8E-ABCBDC195075}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessLibrary", "ProcessLibrary\ProcessLibrary.csproj", "{D58B06A8-04DE-4289-A42E-B6EC80978777}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,5 +21,21 @@ Global
 		{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}.Debug|x86.Build.0 = Debug|x86
 		{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}.Release|x86.ActiveCfg = Release|x86
 		{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}.Release|x86.Build.0 = Release|x86
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Debug|x86.Build.0 = Debug|Any CPU
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Release|x86.ActiveCfg = Release|Any CPU
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Release|x86.Build.0 = Release|Any CPU
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Debug|x86.Build.0 = Debug|Any CPU
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Release|x86.Build.0 = Release|Any CPU
+		{42956A61-E8D5-47EE-8C8E-ABCBDC195075}.Debug|x86.ActiveCfg = Debug|x86
+		{42956A61-E8D5-47EE-8C8E-ABCBDC195075}.Debug|x86.Build.0 = Debug|x86
+		{42956A61-E8D5-47EE-8C8E-ABCBDC195075}.Release|x86.ActiveCfg = Release|x86
+		{42956A61-E8D5-47EE-8C8E-ABCBDC195075}.Release|x86.Build.0 = Release|x86
+		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Debug|x86.ActiveCfg = Debug|x86
+		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Debug|x86.Build.0 = Debug|x86
+		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Release|x86.ActiveCfg = Release|x86
+		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal

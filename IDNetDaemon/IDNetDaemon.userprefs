@@ -1,5 +1,9 @@
 ﻿<Properties StartupConfiguration="{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}|Default">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Escritorio/Proyectos/IDNet/Sketches/PluginsLibrary/Database.cs">
+    <Files>
+      <File FileName="../../Escritorio/Proyectos/IDNet/Sketches/PluginsLibrary/Database.cs" Line="6" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

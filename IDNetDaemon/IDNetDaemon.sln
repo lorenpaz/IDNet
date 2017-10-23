@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostBoxLibrary", "PostBoxLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessLibrary", "ProcessLibrary\ProcessLibrary.csproj", "{D58B06A8-04DE-4289-A42E-B6EC80978777}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertionLibrary", "..\..\Escritorio\Proyectos\IDNet\Sketches\ConvertionLibrary\ConvertionLibrary.csproj", "{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantsLibrary", "..\..\Escritorio\Proyectos\IDNet\Sketches\ConstantsLibrary\ConstantsLibrary.csproj", "{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -37,5 +41,13 @@ Global
 		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Debug|x86.Build.0 = Debug|x86
 		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Release|x86.ActiveCfg = Release|x86
 		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Release|x86.Build.0 = Release|x86
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Release|x86.Build.0 = Release|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Debug|x86.Build.0 = Debug|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Release|x86.ActiveCfg = Release|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

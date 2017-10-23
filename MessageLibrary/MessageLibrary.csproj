@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D06B6599-9951-4215-B50D-095AC39301D9}</ProjectGuid>
+    <ProjectGuid>{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>PluginsLibrary</RootNamespace>
-    <AssemblyName>PluginsLibrary</AssemblyName>
+    <RootNamespace>MessageLibrary</RootNamespace>
+    <AssemblyName>MessageLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -28,46 +28,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="MongoDB.Bson">
-      <HintPath>resources\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver.Core">
-      <HintPath>resources\MongoDB.Driver.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>resources\MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>resources\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Json" />
-    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PluginMongo.cs" />
-    <Compile Include="PluginMySQL.cs" />
-    <Compile Include="Database.cs" />
+    <Compile Include="Message.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="resources\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="resources\MongoDB.Bson.dll" />
-    <None Include="resources\MongoDB.Driver.Core.dll" />
-    <None Include="resources\MongoDB.Driver.dll" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\PluginsLibrary\PluginsLibrary.csproj">
+      <Project>{D06B6599-9951-4215-B50D-095AC39301D9}</Project>
+      <Name>PluginsLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
       <Project>{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}</Project>
       <Name>ConstantsLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ConvertionLibrary\ConvertionLibrary.csproj">
-      <Project>{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}</Project>
-      <Name>ConvertionLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

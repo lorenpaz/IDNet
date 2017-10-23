@@ -1,88 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using System.IO;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using System.Threading.Tasks;
+using System.Json;
 
 namespace PluginsLibrary
 {
     public class PluginMongo
     {
-        // plugin path 
-        private string myPythonPlugin = @"../../../PluginsLibrary/resources/conexionMongo.py";
+        //Propiedades
+		private IMongoClient _client;
+		private IMongoDatabase _database;
+        private string _databaseName;
+        private string _salida;
 
-        //python.exe path
-        private string pythonpath = @"C:\Python27\python.exe";
-
-        private string salida;
-
-        public string Name
+        //Constructor
+        public PluginMongo(string databaseName) 
         {
-            get {
-                return myPythonPlugin;
-            }
-            set
-            {
-                myPythonPlugin = value;
-            }
+            this._databaseName = databaseName; 
         }
 
-        public string PythonPath
+		public string Salida
+		{
+			get
+			{
+				return _salida;
+			}
+			set 
+			{
+				_salida = value;
+			}
+		}
+
+        //Solicitud de la estructura de la base de datos
+        public string EstructureRequest()
         {
-            get
-            {
-                return pythonpath;
-            }
-            set
-            {
-                pythonpath = value;
-            }
-        }
+            MainAsync().Wait();
+            return this._salida;
+		}
 
-        public string Salida
+        //Tarea para la obtención de la info de la BBDD
+        async Task MainAsync()
         {
-            get
-            {
-                return salida;
-            }
-            set
-            {
-                salida = value;
-            }
+			this._client = new MongoClient();
+            this._database = this._client.GetDatabase(this._databaseName);
+            var collection = await this._database.ListCollectionsAsync();
+
+            var j = "";
+			while (collection.MoveNext())
+			{
+				foreach (var collDoc in collection.Current)
+				{
+                    j += collDoc.ToJson();
+				}
+			}
+            this._salida = j;
         }
+			//var collection = _database.GetCollection<BsonDocument>("empleados");
+			//var a = await collection.Find(new BsonDocument()).ToListAsync();
+			//salida = a[0].ToJson();
 
-        public void CallScript()
-        {
-            string args = this.myPythonPlugin;
-            Run_cmd(args);
-        }
-        private void Run_cmd(string args)
-        {
-            //Información del proceso
-            ProcessStartInfo start = new ProcessStartInfo
-            {
-                FileName = this.pythonpath,
-                Arguments = args + " " + "selectall",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true // We don't need new window
-            };
-            Process cmdProcess = new Process
-            {
-                StartInfo = start
-            };
-            cmdProcess.Start();
-
-            // Read the standard output of the app we called.  
-            StreamReader myStreamReader = cmdProcess.StandardOutput;
-            this.salida = myStreamReader.ReadToEnd();
-
-            // wait exit signal from the app we called 
-            cmdProcess.WaitForExit();
-
-            // close the process 
-            cmdProcess.Close();
-        }
+			// var a = await collection.ToListAsync();
+		
     }
 }

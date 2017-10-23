@@ -1,31 +1,41 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainSolution", "MainSolution\MainSolution.csproj", "{CF51FF65-F1DF-407F-822C-1952B501D4D2}"
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainSolution", "MainSolution\MainSolution.csproj", "{2CC85288-CB7A-429F-8DB1-AC951290EC5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginsLibrary", "PluginsLibrary\PluginsLibrary.csproj", "{6EF99313-0314-44FA-9E51-8C4B3B6847E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginsLibrary", "PluginsLibrary\PluginsLibrary.csproj", "{D06B6599-9951-4215-B50D-095AC39301D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantsLibrary", "ConstantsLibrary\ConstantsLibrary.csproj", "{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageLibrary", "MessageLibrary\MessageLibrary.csproj", "{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertionLibrary", "ConvertionLibrary\ConvertionLibrary.csproj", "{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CF51FF65-F1DF-407F-822C-1952B501D4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF51FF65-F1DF-407F-822C-1952B501D4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF51FF65-F1DF-407F-822C-1952B501D4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF51FF65-F1DF-407F-822C-1952B501D4D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EF99313-0314-44FA-9E51-8C4B3B6847E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EF99313-0314-44FA-9E51-8C4B3B6847E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EF99313-0314-44FA-9E51-8C4B3B6847E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EF99313-0314-44FA-9E51-8C4B3B6847E6}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BC902FD3-28CA-4C23-B017-ACB921DE6AEF}
+		{2CC85288-CB7A-429F-8DB1-AC951290EC5B}.Debug|x86.ActiveCfg = Debug|x86
+		{2CC85288-CB7A-429F-8DB1-AC951290EC5B}.Debug|x86.Build.0 = Debug|x86
+		{2CC85288-CB7A-429F-8DB1-AC951290EC5B}.Release|x86.ActiveCfg = Release|x86
+		{2CC85288-CB7A-429F-8DB1-AC951290EC5B}.Release|x86.Build.0 = Release|x86
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Debug|x86.Build.0 = Debug|Any CPU
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{D06B6599-9951-4215-B50D-095AC39301D9}.Release|x86.Build.0 = Release|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Debug|x86.Build.0 = Debug|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Release|x86.ActiveCfg = Release|Any CPU
+		{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}.Release|x86.Build.0 = Release|Any CPU
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Debug|x86.Build.0 = Debug|Any CPU
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Release|x86.ActiveCfg = Release|Any CPU
+		{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}.Release|x86.Build.0 = Release|Any CPU
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

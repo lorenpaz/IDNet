@@ -1,0 +1,5 @@
+/home/lorenzo/Escritorio/IDNet/ConstantsLibrary/bin/Debug/ConstantsLibrary.dll
+/home/lorenzo/Escritorio/IDNet/ConstantsLibrary/bin/Debug/ConstantsLibrary.pdb
+/home/lorenzo/Escritorio/IDNet/ConstantsLibrary/obj/Debug/ConstantsLibrary.csproj.CoreCompileInputs.cache
+/home/lorenzo/Escritorio/IDNet/ConstantsLibrary/obj/Debug/ConstantsLibrary.dll
+/home/lorenzo/Escritorio/IDNet/ConstantsLibrary/obj/Debug/ConstantsLibrary.pdb

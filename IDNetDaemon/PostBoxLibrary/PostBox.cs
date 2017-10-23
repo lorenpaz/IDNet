@@ -16,6 +16,16 @@ namespace PostBoxLibrary
 
 		public void recibir(XmlDocument document)
 		{
+            /*
+             * Cripto cript = new Crito();
+             * cript.decript(document);
+             * 
+             * Mensaje m = new Mensaje(document);
+             * Proceso p = new Proceso(m);
+             * XmlDocument xml = p.toXml();
+             * envio(xml);
+             * */
+
 
 		}
 

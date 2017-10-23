@@ -1,0 +1,6 @@
+/home/lorenzo/Escritorio/IDNet/ConvertionLibrary/bin/Debug/ConvertionLibrary.dll
+/home/lorenzo/Escritorio/IDNet/ConvertionLibrary/bin/Debug/ConvertionLibrary.pdb
+/home/lorenzo/Escritorio/IDNet/ConvertionLibrary/obj/Debug/ConvertionLibrary.csprojResolveAssemblyReference.cache
+/home/lorenzo/Escritorio/IDNet/ConvertionLibrary/obj/Debug/ConvertionLibrary.csproj.CoreCompileInputs.cache
+/home/lorenzo/Escritorio/IDNet/ConvertionLibrary/obj/Debug/ConvertionLibrary.dll
+/home/lorenzo/Escritorio/IDNet/ConvertionLibrary/obj/Debug/ConvertionLibrary.pdb

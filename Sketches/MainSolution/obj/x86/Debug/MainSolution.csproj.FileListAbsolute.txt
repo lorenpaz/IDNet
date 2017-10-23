@@ -1,0 +1,16 @@
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MainSolution.exe
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MainSolution.pdb
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MessageLibrary.dll
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/PluginsLibrary.dll
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MongoDB.Driver.dll
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MongoDB.Driver.Core.dll
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MongoDB.Bson.dll
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MySql.Data.dll
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/ConvertionLibrary.dll
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/PluginsLibrary.pdb
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/MessageLibrary.pdb
+/home/lorenzo/Escritorio/IDNet/MainSolution/bin/Debug/ConvertionLibrary.pdb
+/home/lorenzo/Escritorio/IDNet/MainSolution/obj/x86/Debug/MainSolution.csprojResolveAssemblyReference.cache
+/home/lorenzo/Escritorio/IDNet/MainSolution/obj/x86/Debug/MainSolution.csproj.CoreCompileInputs.cache
+/home/lorenzo/Escritorio/IDNet/MainSolution/obj/x86/Debug/MainSolution.exe
+/home/lorenzo/Escritorio/IDNet/MainSolution/obj/x86/Debug/MainSolution.pdb

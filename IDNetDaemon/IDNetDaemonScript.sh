@@ -1,6 +1,7 @@
-﻿#!/bin/bash
+#!/bin/bash
 
-PROGRAM_NAME="ServiceDaemon"
+PATH_NAME="IDNetDaemon/bin/Debug/"
+PROGRAM_NAME="IDNetDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
 
 usage()
@@ -16,13 +17,13 @@ stop()
         kill $_pid
         rt=$?
         if [ "$rt" == "0" ]
-            then
-                    echo "Daemon stop"
-            else
-                    echo "Error stop demon"
+	        then
+	                echo "IDNetDaemon stop"
+	        else
+	                echo "Error stop demon"
         fi
     else
-        echo "Daemon is not running"
+        echo "IDNetDaemon is not running"
     fi
 }
 

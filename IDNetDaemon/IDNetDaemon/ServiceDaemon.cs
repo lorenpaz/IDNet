@@ -11,7 +11,7 @@ namespace IDNetDaemon
 
 		public ServiceDaemon()
 		{
-			ServiceName = "ServiceDaemon";
+			ServiceName = "IDNetDaemon";
 			_scheduler = new Scheduler();
 		}
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ServiceProcess;
-//using System.ComponentModel
 
 namespace IDNetDaemon
 {
@@ -9,7 +8,7 @@ namespace IDNetDaemon
 		public static void Main(string[] args)
 		{
 			ServiceBase[] ServicesToRun;
-			ServicesToRun = new ServiceBase[] { new ServiceDemon.Service() };
+			ServicesToRun = new ServiceBase[] { new ServiceDaemon() };
 			ServiceBase.Run(ServicesToRun);
 		}
     }

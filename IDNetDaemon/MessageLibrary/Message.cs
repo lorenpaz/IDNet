@@ -19,6 +19,40 @@ namespace MessageLibrary
         private string _db_type;
         private string _body;
 
+		public string Db_type
+		{
+			get
+			{
+				return this._db_type;
+			}
+			set
+			{
+				this._db_type = value;
+			}
+		}
+		public string Db_name
+		{
+			get
+			{
+				return this._db_name;
+			}
+			set
+			{
+				this._db_name = value;
+			}
+		}
+		public string MessageType
+		{
+			get
+			{
+                return this._messageType;
+			}
+			set
+			{
+				this._messageType = value;
+			}
+		}
+
         public Message (XmlDocument doc)
 		{
             parserMessage(doc);

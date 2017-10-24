@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{D58B06A8-04DE-4289-A42E-B6EC80978777}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>ProcessLibrary</RootNamespace>
     <AssemblyName>ProcessLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -28,6 +28,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Process.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PluginsLibrary\PluginsLibrary.csproj">
+      <Project>{D06B6599-9951-4215-B50D-095AC39301D9}</Project>
+      <Name>PluginsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MessageLibrary\MessageLibrary.csproj">
+      <Project>{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}</Project>
+      <Name>MessageLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Xml" />
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

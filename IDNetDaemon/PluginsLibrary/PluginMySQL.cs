@@ -31,7 +31,7 @@ namespace PluginsLibrary
             }
         }
 
-		//Solicitud de la estructura de la base de datos
+		//Solicitud de la estructura de la BBDD
         public  XmlDocument EstructureRequest()
         {
             XmlDocument document = new XmlDocument();
@@ -43,6 +43,16 @@ namespace PluginsLibrary
             document = CreateXMLSchema(dbcon);
             return document;
         }
+
+		//Realizar consulta a la BBDD
+		public XmlDocument SelectRequest()
+        {
+            XmlDocument document = new XmlDocument();
+
+            return document;
+        }
+
+        //Método para la creación del esquema de la BBDD
         private XmlDocument CreateXMLSchema(MySqlConnection dbcon)
         {
 

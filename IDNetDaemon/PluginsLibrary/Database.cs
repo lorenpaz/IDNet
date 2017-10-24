@@ -106,5 +106,25 @@ namespace PluginsLibrary
             return xmldocument;
         }
 
+		//Realizar consulta a la base de datos
+		public XmlDocument EstructureRequest(string databaseType, string databaseName,string consulta)
+		{
+			XmlDocument xmldocument = new XmlDocument();
+			switch (databaseType)
+			{
+				case ("mongodb"):
+					PluginMongo mongo = new PluginMongo(databaseName);
+                    mongo.SelectRequest();
+					xmldocument = Convertion.JsonToXml(mongo.EstructureRequest());
+					break;
+
+				case ("mysql"):
+					PluginMySQL mysql = new PluginMySQL(databaseName);
+					xmldocument = mysql.SelectRequest();
+					break;
+			}
+			return xmldocument;
+		}
+
     }
 }

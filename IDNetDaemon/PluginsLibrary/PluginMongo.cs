@@ -31,14 +31,20 @@ namespace PluginsLibrary
 			}
 		}
 
-        //Solicitud de la estructura de la base de datos
+        //Solicitud de la estructura de la BBDD
         public string EstructureRequest()
         {
             MainAsync().Wait();
             return this._salida;
 		}
 
-        //Tarea para la obtención de la info de la BBDD
+		//Realizar consulta a la BBBDD
+		public string SelectRequest()
+        {
+            return this._salida;
+        }
+
+        //Tarea para la obtención de la información de la BBDD
         async Task MainAsync()
         {
 			this._client = new MongoClient();
@@ -55,11 +61,6 @@ namespace PluginsLibrary
 			}
             this._salida = j;
         }
-			//var collection = _database.GetCollection<BsonDocument>("empleados");
-			//var a = await collection.Find(new BsonDocument()).ToListAsync();
-			//salida = a[0].ToJson();
-
-			// var a = await collection.ToListAsync();
 		
     }
 }

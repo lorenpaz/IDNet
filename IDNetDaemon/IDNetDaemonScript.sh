@@ -29,7 +29,7 @@ stop()
 
 start()
 {
-    mono-service -l:${LOCK_FILE} ./${PROGRAM_NAME}.exe
+    mono-service -l:${LOCK_FILE} ./${PATH_NAME}${PROGRAM_NAME}.exe
 }
 
 case $1 in

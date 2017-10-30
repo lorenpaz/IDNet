@@ -20,6 +20,7 @@ namespace ProcessLibrary
             switch(m.MessageType)
              {
                 case("001"):
+                    
                     break;
                 case("002"):
                     _db.EstructureRequest(m.Db_type, m.Db_name);

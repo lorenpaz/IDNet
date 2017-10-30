@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageLibrary", "MessageLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginsLibrary", "PluginsLibrary\PluginsLibrary.csproj", "{D06B6599-9951-4215-B50D-095AC39301D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriptoLibrary", "CriptoLibrary\CriptoLibrary.csproj", "{91B231D1-1594-4FBE-BA58-01295B2954C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionLibrary", "ConnectionLibrary\ConnectionLibrary.csproj", "{B876774A-AB7E-4B31-931F-6A17704A314A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -49,5 +53,13 @@ Global
 		{D06B6599-9951-4215-B50D-095AC39301D9}.Debug|x86.Build.0 = Debug|Any CPU
 		{D06B6599-9951-4215-B50D-095AC39301D9}.Release|x86.ActiveCfg = Release|Any CPU
 		{D06B6599-9951-4215-B50D-095AC39301D9}.Release|x86.Build.0 = Release|Any CPU
+		{91B231D1-1594-4FBE-BA58-01295B2954C0}.Debug|x86.ActiveCfg = Debug|x86
+		{91B231D1-1594-4FBE-BA58-01295B2954C0}.Debug|x86.Build.0 = Debug|x86
+		{91B231D1-1594-4FBE-BA58-01295B2954C0}.Release|x86.ActiveCfg = Release|x86
+		{91B231D1-1594-4FBE-BA58-01295B2954C0}.Release|x86.Build.0 = Release|x86
+		{B876774A-AB7E-4B31-931F-6A17704A314A}.Debug|x86.ActiveCfg = Debug|x86
+		{B876774A-AB7E-4B31-931F-6A17704A314A}.Debug|x86.Build.0 = Debug|x86
+		{B876774A-AB7E-4B31-931F-6A17704A314A}.Release|x86.ActiveCfg = Release|x86
+		{B876774A-AB7E-4B31-931F-6A17704A314A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal

@@ -58,5 +58,11 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConnectionLibrary\ConnectionLibrary.csproj">
+      <Project>{B876774A-AB7E-4B31-931F-6A17704A314A}</Project>
+      <Name>ConnectionLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

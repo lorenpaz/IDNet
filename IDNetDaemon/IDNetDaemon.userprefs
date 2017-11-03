@@ -1,9 +1,8 @@
-﻿<Properties StartupConfiguration="{91B231D1-1594-4FBE-BA58-01295B2954C0}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="PostBoxLibrary/PostBox.cs">
+﻿<Properties StartupConfiguration="{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ConnectionLibrary/Server.cs">
     <Files>
-      <File FileName="ProcessLibrary/Process.cs" Line="23" Column="21" />
-      <File FileName="ConnectionLibrary/Conexion.cs" Line="1" Column="1" />
-      <File FileName="PostBoxLibrary/PostBox.cs" Line="18" Column="4" />
+      <File FileName="IDNetDaemon/DaemonServiceMain.cs" Line="4" Column="18" />
+      <File FileName="ConnectionLibrary/Server.cs" Line="9" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />

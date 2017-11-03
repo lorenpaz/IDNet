@@ -1,0 +1,13 @@
+-Abrir terminal en esta localización
+
+-Ejecutar el script que aparece:
+./IDNetDaemonScript.sh start
+
+-Comprobar que está operativo: ps a
+-Ver la carpeta logs con la información
+
+-Terminar daemon:
+./IDNetDaemonScript.sh stop
+ 
+ADVERTENCIA: si por algún casual NO ves el demonio corriendo, haz: rm /tmp/IDNetDaemon.lock
+A veces me ha pasado eso

@@ -3,6 +3,7 @@ using Quartz;
 using log4net;
 using Quartz.Impl;
 using System.Configuration;
+using ConnectionLibrary;
 
 namespace IDNetDaemon
 {
@@ -28,6 +29,7 @@ namespace IDNetDaemon
 
 		void StartMyJob()
 		{
+            Server.StartListening();
 			//var seconds = Int16.Parse(ConfigurationManager.AppSettings["MyJobSeconds"]);
 			//log.InfoFormat("Start MyJob. Execute once in {0} seconds", seconds);
 

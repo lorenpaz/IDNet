@@ -57,7 +57,6 @@ namespace PluginsLibrary
         {
 
             XmlDocument doc = new XmlDocument();
-            XmlElement root = doc.DocumentElement;
 			
             XmlElement database = doc.CreateElement("database");
 			doc.AppendChild(database);

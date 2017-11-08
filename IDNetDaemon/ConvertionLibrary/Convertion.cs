@@ -18,5 +18,12 @@ namespace ConvertionLibrary
 
             return xmldocument;
         }
+
+        public static XmlDocument stringToXml(string texto)
+        {
+            XmlDocument document = new XmlDocument();
+            document.LoadXml(texto);
+            return document;
+        }
     }
 }

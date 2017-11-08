@@ -42,5 +42,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PostBoxLibrary\PostBoxLibrary.csproj">
+      <Project>{42956A61-E8D5-47EE-8C8E-ABCBDC195075}</Project>
+      <Name>PostBoxLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

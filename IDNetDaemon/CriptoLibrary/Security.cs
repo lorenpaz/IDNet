@@ -6,15 +6,8 @@ using System.Xml;
 
 namespace CriptoLibrary
 {
-    class Security
+    public class Security
     {
-        RijndaelManaged key;
-
-        public Security()
-        {
-			// Create a new Rijndael key.
-			key = new RijndaelManaged();
-        }
 
         /*static void Main(string[] args)
         {
@@ -60,6 +53,9 @@ namespace CriptoLibrary
 
         public static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
         {
+			// Create a new Rijndael key.
+			RijndaelManaged key = new RijndaelManaged();
+
             // Check the arguments.  
             if (Doc == null)
                 throw new ArgumentNullException("Doc");

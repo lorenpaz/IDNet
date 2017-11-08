@@ -50,11 +50,13 @@ namespace PluginsLibrary
 			{
 				int i = 0;
 				bool param = true;
-				string parameter = "",value="";
+				string parameter = "",valor="";
 				/*
                  * 
-                 * database_type=mongodb;
-                 * database_name=empleados;
+                 * database_type=database_name;
+                 * 
+                 * Ejemplo:
+                 * mongodb=empleados;
                  * 
                  */
 
@@ -67,17 +69,17 @@ namespace PluginsLibrary
 					else if (param)
 						parameter += line[i];
 					else if (!param)
-						value += line[i];
+                        valor += line[i];
 
 					i++;
 				}
 
                 if(this._databases.ContainsKey(parameter))
                 {
-                    this._databases[parameter].Add(value);
+                    this._databases[parameter].Add(valor);
                 }else{
                     List<string> aux = new List<string>();
-                    aux.Add(value);
+                    aux.Add(valor);
                     this._databases.Add(parameter, aux);
                 }
 
@@ -107,7 +109,7 @@ namespace PluginsLibrary
         }
 
 		//Realizar consulta a la base de datos
-		public XmlDocument EstructureRequest(string databaseType, string databaseName,string consulta)
+		public XmlDocument SelectRequest(string databaseType, string databaseName,string consulta)
 		{
 			XmlDocument xmldocument = new XmlDocument();
 			switch (databaseType)

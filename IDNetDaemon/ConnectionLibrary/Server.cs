@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using log4net;
 
+using PostBoxLibrary;
+
 namespace ConnectionLibrary
 {
 
@@ -125,8 +127,11 @@ namespace ConnectionLibrary
 					handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
 					new AsyncCallback(ReadCallback), state);
 				}
-				string dataXml = "hola";
-				Send(handler, dataXml);
+                //string dataXml = "hola";
+                //Send(handler, dataXml);
+                PostBox post = new PostBox();
+                string respuesta = post.procesar(content);
+                Send(handler,respuesta);
 			}
 		}
 

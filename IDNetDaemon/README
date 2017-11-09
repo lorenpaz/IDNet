@@ -1,0 +1,31 @@
+------------------------------------------------------------------
+ARRANCAR DAEMON:
+
+-Abrir terminal en esta localización
+
+-Ejecutar el script que aparece:
+./IDNetDaemonScript.sh start
+
+-Comprobar que está operativo: ps a
+-Ver la carpeta logs con la información
+
+-Terminar daemon:
+./IDNetDaemonScript.sh stop
+ 
+ADVERTENCIA: si por algún casual NO ves el demonio corriendo, haz: rm /tmp/IDNetDaemon.lock
+A veces me ha pasado eso, debido a que HAY ERRORES por algún lado
+
+
+-------------------------------------------------------------
+PruebaClient.exe
+
+Es una prueba que envia un mensaje de tipo 002 con origen,destino,tipoBBDD,nombreBBDD,etc
+Funciona! Lo probé con mysql (debe de estar corriendo el demonio, y la contraseña de la BBDD debes de ponerla en el código como la mía está ahora)
+
+Corres el demonio, lanzas el cliente y verás en el log que aparece la respuesta!
+
+
+
+
+
+

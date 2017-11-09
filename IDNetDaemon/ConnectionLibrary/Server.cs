@@ -129,6 +129,7 @@ namespace ConnectionLibrary
 				}
                 //string dataXml = "hola";
                 //Send(handler, dataXml);
+
                 PostBox post = new PostBox();
                 string respuesta = post.procesar(content);
                 Send(handler,respuesta);
@@ -165,5 +166,14 @@ namespace ConnectionLibrary
 				Console.WriteLine(e.ToString());
 			}
 		}
+
+        /*
+         * Main para probar un mensaje de tipo 002. Funciona OK (el body los < y > los pone diferente)
+         * static void Main(string[] args)
+        {
+            PostBox p = new PostBox();
+            p.procesar("<root><source>Pepe</source><destination>Lorenzo</destination><message_type>002</message_type><db_name>usuarios</db_name><db_type>mysql</db_type><body></body></root>");
+        }*/
+
 	}
 }

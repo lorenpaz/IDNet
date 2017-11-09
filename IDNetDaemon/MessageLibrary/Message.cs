@@ -106,7 +106,7 @@ namespace MessageLibrary
 
 			//Si existe, guardamos el tipo de la base de datos
 			if (doc.DocumentElement.GetElementsByTagName("db_type").Count > 0)
-				this._db_name = doc.DocumentElement.GetElementsByTagName("db_type")[0].InnerText;
+                this._db_type = doc.DocumentElement.GetElementsByTagName("db_type")[0].InnerText;
 		    
             //Si existe, guardamos el nombre de la base de datos
             if (doc.DocumentElement.GetElementsByTagName("db_name").Count > 0)
@@ -129,32 +129,32 @@ namespace MessageLibrary
             //Creamos elemento origen
             XmlNode source = xmlDoc.CreateElement("source");
             source.InnerText = this._source;
-            xmlDoc.AppendChild(source);
+            elementRoot.AppendChild(source);
 
             //Creamos el elemento destino
             XmlNode destination = xmlDoc.CreateElement("destination");
 			destination.InnerText = this._destination;
-			xmlDoc.AppendChild(destination);
+			elementRoot.AppendChild(destination);
 
             //Creamos el elemento tipoDeMensaje
 			XmlNode message_type = xmlDoc.CreateElement("message_type");
             message_type.InnerText = this._messageType;
-            xmlDoc.AppendChild(message_type);
+            elementRoot.AppendChild(message_type);
 
             //Creamos el elemento nombreBBDD
 			XmlNode db_name = xmlDoc.CreateElement("db_name");
             db_name.InnerText = this._db_name;
-            xmlDoc.AppendChild(db_name);
+            elementRoot.AppendChild(db_name);
 
             //Creamos el elemento tipoDeBBDD
 			XmlNode db_type = xmlDoc.CreateElement("db_type");
             db_type.InnerText = this._db_type;
-            xmlDoc.AppendChild(db_type);
+            elementRoot.AppendChild(db_type);
 
             //Creamos el elemento Cuerpo
 			XmlNode body = xmlDoc.CreateElement("body");
             body.InnerText = this._body;
-            xmlDoc.AppendChild(body);
+            elementRoot.AppendChild(body);
 
 			return xmlDoc;
         }
@@ -187,8 +187,8 @@ namespace MessageLibrary
             contestacion.MessageType = typeMessage;
 
             //Para que no sean null
-            contestacion.Db_name = "";
-            contestacion.Db_type = "";
+            contestacion.Db_name = recibido.Db_name;
+            contestacion.Db_type = recibido.Db_type;
             contestacion.Body = "";
 
             return contestacion;

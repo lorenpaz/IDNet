@@ -16,7 +16,6 @@ namespace ProcessLibrary
 
         public XmlDocument ejecutar(Message m)
         {
-            int a;
             XmlDocument xmlDoc = null;
             switch(m.MessageType)
              {

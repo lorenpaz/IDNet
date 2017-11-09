@@ -15,8 +15,10 @@ namespace PostBoxLibrary
     {
         //Mensaje recibido
         Message _messageRecieve;
+
         //Proceso
         Process _process;
+
         //Mensaje de respuesta
         Message _messageResponse;
 
@@ -33,21 +35,19 @@ namespace PostBoxLibrary
             XmlDocument xmlDoc = Convertion.stringToXml(document);
 
             //Clave para desencriptar
-            RijndaelManaged key = new RijndaelManaged();
+            //RijndaelManaged key = new RijndaelManaged();
 
             //Desencriptamos el mensaje
-            Security.Decrypt(xmlDoc, key);
+            //Security.Decrypt(xmlDoc, key);
 
             //Parseamos el mensaje
             this._messageRecieve.parserMessageRecieve(xmlDoc);
 
             //Ejecutamos el proceso
-            Process p = new Process();
-            XmlDocument xmlDocResponse = p.ejecutar(this._messageRecieve);
 
+            XmlDocument xmlDocResponse = this._process.ejecutar(this._messageRecieve);
             //Creamos la respuesta
             String respuesta = responder(xmlDocResponse);
-
             return respuesta;
 		}
         private string responder(XmlDocument doc)

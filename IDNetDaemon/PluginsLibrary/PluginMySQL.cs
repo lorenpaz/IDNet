@@ -16,7 +16,7 @@ namespace PluginsLibrary
 		public PluginMySQL(string databaseName)
 		{
 			this._databaseName = databaseName;
-            this._connectionString ="Server=localhost;Database="+this._databaseName+";User ID=root;Password=1012;Pooling=false;";
+            this._connectionString ="Server=localhost;Database="+this._databaseName+";User ID=root;Password=1907;Pooling=false;";
 		}
 
         public string Salida

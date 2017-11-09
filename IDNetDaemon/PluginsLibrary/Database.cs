@@ -10,7 +10,7 @@ namespace PluginsLibrary
     //Clase constante con el archivo de configuración de las bases de datos
 	static class Constants
 	{
-		public const string ConfigFile = "databases.conf";
+		public const string ConfigFile = @"databases.conf";
 	}
 
     //Clase base de datos
@@ -41,17 +41,16 @@ namespace PluginsLibrary
 		{
             //Archivo a leer
             StreamReader conFile = File.OpenText(Constants.ConfigFile);
-
-			string line= conFile.ReadLine();
+            string line = conFile.ReadLine();
             this._databases = new Dictionary<string, List<string>>();
-			
+
             //Voy leyendo línea por línea
             while (line != null)
-			{
-				int i = 0;
-				bool param = true;
-				string parameter = "",valor="";
-				/*
+            {
+                int i = 0;
+                bool param = true;
+                string parameter = "", valor = "";
+                /*
                  * 
                  * database_type=database_name;
                  * 
@@ -60,31 +59,33 @@ namespace PluginsLibrary
                  * 
                  */
 
-				//Leemos el parámetro
-				while (line[i] != ';')
-				{
-					//Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-					if (line[i] == '=')
-						param = false;
-					else if (param)
-						parameter += line[i];
-					else if (!param)
+                //Leemos el parámetro
+                while (line[i] != ';')
+                {
+                    //Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
+                    if (line[i] == '=')
+                        param = false;
+                    else if (param)
+                        parameter += line[i];
+                    else if (!param)
                         valor += line[i];
 
-					i++;
-				}
+                    i++;
+                }
 
-                if(this._databases.ContainsKey(parameter))
+                if (this._databases.ContainsKey(parameter))
                 {
                     this._databases[parameter].Add(valor);
-                }else{
+                }
+                else
+                {
                     List<string> aux = new List<string>();
                     aux.Add(valor);
                     this._databases.Add(parameter, aux);
                 }
 
                 line = conFile.ReadLine();
-			}
+            }
 		}
 
 		//Solicitud de la estructura de la base de datos
@@ -128,5 +129,11 @@ namespace PluginsLibrary
 			return xmldocument;
 		}
 
+
+      /*  static void Main(string[] args)
+        {
+            Database d = new Database();
+
+        }*/
     }
 }

@@ -13,7 +13,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="IDNetSoftware.MainWindow" design-size="732 500">
+  <widget class="Gtk.Window" id="IDNetSoftware.MainWindow" design-size="733 500">
     <action-group name="Default">
       <action id="ArchivoAction">
         <property name="Type">Action</property>
@@ -70,7 +70,6 @@
     <property name="WidthRequest">700</property>
     <property name="HeightRequest">500</property>
     <property name="Title" translatable="yes">IDNet</property>
-    <property name="Icon">resource:iconoSoftware</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Resizable">False</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
@@ -146,36 +145,20 @@ Response: 006 - Consulta realizada
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.Frame" id="frame1">
+              <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
                 <property name="MemberName" />
-                <property name="ShadowType">None</property>
+                <property name="CanFocus">True</property>
+                <property name="ShadowType">In</property>
                 <child>
-                  <widget class="Gtk.Alignment" id="GtkAlignment">
+                  <widget class="Gtk.TreeView" id="treeviewDatabasesPropias">
                     <property name="MemberName" />
-                    <property name="Xalign">0</property>
-                    <property name="Yalign">0</property>
-                    <property name="LeftPadding">12</property>
-                    <child>
-                      <placeholder />
-                    </child>
+                    <property name="CanFocus">True</property>
                   </widget>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="GtkLabel7">
-                    <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">&lt;b&gt;Mis BBDD&lt;/b&gt;</property>
-                    <property name="UseMarkup">True</property>
-                  </widget>
-                  <packing>
-                    <property name="type">label_item</property>
-                  </packing>
                 </child>
               </widget>
               <packing>
                 <property name="Position">0</property>
                 <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
               </packing>
             </child>
             <child>

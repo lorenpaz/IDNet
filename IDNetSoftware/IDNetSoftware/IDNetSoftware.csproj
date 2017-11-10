@@ -80,5 +80,11 @@
     <None Include="resources\icons\007-database-1.png" />
     <None Include="resources\icons\iconoSoftware.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseLibrary\DatabaseLibrary.csproj">
+      <Project>{32EC6214-3022-4103-82E5-0E882F4497F8}</Project>
+      <Name>DatabaseLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

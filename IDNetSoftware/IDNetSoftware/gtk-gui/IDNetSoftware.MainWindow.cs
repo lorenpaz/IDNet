@@ -36,11 +36,9 @@ namespace IDNetSoftware
 
 		private global::Gtk.HBox hbox1;
 
-		private global::Gtk.Frame frame1;
+		private global::Gtk.ScrolledWindow scrolledwindow1;
 
-		private global::Gtk.Alignment GtkAlignment;
-
-		private global::Gtk.Label GtkLabel7;
+		private global::Gtk.TreeView treeviewDatabasesPropias;
 
 		private global::Gtk.Alignment alignment4;
 
@@ -146,24 +144,18 @@ Response: 006 - Consulta realizada
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.frame1 = new global::Gtk.Frame();
-			this.frame1.Name = "frame1";
-			this.frame1.ShadowType = ((global::Gtk.ShadowType)(0));
-			// Container child frame1.Gtk.Container+ContainerChild
-			this.GtkAlignment = new global::Gtk.Alignment(0F, 0F, 1F, 1F);
-			this.GtkAlignment.Name = "GtkAlignment";
-			this.GtkAlignment.LeftPadding = ((uint)(12));
-			this.frame1.Add(this.GtkAlignment);
-			this.GtkLabel7 = new global::Gtk.Label();
-			this.GtkLabel7.Name = "GtkLabel7";
-			this.GtkLabel7.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Mis BBDD</b>");
-			this.GtkLabel7.UseMarkup = true;
-			this.frame1.LabelWidget = this.GtkLabel7;
-			this.hbox1.Add(this.frame1);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.frame1]));
+			this.scrolledwindow1 = new global::Gtk.ScrolledWindow();
+			this.scrolledwindow1.CanFocus = true;
+			this.scrolledwindow1.Name = "scrolledwindow1";
+			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child scrolledwindow1.Gtk.Container+ContainerChild
+			this.treeviewDatabasesPropias = new global::Gtk.TreeView();
+			this.treeviewDatabasesPropias.CanFocus = true;
+			this.treeviewDatabasesPropias.Name = "treeviewDatabasesPropias";
+			this.scrolledwindow1.Add(this.treeviewDatabasesPropias);
+			this.hbox1.Add(this.scrolledwindow1);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.scrolledwindow1]));
 			w7.Position = 0;
-			w7.Expand = false;
-			w7.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.alignment4 = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
 			this.alignment4.Name = "alignment4";
@@ -220,7 +212,7 @@ Response: 006 - Consulta realizada
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 732;
+			this.DefaultWidth = 733;
 			this.DefaultHeight = 500;
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);

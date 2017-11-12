@@ -36,13 +36,17 @@ namespace IDNetSoftware
 
 		private global::Gtk.HBox hbox1;
 
-		private global::Gtk.ScrolledWindow scrolledwindow1;
+		private global::Gtk.VBox vbox7;
+
+		private global::Gtk.Label labelDatabases;
+
+		private global::Gtk.ScrolledWindow GtkScrolledWindow2;
 
 		private global::Gtk.TreeView treeviewDatabasesPropias;
 
-		private global::Gtk.Alignment alignment4;
+		private global::Gtk.VBox vbox8;
 
-		private global::Gtk.Alignment alignment5;
+		private global::Gtk.Label labelVecinos;
 
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
 
@@ -144,25 +148,48 @@ Response: 006 - Consulta realizada
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.scrolledwindow1 = new global::Gtk.ScrolledWindow();
-			this.scrolledwindow1.CanFocus = true;
-			this.scrolledwindow1.Name = "scrolledwindow1";
-			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child scrolledwindow1.Gtk.Container+ContainerChild
+			this.vbox7 = new global::Gtk.VBox();
+			this.vbox7.WidthRequest = 30;
+			this.vbox7.Name = "vbox7";
+			this.vbox7.Spacing = 6;
+			// Container child vbox7.Gtk.Box+BoxChild
+			this.labelDatabases = new global::Gtk.Label();
+			this.labelDatabases.Name = "labelDatabases";
+			this.labelDatabases.LabelProp = global::Mono.Unix.Catalog.GetString("Base de datos propias");
+			this.vbox7.Add(this.labelDatabases);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.labelDatabases]));
+			w6.Position = 0;
+			w6.Expand = false;
+			w6.Fill = false;
+			// Container child vbox7.Gtk.Box+BoxChild
+			this.GtkScrolledWindow2 = new global::Gtk.ScrolledWindow();
+			this.GtkScrolledWindow2.Name = "GtkScrolledWindow2";
+			this.GtkScrolledWindow2.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child GtkScrolledWindow2.Gtk.Container+ContainerChild
 			this.treeviewDatabasesPropias = new global::Gtk.TreeView();
 			this.treeviewDatabasesPropias.CanFocus = true;
 			this.treeviewDatabasesPropias.Name = "treeviewDatabasesPropias";
-			this.scrolledwindow1.Add(this.treeviewDatabasesPropias);
-			this.hbox1.Add(this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.scrolledwindow1]));
-			w7.Position = 0;
+			this.GtkScrolledWindow2.Add(this.treeviewDatabasesPropias);
+			this.vbox7.Add(this.GtkScrolledWindow2);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.GtkScrolledWindow2]));
+			w8.Position = 1;
+			this.hbox1.Add(this.vbox7);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox7]));
+			w9.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.alignment4 = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
-			this.alignment4.Name = "alignment4";
-			// Container child alignment4.Gtk.Container+ContainerChild
-			this.alignment5 = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
-			this.alignment5.Name = "alignment5";
-			// Container child alignment5.Gtk.Container+ContainerChild
+			this.vbox8 = new global::Gtk.VBox();
+			this.vbox8.Name = "vbox8";
+			this.vbox8.Spacing = 6;
+			// Container child vbox8.Gtk.Box+BoxChild
+			this.labelVecinos = new global::Gtk.Label();
+			this.labelVecinos.Name = "labelVecinos";
+			this.labelVecinos.LabelProp = global::Mono.Unix.Catalog.GetString("Vecinos VO");
+			this.vbox8.Add(this.labelVecinos);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.labelVecinos]));
+			w10.Position = 0;
+			w10.Expand = false;
+			w10.Fill = false;
+			// Container child vbox8.Gtk.Box+BoxChild
 			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
 			this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -171,14 +198,15 @@ Response: 006 - Consulta realizada
 			this.treeviewDatabases.CanFocus = true;
 			this.treeviewDatabases.Name = "treeviewDatabases";
 			this.GtkScrolledWindow1.Add(this.treeviewDatabases);
-			this.alignment5.Add(this.GtkScrolledWindow1);
-			this.alignment4.Add(this.alignment5);
-			this.hbox1.Add(this.alignment4);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.alignment4]));
-			w11.Position = 1;
+			this.vbox8.Add(this.GtkScrolledWindow1);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.GtkScrolledWindow1]));
+			w12.Position = 1;
+			this.hbox1.Add(this.vbox8);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox8]));
+			w13.Position = 1;
 			this.vbox1.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
-			w12.Position = 3;
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+			w14.Position = 3;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar = new global::Gtk.Statusbar();
 			this.statusbar.Name = "statusbar";
@@ -189,24 +217,24 @@ Response: 006 - Consulta realizada
 			this.conexionesLabel.Name = "conexionesLabel";
 			this.conexionesLabel.LabelProp = global::Mono.Unix.Catalog.GetString("0 conexiones activas");
 			this.statusbar.Add(this.conexionesLabel);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.conexionesLabel]));
-			w13.Position = 1;
-			w13.Expand = false;
-			w13.Fill = false;
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.conexionesLabel]));
+			w15.Position = 1;
+			w15.Expand = false;
+			w15.Fill = false;
 			// Container child statusbar.Gtk.Box+BoxChild
 			this.brandLabel = new global::Gtk.Label();
 			this.brandLabel.Name = "brandLabel";
 			this.brandLabel.LabelProp = global::Mono.Unix.Catalog.GetString("IDNet Software");
 			this.statusbar.Add(this.brandLabel);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.brandLabel]));
-			w14.Position = 2;
-			w14.Expand = false;
-			w14.Fill = false;
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.brandLabel]));
+			w16.Position = 2;
+			w16.Expand = false;
+			w16.Fill = false;
 			this.vbox1.Add(this.statusbar);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar]));
-			w15.Position = 4;
-			w15.Expand = false;
-			w15.Fill = false;
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar]));
+			w17.Position = 4;
+			w17.Expand = false;
+			w17.Fill = false;
 			this.Add(this.vbox1);
 			if ((this.Child != null))
 			{

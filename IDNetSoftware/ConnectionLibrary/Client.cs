@@ -11,7 +11,8 @@ namespace ConnectionLibrary
 		{
 		}
 
-		public static void StartClient(string mensaje)
+        //Le pasas el mensaje y el host a quién nos vamos a conectar
+		public static void StartClient(string mensaje, string hostName)
 		{
 			// Data buffer for incoming data.
 			byte[] respuesta = new byte[1024];

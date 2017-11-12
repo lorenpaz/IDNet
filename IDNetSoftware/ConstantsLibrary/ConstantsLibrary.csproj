@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{32EC6214-3022-4103-82E5-0E882F4497F8}</ProjectGuid>
+    <ProjectGuid>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>DatabaseLibrary</RootNamespace>
-    <AssemblyName>DatabaseLibrary</AssemblyName>
+    <RootNamespace>ConstantsLibrary</RootNamespace>
+    <AssemblyName>ConstantsLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -27,14 +27,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Databases.cs" />
-    <Compile Include="Neighbours.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
-      <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
-      <Name>ConstantsLibrary</Name>
-    </ProjectReference>
+    <Compile Include="Constants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

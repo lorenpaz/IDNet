@@ -1,14 +1,13 @@
 ﻿using System;
-using PluginsLibrary;
+using DatabaseLibrary;
 using MessageLibrary;
-using SecurityLibrary;
 using System.Xml;
 
 namespace ProcessLibrary
 {
     public class Process
     {
-		private Database _db;
+	private Database _db;
 
         public Process()
         {
@@ -19,24 +18,18 @@ namespace ProcessLibrary
         {
             XmlDocument xmlDoc = null;
             switch(m.MessageType)
-             {
-				case("001"):
-				{
-					Security sec = new Security();
-					if (sec.checkBlackList()) 
-					{
-							
-					}
-				}
+            {
+                case("004"):
+                    
                     break;
-                case("002"):
+                case("005"):
                     xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
                     break;
-                case("003"):
+                case("006"):
                     xmlDoc = this._db.SelectRequest(m.Db_type,m.Db_name,m.Body);
                     break;
             }
             return xmlDoc;
         }
-	}
+   }
 }

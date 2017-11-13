@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageLibrary", "MessageLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessLibrary", "ProcessLibrary\ProcessLibrary.csproj", "{D58B06A8-04DE-4289-A42E-B6EC80978777}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantsLibrary", "ConstantsLibrary\ConstantsLibrary.csproj", "{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -37,5 +39,18 @@ Global
 		{E6E207AF-6328-45BF-B6AB-5340F6E74453}.Debug|x86.Build.0 = Debug|x86
 		{E6E207AF-6328-45BF-B6AB-5340F6E74453}.Release|x86.ActiveCfg = Release|x86
 		{E6E207AF-6328-45BF-B6AB-5340F6E74453}.Release|x86.Build.0 = Release|x86
+		{32EC6214-3022-4103-82E5-0E882F4497F8}.Debug|x86.ActiveCfg = Debug|x86
+		{32EC6214-3022-4103-82E5-0E882F4497F8}.Debug|x86.Build.0 = Debug|x86
+		{32EC6214-3022-4103-82E5-0E882F4497F8}.Release|x86.ActiveCfg = Release|x86
+		{32EC6214-3022-4103-82E5-0E882F4497F8}.Release|x86.Build.0 = Release|x86
+		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Debug|x86.ActiveCfg = Debug|x86
+		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Debug|x86.Build.0 = Debug|x86
+		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Release|x86.ActiveCfg = Release|x86
+		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Release|x86.Build.0 = Release|x86
+		{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}.Debug|x86.ActiveCfg = Debug|x86
+		{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}.Debug|x86.Build.0 = Debug|x86
+		{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}.Release|x86.ActiveCfg = Release|x86
+		{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}.Release|x86.Build.0 = Release|x86
+>>>>>>> 4fc8b989a1a46c0db8a41f4cac299a34f314ebc2
 	EndGlobalSection
 EndGlobal

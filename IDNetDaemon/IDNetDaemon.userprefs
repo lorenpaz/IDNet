@@ -1,5 +1,9 @@
 ﻿<Properties StartupConfiguration="{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}|Default" StartupItem="IDNetDaemon/IDNetDaemon.csproj">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="IDNetDaemon/DaemonServiceMain.cs">
+    <Files>
+      <File FileName="IDNetDaemon/DaemonServiceMain.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
@@ -7,9 +11,9 @@
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.PluginsLibrary PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.CriptoLibrary PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.PluginsLibrary PreferredExecutionTarget="MonoDevelop.Default" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.IDNetDaemon PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ConnectionLibrary PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.IDNetDaemon PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

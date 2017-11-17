@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDNetSoftware", "IDNetSoftware\IDNetSoftware.csproj", "{E446BCAE-263D-4019-A3EF-A1DBDD061D25}"
@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLibrary", "Database
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageLibrary", "MessageLibrary\MessageLibrary.csproj", "{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessLibrary", "ProcessLibrary\ProcessLibrary.csproj", "{D58B06A8-04DE-4289-A42E-B6EC80978777}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantsLibrary", "ConstantsLibrary\ConstantsLibrary.csproj", "{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}"
 EndProject
 Global
@@ -19,18 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Debug|x86.ActiveCfg = Debug|x86
-		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Debug|x86.Build.0 = Debug|x86
-		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Release|x86.ActiveCfg = Release|x86
-		{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}.Release|x86.Build.0 = Release|x86
-		{32EC6214-3022-4103-82E5-0E882F4497F8}.Debug|x86.ActiveCfg = Debug|x86
-		{32EC6214-3022-4103-82E5-0E882F4497F8}.Debug|x86.Build.0 = Debug|x86
-		{32EC6214-3022-4103-82E5-0E882F4497F8}.Release|x86.ActiveCfg = Release|x86
-		{32EC6214-3022-4103-82E5-0E882F4497F8}.Release|x86.Build.0 = Release|x86
-		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Debug|x86.ActiveCfg = Debug|x86
-		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Debug|x86.Build.0 = Debug|x86
-		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Release|x86.ActiveCfg = Release|x86
-		{D58B06A8-04DE-4289-A42E-B6EC80978777}.Release|x86.Build.0 = Release|x86
 		{E446BCAE-263D-4019-A3EF-A1DBDD061D25}.Debug|x86.ActiveCfg = Debug|x86
 		{E446BCAE-263D-4019-A3EF-A1DBDD061D25}.Debug|x86.Build.0 = Debug|x86
 		{E446BCAE-263D-4019-A3EF-A1DBDD061D25}.Release|x86.ActiveCfg = Release|x86
@@ -51,6 +37,5 @@ Global
 		{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}.Debug|x86.Build.0 = Debug|x86
 		{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}.Release|x86.ActiveCfg = Release|x86
 		{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}.Release|x86.Build.0 = Release|x86
->>>>>>> 4fc8b989a1a46c0db8a41f4cac299a34f314ebc2
 	EndGlobalSection
 EndGlobal

@@ -1,20 +1,12 @@
-﻿<Properties StartupConfiguration="{E446BCAE-263D-4019-A3EF-A1DBDD061D25}|Default" StartupItem="IDNetSoftware/IDNetSoftware.csproj">
-  <MonoDevelop.Ide.Workbench ActiveDocument="DatabaseLibrary/Databases.cs">
-    <Files>
-      <File FileName="IDNetSoftware/MainWindow.cs" Line="1" Column="1" />
-      <File FileName="IDNetSoftware/AddDatabaseDialog.cs" Line="1" Column="1" />
-      <File FileName="IDNetSoftware/Program.cs" Line="1" Column="1" />
-      <File FileName="MessageLibrary/Message.cs" Line="1" Column="1" />
-      <File FileName="DatabaseLibrary/Databases.cs" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+﻿<Properties StartupConfiguration="{E446BCAE-263D-4019-A3EF-A1DBDD061D25}|Default">
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.ItemProperties.IDNetSoftware PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/DatabaseLibrary/Databases.cs" line="104" column="1" />
+      <Breakpoint file="/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/DatabaseLibrary/Databases.cs" relfile="DatabaseLibrary/Databases.cs" line="104" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.IDNetSoftware PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

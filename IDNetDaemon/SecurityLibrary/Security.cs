@@ -1,13 +1,12 @@
 ﻿using System;
-using System.IO.File;
-using System.Windows.Forms;
+using System.IO;
+using ConstantsLibrary;
 
 namespace SecurityLibrary
 {
 	public class Security
 	{
-		const string CONFIG_FILE = "./config/blackList.conf";
-		public Security ()
+		public Security()
 		{
 		}
 
@@ -18,27 +17,26 @@ namespace SecurityLibrary
 			try
 			{
 				//Leemos el archivo
-				string[] lines = ReadAllLines(CONFIG_FILE);
+				StreamReader conFile = File.OpenText(Constants.CONF_BLACK_LIST);
+                string lines = conFile.ReadToEnd();
 
 				//Lo recorremos y buscamos si la ip figura en la lista
 				int i = 0;
-				while(ip.Equals(lines[i]))
+				while (ip.Equals(lines[i]))
 					i++;
 
 				//SI hemos terminado la lista y no lo hemos encontrado
-				if(i = lines.GetLength)
+                if (i == lines.Length)
 					encontrado = true;
 			}
-			catch(Exception ex){
+			catch (Exception e)
+			{
 				//Si ha habido una excepcion al abrir el archivo lo notificamos e ignoramos la comprobacion
 				encontrado = true;
-				MessageBox.Show("BlackList cannot be read. Security check will be ignored.");
+                throw new Exception("BlackList cannot be read. Security check will be ignored."+e.Message);
 			}
-			finally{
 				return encontrado;
-			}
 		}
 
 	}
 }
-

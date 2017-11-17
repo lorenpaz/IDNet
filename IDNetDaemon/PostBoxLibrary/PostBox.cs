@@ -50,7 +50,6 @@ namespace PostBoxLibrary
             String respuesta = responder(xmlDocResponse);
             return respuesta;
 		}
-
         private string responder(XmlDocument doc)
         {
             string respuesta="";

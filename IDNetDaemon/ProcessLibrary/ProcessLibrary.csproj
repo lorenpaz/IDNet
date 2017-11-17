@@ -38,6 +38,10 @@
       <Project>{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}</Project>
       <Name>MessageLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SecurityLibrary\SecurityLibrary.csproj">
+      <Project>{BB2BBDD7-9F09-40D1-831B-D1906B3B7EF8}</Project>
+      <Name>SecurityLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Xml" />

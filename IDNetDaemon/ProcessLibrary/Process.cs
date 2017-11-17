@@ -1,8 +1,8 @@
 ﻿using System;
 using PluginsLibrary;
 using MessageLibrary;
-using SecurityLibrary;
 using System.Xml;
+using SecurityLibrary;
 
 namespace ProcessLibrary
 {
@@ -20,17 +20,15 @@ namespace ProcessLibrary
             XmlDocument xmlDoc = null;
             switch(m.MessageType)
              {
-				case("001"):
-				{
-					Security sec = new Security();
-					if (sec.checkBlackList()) 
-					{
-							
-					}
-				}
+                case("001"):
+                    Security sec = new Security();
+                    if (sec.checkBlackList(m.Source)) 
+                       {
+                               
+                       }
                     break;
                 case("002"):
-                    xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
+                     xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
                     break;
                 case("003"):
                     xmlDoc = this._db.SelectRequest(m.Db_type,m.Db_name,m.Body);
@@ -38,5 +36,6 @@ namespace ProcessLibrary
             }
             return xmlDoc;
         }
+
 	}
 }

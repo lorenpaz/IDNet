@@ -3,9 +3,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.ItemProperties.ConnectionLibrary PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetDaemon/MessageLibrary/Message.cs" relfile="MessageLibrary/Message.cs" line="156" column="42" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.PluginsLibrary PreferredExecutionTarget="MonoDevelop.Default" />

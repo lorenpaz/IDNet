@@ -4,7 +4,6 @@ using System.Xml;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Security.Cryptography;
-using log4net;
 
 using CriptoLibrary;
 using MessageLibrary;
@@ -23,8 +22,6 @@ namespace PostBoxLibrary
 
         //Mensaje de respuesta
         Message _messageResponse;
-
-        static readonly ILog log = LogManager.GetLogger(typeof(PostBox));
 
         public PostBox()
         {
@@ -63,8 +60,6 @@ namespace PostBoxLibrary
 
             //Si hay cuerpo de la respuesta
             if(doc != null){
-                  log.Info("Previo:"+doc.InnerXml);
-                log.Info("Desp"+WebUtility.HtmlDecode(doc.InnerXml));
                 this._messageResponse.Body = doc.InnerXml;
             }
 

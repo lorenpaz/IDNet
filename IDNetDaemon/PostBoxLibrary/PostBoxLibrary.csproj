@@ -35,9 +35,6 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Net" />
     <Reference Include="System" />
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CriptoLibrary\CriptoLibrary.csproj">
@@ -56,9 +53,6 @@
       <Project>{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}</Project>
       <Name>ConvertionLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

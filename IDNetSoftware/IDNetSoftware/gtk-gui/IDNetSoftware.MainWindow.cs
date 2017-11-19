@@ -247,6 +247,7 @@ Response: 006 - Consulta realizada
 			this.salirAction.Activated += new global::System.EventHandler(this.OnSalirActionActivated);
 			this.addDatabasePngAction.Activated += new global::System.EventHandler(this.OnAddDatabasePngActionActivated);
 			this.addAction.Activated += new global::System.EventHandler(this.OnAddActionActivated);
+			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 		}
 	}
 }

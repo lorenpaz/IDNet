@@ -67,6 +67,8 @@
     <Compile Include="AddDatabaseDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.AddDatabaseDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.MainWindow.cs" />
+    <Compile Include="ModifyDatabaseDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ModifyDatabaseDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

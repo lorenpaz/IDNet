@@ -22,6 +22,9 @@ namespace IDNetSoftware
         //Dialogo de añadir BBDD
         AddDatabaseDialog _addDatabaseDialog;
 
+        //Dialogo de modificar BBDD
+        ModifyDatabaseDialog _modifyDatabaseDialog;
+
         public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
@@ -126,7 +129,7 @@ namespace IDNetSoftware
         private void addValuesOwn()
         {
 			//Recorremos las bases de datos para mostrarlas
-			foreach (KeyValuePair<string, List<string>> entry in this._databases.databasesPropias)
+			foreach (KeyValuePair<string, List<string>> entry in this._databases.DatabasesPropias)
 			{
 				foreach (string bbdd in entry.Value)
 				{
@@ -142,5 +145,21 @@ namespace IDNetSoftware
 			Application.Quit();
         }
 
+        protected void OnTreeviewDatabasesPropiasRowActivated(object o, RowActivatedArgs args)
+        {
+            TreeIter t;
+			TreePath p = args.Path;
+            this._infoBBDDownView.GetIter(out t,p);
+
+            string nombreBBDD = (string) this._infoBBDDownView.GetValue(t, 0);
+            string tipoBBDD = (string) this._infoBBDDownView.GetValue(t, 1);
+            List <string> bbdd = new List<string>();
+            bbdd.Add(tipoBBDD);
+            bbdd.Add(nombreBBDD);
+            this._modifyDatabaseDialog = new ModifyDatabaseDialog(this._databases,bbdd);
+            this._modifyDatabaseDialog.Run();
+
+            updateOwnDatabases();
+        }
     }
 }

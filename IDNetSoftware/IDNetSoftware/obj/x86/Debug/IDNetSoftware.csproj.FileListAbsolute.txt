@@ -4,11 +4,3 @@
 /home/lorenzo/Escritorio/Proyectos/git-repos/IDNetSoftware/IDNetSoftware/obj/x86/Debug/IDNetSoftware.exe
 /home/lorenzo/Escritorio/Proyectos/git-repos/IDNetSoftware/IDNetSoftware/obj/x86/Debug/IDNetSoftware.pdb
 /home/lorenzo/Escritorio/Proyectos/git-repos/IDNetSoftware/IDNetSoftware/obj/x86/Debug/IDNetSoftware.csprojResolveAssemblyReference.cache
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/bin/Debug/IDNetSoftware.exe
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/bin/Debug/IDNetSoftware.pdb
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/bin/Debug/DatabaseLibrary.dll
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/bin/Debug/DatabaseLibrary.pdb
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/obj/x86/Debug/IDNetSoftware.csprojResolveAssemblyReference.cache
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/obj/x86/Debug/IDNetSoftware.csproj.CoreCompileInputs.cache
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/obj/x86/Debug/IDNetSoftware.exe
-/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNetSoftware/IDNetSoftware/obj/x86/Debug/IDNetSoftware.pdb

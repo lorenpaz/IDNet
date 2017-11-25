@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using ConstantsLibrary;
+using ConstantsLibraryS;
 
-namespace DatabaseLibrary
+namespace DatabaseLibraryS
 {
 
     public class Databases

@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 
-namespace ConnectionLibrary
+namespace ConnectionLibraryS
 {
 	public class Client
 	{
@@ -12,7 +12,7 @@ namespace ConnectionLibrary
 		}
 
         //Le pasas el mensaje y el host a quién nos vamos a conectar
-		public static void StartClient(string mensaje, string hostName)
+		public string StartClient(string mensaje, string hostName)
 		{
 			// Data buffer for incoming data.
 			byte[] respuesta = new byte[1024];
@@ -53,7 +53,6 @@ namespace ConnectionLibrary
 					// Release the socket.
 					sender.Shutdown(SocketShutdown.Both);
 					sender.Close();
-
 				}
 				catch (ArgumentNullException ane)
 				{
@@ -73,6 +72,7 @@ namespace ConnectionLibrary
 			{
 				Console.WriteLine(e.ToString());
 			}
+			return System.Text.Encoding.UTF8.GetString(respuesta);
 		}
 
 		/*public static int Main(String[] args)

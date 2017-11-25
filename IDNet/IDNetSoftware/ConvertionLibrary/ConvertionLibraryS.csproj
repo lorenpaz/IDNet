@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{E6E207AF-6328-45BF-B6AB-5340F6E74453}</ProjectGuid>
+    <ProjectGuid>{2F0443FD-FFBF-49DA-8C28-11DA692FF5EA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ConnectionLibrary</RootNamespace>
-    <AssemblyName>ConnectionLibrary</AssemblyName>
+    <RootNamespace>ConvertionLibraryS</RootNamespace>
+    <AssemblyName>ConvertionLibraryS</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -27,17 +27,10 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
+    <Compile Include="Convertion.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Sockets">
-      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
-    </Reference>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

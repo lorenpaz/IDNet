@@ -65,6 +65,28 @@
         <property name="StockId">gtk-add</property>
         <signal name="Activated" handler="OnAddActionActivated" />
       </action>
+      <action id="playPngAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">play.png</property>
+      </action>
+      <action id="ConexinAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Conexión</property>
+        <property name="ShortLabel" translatable="yes">Conexión</property>
+      </action>
+      <action id="SolicitarEsquemaAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Solicitar esquema</property>
+        <property name="ShortLabel" translatable="yes">Solicitar esquema</property>
+        <signal name="Activated" handler="OnSolicitarEsquemaActionActivated" />
+      </action>
+      <action id="RealizarConsultaAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Realizar consulta</property>
+        <property name="ShortLabel" translatable="yes">Realizar consulta</property>
+        <signal name="Activated" handler="OnRealizarConsultaActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">700</property>
@@ -90,6 +112,10 @@
               </node>
               <node type="Menu" action="OVAction" />
               <node type="Menu" action="AyudaAction" />
+              <node type="Menu" action="ConexinAction">
+                <node type="Menuitem" action="SolicitarEsquemaAction" />
+                <node type="Menuitem" action="RealizarConsultaAction" />
+              </node>
             </node>
           </widget>
           <packing>
@@ -105,6 +131,7 @@
             <property name="ShowArrow">False</property>
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="addDatabasePngAction" />
+              <node type="Toolitem" action="playPngAction" />
             </node>
           </widget>
           <packing>
@@ -125,13 +152,7 @@
                 <property name="Editable">False</property>
                 <property name="CursorVisible">False</property>
                 <property name="AcceptsTab">False</property>
-                <property name="Text" translatable="yes">Command: 001 - Solicitud de conexión a 'Lorenzo' 
-Response: 004 - Conexión establecida
-Command: 002 - Solicitud a la información de la base de datos 'empleados'
-Response: 005 - Información enviada
-Command: 003 - Solicitud de consulta a la tabla 'empleados Planta 1'
-Response: 006 - Consulta realizada
-</property>
+                <property name="Text" translatable="yes" />
               </widget>
             </child>
           </widget>

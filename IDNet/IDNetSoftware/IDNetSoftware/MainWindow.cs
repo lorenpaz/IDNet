@@ -1,6 +1,12 @@
 ﻿using System;
 using Gtk;
-using DatabaseLibrary;
+
+using DatabaseLibraryS;
+using ConnectionLibraryS;
+using PostBoxLibraryS;
+using MessageLibraryS;
+using ConstantsLibraryS;
+
 using System.Collections.Generic;
 
 namespace IDNetSoftware
@@ -162,8 +168,43 @@ namespace IDNetSoftware
             updateOwnDatabases();
         }
 
-        protected void OnPlayActionActivated(object sender, EventArgs e)
+        protected void OnSolicitarEsquemaActionActivated(object sender, EventArgs e)
         {
+            string msg, response;
+
+            //Proceso el envio
+            PostBox post = new PostBox("Lorenzo","Juan","002","usuarios","mysql","");
+            msg = post.ProcesarEnvio();
+
+            MostrarSolicitudEsquema(post.MessageRequest);
+
+            //Creo el cliente y le envio el mensaje
+            Client c = new Client();
+            response = c.StartClient(msg,"localhost");
+
+            //Proceso la respuesta
+            post.ProcesarRespuesta(response);
+
+            MostrarEsquema(post.MessageResponse);
+        }
+
+        private void MostrarSolicitudEsquema(Message messageRequest)
+        {
+            infoview.Buffer.Text += infoview.Buffer.Text +
+                "Status: " + messageRequest.MessageType +" " + Constants.SOLICITUD_ESQUEMA + "\n" +
+                Constants.USUARIO_SOLICITADO + messageRequest.Destination + "\n";
+        }
+
+        private void MostrarEsquema(Message messageResponse)
+        {
+            infoview.Buffer.Text = "\n" +
+                "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA+ "\n" + 
+                Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n";
+        }
+
+        protected void OnRealizarConsultaActionActivated(object sender, EventArgs e)
+        {
+            
         }
     }
-} 
+}

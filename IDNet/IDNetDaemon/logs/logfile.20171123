@@ -1,6 +1,0 @@
-﻿2017-11-23 22:42:18,600 INFO  IDNetDaemon.ServiceDaemon - Service starting
-2017-11-23 22:42:19,013 INFO  ConnectionLibrary.Server - Waiting for a connection...
-2017-11-23 22:42:51,348 INFO  ConnectionLibrary.Server - Waiting for a connection...
-2017-11-23 22:42:51,383 INFO  ConnectionLibrary.Server - Read 164 bytes from socket. 
- Data :<root><source>Pepe</source><destination>Lorenzo</destination><message_type>002</message_type><db_name>usuarios</db_name><db_type>mysql</db_type><body></body></root>
-2017-11-23 22:42:52,003 INFO  ConnectionLibrary.Server - Sent 477 bytes to client.

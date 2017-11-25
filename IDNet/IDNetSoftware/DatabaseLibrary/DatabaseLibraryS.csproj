@@ -31,9 +31,9 @@
     <Compile Include="Neighbours.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibraryS.csproj">
       <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
-      <Name>ConstantsLibrary</Name>
+      <Name>ConstantsLibraryS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

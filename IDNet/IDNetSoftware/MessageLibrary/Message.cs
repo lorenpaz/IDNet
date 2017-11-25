@@ -3,7 +3,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MessageLibrary
+namespace MessageLibraryS
 {
 	public class Message
 	{
@@ -82,6 +82,21 @@ namespace MessageLibrary
 			}
 		}
 
+        public Message()
+        {
+            
+        }
+
+        public Message(string source, string destination,string messageType,string db_name,
+                       string db_type, string body)
+        {
+            this._source = source;
+            this._destination = destination;
+            this._body = body;
+            this._messageType = messageType;
+            this._db_name = db_name;
+            this._db_type = db_type;
+        }
 
 		/**
          * Método para parsear un mensaje recibido como un XmlDocument

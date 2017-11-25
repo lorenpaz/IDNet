@@ -65,6 +65,10 @@
       <Project>{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}</Project>
       <Name>ConvertionLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
+      <Project>{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}</Project>
+      <Name>ConstantsLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

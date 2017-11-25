@@ -1,5 +1,5 @@
 ﻿using System;
-using DatabaseLibrary;
+using DatabaseLibraryS;
 using System.Collections.Generic;
 using Gtk;
 
@@ -9,7 +9,6 @@ namespace IDNetSoftware
     {
 		//Atributo de las bases de datos propias
 		Databases _databases;
-        TreePath _path;
         List<string> _bbdd;
 
         public ModifyDatabaseDialog(Databases databases,List<string> bbdd)

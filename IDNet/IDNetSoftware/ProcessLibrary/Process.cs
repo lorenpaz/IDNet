@@ -1,20 +1,21 @@
-﻿using System;
-using DatabaseLibrary;
-using MessageLibrary;
+﻿﻿using System;
+using DatabaseLibraryS;
+using MessageLibraryS;
 using System.Xml;
 
-namespace ProcessLibrary
-{/*
+namespace ProcessLibraryS
+{
+
     public class Process
     {
-	private Database _db;
+        private Databases _dbs;
 
         public Process()
         {
-            _db = new Database();            
+            _dbs = new Databases();            
         }
 
-        public XmlDocument ejecutar(Message m)
+      /*  public XmlDocument ejecutar(Message m)
         {
             XmlDocument xmlDoc = null;
             switch(m.MessageType)
@@ -23,13 +24,13 @@ namespace ProcessLibrary
                     
                     break;
                 case("005"):
-                    xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
+                    xmlDoc = this._dbs.EstructureRequest(m.Db_type, m.Db_name);
                     break;
                 case("006"):
-                    xmlDoc = this._db.SelectRequest(m.Db_type,m.Db_name,m.Body);
+                    xmlDoc = this._dbs.SelectRequest(m.Db_type,m.Db_name,m.Body);
                     break;
             }
             return xmlDoc;
-        }
-   }*/
+        }*/
+   }
 }

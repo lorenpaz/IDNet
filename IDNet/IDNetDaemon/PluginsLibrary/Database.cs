@@ -4,14 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using ConvertionLibrary;
+using ConstantsLibrary;
 
 namespace PluginsLibrary
 {
-    //Clase constante con el archivo de configuración de las bases de datos
-	static class Constants
-	{
-		public const string ConfigFile = @"databases.conf";
-	}
 
     //Clase base de datos
     public class Database
@@ -40,7 +36,7 @@ namespace PluginsLibrary
 		private void ParseConf()
 		{
             //Archivo a leer
-            StreamReader conFile = File.OpenText(Constants.ConfigFile);
+            StreamReader conFile = File.OpenText(Constants.CONF_DATABASES);
             string line = conFile.ReadLine();
             this._databases = new Dictionary<string, List<string>>();
 

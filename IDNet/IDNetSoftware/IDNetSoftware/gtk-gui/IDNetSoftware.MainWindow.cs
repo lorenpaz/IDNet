@@ -24,14 +24,6 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action addAction;
 
-		private global::Gtk.Action playPngAction;
-
-		private global::Gtk.Action ConexinAction;
-
-		private global::Gtk.Action SolicitarEsquemaAction;
-
-		private global::Gtk.Action RealizarConsultaAction;
-
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -98,17 +90,6 @@ namespace IDNetSoftware
 			this.addAction = new global::Gtk.Action("addAction", global::Mono.Unix.Catalog.GetString("Añadir"), null, "gtk-add");
 			this.addAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Añadir");
 			w1.Add(this.addAction, null);
-			this.playPngAction = new global::Gtk.Action("playPngAction", null, null, "play.png");
-			w1.Add(this.playPngAction, null);
-			this.ConexinAction = new global::Gtk.Action("ConexinAction", global::Mono.Unix.Catalog.GetString("Conexión"), null, null);
-			this.ConexinAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Conexión");
-			w1.Add(this.ConexinAction, null);
-			this.SolicitarEsquemaAction = new global::Gtk.Action("SolicitarEsquemaAction", global::Mono.Unix.Catalog.GetString("Solicitar esquema"), null, null);
-			this.SolicitarEsquemaAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Solicitar esquema");
-			w1.Add(this.SolicitarEsquemaAction, null);
-			this.RealizarConsultaAction = new global::Gtk.Action("RealizarConsultaAction", global::Mono.Unix.Catalog.GetString("Realizar consulta"), null, null);
-			this.RealizarConsultaAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Realizar consulta");
-			w1.Add(this.RealizarConsultaAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 700;
@@ -122,7 +103,7 @@ namespace IDNetSoftware
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar2'><menu name='ArchivoAction' action='ArchivoAction'><menuitem name='salirAction' action='salirAction'/></menu><menu name='EdicinAction' action='EdicinAction'/><menu name='BasesDeDatosAction' action='BasesDeDatosAction'><menuitem name='addAction' action='addAction'/></menu><menu name='OVAction' action='OVAction'/><menu name='AyudaAction' action='AyudaAction'/><menu name='ConexinAction' action='ConexinAction'><menuitem name='SolicitarEsquemaAction' action='SolicitarEsquemaAction'/><menuitem name='RealizarConsultaAction' action='RealizarConsultaAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar2'><menu name='ArchivoAction' action='ArchivoAction'><menuitem name='salirAction' action='salirAction'/></menu><menu name='EdicinAction' action='EdicinAction'/><menu name='BasesDeDatosAction' action='BasesDeDatosAction'><menuitem name='addAction' action='addAction'/></menu><menu name='OVAction' action='OVAction'/><menu name='AyudaAction' action='AyudaAction'/></menubar></ui>");
 			this.menubar2 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget("/menubar2")));
 			this.menubar2.Name = "menubar2";
 			this.vbox1.Add(this.menubar2);
@@ -132,8 +113,7 @@ namespace IDNetSoftware
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar1\'><toolitem name=\'addDatabasePngAction\' action=\'addDat" +
-					"abasePngAction\'/><toolitem name=\'playPngAction\' action=\'playPngAction\'/></toolba" +
-					"r></ui>");
+					"abasePngAction\'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -260,9 +240,8 @@ namespace IDNetSoftware
 			this.salirAction.Activated += new global::System.EventHandler(this.OnSalirActionActivated);
 			this.addDatabasePngAction.Activated += new global::System.EventHandler(this.OnAddDatabasePngActionActivated);
 			this.addAction.Activated += new global::System.EventHandler(this.OnAddActionActivated);
-			this.SolicitarEsquemaAction.Activated += new global::System.EventHandler(this.OnSolicitarEsquemaActionActivated);
-			this.RealizarConsultaAction.Activated += new global::System.EventHandler(this.OnRealizarConsultaActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
+			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 		}
 	}
 }

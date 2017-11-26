@@ -69,6 +69,10 @@
     <Compile Include="gtk-gui\IDNetSoftware.MainWindow.cs" />
     <Compile Include="ModifyDatabaseDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.ModifyDatabaseDialog.cs" />
+    <Compile Include="ErrorServersDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ErrorServersDialog.cs" />
+    <Compile Include="ConnectionDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ConnectionDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

@@ -29,5 +29,11 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MessageLibrary\MessageLibraryS.csproj">
+      <Project>{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}</Project>
+      <Name>MessageLibraryS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

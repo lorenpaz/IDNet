@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
 using ConstantsLibraryS;
+
+using MongoDB.Bson;
+using MongoDB.Driver;
+using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace DatabaseLibraryS
 {
@@ -29,6 +35,9 @@ namespace DatabaseLibraryS
 			}
 		}
 
+        /*
+         * Método para actualizar las bases de datos
+         * */
         public void update()
         {
             this._databasesPropias.Clear();
@@ -96,6 +105,9 @@ namespace DatabaseLibraryS
             }
 		}
 
+        /*
+         * Método para añadir una base de datos
+         * */
         public bool addDatabase(string tipoBBDD,string nombreBBDD)
         {
             if(this._databasesPropias.ContainsKey(tipoBBDD) &&
@@ -128,6 +140,9 @@ namespace DatabaseLibraryS
             }
         }
 
+        /*
+         * Método para modificar la base de datos
+         * */
         public bool ModifyDatabase(List<string> bbdd,string nuevoTipoBBDD, string nuevoNombreBBDD)
         {
 			if (!this._databasesPropias.ContainsKey(bbdd[0]) ||
@@ -182,5 +197,73 @@ namespace DatabaseLibraryS
 
             return true;
         }
+
+
+		/*
+         * Método para comprobar que está el servidor MYSQL activo
+         * */
+		public bool ComprobacionMysql()
+        {
+            bool check = false;
+
+			//Control de errores
+			if (!this._databasesPropias.ContainsKey("mysql"))
+			{
+				return false;
+			}
+
+			//Primera base de datos con mysql
+			string db_name = this._databasesPropias["mysql"][0];
+
+            string connection = "Server=localhost;Database=" + db_name + ";User ID=root;Password=1907;Pooling=false;";
+            try
+            {
+                MySqlConnection dbcon = new MySqlConnection(connection);
+                dbcon.Open();
+
+                check = true;
+
+			} catch (MySqlException ex)
+			{
+				check = false;
+				switch (ex.Number)
+				{
+					//http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
+					case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
+                        throw new Exception(Constants.UNABLE_CONNECT_MYSQL_HOSTS);
+					case 0: // Access denied (Check DB name,username,password)
+                        throw new Exception(Constants.ACCESS_DENIED_MYSQL);
+					default:
+						break;
+				}
+			}
+
+            return check;
+        }
+
+        /*
+         * Método para comprobar que está el servidor MongoDB activo
+         * */
+        public bool ComprobacionMongodb()
+        {
+			string connectionString = "mongodb://localhost";
+
+            //Control de errores
+            if(!this._databasesPropias.ContainsKey("mongodb"))
+            {
+                return false;
+            }
+
+            //Primera base de datos con mongodb
+            string db_name = this._databasesPropias["mongodb"][0];
+
+            //Comprobamos si está activo
+            var client = new MongoClient(connectionString);
+            var server = client.GetDatabase(db_name);
+			bool mongodbAlive = server.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000);
+
+            return mongodbAlive;
+        }
+
     }
 }

@@ -34,13 +34,30 @@ namespace PluginsLibrary
 		//Solicitud de la estructura de la BBDD
         public  XmlDocument EstructureRequest()
         {
-            XmlDocument document = new XmlDocument();
-
-            MySqlConnection dbcon = new MySqlConnection(this._connectionString);
-            dbcon.Open();
-           // DataTable schemas = dbcon.GetSchema("Tables");
-            var a = dbcon.GetSchema("Columns");
-            document = CreateXMLSchema(dbcon);
+            XmlDocument document = null;
+            try
+            {
+                MySqlConnection dbcon = new MySqlConnection(this._connectionString);
+                dbcon.Open();
+                // DataTable schemas = dbcon.GetSchema("Tables");
+                var a = dbcon.GetSchema("Columns");
+                document = CreateXMLSchema(dbcon);
+           
+            }catch(MySqlException ex)
+            {
+				switch (ex.Number)
+				{
+					//http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
+					case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
+						break;
+					
+                    case 0: // Access denied (Check DB name,username,password)
+						throw new Exception("Access Denied: Check DB name, username, password");
+					
+                    default:
+						break;
+				}
+            }
             return document;
         }
 

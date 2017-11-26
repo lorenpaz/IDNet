@@ -2,8 +2,6 @@
 using Gtk;
 
 using DatabaseLibraryS;
-using ConnectionLibraryS;
-using PostBoxLibraryS;
 using MessageLibraryS;
 using ConstantsLibraryS;
 
@@ -31,6 +29,12 @@ namespace IDNetSoftware
         //Dialogo de modificar BBDD
         ModifyDatabaseDialog _modifyDatabaseDialog;
 
+        //Dialogo de error en algun servidor
+        ErrorServersDialog _errorServerDialog;
+
+        //Dialogo de conexion
+        ConnectionDialog _connectionDialog;
+
         public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
@@ -44,6 +48,8 @@ namespace IDNetSoftware
             cargoBasesDeDatosDeLaOV();
 
             cargoBasesDeDatosPropias();
+
+            comprobacionServidoresBaseDeDatos();
         }
 
         private void cargoBasesDeDatosDeLaOV()
@@ -60,7 +66,6 @@ namespace IDNetSoftware
             treeviewDatabases.AppendColumn("Usuario", new CellRendererText(), "text", 0);
             treeviewDatabases.AppendColumn("Tipo BBDD", new CellRendererText(), "text", 1);
             treeviewDatabases.AppendColumn("Nombre BBDD", new CellRendererText(), "text", 2);
-            treeviewDatabases.AppendColumn("Conexión", new CellRendererSpin(), "activatable", 3);
         }
 
         private void cargoBasesDeDatosPropias()
@@ -75,6 +80,43 @@ namespace IDNetSoftware
             //Añado las columnas
             treeviewDatabasesPropias.AppendColumn("Nombre BBDD", new CellRendererText(), "text", 0);
             treeviewDatabasesPropias.AppendColumn("Tipo BBDD", new CellRendererText(), "text", 1);
+        }
+
+        private void comprobacionServidoresBaseDeDatos()
+        {
+            bool ok = false;
+            string messageError = "";
+            Dictionary<string, string> errors = new Dictionary<string, string>();
+
+            foreach(KeyValuePair<string, List<string>> entry in this._databases.DatabasesPropias)
+            {
+                switch(entry.Key){
+
+                    case "mysql":
+                        try
+                        {
+                            ok = this._databases.ComprobacionMysql();
+                        } catch(Exception e)
+                        {
+                            messageError = e.Message;
+                            errors.Add("mysql",messageError);
+                        }
+
+                        break;
+                    case "mongodb":
+                        ok = this._databases.ComprobacionMongodb();
+                        if(!ok)
+                        {
+                            errors.Add("mongodb", Constants.UNABLE_CONNECT_MONGODB);
+                        }
+                        break;
+                }
+            }
+            if (!ok && errors.Count != 0)
+			{
+                this._errorServerDialog = new ErrorServersDialog(this._databases,errors);
+                this._errorServerDialog.Run();
+            }
         }
 
         protected void OnDeleteEvent(object sender, DeleteEventArgs a)
@@ -92,6 +134,9 @@ namespace IDNetSoftware
             updateOwnDatabases();
         }
 
+        /*
+         * Método privado para la actualización de las bases de datos propias
+         * */
         private void updateOwnDatabases()
         {
             this._databases.update();
@@ -121,14 +166,11 @@ namespace IDNetSoftware
                 {
                     foreach (string bbdd in entryTwo.Value)
                     {
-                        this._infoBBDDView.AppendValues(entry.Key, bbdd, entryTwo.Key, "No");
+                        this._infoBBDDView.AppendValues(entry.Key,entryTwo.Key, bbdd);
                     }
                 }
 
             }
-            //Ejemplo dar valores
-            //this._infoBBDDView.AppendValues("empleados", "mysql", "Lorenzo", "No");
-            //this._infoBBDDView.AppendValues("compañia", "mongodb", "Juan", "Si");
         }
 
         //Añadir info de las bases de datos PROPIAS
@@ -151,6 +193,9 @@ namespace IDNetSoftware
             Application.Quit();
         }
 
+        /*
+         * Evento cuando cliqueas en una base de datos propias
+         * */
         protected void OnTreeviewDatabasesPropiasRowActivated(object o, RowActivatedArgs args)
         {
             TreeIter t;
@@ -168,43 +213,37 @@ namespace IDNetSoftware
             updateOwnDatabases();
         }
 
-        protected void OnSolicitarEsquemaActionActivated(object sender, EventArgs e)
-        {
-            string msg, response;
-
-            //Proceso el envio
-            PostBox post = new PostBox("Lorenzo","Juan","002","usuarios","mysql","");
-            msg = post.ProcesarEnvio();
-
-            MostrarSolicitudEsquema(post.MessageRequest);
-
-            //Creo el cliente y le envio el mensaje
-            Client c = new Client();
-            response = c.StartClient(msg,"localhost");
-
-            //Proceso la respuesta
-            post.ProcesarRespuesta(response);
-
-            MostrarEsquema(post.MessageResponse);
-        }
-
+        /*
+         * Método privado para mostrar la solicitud de esquema de BBDD
+         * */
         private void MostrarSolicitudEsquema(Message messageRequest)
         {
-            infoview.Buffer.Text += infoview.Buffer.Text +
-                "Status: " + messageRequest.MessageType +" " + Constants.SOLICITUD_ESQUEMA + "\n" +
-                Constants.USUARIO_SOLICITADO + messageRequest.Destination + "\n";
+            infoview.Buffer.Text += "\n"+ Constants.SolicitudEsquema(messageRequest);
         }
 
-        private void MostrarEsquema(Message messageResponse)
+		/*
+         * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
+         * */
+		private void MostrarEsquema(Message messageResponse)
         {
-            infoview.Buffer.Text = "\n" +
-                "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA+ "\n" + 
-                Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n";
+            infoview.Buffer.Text = "\n" + Constants.RespuestaEsquema(messageResponse);
         }
 
-        protected void OnRealizarConsultaActionActivated(object sender, EventArgs e)
+        protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
         {
-            
-        }
+			TreeIter t;
+			TreePath p = args.Path;
+			this._infoBBDDView.GetIter(out t, p);
+
+            string usuario = (string)this._infoBBDDView.GetValue(t, 0);
+			string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
+            string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
+
+            this._connectionDialog = new ConnectionDialog(usuario,tipoBBDD,nombreBBDD);
+            this._connectionDialog.Run();
+
+            MostrarSolicitudEsquema(this._connectionDialog.MessageRequest);
+            MostrarEsquema(this._connectionDialog.MessageResponse);
+		}
     }
 }

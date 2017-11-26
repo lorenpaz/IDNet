@@ -131,9 +131,7 @@ namespace ConnectionLibrary
                 //Send(handler, dataXml);
 
                 PostBox post = new PostBox();
-                log.Info("Voy a procesar");
                 string respuesta = post.procesar(content);
-                log.Info("salgo");
                 Send(handler,respuesta);
 			}
 		}

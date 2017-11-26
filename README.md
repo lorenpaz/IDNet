@@ -34,10 +34,11 @@ Es una prueba que envia un mensaje de tipo 002 con origen,destino,tipoBBDD,nombr
 Funciona! Lo probé con mysql (debe de estar corriendo el demonio, y la contraseña de la BBDD debes de ponerla en el código como la mía está ahora, en PluginMysql)
 
 Corres el demonio, lanzas el cliente y verás en el log que aparece la respuesta!
-
 -----------------------------------------------------------------
 IDNETSOFTWARE
 - Funciona añadir una base de datos. Con el icono que hay en la barra  o en el menú bar Bases de datos-Añadir.
 - FUnciona modificar la base de datos
+- Checkea que los servidores MongoDB y Mysql están encendidos
+- AÑadido diálogo de error en los servidores y diálogo de conexión en las bases de datos de los neighbours
 
 

@@ -5,6 +5,8 @@ using System.Text;
 
 namespace MessageLibraryS
 {
+
+
 	public class Message
 	{
 		private string _destination;

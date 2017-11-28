@@ -226,7 +226,7 @@ namespace IDNetSoftware
          * */
 		private void MostrarEsquema(Message messageResponse)
         {
-            infoview.Buffer.Text = "\n" + Constants.RespuestaEsquema(messageResponse);
+            infoview.Buffer.Text += "\n" + Constants.RespuestaEsquema(messageResponse);
         }
 
         protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)

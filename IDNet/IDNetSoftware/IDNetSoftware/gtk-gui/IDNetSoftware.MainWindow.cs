@@ -24,6 +24,8 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action addAction;
 
+		private global::Gtk.Action Action;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -90,14 +92,18 @@ namespace IDNetSoftware
 			this.addAction = new global::Gtk.Action("addAction", global::Mono.Unix.Catalog.GetString("Añadir"), null, "gtk-add");
 			this.addAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Añadir");
 			w1.Add(this.addAction, null);
+			this.Action = new global::Gtk.Action("Action", null, null, null);
+			w1.Add(this.Action, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
-			this.WidthRequest = 700;
+			this.WidthRequest = 600;
 			this.HeightRequest = 500;
 			this.Name = "IDNetSoftware.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Resizable = false;
+			this.DefaultWidth = 600;
+			this.DefaultHeight = 600;
 			// Container child IDNetSoftware.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";
@@ -113,7 +119,7 @@ namespace IDNetSoftware
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar1\'><toolitem name=\'addDatabasePngAction\' action=\'addDat" +
-					"abasePngAction\'/></toolbar></ui>");
+					"abasePngAction\'/><toolitem name=\'Action\' action=\'Action\'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -128,6 +134,8 @@ namespace IDNetSoftware
 			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
 			this.infoview = new global::Gtk.TextView();
+			this.infoview.WidthRequest = 200;
+			this.infoview.HeightRequest = 0;
 			this.infoview.Name = "infoview";
 			this.infoview.Editable = false;
 			this.infoview.CursorVisible = false;
@@ -233,8 +241,6 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 733;
-			this.DefaultHeight = 500;
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.salirAction.Activated += new global::System.EventHandler(this.OnSalirActionActivated);

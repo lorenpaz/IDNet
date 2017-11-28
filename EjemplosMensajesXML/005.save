@@ -1,0 +1,24 @@
+<root>
+	<source>Juan</source>
+	<destination>Lorenzo</destination>
+	<message_type>005</message_type>
+	<db_name>usuarios</db_name>
+	<db_type>mysql</db_type>
+	<body>
+	<database>
+		<name>usuarios</name>
+		<table>
+			<name>Empleados</name>
+			<cols>
+				<col>
+					<name>id</name>
+				</col>
+				<col>
+					<name>nombre</name>
+				<col>
+
+			<cols>
+		</table>
+	</database>
+	</body>
+</root>

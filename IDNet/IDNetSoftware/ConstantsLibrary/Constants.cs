@@ -35,7 +35,7 @@ namespace ConstantsLibraryS
                 Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
                 "+----------------------+" + "\n"+
                 "|                                |" + "\n"+
-                                               "|                                |"+ messageResponse.Body;
+                "|                                |"+ messageResponse.Body;
 		}
     }
 }

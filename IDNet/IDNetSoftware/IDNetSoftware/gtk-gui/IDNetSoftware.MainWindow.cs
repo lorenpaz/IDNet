@@ -24,8 +24,6 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action addAction;
 
-		private global::Gtk.Action Action;
-
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -92,8 +90,6 @@ namespace IDNetSoftware
 			this.addAction = new global::Gtk.Action("addAction", global::Mono.Unix.Catalog.GetString("Añadir"), null, "gtk-add");
 			this.addAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Añadir");
 			w1.Add(this.addAction, null);
-			this.Action = new global::Gtk.Action("Action", null, null, null);
-			w1.Add(this.Action, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 600;
@@ -119,7 +115,7 @@ namespace IDNetSoftware
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar1\'><toolitem name=\'addDatabasePngAction\' action=\'addDat" +
-					"abasePngAction\'/><toolitem name=\'Action\' action=\'Action\'/></toolbar></ui>");
+					"abasePngAction\'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;

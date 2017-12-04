@@ -37,10 +37,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CriptoLibrary\CriptoLibrary.csproj">
-      <Project>{91B231D1-1594-4FBE-BA58-01295B2954C0}</Project>
-      <Name>CriptoLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MessageLibrary\MessageLibrary.csproj">
       <Project>{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}</Project>
       <Name>MessageLibrary</Name>
@@ -52,6 +48,10 @@
     <ProjectReference Include="..\ConvertionLibrary\ConvertionLibrary.csproj">
       <Project>{7B09FA70-9FC1-4C95-92E5-1536A7BD496D}</Project>
       <Name>ConvertionLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CriptoLibrary\CriptoLibrary.csproj">
+      <Project>{91B231D1-1594-4FBE-BA58-01295B2954C0}</Project>
+      <Name>CriptoLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

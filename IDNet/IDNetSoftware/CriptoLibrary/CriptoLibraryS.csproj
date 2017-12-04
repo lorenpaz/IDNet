@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{91B231D1-1594-4FBE-BA58-01295B2954C0}</ProjectGuid>
+    <ProjectGuid>{5CB08C2F-ED6E-4A24-9C37-19179FCDC7E5}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CriptoLibrary</RootNamespace>
-    <AssemblyName>CriptoLibrary</AssemblyName>
+    <RootNamespace>CriptoLibraryS</RootNamespace>
+    <AssemblyName>CriptoLibraryS</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -27,16 +27,16 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Cripto.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cripto.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
-      <Project>{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}</Project>
-      <Name>ConstantsLibrary</Name>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibraryS.csproj">
+      <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
+      <Name>ConstantsLibraryS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

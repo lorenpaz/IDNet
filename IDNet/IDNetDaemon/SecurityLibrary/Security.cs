@@ -6,6 +6,7 @@ namespace SecurityLibrary
 {
 	public class Security
 	{
+
 		public Security()
 		{
 		}
@@ -37,6 +38,7 @@ namespace SecurityLibrary
 			}
 				return encontrado;
 		}
+
 
 	}
 }

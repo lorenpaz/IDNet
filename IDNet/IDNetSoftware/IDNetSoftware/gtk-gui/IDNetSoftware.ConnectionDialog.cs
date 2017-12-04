@@ -91,6 +91,7 @@ namespace IDNetSoftware
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 168;
 			this.Show();
+			this.buttonConexion.Clicked += new global::System.EventHandler(this.OnButtonConexionClicked);
 			this.buttonEsquema.Clicked += new global::System.EventHandler(this.OnButtonEsquemaClicked);
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 		}

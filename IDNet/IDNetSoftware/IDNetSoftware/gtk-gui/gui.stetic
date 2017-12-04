@@ -65,10 +65,6 @@
         <property name="StockId">gtk-add</property>
         <signal name="Activated" handler="OnAddActionActivated" />
       </action>
-      <action id="Action">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes" />
-      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">600</property>
@@ -111,7 +107,6 @@
             <property name="ShowArrow">False</property>
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="addDatabasePngAction" />
-              <node type="Toolitem" action="Action" />
             </node>
           </widget>
           <packing>
@@ -687,6 +682,7 @@ mongodb</property>
                 <property name="Type">TextOnly</property>
                 <property name="Label" translatable="yes">Establecer conexión</property>
                 <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnButtonConexionClicked" />
               </widget>
               <packing>
                 <property name="Position">0</property>

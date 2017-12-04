@@ -31,24 +31,37 @@ namespace PostBoxLibrary
         }
 
         public string procesar(string document)
-		{
+        {
             //Convertimos el string a xml
             XmlDocument xmlDoc = Convertion.stringToXml(document);
 
-            //Clave para desencriptar
-            //RijndaelManaged key = new RijndaelManaged();
+            //Recogemos la información de inicio
+            SymmetricAlgorithm simKey;
+			Cripto cript = new Cripto();
+            this._messageRecieve.parserStartRecievedMessage(xmlDoc);
 
-            //Desencriptamos el mensaje
-            //Security.Decrypt(xmlDoc, key);
+            if (this._messageRecieve.MessageType == "001")
+            {
+                //Aquí iria una funcion para quitar el cifrado asimetrico
+                cript.CheckKey(this._messageRecieve.Source, this._messageRecieve.Key);
+			}
+            else
+            {
+                simKey = cript.CheckKey(this._messageRecieve.Source);
 
-            //Parseamos el mensaje
-            this._messageRecieve.parserMessageRecieve(xmlDoc);
+                //Desencriptamos
+                Cripto.Decrypt(xmlDoc, simKey);
+				
+                //Parseamos el mensaje
+				this._messageRecieve.parserMessageRecieve(xmlDoc);
+            }
 
             //Ejecutamos el proceso
-
             XmlDocument xmlDocResponse = this._process.ejecutar(this._messageRecieve);
+
             //Creamos la respuesta
             String respuesta = responder(xmlDocResponse);
+
             return respuesta;
 		}
         private string responder(XmlDocument doc)

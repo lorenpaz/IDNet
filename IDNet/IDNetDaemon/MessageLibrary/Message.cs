@@ -1,5 +1,5 @@
 using System.Xml;
-
+using System.Security.Cryptography;
 
 namespace MessageLibrary 
 {
@@ -8,7 +8,7 @@ namespace MessageLibrary
 		private string _destination;
 		private string _source;
 		private string _messageType;
-		private string _file_path;
+        private SymmetricAlgorithm _key;
 		private string _db_name;
         private string _db_type;
         private string _body;
@@ -79,6 +79,26 @@ namespace MessageLibrary
 				this._body = value;
 			}
 		}
+		public SymmetricAlgorithm Key
+        {
+            get
+            {
+                return this._key;
+            }
+            set
+            {
+                this._key = value;
+            }
+        }
+
+
+        public void parserStartRecievedMessage(XmlDocument doc)
+        {
+			this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
+			this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;
+            if(this._messageType == "001")
+                this._key = SymmetricAlgorithm.Create(doc.DocumentElement.GetElementsByTagName("key")[0].InnerText);
+        }
 
 
         /**
@@ -87,16 +107,13 @@ namespace MessageLibrary
         public void parserMessageRecieve(XmlDocument doc)
         {
             //Cogemos el destinatario del mensaje
-            this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;
+            //this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;
 
             //Cogemos el origen del mensaje
             this._source = doc.DocumentElement.GetElementsByTagName("source")[0].InnerText;
 
-            //Cogemos el path donde guardamos temporalmente el xml
-            //this._file_path = Constants.TEMPORAL_FILE_PATH + doc.DocumentElement.GetElementsByTagName("seq_id")[0].InnerText;
-
             //Cogemos el código del mensaje
-            this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
+            //this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
 
 			//Si existe, guardamos el tipo de la base de datos
 			if (doc.DocumentElement.GetElementsByTagName("db_type").Count > 0)
@@ -119,7 +136,12 @@ namespace MessageLibrary
             //Creamos elemento root
 			XmlElement elementRoot = xmlDoc.CreateElement("root");
             xmlDoc.AppendChild(elementRoot);
-			
+
+			//Creamos el elemento tipoDeMensaje
+			XmlNode message_type = xmlDoc.CreateElement("message_type");
+			message_type.InnerText = this._messageType;
+			elementRoot.AppendChild(message_type);
+
             //Creamos elemento origen
             XmlNode source = xmlDoc.CreateElement("source");
             source.InnerText = this._source;
@@ -130,25 +152,24 @@ namespace MessageLibrary
 			destination.InnerText = this._destination;
 			elementRoot.AppendChild(destination);
 
-            //Creamos el elemento tipoDeMensaje
-			XmlNode message_type = xmlDoc.CreateElement("message_type");
-            message_type.InnerText = this._messageType;
-            elementRoot.AppendChild(message_type);
+            //Creamos el elemento encripted
+            XmlNode encripted = xmlDoc.CreateElement("encripted");
+            elementRoot.AppendChild(encripted);
 
             //Creamos el elemento nombreBBDD
 			XmlNode db_name = xmlDoc.CreateElement("db_name");
             db_name.InnerText = this._db_name;
-            elementRoot.AppendChild(db_name);
+            encripted.AppendChild(db_name);
 
             //Creamos el elemento tipoDeBBDD
 			XmlNode db_type = xmlDoc.CreateElement("db_type");
             db_type.InnerText = this._db_type;
-            elementRoot.AppendChild(db_type);
+            encripted.AppendChild(db_type);
 
             //Creamos el elemento Cuerpo
 			XmlNode body = xmlDoc.CreateElement("body");
             body.InnerText = this._body;
-            elementRoot.AppendChild(body);
+            encripted.AppendChild(body);
 
 			return xmlDoc;
         }

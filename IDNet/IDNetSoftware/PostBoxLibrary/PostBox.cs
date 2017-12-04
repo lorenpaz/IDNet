@@ -42,6 +42,13 @@ namespace PostBoxLibraryS
 			this._messageResponse = new Message();
 		}
 
+        //Constructor para conexión
+		public PostBox(string source, string destination, string tipoMensaje)
+		{
+			this._process = new Process();
+			this._messageRequest = new Message(source, destination, tipoMensaje);
+			this._messageResponse = new Message();
+		}
 
 		/*
         * Realizamos el envio
@@ -49,6 +56,16 @@ namespace PostBoxLibraryS
 		public string ProcesarEnvio()
 		{
 			XmlDocument doc = this._messageRequest.createMessage();
+			return doc.InnerXml;
+		}
+
+		/*
+        * Realizamos el envio de Conexión
+        */
+		public string ProcesarEnvioConexion()
+		{
+            //Aqui falta llamar a la funcion de generar clave
+			XmlDocument doc = this._messageRequest.createMessageConnection();
 			return doc.InnerXml;
 		}
 

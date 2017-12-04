@@ -2,6 +2,7 @@
 using System.Xml;
 using System.Collections.Generic;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace MessageLibraryS
 {
@@ -12,7 +13,7 @@ namespace MessageLibraryS
 		private string _destination;
 		private string _source;
 		private string _messageType;
-		private string _file_path;
+        private SymmetricAlgorithm _key;
 		private string _db_name;
 		private string _db_type;
 		private string _body;
@@ -84,6 +85,19 @@ namespace MessageLibraryS
 			}
 		}
 
+        public SymmetricAlgorithm Key
+		{
+			get
+			{
+                return this._key;
+			}
+			set
+			{
+                this._key = value;
+			}
+		}
+
+
         public Message()
         {
             
@@ -99,6 +113,13 @@ namespace MessageLibraryS
             this._db_name = db_name;
             this._db_type = db_type;
         }
+
+		public Message(string source, string destination, string messageType)
+		{
+			this._source = source;
+			this._destination = destination;
+			this._messageType = messageType;
+		}
 
 		/**
          * Método para parsear un mensaje recibido como un XmlDocument
@@ -127,6 +148,7 @@ namespace MessageLibraryS
 
 			this._body = doc.DocumentElement.GetElementsByTagName("body")[0].InnerXml;
 		}
+
 		/*
          * Método para al creación de un XmlDocument a partir del mensaje
          * */
@@ -139,6 +161,11 @@ namespace MessageLibraryS
 			XmlElement elementRoot = xmlDoc.CreateElement("root");
 			xmlDoc.AppendChild(elementRoot);
 
+			//Creamos el elemento tipoDeMensaje
+			XmlNode message_type = xmlDoc.CreateElement("message_type");
+			message_type.InnerText = this._messageType;
+			elementRoot.AppendChild(message_type);
+
 			//Creamos elemento origen
 			XmlNode source = xmlDoc.CreateElement("source");
 			source.InnerText = this._source;
@@ -149,25 +176,60 @@ namespace MessageLibraryS
 			destination.InnerText = this._destination;
 			elementRoot.AppendChild(destination);
 
+			//Creamos el elemento encripted
+			XmlNode encripted = xmlDoc.CreateElement("encripted");
+			elementRoot.AppendChild(encripted);
+
+			//Creamos el elemento nombreBBDD
+			XmlNode db_name = xmlDoc.CreateElement("db_name");
+			db_name.InnerText = this._db_name;
+			encripted.AppendChild(db_name);
+
+			//Creamos el elemento tipoDeBBDD
+			XmlNode db_type = xmlDoc.CreateElement("db_type");
+			db_type.InnerText = this._db_type;
+			encripted.AppendChild(db_type);
+
+			//Creamos el elemento Cuerpo
+			XmlNode body = xmlDoc.CreateElement("body");
+			body.InnerText = this._body;
+			encripted.AppendChild(body);
+
+			return xmlDoc;
+		}
+
+		/*
+         * Método para al creación de un XmlDocument a partir del mensaje
+         * */
+		public XmlDocument createMessageConnection()
+		{
+			XmlDocument xmlDoc = new XmlDocument();
+			XmlElement root = xmlDoc.DocumentElement;
+
+			//Creamos elemento root
+			XmlElement elementRoot = xmlDoc.CreateElement("root");
+			xmlDoc.AppendChild(elementRoot);
+
 			//Creamos el elemento tipoDeMensaje
 			XmlNode message_type = xmlDoc.CreateElement("message_type");
 			message_type.InnerText = this._messageType;
 			elementRoot.AppendChild(message_type);
 
+			//Creamos elemento origen
+			XmlNode source = xmlDoc.CreateElement("source");
+			source.InnerText = this._source;
+			elementRoot.AppendChild(source);
+
+			//Creamos el elemento destino
+			XmlNode destination = xmlDoc.CreateElement("destination");
+			destination.InnerText = this._destination;
+			elementRoot.AppendChild(destination);
+
 			//Creamos el elemento nombreBBDD
-			XmlNode db_name = xmlDoc.CreateElement("db_name");
-			db_name.InnerText = this._db_name;
-			elementRoot.AppendChild(db_name);
+			XmlNode key = xmlDoc.CreateElement("key");
+            key.InnerText = Encoding.UTF8.GetString(this._key.Key);
+			elementRoot.AppendChild(key);
 
-			//Creamos el elemento tipoDeBBDD
-			XmlNode db_type = xmlDoc.CreateElement("db_type");
-			db_type.InnerText = this._db_type;
-			elementRoot.AppendChild(db_type);
-
-			//Creamos el elemento Cuerpo
-			XmlNode body = xmlDoc.CreateElement("body");
-			body.InnerText = this._body;
-			elementRoot.AppendChild(body);
 
 			return xmlDoc;
 		}

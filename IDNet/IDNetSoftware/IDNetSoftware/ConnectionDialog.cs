@@ -71,5 +71,25 @@ namespace IDNetSoftware
 			this._messageRequest = post.MessageRequest;
 			this._messageResponse = post.MessageResponse;
 		}
+
+        protected void OnButtonConexionClicked(object sender, EventArgs e)
+        {
+            string msg, response;
+
+			//Proceso el envio
+			PostBox post = new PostBox("Lorenzo", this._destination, "001");
+            msg = post.ProcesarEnvioConexion();
+
+			//Creo el cliente y le envio el mensaje
+			Client c = new Client();
+			response = c.StartClient(msg, "localhost");
+
+			//Proceso la respuesta
+			post.ProcesarRespuesta(response);
+
+			this._messageRequest = post.MessageRequest;
+			this._messageResponse = post.MessageResponse;
+            this.Destroy();
+        }
     }
 }

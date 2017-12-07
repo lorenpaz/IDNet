@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 using MessageLibraryS;
 using ConnectionLibraryS;
@@ -76,8 +77,10 @@ namespace IDNetSoftware
         {
             string msg, response;
 
-			//Proceso el envio
-			PostBox post = new PostBox("Lorenzo", this._destination, "001");
+            //Proceso el envio
+            SymmetricAlgorithm key = SymmetricAlgorithm.Create();
+
+			PostBox post = new PostBox("Lorenzo", this._destination, "001",key);
             msg = post.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje

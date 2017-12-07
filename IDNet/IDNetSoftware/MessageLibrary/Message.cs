@@ -114,11 +114,13 @@ namespace MessageLibraryS
             this._db_type = db_type;
         }
 
-		public Message(string source, string destination, string messageType)
+        //Constructor para mensaje de conexión
+        public Message(string source, string destination, string messageType, SymmetricAlgorithm key)
 		{
 			this._source = source;
 			this._destination = destination;
 			this._messageType = messageType;
+            this._key = key;
 		}
 
 		/**

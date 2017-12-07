@@ -4,6 +4,7 @@ using ProcessLibraryS;
 using ConvertionLibraryS;
 
 using System.Xml;
+using System.Security.Cryptography;
 
 namespace PostBoxLibraryS
 {
@@ -43,10 +44,10 @@ namespace PostBoxLibraryS
 		}
 
         //Constructor para conexión
-		public PostBox(string source, string destination, string tipoMensaje)
+        public PostBox(string source, string destination, string tipoMensaje, SymmetricAlgorithm key)
 		{
 			this._process = new Process();
-			this._messageRequest = new Message(source, destination, tipoMensaje);
+			this._messageRequest = new Message(source, destination, tipoMensaje,key);
 			this._messageResponse = new Message();
 		}
 

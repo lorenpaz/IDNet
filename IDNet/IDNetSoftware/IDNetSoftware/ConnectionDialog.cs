@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Xml;
 
 using MessageLibraryS;
 using ConnectionLibraryS;
@@ -9,25 +10,59 @@ namespace IDNetSoftware
 {
     public partial class ConnectionDialog : Gtk.Dialog
     {
-        private Message _messageRequest;
-        private Message _messageResponse;
+        private PipeMessage _connection;
+        private PipeMessage _schema;
+		private PipeMessage _select;
+
         private string _destination;
         private string _db_name;
         private string _db_type;
-        private string _body;
+        private XmlNode _body;
 
-		public Message MessageRequest
+        private string _typeOutPut;
+
+		public PipeMessage Connection
 		{
 			get
 			{
-				return this._messageRequest;
+                return this._connection;
+			}
+			set
+			{
+                this._connection = value;
 			}
 		}
-		public Message MessageResponse
+		public PipeMessage Schema
 		{
 			get
 			{
-				return this._messageResponse;
+                return this._schema;
+			}
+			set
+			{
+                this._schema = value;
+			}
+		}
+		public PipeMessage Select
+		{
+			get
+			{
+                return this._select;
+			}
+            set
+            {
+                this._select = value;
+            }
+		}
+		public String TypeOutPut
+		{
+			get
+			{
+                return this._typeOutPut;
+			}
+			set
+			{
+                this._typeOutPut = value;
 			}
 		}
 
@@ -38,14 +73,42 @@ namespace IDNetSoftware
             this._destination = destination;
             this._db_name = db_name;
             this._db_type = db_type;
-            this._body = "";
-
+            this._body = new XmlDocument();
+            this._typeOutPut = "Cancel";
         }
 
+		public ConnectionDialog(string destination, string db_type, string db_name,
+            PipeMessage pipeConexion, PipeMessage pipeSchema)
+		{
+			this.Build();
+
+			this._destination = destination;
+			this._db_name = db_name;
+			this._db_type = db_type;
+			this._body = new XmlDocument();
+			this._typeOutPut = "Cancel";
+
+			this._connection = pipeConexion;
+			this._schema = pipeSchema;
+		}
+		public ConnectionDialog(string destination, string db_type, string db_name,
+            PipeMessage pipeConexion)
+		{
+			this.Build();
+
+			this._destination = destination;
+			this._db_name = db_name;
+			this._db_type = db_type;
+			this._body = new XmlDocument();
+			this._typeOutPut = "Cancel";
+
+			this._connection = pipeConexion;
+		}
 
         protected void OnButtonEsquemaClicked(object sender, EventArgs e)
         {
             solicitarEsquema();
+            this._typeOutPut = "002";
             this.Destroy();
         }
 
@@ -59,7 +122,7 @@ namespace IDNetSoftware
 			string msg, response;
 
 			//Proceso el envio
-            PostBox post = new PostBox("Lorenzo",this._destination, "002",this._db_name,this._db_type,this._body);
+            PostBox post = new PostBox("Lorenzo Jose",this._destination, "002",this._db_name,this._db_type,this._body);
 			msg = post.ProcesarEnvio();
 
 			//Creo el cliente y le envio el mensaje
@@ -69,16 +132,17 @@ namespace IDNetSoftware
 			//Proceso la respuesta
 			post.ProcesarRespuesta(response);
 
-			this._messageRequest = post.MessageRequest;
-			this._messageResponse = post.MessageResponse;
+            this._schema = new PipeMessage(post.MessageRequest,post.MessageResponse);
 		}
 
         protected void OnButtonConexionClicked(object sender, EventArgs e)
         {
             string msg, response;
 
-            //Proceso el envio
-            SymmetricAlgorithm key = SymmetricAlgorithm.Create();
+			// Create a new Rijndael key.
+			RijndaelManaged key = new RijndaelManaged();
+            key.GenerateKey();
+            key.GenerateIV();
 
 			PostBox post = new PostBox("Lorenzo", this._destination, "001",key);
             msg = post.ProcesarEnvioConexion();
@@ -90,8 +154,10 @@ namespace IDNetSoftware
 			//Proceso la respuesta
 			post.ProcesarRespuesta(response);
 
-			this._messageRequest = post.MessageRequest;
-			this._messageResponse = post.MessageResponse;
+            this._connection = new PipeMessage(post.MessageRequest,post.MessageResponse);
+
+            this._typeOutPut = "001";
+
             this.Destroy();
         }
     }

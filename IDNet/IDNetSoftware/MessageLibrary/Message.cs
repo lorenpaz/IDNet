@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System;
 using System.Xml;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace MessageLibraryS
         private SymmetricAlgorithm _key;
 		private string _db_name;
 		private string _db_type;
-		private string _body;
+		private XmlNode _body;
 
 		public string Destination
 		{
@@ -73,7 +74,7 @@ namespace MessageLibraryS
 				this._db_type = value;
 			}
 		}
-		public string Body
+		public XmlNode Body
 		{
 			get
 			{
@@ -104,7 +105,7 @@ namespace MessageLibraryS
         }
 
         public Message(string source, string destination,string messageType,string db_name,
-                       string db_type, string body)
+                       string db_type, XmlNode body)
         {
             this._source = source;
             this._destination = destination;
@@ -148,7 +149,7 @@ namespace MessageLibraryS
 			if (doc.DocumentElement.GetElementsByTagName("db_name").Count > 0)
 				this._db_name = doc.DocumentElement.GetElementsByTagName("db_name")[0].InnerText;
 
-			this._body = doc.DocumentElement.GetElementsByTagName("body")[0].InnerXml;
+			this._body = doc.DocumentElement.GetElementsByTagName("body")[0];
 		}
 
 		/*
@@ -194,9 +195,14 @@ namespace MessageLibraryS
 
 			//Creamos el elemento Cuerpo
 			XmlNode body = xmlDoc.CreateElement("body");
-			body.InnerText = this._body;
-			encripted.AppendChild(body);
-
+            if(this._body.InnerXml == "")
+            {
+                encripted.AppendChild(body);
+            }else{
+                body = this._body;
+                encripted.AppendChild(this._body);
+            }
+			
 			return xmlDoc;
 		}
 
@@ -229,9 +235,9 @@ namespace MessageLibraryS
 
 			//Creamos el elemento nombreBBDD
 			XmlNode key = xmlDoc.CreateElement("key");
-            key.InnerText = Encoding.UTF8.GetString(this._key.Key);
+           // int aux = BitConverter.T(this._key.Key, 0);
+            //key.InnerText = Convert.ToString(aux);
 			elementRoot.AppendChild(key);
-
 
 			return xmlDoc;
 		}

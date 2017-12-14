@@ -36,7 +36,7 @@ namespace PostBoxLibraryS
         }
 
 		public PostBox(string source, string destination, string tipoMensaje, string db_name,
-					  string db_type, string body)
+					  string db_type, XmlNode body)
 		{
 			this._process = new Process();
 			this._messageRequest = new Message(source, destination, tipoMensaje, db_name, db_type, body);

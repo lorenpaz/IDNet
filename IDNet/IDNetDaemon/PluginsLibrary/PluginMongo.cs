@@ -2,11 +2,12 @@
 using MongoDB.Driver;
 using System.Threading.Tasks;
 using System.Json;
-
+using log4net;
 namespace PluginsLibrary
 {
     public class PluginMongo
     {
+        static readonly ILog log = LogManager.GetLogger(typeof(PluginMongo));
         //Propiedades
 		private IMongoClient _client;
 		private IMongoDatabase _database;
@@ -51,15 +52,23 @@ namespace PluginsLibrary
             this._database = this._client.GetDatabase(this._databaseName);
             var collection = await this._database.ListCollectionsAsync();
 
-            var j = "";
-			while (collection.MoveNext())
-			{
-				foreach (var collDoc in collection.Current)
-				{
+            var j = "{\"database\": {";
+            j += "\"name\": \""+this._databaseName+"\",";
+            j += "\"coleccion\":[";
+            int i=0;
+            while (collection.MoveNext())
+            {
+                foreach (var collDoc in collection.Current)
+                {
                     j += collDoc.ToJson();
-				}
-			}
-            this._salida = j;
+                    j += ",";
+                    i = i + 1;
+                }
+                j = j.Remove(j.Length - 1,1);
+            }
+            j += "]}";
+
+                this._salida = j;
         }
 		
     }

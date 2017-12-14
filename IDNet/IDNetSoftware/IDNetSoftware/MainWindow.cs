@@ -9,6 +9,42 @@ using System.Collections.Generic;
 
 namespace IDNetSoftware
 {
+    /*
+     * Estructua que nos sirve para guardar el intercambio de mensajes en cada accion
+     * */
+    public struct PipeMessage 
+    {
+        Message _messageRequest;
+        Message _messageResponse;
+
+        public PipeMessage(Message mrequest, Message mresponse)
+        {
+            this._messageRequest = mrequest;
+            this._messageResponse = mresponse;
+        }
+		public Message MessageRequest
+		{
+			get
+			{
+                return this._messageRequest;
+			}
+            set
+            {
+                this._messageRequest = value;
+            }
+		}
+		public Message MessageResponse
+		{
+			get
+			{
+				return this._messageResponse;
+			}
+			set
+			{
+				this._messageResponse = value;
+			}
+		}
+    }
     public partial class MainWindow : Gtk.Window
     {
         //Lista que se muestra
@@ -35,6 +71,9 @@ namespace IDNetSoftware
         //Dialogo de conexion
         ConnectionDialog _connectionDialog;
 
+        //Diccionario con todos los mensajes (neighbour -> (connection->Pipe,schema->Pipe,select->Pipe))
+        Dictionary<string, Dictionary<string, PipeMessage>> _messages;
+
         public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
@@ -44,6 +83,8 @@ namespace IDNetSoftware
 
             this._databases = new Databases();
             this._neighbours = new Neighbours();
+
+            this._messages = new Dictionary<string, Dictionary<string, PipeMessage>>();
 
             cargoBasesDeDatosDeLaOV();
 
@@ -213,22 +254,6 @@ namespace IDNetSoftware
             updateOwnDatabases();
         }
 
-        /*
-         * Método privado para mostrar la solicitud de esquema de BBDD
-         * */
-        private void MostrarSolicitudEsquema(Message messageRequest)
-        {
-            infoview.Buffer.Text += "\n"+ Constants.SolicitudEsquema(messageRequest);
-        }
-
-		/*
-         * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
-         * */
-		private void MostrarEsquema(Message messageResponse)
-        {
-            infoview.Buffer.Text += "\n" + Constants.RespuestaEsquema(messageResponse);
-        }
-
         protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
         {
 			TreeIter t;
@@ -239,11 +264,89 @@ namespace IDNetSoftware
 			string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
             string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
 
-            this._connectionDialog = new ConnectionDialog(usuario,tipoBBDD,nombreBBDD);
+            if(this._messages.ContainsKey(usuario))
+            {
+                if( this._messages[usuario].ContainsKey("schema"))
+                {
+					PipeMessage pipeConexion = this._messages[usuario]["connection"];
+					PipeMessage pipeSchema = this._messages[usuario]["schema"];
+
+					this._connectionDialog = new ConnectionDialog(
+						usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema);
+
+				}else{
+					PipeMessage pipeConexion = this._messages[usuario]["connection"];
+
+					this._connectionDialog = new ConnectionDialog(
+						usuario, tipoBBDD, nombreBBDD, pipeConexion);
+                }
+            }else{
+                this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD);
+            }
+
             this._connectionDialog.Run();
 
-            MostrarSolicitudEsquema(this._connectionDialog.MessageRequest);
-            MostrarEsquema(this._connectionDialog.MessageResponse);
+            switch(this._connectionDialog.TypeOutPut)
+            {
+                case "Cancel":
+                    
+                    break;
+                case "001":
+                    Dictionary<string, PipeMessage> message = new Dictionary<string, PipeMessage>();
+                    message.Add("connection",this._connectionDialog.Connection);
+                    this._messages.Add(usuario, message);
+
+                    MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
+					MostrarConexion(this._connectionDialog.Connection.MessageResponse);
+
+					break;
+
+                case "002":
+                    MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
+					MostrarEsquema(this._connectionDialog.Schema.MessageResponse);
+                    break;
+
+                case "003":
+                    break;
+            }
+
+		}
+
+        /*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/
+
+        /*
+         * Método privado para mostrar la solicitud de esquema de BBDD
+         * */
+		private void MostrarSolicitudEsquema(Message messageRequest)
+		{
+			infoview.Buffer.Text += "\n" + Constants.SolicitudEsquema(messageRequest);
+		}
+
+		/*
+         * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
+         * */
+		private void MostrarEsquema(Message messageResponse)
+		{
+			if (messageResponse.Db_type == "mysql")
+				infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMySQL(messageResponse);
+			else
+				infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse);
+		}
+
+        /*
+         * Método privado para mostrar la solicitud de conexión de BBDD
+         * */
+		private void MostrarSolicitudConexion(Message messageRequest)
+		{
+			infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
+		}
+
+		/*
+         * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
+         * */
+		private void MostrarConexion(Message messageResponse)
+		{
+				infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
 		}
     }
 }

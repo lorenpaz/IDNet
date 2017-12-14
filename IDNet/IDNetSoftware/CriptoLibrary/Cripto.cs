@@ -19,8 +19,6 @@ namespace CriptoLibraryS
 
 		public static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
 		{
-			// Create a new Rijndael key.
-			RijndaelManaged key = new RijndaelManaged();
 
 			// Check the arguments.  
 			if (Doc == null)

@@ -11,8 +11,8 @@ namespace PluginsLibrary
         private string _databaseName;
         private string _salida;
         private string _connectionString;
-       
-        //Constructor
+
+		//Constructor
 		public PluginMySQL(string databaseName)
 		{
 			this._databaseName = databaseName;
@@ -84,33 +84,37 @@ namespace PluginsLibrary
             database.AppendChild(nombreBBDD);
 
             DataTable tableSchema = dbcon.GetSchema("Tables");
-            foreach(DataRow row in tableSchema.Rows)
-            {
-				XmlNode tabla = doc.CreateElement("table");
-				database.AppendChild(tabla);
+			 foreach(DataRow row in tableSchema.Rows)
+             {
+                 XmlNode tabla = doc.CreateElement("table");
+                 database.AppendChild(tabla);
 
-                XmlNode nombreTabla = doc.CreateElement("name");
-				nombreTabla.InnerText = row["TABLE_NAME"].ToString();
-				tabla.AppendChild(nombreTabla);
+                 XmlNode nombreTabla = doc.CreateElement("name");
+                 nombreTabla.InnerText = row["TABLE_NAME"].ToString();
+                 tabla.AppendChild(nombreTabla);
 
-                XmlNode columnas = doc.CreateElement("cols");
-                tabla.AppendChild(columnas);
+                 XmlNode columnas = doc.CreateElement("cols");
+                 tabla.AppendChild(columnas);
 
-                // var colSchema = dbcon.GetSchema("Columns", new[] { nombreBBDD.InnerText, null, nombreTabla.InnerText });
-                var colSchema = dbcon.GetSchema("Columns");
-                foreach (DataRow row1 in colSchema.Rows)
-                {
-                    if (row1["TABLE_NAME"].ToString() == nombreTabla.InnerText)
-                    { 
-                        XmlNode columna = doc.CreateElement("col");
-                        XmlNode nombreColumna = doc.CreateElement("name");
-                        nombreColumna.InnerText = row1["COLUMN_NAME"].ToString();
-                        columna.AppendChild(nombreColumna);
-                        columnas.AppendChild(columna);
-                    }
-                }
-            }
+                 // var colSchema = dbcon.GetSchema("Columns", new[] { nombreBBDD.InnerText, null, nombreTabla.InnerText });
+                 var colSchema = dbcon.GetSchema("Columns");
+                 foreach (DataRow row1 in colSchema.Rows)
+                 {
+                        if (row1["TABLE_NAME"].ToString() == nombreTabla.InnerText)
+                        {
+                            XmlNode columna = doc.CreateElement("col");
+                            XmlNode nombreColumna = doc.CreateElement("name");
+                            XmlNode tipoColumna = doc.CreateElement("type");
 
+                            nombreColumna.InnerText = row1["COLUMN_NAME"].ToString();
+                            tipoColumna.InnerText = row1["DATA_TYPE"].ToString();
+                            
+                            columna.AppendChild(nombreColumna);
+                            columna.AppendChild(tipoColumna);
+                            columnas.AppendChild(columna);
+                        }
+                 }
+              }
 			/*
               <?xml version="1.0"?>
                 <database>
@@ -134,12 +138,15 @@ namespace PluginsLibrary
                     <cols>
                       <col>
                         <name>id</name>
+                        <type>NUMBER</type>
                       </col>
                       <col>
                         <name>nombre</name>
+                        <type>string</type>
                       </col>
                       <col>
                         <name>apellidos</name>
+                        <type>string</type>
                       </col>
                     </cols>
                   </table>

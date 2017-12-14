@@ -11,7 +11,7 @@ namespace MessageLibrary
         private SymmetricAlgorithm _key;
 		private string _db_name;
         private string _db_type;
-        private string _body;
+        private XmlNode _body;
 
 		public string Destination
 		{
@@ -68,7 +68,7 @@ namespace MessageLibrary
 				this._db_type = value;
 			}
 		}
-		public string Body
+		public XmlNode Body
 		{
 			get
 			{
@@ -123,7 +123,7 @@ namespace MessageLibrary
             if (doc.DocumentElement.GetElementsByTagName("db_name").Count > 0)
                 this._db_name = doc.DocumentElement.GetElementsByTagName("db_name")[0].InnerText;
 
-            this._body = doc.DocumentElement.GetElementsByTagName("body")[0].InnerXml;
+            this._body = doc.DocumentElement.GetElementsByTagName("body")[0];
         }
         /*
          * Método para al creación de un XmlDocument a partir del mensaje
@@ -168,8 +168,16 @@ namespace MessageLibrary
 
             //Creamos el elemento Cuerpo
 			XmlNode body = xmlDoc.CreateElement("body");
-            body.InnerText = this._body;
-            encripted.AppendChild(body);
+            if (this._body == null || this._body.InnerXml == "")
+			{
+				encripted.AppendChild(body);
+			}
+			else
+			{
+                body.InnerXml = this._body.InnerXml;
+
+                encripted.AppendChild(body);
+            }
 
 			return xmlDoc;
         }
@@ -204,7 +212,7 @@ namespace MessageLibrary
             //Para que no sean null
             contestacion.Db_name = recibido.Db_name;
             contestacion.Db_type = recibido.Db_type;
-            contestacion.Body = "";
+            contestacion.Body = null;
 
             return contestacion;
         }

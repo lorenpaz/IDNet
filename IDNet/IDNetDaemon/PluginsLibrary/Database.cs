@@ -92,13 +92,11 @@ namespace PluginsLibrary
             {
                 case("mongodb"):
                     PluginMongo mongo = new PluginMongo(databaseName);
-                    mongo.EstructureRequest();
                     xmldocument = Convertion.JsonToXml(mongo.EstructureRequest());
                     break;
 
                 case("mysql"):
                     PluginMySQL mysql = new PluginMySQL(databaseName);
-                    mysql.EstructureRequest();
                     xmldocument = mysql.EstructureRequest();
                     break;
             }
@@ -113,8 +111,7 @@ namespace PluginsLibrary
 			{
 				case ("mongodb"):
 					PluginMongo mongo = new PluginMongo(databaseName);
-                    mongo.SelectRequest();
-					xmldocument = Convertion.JsonToXml(mongo.EstructureRequest());
+					xmldocument = Convertion.JsonToXml(mongo.SelectRequest());
 					break;
 
 				case ("mysql"):
@@ -128,8 +125,9 @@ namespace PluginsLibrary
 
       /*  static void Main(string[] args)
         {
-            Database d = new Database();
-
+            Database d;
+                 d = new Database();
+           d.EstructureRequest("mongodb", "usuarios");
         }*/
     }
 }

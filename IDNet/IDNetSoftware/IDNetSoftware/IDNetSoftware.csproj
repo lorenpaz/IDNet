@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="Mono.Posix" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

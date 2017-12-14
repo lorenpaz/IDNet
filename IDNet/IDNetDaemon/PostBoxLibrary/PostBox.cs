@@ -10,6 +10,7 @@ using MessageLibrary;
 using ProcessLibrary;
 using ConvertionLibrary;
 
+
 namespace PostBoxLibrary
 {
     public class PostBox
@@ -47,13 +48,14 @@ namespace PostBoxLibrary
 			}
             else
             {
-                simKey = cript.CheckKey(this._messageRecieve.Source);
+                //  simKey = cript.CheckKey(this._messageRecieve.Source);
 
                 //Desencriptamos
-                Cripto.Decrypt(xmlDoc, simKey);
-				
+                // Cripto.Decrypt(xmlDoc, simKey);
+
                 //Parseamos el mensaje
 				this._messageRecieve.parserMessageRecieve(xmlDoc);
+
             }
 
             //Ejecutamos el proceso
@@ -73,9 +75,8 @@ namespace PostBoxLibrary
 
             //Si hay cuerpo de la respuesta
             if(doc != null){
-                this._messageResponse.Body = doc.InnerXml;
+                this._messageResponse.Body = doc as XmlNode;
             }
-
             //Creamos un XMLDocument con el mensaje de respuesta
             XmlDocument xmlDocRespuesta = this._messageResponse.createMessage();
 

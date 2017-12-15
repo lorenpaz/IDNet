@@ -6,9 +6,10 @@ namespace ConstantsLibrary
         public static string MONGODB = "mongodb";
         public static string MYSQL = "mysql";
         public static string TEMPORAL_FILE_PATH = @"./temp_files/";
-        public static string CONF_BLACK_LIST = @"./config/blackList.conf";
-		public static string CONF_DATABASES = @"./config/databases.conf";
-		public static string CONF_KEYS = @"./config/keys.conf";
+        public static string CONF = @"./configuration/";
+        public static string CONF_BLACK_LIST = CONF+@"blackList.conf";
+		public static string CONF_DATABASES = CONF+@"databases.conf";
+        public static string CONF_KEYS = CONF+@"keys.conf";
 		public static string CONEXION = "001";
 		public static string SCHEMA = "002";
 		public static string SELECT = "003";

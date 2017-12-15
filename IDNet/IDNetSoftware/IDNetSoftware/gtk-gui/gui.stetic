@@ -65,6 +65,12 @@
         <property name="StockId">gtk-add</property>
         <signal name="Activated" handler="OnAddActionActivated" />
       </action>
+      <action id="clearAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-clear</property>
+        <signal name="Activated" handler="OnClearActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">600</property>
@@ -72,8 +78,8 @@
     <property name="Title" translatable="yes">IDNet</property>
     <property name="WindowPosition">Center</property>
     <property name="Resizable">False</property>
-    <property name="DefaultWidth">600</property>
-    <property name="DefaultHeight">600</property>
+    <property name="DefaultWidth">900</property>
+    <property name="DefaultHeight">1000</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -107,6 +113,7 @@
             <property name="ShowArrow">False</property>
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="addDatabasePngAction" />
+              <node type="Toolitem" action="clearAction" />
             </node>
           </widget>
           <packing>

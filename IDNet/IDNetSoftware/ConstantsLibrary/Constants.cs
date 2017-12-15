@@ -8,7 +8,7 @@ namespace ConstantsLibraryS
     //Clase con las constantes
     public static class Constants
     {
-        public const string CONFIG = @"./config/";
+        public const string CONFIG = @"../../../../configuration/";
         public const string ConfigFileDatabases = CONFIG + @"databases.conf";
         public const string ConfigFileNeighbours = CONFIG + @"neighbours.conf";
 

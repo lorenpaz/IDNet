@@ -129,7 +129,7 @@ namespace ConnectionLibrary
 				}
                 //string dataXml = "hola";
                 //Send(handler, dataXml);
-
+                log.Info("inicio");
                 PostBox post = new PostBox();
                 string respuesta = post.procesar(content);
                 Send(handler,respuesta);

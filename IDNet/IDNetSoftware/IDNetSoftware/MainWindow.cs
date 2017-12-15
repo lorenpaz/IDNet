@@ -12,7 +12,7 @@ namespace IDNetSoftware
     /*
      * Estructua que nos sirve para guardar el intercambio de mensajes en cada accion
      * */
-    public struct PipeMessage 
+    public struct PipeMessage
     {
         Message _messageRequest;
         Message _messageResponse;
@@ -22,28 +22,28 @@ namespace IDNetSoftware
             this._messageRequest = mrequest;
             this._messageResponse = mresponse;
         }
-		public Message MessageRequest
-		{
-			get
-			{
+        public Message MessageRequest
+        {
+            get
+            {
                 return this._messageRequest;
-			}
+            }
             set
             {
                 this._messageRequest = value;
             }
-		}
-		public Message MessageResponse
-		{
-			get
-			{
-				return this._messageResponse;
-			}
-			set
-			{
-				this._messageResponse = value;
-			}
-		}
+        }
+        public Message MessageResponse
+        {
+            get
+            {
+                return this._messageResponse;
+            }
+            set
+            {
+                this._messageResponse = value;
+            }
+        }
     }
     public partial class MainWindow : Gtk.Window
     {
@@ -129,24 +129,26 @@ namespace IDNetSoftware
             string messageError = "";
             Dictionary<string, string> errors = new Dictionary<string, string>();
 
-            foreach(KeyValuePair<string, List<string>> entry in this._databases.DatabasesPropias)
+            foreach (KeyValuePair<string, List<string>> entry in this._databases.DatabasesPropias)
             {
-                switch(entry.Key){
+                switch (entry.Key)
+                {
 
                     case "mysql":
                         try
                         {
                             ok = this._databases.ComprobacionMysql();
-                        } catch(Exception e)
+                        }
+                        catch (Exception e)
                         {
                             messageError = e.Message;
-                            errors.Add("mysql",messageError);
+                            errors.Add("mysql", messageError);
                         }
 
                         break;
                     case "mongodb":
                         ok = this._databases.ComprobacionMongodb();
-                        if(!ok)
+                        if (!ok)
                         {
                             errors.Add("mongodb", Constants.UNABLE_CONNECT_MONGODB);
                         }
@@ -154,8 +156,8 @@ namespace IDNetSoftware
                 }
             }
             if (!ok && errors.Count != 0)
-			{
-                this._errorServerDialog = new ErrorServersDialog(this._databases,errors);
+            {
+                this._errorServerDialog = new ErrorServersDialog(this._databases, errors);
                 this._errorServerDialog.Run();
             }
         }
@@ -207,7 +209,7 @@ namespace IDNetSoftware
                 {
                     foreach (string bbdd in entryTwo.Value)
                     {
-                        this._infoBBDDView.AppendValues(entry.Key,entryTwo.Key, bbdd);
+                        this._infoBBDDView.AppendValues(entry.Key, entryTwo.Key, bbdd);
                     }
                 }
 
@@ -256,97 +258,109 @@ namespace IDNetSoftware
 
         protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
         {
-			TreeIter t;
-			TreePath p = args.Path;
-			this._infoBBDDView.GetIter(out t, p);
+            TreeIter t;
+            TreePath p = args.Path;
+            this._infoBBDDView.GetIter(out t, p);
 
             string usuario = (string)this._infoBBDDView.GetValue(t, 0);
-			string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
+            string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
             string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
 
-            if(this._messages.ContainsKey(usuario))
+            if (this._messages.ContainsKey(usuario))
             {
-                if( this._messages[usuario].ContainsKey("schema"))
+                if (this._messages[usuario].ContainsKey("schema"))
                 {
-					PipeMessage pipeConexion = this._messages[usuario]["connection"];
-					PipeMessage pipeSchema = this._messages[usuario]["schema"];
+                    PipeMessage pipeConexion = this._messages[usuario]["connection"];
+                    PipeMessage pipeSchema = this._messages[usuario]["schema"];
 
-					this._connectionDialog = new ConnectionDialog(
-						usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema);
+                    this._connectionDialog = new ConnectionDialog(
+                        usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema);
 
-				}else{
-					PipeMessage pipeConexion = this._messages[usuario]["connection"];
-
-					this._connectionDialog = new ConnectionDialog(
-						usuario, tipoBBDD, nombreBBDD, pipeConexion);
                 }
-            }else{
+                else
+                {
+                    PipeMessage pipeConexion = this._messages[usuario]["connection"];
+
+                    this._connectionDialog = new ConnectionDialog(
+                        usuario, tipoBBDD, nombreBBDD, pipeConexion);
+                }
+            }
+            else
+            {
                 this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD);
             }
 
             this._connectionDialog.Run();
 
-            switch(this._connectionDialog.TypeOutPut)
+            switch (this._connectionDialog.TypeOutPut)
             {
                 case "Cancel":
-                    
+
                     break;
                 case "001":
                     Dictionary<string, PipeMessage> message = new Dictionary<string, PipeMessage>();
-                    message.Add("connection",this._connectionDialog.Connection);
+                    message.Add("connection", this._connectionDialog.Connection);
                     this._messages.Add(usuario, message);
 
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
-					MostrarConexion(this._connectionDialog.Connection.MessageResponse);
+                    MostrarConexion(this._connectionDialog.Connection.MessageResponse);
 
-					break;
+                    break;
 
                 case "002":
                     MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
-					MostrarEsquema(this._connectionDialog.Schema.MessageResponse);
+                    MostrarEsquema(this._connectionDialog.Schema.MessageResponse);
                     break;
 
                 case "003":
                     break;
             }
 
-		}
+        }
 
         /*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/
 
         /*
          * Método privado para mostrar la solicitud de esquema de BBDD
          * */
-		private void MostrarSolicitudEsquema(Message messageRequest)
-		{
-			infoview.Buffer.Text += "\n" + Constants.SolicitudEsquema(messageRequest);
-		}
+        private void MostrarSolicitudEsquema(Message messageRequest)
+        {
+            infoview.Buffer.Text += "\n" + Constants.SolicitudEsquema(messageRequest);
+        }
 
-		/*
+        /*
          * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
          * */
-		private void MostrarEsquema(Message messageResponse)
-		{
-			if (messageResponse.Db_type == "mysql")
-				infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMySQL(messageResponse);
-			else
-				infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse);
-		}
+        private void MostrarEsquema(Message messageResponse)
+        {
+            if (messageResponse.Db_type == "mysql")
+                infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMySQL(messageResponse);
+            else
+                infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse);
+        }
 
         /*
          * Método privado para mostrar la solicitud de conexión de BBDD
          * */
-		private void MostrarSolicitudConexion(Message messageRequest)
-		{
-			infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
-		}
+        private void MostrarSolicitudConexion(Message messageRequest)
+        {
+            infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
+        }
 
-		/*
+        /*
          * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
          * */
-		private void MostrarConexion(Message messageResponse)
-		{
-				infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
-		}
+        private void MostrarConexion(Message messageResponse)
+        {
+            infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
+        }
+
+        /*
+         * Limpiado de consola
+         * */
+        protected void OnClearActionActivated(object sender, EventArgs e)
+        {
+            infoview.Buffer.Clear();
+        }
     }
 }

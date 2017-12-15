@@ -10,13 +10,16 @@ using MessageLibrary;
 using ProcessLibrary;
 using ConvertionLibrary;
 
+using log4net;
 
 namespace PostBoxLibrary
 {
     public class PostBox
     {
-        //Mensaje recibido
-        Message _messageRecieve;
+        static readonly ILog log = LogManager.GetLogger(typeof(PostBox));
+
+		//Mensaje recibido
+		Message _messageRecieve;
 
         //Proceso
         Process _process;
@@ -33,9 +36,10 @@ namespace PostBoxLibrary
 
         public string procesar(string document)
         {
+            log.Info("aqui0");
             //Convertimos el string a xml
             XmlDocument xmlDoc = Convertion.stringToXml(document);
-
+            log.Info("aqui");
             //Recogemos la información de inicio
             SymmetricAlgorithm simKey;
 			Cripto cript = new Cripto();
@@ -57,13 +61,13 @@ namespace PostBoxLibrary
 				this._messageRecieve.parserMessageRecieve(xmlDoc);
 
             }
-
+            log.Info("aqui dos");
             //Ejecutamos el proceso
             XmlDocument xmlDocResponse = this._process.ejecutar(this._messageRecieve);
 
             //Creamos la respuesta
             String respuesta = responder(xmlDocResponse);
-
+            log.Info("tres");
             return respuesta;
 		}
         private string responder(XmlDocument doc)

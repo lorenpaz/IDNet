@@ -24,6 +24,8 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action addAction;
 
+		private global::Gtk.Action clearAction;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -90,6 +92,8 @@ namespace IDNetSoftware
 			this.addAction = new global::Gtk.Action("addAction", global::Mono.Unix.Catalog.GetString("Añadir"), null, "gtk-add");
 			this.addAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Añadir");
 			w1.Add(this.addAction, null);
+			this.clearAction = new global::Gtk.Action("clearAction", null, null, "gtk-clear");
+			w1.Add(this.clearAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 600;
@@ -98,8 +102,8 @@ namespace IDNetSoftware
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Resizable = false;
-			this.DefaultWidth = 600;
-			this.DefaultHeight = 600;
+			this.DefaultWidth = 900;
+			this.DefaultHeight = 1000;
 			// Container child IDNetSoftware.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";
@@ -115,7 +119,8 @@ namespace IDNetSoftware
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar1\'><toolitem name=\'addDatabasePngAction\' action=\'addDat" +
-					"abasePngAction\'/></toolbar></ui>");
+					"abasePngAction\'/><toolitem name=\'clearAction\' action=\'clearAction\'/></toolbar></" +
+					"ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -242,6 +247,7 @@ namespace IDNetSoftware
 			this.salirAction.Activated += new global::System.EventHandler(this.OnSalirActionActivated);
 			this.addDatabasePngAction.Activated += new global::System.EventHandler(this.OnAddDatabasePngActionActivated);
 			this.addAction.Activated += new global::System.EventHandler(this.OnAddActionActivated);
+			this.clearAction.Activated += new global::System.EventHandler(this.OnClearActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 		}

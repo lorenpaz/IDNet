@@ -93,6 +93,7 @@ namespace IDNetSoftware
 			this.Show();
 			this.buttonConexion.Clicked += new global::System.EventHandler(this.OnButtonConexionClicked);
 			this.buttonEsquema.Clicked += new global::System.EventHandler(this.OnButtonEsquemaClicked);
+			this.buttonSelect.Clicked += new global::System.EventHandler(this.OnButtonSelectClicked);
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 		}
 	}

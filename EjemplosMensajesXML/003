@@ -1,0 +1,14 @@
+<root>
+	<source>Lorenzo</source>
+	<destination>Juan</destination>
+	<message_type>003</message_type>
+	<encripted>	
+		<db_name>usuarios</db_name>
+		<db_type>mysql</db_type>
+		<body>
+			<select>*</select>
+			<from>empleados</from>
+			<where></where>
+		</body>
+	</encripted>
+</root>

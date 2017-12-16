@@ -97,13 +97,13 @@ namespace IDNetSoftware
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 600;
-			this.HeightRequest = 500;
+			this.HeightRequest = 550;
 			this.Name = "IDNetSoftware.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Resizable = false;
-			this.DefaultWidth = 900;
-			this.DefaultHeight = 1000;
+			this.DefaultWidth = 700;
+			this.DefaultHeight = 750;
 			// Container child IDNetSoftware.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";
@@ -136,7 +136,7 @@ namespace IDNetSoftware
 			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
 			this.infoview = new global::Gtk.TextView();
 			this.infoview.WidthRequest = 200;
-			this.infoview.HeightRequest = 0;
+			this.infoview.HeightRequest = 300;
 			this.infoview.Name = "infoview";
 			this.infoview.Editable = false;
 			this.infoview.CursorVisible = false;

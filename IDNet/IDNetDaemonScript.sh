@@ -18,6 +18,7 @@ stop()
         rt=$?
         if [ "$rt" == "0" ]
 	        then
+			rm -rf /tmp/IDNetDaemon.lock
 	                echo "IDNetDaemon stop"
 	        else
 	                echo "Error stop demon"

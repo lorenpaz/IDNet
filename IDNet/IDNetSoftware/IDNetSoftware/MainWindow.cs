@@ -12,11 +12,12 @@ namespace IDNetSoftware
     /*
      * Estructua que nos sirve para guardar el intercambio de mensajes en cada accion
      * */
-    public struct PipeMessage
+    public class PipeMessage
     {
         Message _messageRequest;
         Message _messageResponse;
 
+        public PipeMessage(){}
         public PipeMessage(Message mrequest, Message mresponse)
         {
             this._messageRequest = mrequest;
@@ -256,6 +257,9 @@ namespace IDNetSoftware
             updateOwnDatabases();
         }
 
+        /*
+         * Método activado cuando se pulsa en la lista de BBDD de vecinos
+         * */
         protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
         {
             TreeIter t;
@@ -281,8 +285,7 @@ namespace IDNetSoftware
                 {
                     PipeMessage pipeConexion = this._messages[usuario]["connection"];
 
-                    this._connectionDialog = new ConnectionDialog(
-                        usuario, tipoBBDD, nombreBBDD, pipeConexion);
+                    this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion);
                 }
             }
             else
@@ -298,9 +301,9 @@ namespace IDNetSoftware
 
                     break;
                 case "001":
-                    Dictionary<string, PipeMessage> message = new Dictionary<string, PipeMessage>();
-                    message.Add("connection", this._connectionDialog.Connection);
-                    this._messages.Add(usuario, message);
+                    Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
+                    messageC.Add("connection", this._connectionDialog.Connection);
+                    this._messages.Add(usuario, messageC);
 
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
                     MostrarConexion(this._connectionDialog.Connection.MessageResponse);
@@ -308,7 +311,22 @@ namespace IDNetSoftware
                     break;
 
                 case "002":
-                    MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
+                    
+                    if (!this._messages.ContainsKey(usuario) || !this._messages[usuario].ContainsKey("schema"))
+                    {
+                        if (this._messages.ContainsKey(usuario))
+                        {
+                            this._messages[usuario].Add("schema", this._connectionDialog.Schema);
+                        }
+                        else
+                        {
+							Dictionary<string, PipeMessage> messageS = new Dictionary<string, PipeMessage>();
+							messageS.Add("schema", this._connectionDialog.Schema);
+                            this._messages.Add(usuario, messageS);
+                        }
+                    }
+
+					MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
                     MostrarEsquema(this._connectionDialog.Schema.MessageResponse);
                     break;
 

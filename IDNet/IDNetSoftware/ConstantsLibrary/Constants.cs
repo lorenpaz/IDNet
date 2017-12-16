@@ -42,211 +42,7 @@ namespace ConstantsLibraryS
         public const string NOMBRE_COLECCION = @"Nombre colección: ";
         public const string NOMBRE_CAMPO = @"Nombre del campo: ";
 
-        private struct Col
-        {
-            string _name;
-            string _type;
 
-            public Col(XmlElement infoCol)
-            {
-                this._name = infoCol.GetElementsByTagName("name")[0].InnerText;
-                this._type = infoCol.GetElementsByTagName("type")[0].InnerText;
-            }
-			public string Name
-			{
-				get
-				{
-					return this._name;
-				}
-				set
-				{
-					this._name = value;
-				}
-			}
-			public string Type
-			{
-				get
-				{
-					return this._type;
-				}
-				set
-				{
-					this._type = value;
-				}
-			}
-        }
-		private struct Field
-		{
-			string _name;
-			//string _type;
-
-			public Field(XmlElement infoField)
-			{
-                this._name = infoField.GetElementsByTagName("name")[0].InnerText;
-				//this._type = infoCol.GetElementsByTagName("type")[0].InnerText;
-			}
-			public string Name
-			{
-				get
-				{
-					return this._name;
-				}
-				set
-				{
-					this._name = value;
-				}
-			}
-			/*public string Type
-			{
-				get
-				{
-					return this._type;
-				}
-				set
-				{
-					this._type = value;
-				}
-			}*/
-		}
-
-        private struct Table
-        {
-            string _name;
-            List<Col> _cols;
-
-            public Table(XmlElement infoTable)
-            {
-
-                this._cols = new List<Col>();
-                this._name = infoTable.GetElementsByTagName("name")[0].InnerText;
-                foreach (XmlElement infoCol in infoTable.GetElementsByTagName("col"))
-                {
-                    this._cols.Add(new Col(infoCol));
-
-                }
-            }
-			public string Name
-			{
-				get
-				{
-					return this._name;
-				}
-				set
-				{
-					this._name = value;
-				}
-			}
-            public List<Col> Cols
-			{
-				get
-				{
-					return this._cols;
-				}
-				set
-				{
-					this._cols = value;
-				}
-			}
-        }
-
-		private struct Collection
-		{
-			string _name;
-            List<Field> _fields;
-
-            public Collection(XmlElement infoCollection)
-			{
-
-                this._fields = new List<Field>();
-				this._name = infoCollection.GetElementsByTagName("name")[0].InnerText;
-				foreach (XmlElement infoField in infoCollection.GetElementsByTagName("field"))
-				{
-                    this._fields.Add(new Field(infoField));
-
-				}
-			}
-			public string Name
-			{
-				get
-				{
-					return this._name;
-				}
-				set
-				{
-					this._name = value;
-				}
-			}
-			public List<Field> Fields
-			{
-				get
-				{
-					return this._fields;
-				}
-				set
-				{
-					this._fields = value;
-				}
-			}
-		}
-
-        private struct BodyRespuesta002MySQL
-        {
-            string _db_name;
-            List<Table> _tables;
-            public BodyRespuesta002MySQL(string body)
-            {
-
-                this._tables = new List<Table>();
-                XmlDocument x = new XmlDocument();
-                x.LoadXml(body);
-                this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
-                foreach (XmlElement infoTable in x.DocumentElement.GetElementsByTagName("table"))
-                {
-                    this._tables.Add(new Table(infoTable));
-                }
-            }
-			public string Db_name
-			{
-				get
-				{
-                    return this._db_name;
-				}
-				set
-				{
-                    this._db_name = value;
-				}
-			}
-            public List<Table> Tables
-			{
-				get
-				{
-					return this._tables;
-				}
-				set
-				{
-					this._tables = value;
-				}
-			} 
-        }
-
-        private struct BodyRespuesta002MongoDB
-        {
-			string _db_name;
-            List<Collection> _collections;
-
-			public BodyRespuesta002MongoDB(string body)
-            {
-                _collections = new List<Collection>();
-
-				XmlDocument x = new XmlDocument();
-				x.LoadXml(body);
-				this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
-                foreach(XmlElement coleccion in x.DocumentElement.GetElementsByTagName("coleccion"))
-                {
-                    this._collections.Add(new Collection(coleccion));
-                }
-			}
-        }
         private static string Columna(string word, int NSpaces)
         {
             return "|" + word.PadRight(NSpaces) + "|";
@@ -332,6 +128,211 @@ namespace ConstantsLibraryS
 		   Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
 
 		}
-
     }
+	public struct Col
+	{
+		private string _name;
+		private string _type;
+
+		public Col(XmlElement infoCol)
+		{
+			this._name = infoCol.GetElementsByTagName("name")[0].InnerText;
+			this._type = infoCol.GetElementsByTagName("type")[0].InnerText;
+		}
+		public string Name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				this._name = value;
+			}
+		}
+		public string Type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				this._type = value;
+			}
+		}
+	}
+
+	public struct Field
+	{
+		private string _name;
+		//string _type;
+
+		public Field(XmlElement infoField)
+		{
+			this._name = infoField.GetElementsByTagName("name")[0].InnerText;
+			//this._type = infoCol.GetElementsByTagName("type")[0].InnerText;
+		}
+		public string Name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				this._name = value;
+			}
+		}
+		/*public string Type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				this._type = value;
+			}
+		}*/
+	}
+
+	public struct Table
+	{
+		private string _name;
+		private List<Col> _cols;
+
+		public Table(XmlElement infoTable)
+		{
+
+			this._cols = new List<Col>();
+			this._name = infoTable.GetElementsByTagName("name")[0].InnerText;
+			foreach (XmlElement infoCol in infoTable.GetElementsByTagName("col"))
+			{
+				this._cols.Add(new Col(infoCol));
+
+			}
+		}
+		public string Name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				this._name = value;
+			}
+		}
+		public List<Col> Cols
+		{
+			get
+			{
+				return this._cols;
+			}
+			set
+			{
+				this._cols = value;
+			}
+		}
+	}
+
+	public struct Collection
+	{
+		private string _name;
+		private List<Field> _fields;
+
+		public Collection(XmlElement infoCollection)
+		{
+
+			this._fields = new List<Field>();
+			this._name = infoCollection.GetElementsByTagName("name")[0].InnerText;
+			foreach (XmlElement infoField in infoCollection.GetElementsByTagName("field"))
+			{
+				this._fields.Add(new Field(infoField));
+
+			}
+		}
+		public string Name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				this._name = value;
+			}
+		}
+		public List<Field> Fields
+		{
+			get
+			{
+				return this._fields;
+			}
+			set
+			{
+				this._fields = value;
+			}
+		}
+	}
+
+	public struct BodyRespuesta002MySQL
+	{
+		private string _db_name;
+		private List<Table> _tables;
+		public BodyRespuesta002MySQL(string body)
+		{
+
+			this._tables = new List<Table>();
+			XmlDocument x = new XmlDocument();
+			x.LoadXml(body);
+			this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
+			foreach (XmlElement infoTable in x.DocumentElement.GetElementsByTagName("table"))
+			{
+				this._tables.Add(new Table(infoTable));
+			}
+		}
+		public string Db_name
+		{
+			get
+			{
+				return this._db_name;
+			}
+			set
+			{
+				this._db_name = value;
+			}
+		}
+		public List<Table> Tables
+		{
+			get
+			{
+				return this._tables;
+			}
+			set
+			{
+				this._tables = value;
+			}
+		}
+	}
+
+	public struct BodyRespuesta002MongoDB
+	{
+		private string _db_name;
+		private List<Collection> _collections;
+
+		public BodyRespuesta002MongoDB(string body)
+		{
+			_collections = new List<Collection>();
+
+			XmlDocument x = new XmlDocument();
+			x.LoadXml(body);
+			this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
+			foreach (XmlElement coleccion in x.DocumentElement.GetElementsByTagName("coleccion"))
+			{
+				this._collections.Add(new Collection(coleccion));
+			}
+		}
+	}
 }

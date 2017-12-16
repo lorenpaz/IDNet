@@ -36,19 +36,20 @@ namespace PostBoxLibrary
 
         public string procesar(string document)
         {
-            log.Info("aqui0");
+
             //Convertimos el string a xml
             XmlDocument xmlDoc = Convertion.stringToXml(document);
-            log.Info("aqui");
+
             //Recogemos la información de inicio
             SymmetricAlgorithm simKey;
 			Cripto cript = new Cripto();
+
             this._messageRecieve.parserStartRecievedMessage(xmlDoc);
 
             if (this._messageRecieve.MessageType == "001")
             {
                 //Aquí iria una funcion para quitar el cifrado asimetrico
-                cript.CheckKey(this._messageRecieve.Source, this._messageRecieve.Key);
+               // cript.CheckKey(this._messageRecieve.Source, this._messageRecieve.Key);
 			}
             else
             {
@@ -61,13 +62,24 @@ namespace PostBoxLibrary
 				this._messageRecieve.parserMessageRecieve(xmlDoc);
 
             }
-            log.Info("aqui dos");
-            //Ejecutamos el proceso
-            XmlDocument xmlDocResponse = this._process.ejecutar(this._messageRecieve);
 
-            //Creamos la respuesta
-            String respuesta = responder(xmlDocResponse);
-            log.Info("tres");
+            String respuesta="";
+
+			if (!(this._messageRecieve.MessageType == "001"))
+            {
+				//Ejecutamos el proceso
+				XmlDocument xmlDocResponse = this._process.ejecutar(this._messageRecieve);
+
+                //Creamos la respuesta
+                respuesta = responder(xmlDocResponse);
+
+            }else{
+				log.Info("here3");
+
+				respuesta = responderConexion();
+                log.Info(respuesta);
+            }
+
             return respuesta;
 		}
         private string responder(XmlDocument doc)
@@ -88,6 +100,16 @@ namespace PostBoxLibrary
             respuesta = xmlDocRespuesta.InnerXml;
 
             return respuesta;
+        }
+
+        private string responderConexion()
+        {
+            this._messageResponse.Source = this._messageRecieve.Destination;
+            this._messageResponse.Destination = this._messageRecieve.Source;
+            this._messageResponse.MessageType = "004";
+            XmlDocument xmlDocRespuesta = this._messageResponse.createMessageConexion();
+
+            return xmlDocRespuesta.InnerXml;
         }
 	}
 }

@@ -75,6 +75,8 @@
     <Compile Include="gtk-gui\IDNetSoftware.ErrorServersDialog.cs" />
     <Compile Include="ConnectionDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.ConnectionDialog.cs" />
+    <Compile Include="SelectDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.SelectDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

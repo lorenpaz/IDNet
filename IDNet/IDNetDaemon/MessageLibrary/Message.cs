@@ -95,9 +95,10 @@ namespace MessageLibrary
         public void parserStartRecievedMessage(XmlDocument doc)
         {
 			this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
+			this._source = doc.DocumentElement.GetElementsByTagName("source")[0].InnerText;
 			this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;
-            if(this._messageType == "001")
-                this._key = SymmetricAlgorithm.Create(doc.DocumentElement.GetElementsByTagName("key")[0].InnerText);
+           /* if(this._messageType == "001")
+                this._key = SymmetricAlgorithm.Create(doc.DocumentElement.GetElementsByTagName("key")[0].InnerText);*/
         }
 
 
@@ -106,15 +107,7 @@ namespace MessageLibrary
          * */
         public void parserMessageRecieve(XmlDocument doc)
         {
-            //Cogemos el destinatario del mensaje
-            //this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;
-
-            //Cogemos el origen del mensaje
-            this._source = doc.DocumentElement.GetElementsByTagName("source")[0].InnerText;
-
-            //Cogemos el código del mensaje
-            //this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
-
+                      
 			//Si existe, guardamos el tipo de la base de datos
 			if (doc.DocumentElement.GetElementsByTagName("db_type").Count > 0)
                 this._db_type = doc.DocumentElement.GetElementsByTagName("db_type")[0].InnerText;
@@ -178,6 +171,42 @@ namespace MessageLibrary
 
                 encripted.AppendChild(body);
             }
+
+			return xmlDoc;
+        }
+
+        /*
+         * Método para al creación de un XmlDocument a partir del mensaje de conexion
+         * */
+        public XmlDocument createMessageConexion()
+        {
+
+			XmlDocument xmlDoc = new XmlDocument();
+			XmlElement root = xmlDoc.DocumentElement;
+
+			//Creamos elemento root
+			XmlElement elementRoot = xmlDoc.CreateElement("root");
+			xmlDoc.AppendChild(elementRoot);
+
+			//Creamos el elemento tipoDeMensaje
+			XmlNode message_type = xmlDoc.CreateElement("message_type");
+			message_type.InnerText = this._messageType;
+			elementRoot.AppendChild(message_type);
+
+			//Creamos elemento origen
+			XmlNode source = xmlDoc.CreateElement("source");
+			source.InnerText = this._source;
+			elementRoot.AppendChild(source);
+
+			//Creamos el elemento destino
+			XmlNode destination = xmlDoc.CreateElement("destination");
+			destination.InnerText = this._destination;
+			elementRoot.AppendChild(destination);
+
+			//Creamos el elemento destino
+			XmlNode key = xmlDoc.CreateElement("key");
+            key.InnerText = "keyPrueba";
+			elementRoot.AppendChild(key);
 
 			return xmlDoc;
         }

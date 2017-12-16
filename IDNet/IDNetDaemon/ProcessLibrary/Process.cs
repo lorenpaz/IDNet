@@ -21,12 +21,12 @@ namespace ProcessLibrary
             switch(m.MessageType)
              {
                 case("001"):
-                    Security sec = new Security();
-                    if (sec.checkBlackList(m.Source)) 
-                       {
-                               
-                       }
-                    break;
+                    /* Security sec = new Security();
+                     if (sec.checkBlackList(m.Source)) 
+                        {
+
+                        }*/
+                     break;
                 case("002"):
                      xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
                     break;
@@ -36,6 +36,5 @@ namespace ProcessLibrary
             }
             return xmlDoc;
         }
-
 	}
 }

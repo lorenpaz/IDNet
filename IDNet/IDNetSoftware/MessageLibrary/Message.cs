@@ -235,6 +235,7 @@ namespace MessageLibraryS
 
 			//Creamos el elemento nombreBBDD
 			XmlNode key = xmlDoc.CreateElement("key");
+            key.InnerText = "keyPrueba";
            // int aux = BitConverter.T(this._key.Key, 0);
             //key.InnerText = Convert.ToString(aux);
 			elementRoot.AppendChild(key);

@@ -2,6 +2,8 @@
 using System.Xml;
 using System.Collections.Generic;
 
+using ConstantsLibraryS;
+
 namespace IDNetSoftware
 {
     public partial class SelectDialog : Gtk.Dialog
@@ -12,6 +14,9 @@ namespace IDNetSoftware
 		private string _db_name;
 		private string _db_type;
 		private XmlNode _body;
+
+        //Contiene la información del esquema
+        private BodyRespuesta002MySQL _schema;
 
 		//Atributo para saber cómo ha cerrado el diálogo
         private string _typeOutPut;
@@ -44,7 +49,7 @@ namespace IDNetSoftware
          * Constructor del diálogo de SELECT
          * */
         public SelectDialog(string destination, string db_type, string db_name,
-                           List<string> select, List<string> from, List<string> where)
+                            BodyRespuesta002MySQL schema)
         {
             this.Build();
 
@@ -54,27 +59,70 @@ namespace IDNetSoftware
 			this._body = new XmlDocument();
 			this._typeOutPut = "Cancel";
 
-            RellenarComboBox(select, from,where);
+            this._schema = schema;
+
+            comboboxSelect.Sensitive = false;
+            entryWhere.Sensitive = false;
+
+            RellenarComboBox(null,CargarComboBoxFrom());
         }
 
         /*
          * Método privado para rellenar los ComboBoxs
          * */
-        private void RellenarComboBox(List<string> select, List<string> from, List<string> where)
+        private void RellenarComboBox(List<string> select, List<string> from)
         {
-            foreach (string field in select)
+            if (select != null)
             {
-                comboboxSelect.AppendText(field);
+                foreach (string field in select)
+                {
+                    comboboxSelect.AppendText(field);
+                }
             }
-            foreach (string field in from)
+            if (from != null)
             {
-				comboboxFrom.AppendText(field);
-			}
-            foreach (string field in where)
-            {
-				comboboxWhere.AppendText(field);
-			}
+				foreach (string field in from)
+				{
+					comboboxFrom.AppendText(field);
+				}
+            }
         }
+
+		/*
+         * Método para cargar el ComboBox del Select
+         * */
+		private List<string> CargarComboBoxSelect(string tabla)
+		{
+			List<string> select = new List<string>();
+
+            foreach (var table in this._schema.Tables)
+			{
+                if (tabla == table.Name)
+                {
+                    foreach (var col in table.Cols)
+                    {
+                        select.Add(col.Name);
+                    }
+                }
+			}
+
+			return select;
+		}
+
+		/*
+         * Método para cargar el ComboBox del Select
+         * */
+		private List<string> CargarComboBoxFrom()
+		{
+			List<string> from = new List<string>();
+
+            foreach (var table in this._schema.Tables)
+			{
+				from.Add(table.Name);
+			}
+
+			return from;
+		}
 
         /*
          * Método del botón 'Cancel'
@@ -90,6 +138,18 @@ namespace IDNetSoftware
         protected void OnButtonOkClicked(object sender, EventArgs e)
         {
             this.Destroy();
+        }
+
+        protected void OnComboboxFromChanged(object sender, EventArgs e)
+        {
+            //Relleno el select
+            RellenarComboBox(CargarComboBoxSelect(comboboxFrom.ActiveText),null);
+            comboboxSelect.Sensitive = true;
+        }
+
+        protected void OnComboboxSelectChanged(object sender, EventArgs e)
+        {
+            entryWhere.Sensitive = true;
         }
     }
 }

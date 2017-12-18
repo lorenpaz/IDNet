@@ -26,7 +26,7 @@ namespace IDNetSoftware
 
 		private global::Gtk.Label labelWhere;
 
-		private global::Gtk.ComboBox comboboxWhere;
+		private global::Gtk.Entry entryWhere;
 
 		private global::Gtk.Button buttonCancel;
 
@@ -120,18 +120,17 @@ namespace IDNetSoftware
 			w8.Expand = false;
 			w8.Fill = false;
 			// Container child hbox6.Gtk.Box+BoxChild
-			this.comboboxWhere = global::Gtk.ComboBox.NewText();
-			this.comboboxWhere.Name = "comboboxWhere";
-			this.hbox6.Add(this.comboboxWhere);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox6[this.comboboxWhere]));
+			this.entryWhere = new global::Gtk.Entry();
+			this.entryWhere.CanFocus = true;
+			this.entryWhere.Name = "entryWhere";
+			this.entryWhere.IsEditable = true;
+			this.entryWhere.InvisibleChar = '•';
+			this.hbox6.Add(this.entryWhere);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox6[this.entryWhere]));
 			w9.Position = 1;
-			w9.Expand = false;
-			w9.Fill = false;
 			this.hbox5.Add(this.hbox6);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.hbox6]));
 			w10.Position = 2;
-			w10.Expand = false;
-			w10.Fill = false;
 			this.vbox2.Add(this.hbox5);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox5]));
 			w11.Position = 1;
@@ -140,8 +139,6 @@ namespace IDNetSoftware
 			this.hbox1.Add(this.vbox2);
 			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
 			w12.Position = 0;
-			w12.Expand = false;
-			w12.Fill = false;
 			w1.Add(this.hbox1);
 			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(w1[this.hbox1]));
 			w13.Position = 0;
@@ -180,9 +177,11 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 400;
+			this.DefaultWidth = 403;
 			this.DefaultHeight = 300;
 			this.Show();
+			this.comboboxSelect.Changed += new global::System.EventHandler(this.OnComboboxSelectChanged);
+			this.comboboxFrom.Changed += new global::System.EventHandler(this.OnComboboxFromChanged);
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}

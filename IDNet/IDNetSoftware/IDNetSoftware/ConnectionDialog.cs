@@ -143,6 +143,7 @@ namespace IDNetSoftware
 			}
 			else
 			{
+                buttonConexion.Sensitive = false;
                 buttonEsquema.Sensitive = true;
 			}
 
@@ -150,6 +151,7 @@ namespace IDNetSoftware
             {
 				buttonSelect.Sensitive = false;
             }else{
+                buttonConexion.Sensitive = false;
 				buttonSelect.Sensitive = true;
 			}
 
@@ -234,12 +236,10 @@ namespace IDNetSoftware
         {
 			string msg, response;
 
-            List<string> select = CargarComboBoxSelect();
-			List<string> from = CargarComboBoxFrom();
-			List<string> where = CargarComboBoxWhere();
-			
-            this._selectDialog = new SelectDialog(this._destination, this._db_type, this._db_name, select, from,where);
-            this._selectDialog.Run();
+            BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
+
+			this._selectDialog = new SelectDialog(this._destination, this._db_type, this._db_name,schema);
+            this._selectDialog.Show();
 
             switch (this._selectDialog.TypeOutPut)
             {
@@ -265,50 +265,5 @@ namespace IDNetSoftware
             this.Destroy();
         }
 
-        /*
-         * Método para cargar el ComboBox del Select
-         * */
-        private List<string> CargarComboBoxSelect()
-        {
-            List<string> select = new List<string>();
-            BodyRespuesta002MySQL body = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
-
-			foreach (var table in body.Tables)
-			{
-                foreach (var col in table.Cols)
-                {
-                    select.Add(col.Name);
-                }
-			}
-
-			return select;
-        }
-
-		/*
-         * Método para cargar el ComboBox del Select
-         * */
-		private List<string> CargarComboBoxFrom()
-		{
-			List<string> from = new List<string>();
-            BodyRespuesta002MySQL body = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
-
-            foreach(var table in body.Tables)
-            {
-                from.Add(table.Name);
-			}
-
-			return from;
-		}
-
-		/*
-         * Método para cargar el ComboBox del Select
-         * */
-		private List<string> CargarComboBoxWhere()
-		{
-			List<string> where = new List<string>();
-            BodyRespuesta002MySQL body = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
-
-			return where;
-		}
     }
 }

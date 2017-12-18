@@ -72,12 +72,14 @@ namespace IDNetSoftware
         //Dialogo de conexion
         ConnectionDialog _connectionDialog;
 
-        //Diccionario con todos los mensajes (neighbour -> (connection->Pipe,schema->Pipe,select->Pipe))
-        Dictionary<string, Dictionary<string, PipeMessage>> _messages;
+        //Diccionario con todos los mensajes (neighbour -> [(tipobbdd,nombrebbdd,(connection->Pipe,schema->Pipe,select->Pipe))])
+        Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>> _messages;
 
         public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
+           
+            infoview.ModifyFont(new Pango.FontDescription());
 
             this._infoBBDDView = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
             this._infoBBDDownView = new ListStore(typeof(string), typeof(string));
@@ -85,7 +87,7 @@ namespace IDNetSoftware
             this._databases = new Databases();
             this._neighbours = new Neighbours();
 
-            this._messages = new Dictionary<string, Dictionary<string, PipeMessage>>();
+            this._messages = new Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>>();
 
             cargoBasesDeDatosDeLaOV();
 
@@ -270,20 +272,24 @@ namespace IDNetSoftware
             string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
             string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
 
-            if (this._messages.ContainsKey(usuario))
+            //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
+            if (this._messages.ContainsKey(usuario) && devuelveTupla(usuario, tipoBBDD, nombreBBDD) != null)
             {
-                if (this._messages[usuario].ContainsKey("schema"))
-                {
-                    PipeMessage pipeConexion = this._messages[usuario]["connection"];
-                    PipeMessage pipeSchema = this._messages[usuario]["schema"];
+                Tuple<string, string, Dictionary<string, PipeMessage>> tupla = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+               
+				int index = this._messages[usuario].IndexOf(tupla); 
+
+				if (comprobarTuplaConSchema(usuario, tipoBBDD, nombreBBDD))
+				{
+                    PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
+                    PipeMessage pipeSchema = this._messages[usuario][index].Item3["schema"];
 
                     this._connectionDialog = new ConnectionDialog(
                         usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema);
-
                 }
                 else
                 {
-                    PipeMessage pipeConexion = this._messages[usuario]["connection"];
+                    PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
 
                     this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion);
                 }
@@ -303,8 +309,18 @@ namespace IDNetSoftware
                 case "001":
                     Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
                     messageC.Add("connection", this._connectionDialog.Connection);
-                    this._messages.Add(usuario, messageC);
+                    Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
+                        new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD,nombreBBDD,messageC);
 
+                    if (!this._messages.ContainsKey(usuario))
+                    {
+                        List<Tuple<string, string, Dictionary<string, PipeMessage>>> lista = new List<Tuple<string, string, Dictionary<string, PipeMessage>>>();
+                        lista.Add(tupl);
+
+                        this._messages.Add(usuario, lista);
+                    }else{
+                        this._messages[usuario].Add(tupl);
+                    }
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
                     MostrarConexion(this._connectionDialog.Connection.MessageResponse);
 
@@ -312,18 +328,13 @@ namespace IDNetSoftware
 
                 case "002":
                     
-                    if (!this._messages.ContainsKey(usuario) || !this._messages[usuario].ContainsKey("schema"))
+                    if (!comprobarTuplaConSchema(usuario, tipoBBDD, nombreBBDD))
                     {
-                        if (this._messages.ContainsKey(usuario))
-                        {
-                            this._messages[usuario].Add("schema", this._connectionDialog.Schema);
-                        }
-                        else
-                        {
-							Dictionary<string, PipeMessage> messageS = new Dictionary<string, PipeMessage>();
-							messageS.Add("schema", this._connectionDialog.Schema);
-                            this._messages.Add(usuario, messageS);
-                        }
+						Tuple<string, string, Dictionary<string, PipeMessage>> tuplaa = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+
+						int indexx = this._messages[usuario].IndexOf(tuplaa);
+
+                        this._messages[usuario][indexx].Item3.Add("schema", this._connectionDialog.Schema);
                     }
 
 					MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
@@ -331,9 +342,43 @@ namespace IDNetSoftware
                     break;
 
                 case "003":
-                    break;
+					Tuple<string, string, Dictionary<string, PipeMessage>> tupla = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+
+					int index = this._messages[usuario].IndexOf(tupla);
+                    if(this._messages[usuario][index].Item3.ContainsKey("select"))
+                    {
+                        this._messages[usuario][index].Item3["select"] = this._connectionDialog.Select;
+                    }else{
+                        this._messages[usuario][index].Item3.Add("select", this._connectionDialog.Select);
+					}
+
+					break;
             }
 
+        }
+
+        private Tuple<string, string, Dictionary<string, PipeMessage>> devuelveTupla(string usuario, string tipoBBDD, string nombreBBDD)
+        {
+			foreach (var tupla in this._messages[usuario])
+			{
+				if (tupla.Item1 == tipoBBDD && tupla.Item2 == nombreBBDD)
+				{
+					 return tupla;
+				}
+			}
+            return null;
+		}
+
+        private bool comprobarTuplaConSchema(string usuario,string tipoBBDD,string nombreBBDD)
+        {
+			Tuple<string, string, Dictionary<string, PipeMessage>> tupl = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+
+            if(tupl != null && tupl.Item3.ContainsKey("schema"))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/

@@ -18,8 +18,8 @@ namespace ConstantsLibraryS
 		public const string SOLICITUD_ESQUEMA = @"Solicitud de esquema de base de datos";
         public const string RESPUESTA_ESQUEMA = @"Respuesta a la solicitud de esquema de la base de datos";
 
-        public const string USUARIO_SOLICITADO = @"Usuario solicitado: ";
-        public const string USUARIO_RESPUESTA = "Usuario: ";
+        public const string USUARIO_SOLICITADO = @"Solicitado al usuario: ";
+        public const string USUARIO_RESPUESTA = "Respuesta del usuario: ";
 
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
         public const string ACCESS_DENIED_MYSQL = "Access Denied: Check DB name, username, password";
@@ -119,13 +119,8 @@ namespace ConstantsLibraryS
         public static string RespuestaConexion(Message messageResponse)
         {
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
-			return "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
-			Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
-			linea + "\n" +
-			 Columna(" ", LENGTH_TABLE_VIEW, ' ') + "\n" +
-			Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
-			linea + "\n" +
-		   Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
+            return "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_CONEXION +"\n" +
+           Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n";
 
 		}
     }

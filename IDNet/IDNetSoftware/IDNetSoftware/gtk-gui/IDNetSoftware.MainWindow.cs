@@ -100,6 +100,7 @@ namespace IDNetSoftware
 			this.HeightRequest = 550;
 			this.Name = "IDNetSoftware.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Resizable = false;
 			this.DefaultWidth = 700;

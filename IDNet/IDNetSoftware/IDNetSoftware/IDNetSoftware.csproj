@@ -60,6 +60,9 @@
     <EmbeddedResource Include="resources\icons\user.png">
       <LogicalName>user.png</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\FInL.png">
+      <LogicalName>iconoIDNetSoftware</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />

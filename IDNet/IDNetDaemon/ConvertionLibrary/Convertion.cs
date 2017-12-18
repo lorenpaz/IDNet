@@ -16,41 +16,10 @@ namespace ConvertionLibrary
 
         public static XmlDocument JsonToXml(string k)
         {
-            log.Info(k);
-       /*    XmlDocument doc = new XmlDocument();
-			XmlElement database = doc.CreateElement("database");
-			doc.AppendChild(database);
-
-            log.Info(k);
-          //  JObject json = JObject.Parse(k);
-            dynamic x = Newtonsoft.Json.JsonConvert.DeserializeObject(k);
-
-
-			XmlNode nombreBBDD = doc.CreateElement("name");
-            nombreBBDD.InnerText = x.name;
-            database.AppendChild(nombreBBDD);
-
-             
-            foreach(var coleccion in x.colecciones)
-            {
-                XmlNode collection = doc.CreateElement("collection");
-
-                foreach (var field in coleccion)
-                {
-                    XmlNode nombreColeccion = doc.CreateElement("name");
-                    nombreColeccion.InnerText = field.name;
-					//XmlNode campo = doc.CreateElement("field");
-
-                    //XmlNode campoNombre = doc.
-
-					collection.AppendChild(nombreColeccion);
-				}
-
-                database.AppendChild(collection);
-            }
-*/
-            XmlDocument doc = (XmlDocument)JsonConvert.DeserializeXmlNode(k);
-            log.Info(doc.InnerXml);
+           // log.Info(k);
+     
+            XmlDocument doc = JsonConvert.DeserializeXmlNode(k);
+         //   log.Info(doc.InnerXml);
             return doc;
         }
 

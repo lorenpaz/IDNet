@@ -45,6 +45,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Json" />
     <Reference Include="System.Data" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -62,6 +65,7 @@
     <None Include="resources\MongoDB.Bson.dll" />
     <None Include="resources\MongoDB.Driver.Core.dll" />
     <None Include="resources\MongoDB.Driver.dll" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConvertionLibrary\ConvertionLibrary.csproj">

@@ -396,7 +396,15 @@ namespace IDNetSoftware
          * */
         private void MostrarEsquema(Message messageResponse)
         {
+		/*	TextTag tag = new TextTag("xx-small");
+            tag.Size = (int) Pango.Scale.PangoScale * 9;
+			infoview.Buffer.TagTable.Add(tag);
+			TextIter insertIter = infoview.Buffer.EndIter;*/
+
             if (messageResponse.Db_type == "mysql")
+            //    infoview.Buffer.InsertWithTags(ref insertIter,
+              //                                 "\n"+Constants.RespuestaEsquemaMySQL(messageResponse),
+                //                              tag);
                 infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMySQL(messageResponse);
             else
                 infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse);

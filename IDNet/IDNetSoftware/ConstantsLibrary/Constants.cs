@@ -97,10 +97,10 @@ namespace ConstantsLibraryS
         }
 		public static string RespuestaEsquemaMongoDB(Message messageResponse)
 		{
-			//BodyRespuesta002MongoDB body = new BodyRespuesta002MongoDB(messageResponse.Body.InnerXml);
+			BodyRespuesta002MongoDB body = new BodyRespuesta002MongoDB(messageResponse.Body.InnerXml);
 			
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
-			return "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
+			string status = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
 			Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
 			linea + "\n" +
 			 Columna(" ", LENGTH_TABLE_VIEW, ' ') + "\n" +
@@ -108,6 +108,19 @@ namespace ConstantsLibraryS
 			linea + "\n" +
 		   Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
 
+            string collections = "";
+            foreach(Collection c in body.Collections)
+            {
+                collections += "--" + NOMBRE_COLECCION + c.Name + "\n";
+				collections += TABLA_COLUMNAS_CAMPOS + "\n";
+                foreach (Field co in c.Fields)
+				{
+					//tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
+					collections += ColumnaTabla(co.Name,"") + "\n";
+				}
+				collections += TABLA_COLUMNAS + "\n";
+            }
+            return status + collections;
 		}
 
         public static string SolicitudConexion(Message messageRequest)
@@ -163,9 +176,9 @@ namespace ConstantsLibraryS
 		private string _name;
 		//string _type;
 
-		public Field(XmlElement infoField)
+        public Field(XmlNode infoField)
 		{
-			this._name = infoField.GetElementsByTagName("name")[0].InnerText;
+            this._name = infoField.Name;
 			//this._type = infoCol.GetElementsByTagName("type")[0].InnerText;
 		}
 		public string Name
@@ -242,11 +255,16 @@ namespace ConstantsLibraryS
 
 			this._fields = new List<Field>();
 			this._name = infoCollection.GetElementsByTagName("name")[0].InnerText;
-			foreach (XmlElement infoField in infoCollection.GetElementsByTagName("field"))
+            /*foreach (XmlElement infoField in infoCollection.GetElementsByTagName("field"))
 			{
 				this._fields.Add(new Field(infoField));
 
-			}
+			}*/
+            XmlNode ejemploColeccion = infoCollection.GetElementsByTagName("ejemploColeccion")[0];
+            foreach (XmlNode node in ejemploColeccion.ChildNodes)
+            {
+                this._fields.Add(new Field(node));
+            }
 		}
 		public string Name
 		{
@@ -324,9 +342,31 @@ namespace ConstantsLibraryS
 			XmlDocument x = new XmlDocument();
 			x.LoadXml(body);
 			this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
-			foreach (XmlElement coleccion in x.DocumentElement.GetElementsByTagName("coleccion"))
+			foreach (XmlElement coleccion in x.DocumentElement.GetElementsByTagName("colecciones"))
 			{
 				this._collections.Add(new Collection(coleccion));
+			}
+		}
+		public string Db_name
+		{
+			get
+			{
+				return this._db_name;
+			}
+			set
+			{
+				this._db_name = value;
+			}
+		}
+        public List<Collection> Collections
+		{
+			get
+			{
+                return this._collections;
+			}
+			set
+			{
+                this._collections = value;
 			}
 		}
 	}

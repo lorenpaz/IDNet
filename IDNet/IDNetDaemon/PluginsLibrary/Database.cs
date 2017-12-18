@@ -122,12 +122,5 @@ namespace PluginsLibrary
 			return xmldocument;
 		}
 
-
-      /*  static void Main(string[] args)
-        {
-            Database d;
-                 d = new Database();
-           d.EstructureRequest("mongodb", "usuarios");
-        }*/
     }
 }

@@ -1,8 +1,13 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Threading.Tasks;
-using System.Json;
 using log4net;
+using System;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
+
 namespace PluginsLibrary
 {
     public class PluginMongo
@@ -52,23 +57,36 @@ namespace PluginsLibrary
             this._database = this._client.GetDatabase(this._databaseName);
             var collection = await this._database.ListCollectionsAsync();
 
+            List<JObject> objects = new List<JObject>();
             var j = "{\"database\": {";
             j += "\"name\": \""+this._databaseName+"\",";
-            j += "\"coleccion\":[";
-            int i=0;
+            j += "\"colecciones\":[";
+
             while (collection.MoveNext())
             {
                 foreach (var collDoc in collection.Current)
                 {
-                    j += collDoc.ToJson();
-                    j += ",";
-                    i = i + 1;
+                    JToken doc = JObject.Parse(collDoc.ToJson());
+
+					string nombreColeccion = (string) doc.SelectToken("name");
+                    var coleccion = this._database.GetCollection<BsonDocument>(nombreColeccion);
+
+                    var firstDocument = coleccion.FindAsync(_ => true).Result.Single();
+                    firstDocument.Remove("_id");
+                    j += "{\"name\":"+"\""+nombreColeccion+"\""+",\"ejemploColeccion\":"+firstDocument.ToJson() +"}";
+				    j += ",";	
                 }
                 j = j.Remove(j.Length - 1,1);
             }
             j += "]}";
+            this._salida = j;
+        }
 
-                this._salida = j;
+        static void Main(string[] args)
+		{
+            PluginMongo p = new PluginMongo("usuarios");
+            p.EstructureRequest();
+
         }
 		
     }

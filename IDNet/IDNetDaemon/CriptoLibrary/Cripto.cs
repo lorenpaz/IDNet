@@ -5,14 +5,16 @@ using System.Security.Cryptography.Xml;
 using System.Xml;
 using ConstantsLibrary;
 using System.IO;
-
+using log4net;
 
 namespace CriptoLibrary
 {
     public class Cripto
     {
         private Dictionary<string, SymmetricAlgorithm> _keyMap;
+        static readonly ILog log = LogManager.GetLogger(typeof(Cripto));
 
+		static byte[] entropy = System.Text.Encoding.Unicode.GetBytes("saltSalt");
         public Cripto(){}
 
 		/*static void Main(string[] args)
@@ -257,6 +259,37 @@ namespace CriptoLibrary
 			}
 		}
 
+
+	/*	public static string EncryptString(string input)
+		{
+            try
+            {
+                byte[] encryptedData = System.Security.Cryptography.ProtectedData.Protect(
+                    System.Text.Encoding.UTF8.GetBytes(input),
+                    entropy,
+                    System.Security.Cryptography.DataProtectionScope.LocalMachine);
+				return Convert.ToBase64String(encryptedData);
+			}catch(CryptographicException e){
+                log.Info("EncryptString:"+input+e.ToString());
+            }
+            return null;
+		}
+
+		public static string DecryptString(string encryptedData)
+		{
+            try
+            {
+                byte[] decryptedData = System.Security.Cryptography.ProtectedData.Unprotect(
+                    Convert.FromBase64String(encryptedData),
+                    entropy,
+                    System.Security.Cryptography.DataProtectionScope.LocalMachine);
+                return System.Text.Encoding.UTF8.GetString(decryptedData);
+            }catch(CryptographicException e){
+                log.Info("EncryptString:" + encryptedData + e.ToString());
+
+			}
+            return null;
+		}*/
 	}
 }
 

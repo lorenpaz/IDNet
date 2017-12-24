@@ -38,20 +38,17 @@ namespace IDNetSoftware
         {
 			this.Destroy();
         }
-
-        protected void OnButtonReconectarClicked(object sender, EventArgs e)
+        
+        protected void OnButtonOKClicked(object sender, EventArgs e)
         {
-            if(comprobacionServidoresBaseDeDatos())
-            {
-                this.Destroy();
-            }
+            this.Destroy();
         }
 
 		private bool comprobacionServidoresBaseDeDatos()
 		{
 			bool ok = false;
 			string messageError = "";
-			foreach (KeyValuePair<string, List<string>> entry in this._databases.DatabasesPropias)
+			foreach (KeyValuePair<string, List<Tuple<string,string,string>>> entry in this._databases.DatabasesPropias)
 			{
 				switch (entry.Key)
 				{
@@ -87,5 +84,6 @@ namespace IDNetSoftware
 			}
             return ok;
 		}
+
     }
 }

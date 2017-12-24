@@ -16,6 +16,8 @@ namespace CriptoLibraryS
         public Cripto()
         {
         }
+		static byte[] entropy = System.Text.Encoding.Unicode.GetBytes("saltSalt");
+
 
 		public static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
 		{
@@ -140,5 +142,45 @@ namespace CriptoLibraryS
 			// Replace the encryptedData element with the plaintext XML element.
 			exml.ReplaceData(encryptedElement, rgbOutput);
 		}
+
+		/*public static string EncryptString(string input)
+		{
+			try
+			{
+				byte[] encryptedData = System.Security.Cryptography.ProtectedData.Protect(
+                    System.Text.Encoding.UTF8.GetBytes(input),
+					entropy,
+                    System.Security.Cryptography.DataProtectionScope.LocalMachine);
+				return Convert.ToBase64String(encryptedData);
+			}
+			catch (CryptographicException e)
+			{
+                string error = e.ToString();
+			}
+			return null;
+		}
+
+		public static string DecryptString(string encryptedData)
+		{
+			try
+			{
+				byte[] decryptedData = System.Security.Cryptography.ProtectedData.Unprotect(
+					Convert.FromBase64String(encryptedData),
+					entropy,
+                    System.Security.Cryptography.DataProtectionScope.LocalMachine);
+				return System.Text.Encoding.UTF8.GetString(decryptedData);
+			}
+			catch (CryptographicException e)
+			{
+				string error = e.ToString();
+
+			}
+			return null;
+		}
+        static void Main(){
+            string s = Cripto.EncryptString("hola");
+            string c = Cripto.DecryptString(s);
+        }*/
     }
+
 }

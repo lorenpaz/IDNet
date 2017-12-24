@@ -82,12 +82,12 @@ namespace PluginsLibrary
             this._salida = j;
         }
 
-        static void Main(string[] args)
+       /* static void Main(string[] args)
 		{
             PluginMongo p = new PluginMongo("usuarios");
             p.EstructureRequest();
 
-        }
+        }*/
 		
     }
 }

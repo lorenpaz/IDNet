@@ -3,20 +3,36 @@ using System.Xml;
 using MySql.Data.MySqlClient;
 using System.Data;
 
+using log4net;
+
 namespace PluginsLibrary
 {
     public class PluginMySQL
     {
         //Propiedades
         private string _databaseName;
+        private string _usernameDatabase;
+        private string _passwordDatabase;
         private string _salida;
         private string _connectionString;
+		static readonly ILog log = LogManager.GetLogger(typeof(PluginMySQL));
 
 		//Constructor
 		public PluginMySQL(string databaseName)
 		{
 			this._databaseName = databaseName;
             this._connectionString ="Server=localhost;Database="+this._databaseName+";User ID=root;Password=1907;Pooling=false;";
+            this._usernameDatabase = null;
+            this._passwordDatabase = null;
+        }
+
+        public PluginMySQL(string databaseName,string userDatabase,string passwordDatabase){
+            this._databaseName = databaseName;
+            this._usernameDatabase = userDatabase;
+            this._passwordDatabase = passwordDatabase;
+            this._connectionString = "Server=localhost;Database="
+                + this._databaseName + ";User ID="+this._usernameDatabase+
+                ";Password="+this._passwordDatabase+";Pooling=false;";
 		}
 
         public string Salida
@@ -34,6 +50,7 @@ namespace PluginsLibrary
 		//Solicitud de la estructura de la BBDD
         public  XmlDocument EstructureRequest()
         {
+            log.Info(this._connectionString);
             XmlDocument document = null;
             try
             {

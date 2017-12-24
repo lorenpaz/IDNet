@@ -82,7 +82,7 @@ namespace IDNetSoftware
             infoview.ModifyFont(new Pango.FontDescription());
 
             this._infoBBDDView = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
-            this._infoBBDDownView = new ListStore(typeof(string), typeof(string));
+            this._infoBBDDownView = new ListStore(typeof(string), typeof(string),typeof(bool));
 
             this._databases = new Databases();
             this._neighbours = new Neighbours();
@@ -91,9 +91,9 @@ namespace IDNetSoftware
 
             cargoBasesDeDatosDeLaOV();
 
-            cargoBasesDeDatosPropias();
+			comprobacionServidoresBaseDeDatos();
 
-            comprobacionServidoresBaseDeDatos();
+			cargoBasesDeDatosPropias();
         }
 
         private void cargoBasesDeDatosDeLaOV()
@@ -124,6 +124,7 @@ namespace IDNetSoftware
             //Añado las columnas
             treeviewDatabasesPropias.AppendColumn("Nombre BBDD", new CellRendererText(), "text", 0);
             treeviewDatabasesPropias.AppendColumn("Tipo BBDD", new CellRendererText(), "text", 1);
+            treeviewDatabasesPropias.AppendColumn("Funciona",new CellRendererToggle(), "active", 2);
         }
 
         private void comprobacionServidoresBaseDeDatos()
@@ -132,7 +133,7 @@ namespace IDNetSoftware
             string messageError = "";
             Dictionary<string, string> errors = new Dictionary<string, string>();
 
-            foreach (KeyValuePair<string, List<string>> entry in this._databases.DatabasesPropias)
+            foreach (KeyValuePair<string, List<Tuple<string,string,string>>> entry in this._databases.DatabasesPropias)
             {
                 switch (entry.Key)
                 {
@@ -223,11 +224,18 @@ namespace IDNetSoftware
         private void addValuesOwn()
         {
             //Recorremos las bases de datos para mostrarlas
-            foreach (KeyValuePair<string, List<string>> entry in this._databases.DatabasesPropias)
+            foreach (KeyValuePair<string, List<Tuple<string,string,string>>> entry in this._databases.DatabasesPropias)
             {
-                foreach (string bbdd in entry.Value)
+                foreach (Tuple<string, string, string> bbdd in entry.Value)
                 {
-                    this._infoBBDDownView.AppendValues(bbdd, entry.Key);
+                    bool works = false;
+                    if (this._databases.ComprobacionServidor(entry.Key,bbdd.Item1,bbdd.Item2,bbdd.Item3))
+                    {
+                        works = true;
+                    }else{
+                        works = false;
+                    }
+                    this._infoBBDDownView.AppendValues(bbdd.Item1, entry.Key,works);
                 }
                 // do something with entry.Value or entry.Key
             }
@@ -250,9 +258,14 @@ namespace IDNetSoftware
 
             string nombreBBDD = (string)this._infoBBDDownView.GetValue(t, 0);
             string tipoBBDD = (string)this._infoBBDDownView.GetValue(t, 1);
+            string usuarioBBDD = getUserDatabase(tipoBBDD, nombreBBDD);
+            string passwordBBDD = getPasswordDatabase(tipoBBDD, nombreBBDD);
             List<string> bbdd = new List<string>();
             bbdd.Add(tipoBBDD);
             bbdd.Add(nombreBBDD);
+            bbdd.Add(usuarioBBDD);
+            bbdd.Add(passwordBBDD);
+
             this._modifyDatabaseDialog = new ModifyDatabaseDialog(this._databases, bbdd);
             this._modifyDatabaseDialog.Run();
 
@@ -367,6 +380,30 @@ namespace IDNetSoftware
 				}
 			}
             return null;
+		}
+
+		private Tuple<string, string, string> devuelveTuplaDatabase(string tipoBBDD, string nombreBBDD)
+		{
+            foreach (var tupla in this._databases.DatabasesPropias[tipoBBDD])
+			{
+				if (tupla.Item1 == nombreBBDD)
+				{
+					return tupla;
+				}
+			}
+			return null;
+		}
+
+		private string getUserDatabase(string databaseType, string databaseName)
+		{
+
+            int index = this._databases.DatabasesPropias[databaseType].IndexOf(devuelveTuplaDatabase(databaseType, databaseName));
+            return this._databases.DatabasesPropias[databaseType][index].Item2 == null ? null : this._databases.DatabasesPropias[databaseType][index].Item2;
+		}
+		private string getPasswordDatabase(string databaseType, string databaseName)
+		{
+			int index = this._databases.DatabasesPropias[databaseType].IndexOf(devuelveTuplaDatabase(databaseType, databaseName));
+			return this._databases.DatabasesPropias[databaseType][index].Item3 == null ? null : this._databases.DatabasesPropias[databaseType][index].Item3;
 		}
 
         private bool comprobarTuplaConSchema(string usuario,string tipoBBDD,string nombreBBDD)

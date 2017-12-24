@@ -24,8 +24,12 @@ namespace IDNetSoftware
         protected void OnButtonOkClicked(object sender, EventArgs e)
         {
             bool add = false;
-            add = this._databases.addDatabase(comboboxTipos.ActiveText,entryNombreBBDD.Text);
-            this.Destroy();
+            if(entryUsername.Text == "")
+                add = this._databases.addDatabase(comboboxTipos.ActiveText,entryNombreBBDD.Text,null,null);
+            else
+				add = this._databases.addDatabase(comboboxTipos.ActiveText, entryNombreBBDD.Text,
+                                                  entryUsername.Text, entryContrasenia.Text);
+			this.Destroy();
         }
     }
 }

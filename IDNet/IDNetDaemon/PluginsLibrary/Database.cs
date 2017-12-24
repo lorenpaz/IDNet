@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using ConvertionLibrary;
 using ConstantsLibrary;
+using CriptoLibrary;
 
 namespace PluginsLibrary
 {
@@ -12,15 +13,16 @@ namespace PluginsLibrary
     //Clase base de datos
     public class Database
     {
-        //Diccionario tipoBBDD -> [nombreBBDD1,nombreBBDD2]
-        private Dictionary<string, List<string>> _databases;
+        //Diccionario tipoBBDD -> [(nombreBBDD1,usuario1,contrasenia1),
+                                    //(nombreBBDD2,usuario2,contrasenia2)]
+        private Dictionary<string, List<Tuple<string,string,string>>> _databases;
 
 		public Database()
 		{
 			ParseConf();
 		}
 
-        public Dictionary<string, List<string>> Databases
+        public Dictionary<string, List<Tuple<string, string, string>>> Databases
         {
             get
             {
@@ -38,20 +40,21 @@ namespace PluginsLibrary
             //Archivo a leer
             StreamReader conFile = File.OpenText(Constants.CONF_DATABASES);
             string line = conFile.ReadLine();
-            this._databases = new Dictionary<string, List<string>>();
+            this._databases = new Dictionary<string, List<Tuple<string, string, string>>>();
 
             //Voy leyendo línea por línea
             while (line != null)
             {
                 int i = 0;
-                bool param = true;
-                string parameter = "", valor = "";
+                bool param = true, secondParam = false, thirdParam = false;
+                string parameter = "", valor = "",usuario="",contrasenia="";
                 /*
                  * 
                  * database_type=database_name;
                  * 
-                 * Ejemplo:
-                 * mongodb=empleados;
+                 * Ejemplos:
+                 * mysql*usuarios|pepe*contrasenia;
+                 * mongodb*empleados;
                  * 
                  */
 
@@ -59,44 +62,96 @@ namespace PluginsLibrary
                 while (line[i] != ';')
                 {
                     //Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-                    if (line[i] == '=')
+                    if (line[i] == '*')
+                    {
                         param = false;
-                    else if (param)
+                        if (secondParam)
+                            thirdParam = true;
+                    }
+                    else if (line[i] == '|')
+                    {
+                        secondParam = true;
+                        param = true;
+                    }
+                    else if (param && !secondParam && !thirdParam)
                         parameter += line[i];
-                    else if (!param)
+                    else if (!param && !secondParam && !thirdParam)
                         valor += line[i];
-
+                    else if (param && secondParam && !thirdParam)
+                        usuario += line[i];
+                    else if (thirdParam)
+                        contrasenia += line[i];
                     i++;
                 }
 
+				if (usuario == "")
+                    usuario = null;
+                if (contrasenia == "")
+                    contrasenia = null;
+               /* else
+                    contrasenia = Cripto.DecryptString(contrasenia);*/
                 if (this._databases.ContainsKey(parameter))
                 {
-                    this._databases[parameter].Add(valor);
+                    Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+                    this._databases[parameter].Add(tupla);
                 }
                 else
                 {
-                    List<string> aux = new List<string>();
-                    aux.Add(valor);
+                    List<Tuple<string,string,string>> aux = new List<Tuple<string, string, string>>();
+					Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+					aux.Add(tupla);
                     this._databases.Add(parameter, aux);
                 }
 
                 line = conFile.ReadLine();
             }
+            conFile.Close();
+		}
+
+
+		private Tuple<string, string,string> devuelveTupla(string tipoBBDD, string nombreBBDD)
+		{
+            foreach (var tupla in this._databases[tipoBBDD])
+			{
+				if (tupla.Item1 == nombreBBDD)
+				{
+					return tupla;
+				}
+			}
+			return null;
+		}
+
+        private string getUser(string databaseType, string databaseName){
+            int index = this._databases[databaseType].IndexOf(devuelveTupla(databaseType, databaseName));
+            return this._databases[databaseType][index].Item2 == null ? null: this._databases[databaseType][index].Item2;
+        }
+		private string getPassword(string databaseType, string databaseName)
+		{
+			int index = this._databases[databaseType].IndexOf(devuelveTupla(databaseType, databaseName));
+			return this._databases[databaseType][index].Item3 == null ? null : this._databases[databaseType][index].Item3;
 		}
 
 		//Solicitud de la estructura de la base de datos
 		public XmlDocument EstructureRequest(string databaseType, string databaseName)
         {
             XmlDocument xmldocument = new XmlDocument();
+            PluginMongo mongo;
+            PluginMySQL mysql;
             switch(databaseType)
             {
                 case("mongodb"):
-                    PluginMongo mongo = new PluginMongo(databaseName);
+                    mongo = new PluginMongo(databaseName);
                     xmldocument = Convertion.JsonToXml(mongo.EstructureRequest());
                     break;
 
                 case("mysql"):
-                    PluginMySQL mysql = new PluginMySQL(databaseName);
+                    string username = getUser(databaseType, databaseName);
+                    string password = getPassword(databaseType, databaseName);
+
+                    if (username == null)
+                        mysql = new PluginMySQL(databaseName);
+                    else
+                        mysql = new PluginMySQL(databaseName,username,password);
                     xmldocument = mysql.EstructureRequest();
                     break;
             }
@@ -107,15 +162,22 @@ namespace PluginsLibrary
 		public XmlDocument SelectRequest(string databaseType, string databaseName,string consulta)
 		{
 			XmlDocument xmldocument = new XmlDocument();
+            PluginMySQL mysql;
+            PluginMongo mongo;
 			switch (databaseType)
 			{
 				case ("mongodb"):
-					PluginMongo mongo = new PluginMongo(databaseName);
+					mongo = new PluginMongo(databaseName);
 					xmldocument = Convertion.JsonToXml(mongo.SelectRequest());
 					break;
 
 				case ("mysql"):
-					PluginMySQL mysql = new PluginMySQL(databaseName);
+					string username = getUser(databaseType, databaseName);
+                    string password = getPassword(databaseType, databaseName);
+                    if (username == null)
+                         mysql = new PluginMySQL(databaseName);
+                    else
+					     mysql = new PluginMySQL(databaseName, username, password);
 					xmldocument = mysql.SelectRequest();
 					break;
 			}

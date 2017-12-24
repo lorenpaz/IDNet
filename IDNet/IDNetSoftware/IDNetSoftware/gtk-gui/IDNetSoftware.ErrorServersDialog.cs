@@ -16,7 +16,7 @@ namespace IDNetSoftware
 
 		private global::Gtk.Button buttonCancel;
 
-		private global::Gtk.Button buttonReconectar;
+		private global::Gtk.Button buttonOK;
 
 		protected virtual void Build()
 		{
@@ -82,14 +82,14 @@ namespace IDNetSoftware
 			w8.Expand = false;
 			w8.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonReconectar = new global::Gtk.Button();
-			this.buttonReconectar.CanDefault = true;
-			this.buttonReconectar.CanFocus = true;
-			this.buttonReconectar.Name = "buttonReconectar";
-			this.buttonReconectar.UseUnderline = true;
-			this.buttonReconectar.Label = global::Mono.Unix.Catalog.GetString("_Reconectar");
-			this.AddActionWidget(this.buttonReconectar, 0);
-			global::Gtk.ButtonBox.ButtonBoxChild w9 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonReconectar]));
+			this.buttonOK = new global::Gtk.Button();
+			this.buttonOK.CanDefault = true;
+			this.buttonOK.CanFocus = true;
+			this.buttonOK.Name = "buttonOK";
+			this.buttonOK.UseUnderline = true;
+			this.buttonOK.Label = global::Mono.Unix.Catalog.GetString("_OK");
+			this.AddActionWidget(this.buttonOK, 0);
+			global::Gtk.ButtonBox.ButtonBoxChild w9 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonOK]));
 			w9.Position = 1;
 			w9.Expand = false;
 			w9.Fill = false;
@@ -101,7 +101,7 @@ namespace IDNetSoftware
 			this.DefaultHeight = 300;
 			this.Show();
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
-			this.buttonReconectar.Clicked += new global::System.EventHandler(this.OnButtonReconectarClicked);
+			this.buttonOK.Clicked += new global::System.EventHandler(this.OnButtonOKClicked);
 		}
 	}
 }

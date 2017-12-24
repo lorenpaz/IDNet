@@ -45,7 +45,7 @@ namespace PostBoxLibrary
 			Cripto cript = new Cripto();
 
             this._messageRecieve.parserStartRecievedMessage(xmlDoc);
-
+            log.Info("entrmedias");
             if (this._messageRecieve.MessageType == "001")
             {
                 //Aquí iria una funcion para quitar el cifrado asimetrico
@@ -67,12 +67,13 @@ namespace PostBoxLibrary
 
 			if (!(this._messageRecieve.MessageType == "001"))
             {
+                log.Info("previoEJecutar");
 				//Ejecutamos el proceso
 				XmlDocument xmlDocResponse = this._process.ejecutar(this._messageRecieve);
-
+                log.Info("postEjecutar");
                 //Creamos la respuesta
                 respuesta = responder(xmlDocResponse);
-
+                log.Info("finiquitado");
             }else{
 				log.Info("here3");
 

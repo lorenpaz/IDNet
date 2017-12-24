@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using ConstantsLibraryS;
+using CriptoLibraryS;
 
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -15,15 +16,16 @@ namespace DatabaseLibraryS
     public class Databases
     {
 
-		//Diccionario tipoBBDD -> [nombreBBDD1,nombreBBDD2]
-		private Dictionary<string, List<string>> _databasesPropias;
+		//Diccionario tipoBBDD -> [(nombreBBDD1,usuario1,contrasenia1),
+		//(nombreBBDD2,usuario2,contrasenia2)]
+		private Dictionary<string, List<Tuple<string, string, string>>> _databasesPropias;
 
 		public Databases()
 		{
 			ParseConf();
 		}
 
-		public Dictionary<string, List<string>> DatabasesPropias
+		public Dictionary<string, List<Tuple<string, string, string>>> DatabasesPropias
 		{
 			get
 			{
@@ -35,6 +37,78 @@ namespace DatabaseLibraryS
 			}
 		}
 
+		//Lee del fichero de configuración
+		private void ParseConf()
+		{
+			//Archivo a leer
+            StreamReader conFile = File.OpenText(Constants.ConfigFileDatabases);
+			string line = conFile.ReadLine();
+			this._databasesPropias = new Dictionary<string, List<Tuple<string, string, string>>>();
+
+			//Voy leyendo línea por línea
+			while (line != null)
+			{
+				int i = 0;
+				bool param = true, secondParam = false, thirdParam = false;
+				string parameter = "", valor = "", usuario = "", contrasenia = "";
+				/*
+                 * 
+                 * database_type=database_name;
+                 * 
+                 * Ejemplo:
+                 * mongodb*empleados|pepe*contrasenia;
+                 * 
+                 */
+
+				//Leemos el parámetro
+				while (line[i] != ';')
+				{
+					//Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
+					if (line[i] == '*')
+					{
+						param = false;
+						if (secondParam)
+							thirdParam = true;
+					}
+					else if (line[i] == '|')
+					{
+						secondParam = true;
+						param = true;
+					}
+					else if (param && !secondParam && !thirdParam)
+						parameter += line[i];
+					else if (!param && !secondParam && !thirdParam)
+						valor += line[i];
+					else if (param && secondParam && !thirdParam)
+						usuario += line[i];
+					else if (thirdParam)
+						contrasenia += line[i];
+					i++;
+				}
+				if (usuario == "")
+					usuario = null;
+                if (contrasenia == "")
+                    contrasenia = null;
+                /*else
+                    contrasenia = Cripto.DecryptString(contrasenia);*/
+                
+				if (this._databasesPropias.ContainsKey(parameter))
+				{
+					Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+					this._databasesPropias[parameter].Add(tupla);
+				}
+				else
+				{
+					List<Tuple<string, string, string>> aux = new List<Tuple<string, string, string>>();
+					Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+					aux.Add(tupla);
+					this._databasesPropias.Add(parameter, aux);
+				}
+
+				line = conFile.ReadLine();
+			}
+            conFile.Close();
+		}
         /*
          * Método para actualizar las bases de datos
          * */
@@ -44,74 +118,25 @@ namespace DatabaseLibraryS
             ParseConf();    
         }
 
-		//Lee del fichero de configuración
-		private void ParseConf()
+		private Tuple<string, string, string> devuelveTupla(string tipoBBDD, string nombreBBDD)
 		{
-            //Archivo a leer
-            if(!File.Exists(Constants.ConfigFileDatabases))
-            {
-                throw new Exception("No hay archivo de configuración");
-            }
-            using (StreamReader conFile = File.OpenText(Constants.ConfigFileDatabases))
-            {
-
-                string line = conFile.ReadLine();
-
-                //Inicializamos el atributo
-                this._databasesPropias = new Dictionary<string, List<string>>();
-
-                //Voy leyendo línea por línea
-                while (line != null)
-                {
-                    int i = 0;
-                    bool param = true;
-                    string parameter = "", valor = "";
-                    /*
-                     * 
-                     * database_type=database_name;
-                     * 
-                     * Ejemplo:
-                     * mongodb=empleados;
-                     * 
-                     */
-
-                    //Leemos el parámetro
-                    while (line[i] != ';')
-                    {
-                        //Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-                        if (line[i] == '=')
-                            param = false;
-                        else if (param)
-                            parameter += line[i];
-                        else if (!param)
-                            valor += line[i];
-
-                        i++;
-                    }
-
-                    if (this._databasesPropias.ContainsKey(parameter))
-                    {
-                        this._databasesPropias[parameter].Add(valor);
-                    }
-                    else
-                    {
-                        List<string> aux = new List<string>();
-                        aux.Add(valor);
-                        this._databasesPropias.Add(parameter, aux);
-                    }
-
-                    line = conFile.ReadLine();
-                }
-            }
+            foreach (var tupla in this._databasesPropias[tipoBBDD])
+			{
+				if (tupla.Item1 == nombreBBDD)
+				{
+					return tupla;
+				}
+			}
+			return null;
 		}
 
         /*
          * Método para añadir una base de datos
          * */
-        public bool addDatabase(string tipoBBDD,string nombreBBDD)
+        public bool addDatabase(string tipoBBDD,string nombreBBDD,string usuarioDatabase, string passwordDatabase)
         {
             if(this._databasesPropias.ContainsKey(tipoBBDD) &&
-               this._databasesPropias[tipoBBDD].Contains(nombreBBDD) )
+               devuelveTupla(tipoBBDD,nombreBBDD) != null)
             {
                 return false;
             }
@@ -123,16 +148,24 @@ namespace DatabaseLibraryS
 
             using (StreamWriter w = File.AppendText(Constants.ConfigFileDatabases))
             {
-                w.WriteLine(tipoBBDD+"="+nombreBBDD+";");
+                if (usuarioDatabase == null)
+                    w.WriteLine(tipoBBDD + "*" + nombreBBDD + ";");
+                else
+                {
+                   // passwordDatabase = Cripto.EncryptString(passwordDatabase);
+                    w.WriteLine(tipoBBDD + "*" + nombreBBDD + "|" + usuarioDatabase + "*" + passwordDatabase + ";");
+                }
 
-                if (this._databasesPropias.ContainsKey(tipoBBDD))
+				if (this._databasesPropias.ContainsKey(tipoBBDD))
 				{
-					this._databasesPropias[tipoBBDD].Add(nombreBBDD);
+                    Tuple<string, string, string> tupla = new Tuple<string, string, string>(nombreBBDD, usuarioDatabase, passwordDatabase);
+					this._databasesPropias[tipoBBDD].Add(tupla);
 				}
 				else
 				{
-					List<string> aux = new List<string>();
-					aux.Add(nombreBBDD);
+					List<Tuple<string, string, string>> aux = new List<Tuple<string, string, string>>();
+					Tuple<string, string, string> tupla = new Tuple<string, string, string>(nombreBBDD, usuarioDatabase, passwordDatabase);
+					aux.Add(tupla);
 					this._databasesPropias.Add(tipoBBDD, aux);
 				}
 
@@ -143,10 +176,10 @@ namespace DatabaseLibraryS
         /*
          * Método para modificar la base de datos
          * */
-        public bool ModifyDatabase(List<string> bbdd,string nuevoTipoBBDD, string nuevoNombreBBDD)
+        public bool ModifyDatabase(List<string> bbdd,string nuevoTipoBBDD, string nuevoNombreBBDD,string nuevoUserDatabase, string nuevoPasswordDatabase)
         {
 			if (!this._databasesPropias.ContainsKey(bbdd[0]) ||
-             !this._databasesPropias[bbdd[0]].Contains(bbdd[1]))
+                !this._databasesPropias[bbdd[0]].Contains(devuelveTupla(bbdd[0],bbdd[1])))
 			{
 				return false;
 			}
@@ -169,9 +202,15 @@ namespace DatabaseLibraryS
                 }    
             }
 
-            string line = null;
-            string lineToWrite = nuevoTipoBBDD + "=" + nuevoNombreBBDD + ";";
+            string line = null,lineToWrite;
 
+            if (nuevoUserDatabase == null)
+                lineToWrite = nuevoTipoBBDD + "*" + nuevoNombreBBDD + ";";
+            else
+            {
+                //nuevoPasswordDatabase = Cripto.EncryptString(nuevoPasswordDatabase);
+                lineToWrite = nuevoTipoBBDD + "*" + nuevoNombreBBDD + "|" + nuevoUserDatabase + "*" + nuevoPasswordDatabase + ";";
+            }
             //Escribo en un archivo temporal mientras que leo
             using (StreamReader reader = new StreamReader(Constants.ConfigFileDatabases))
 			using (StreamWriter writer = new StreamWriter(tempFile))
@@ -198,6 +237,23 @@ namespace DatabaseLibraryS
             return true;
         }
 
+        public bool ComprobacionServidor(string databaseType, string databaseName,
+            string usernameDatabase, string passwordDatabase){
+            try
+            {
+                if (databaseType == "mysql")
+                {
+                    return ComprobacionMysql(databaseName, usernameDatabase, passwordDatabase);
+                }
+                else if (databaseType == "mongodb")
+                {
+                    return ComprobacionMongodb(databaseName, usernameDatabase, passwordDatabase);
+                }
+            }catch(Exception e){
+                return false;
+            }
+            return false;
+        }
 
 		/*
          * Método para comprobar que está el servidor MYSQL activo
@@ -213,10 +269,16 @@ namespace DatabaseLibraryS
 			}
 
 			//Primera base de datos con mysql
-			string db_name = this._databasesPropias["mysql"][0];
+            string db_name = this._databasesPropias["mysql"][0].Item1;
 
-            string connection = "Server=localhost;Database=" + db_name + ";User ID=root;Password=1907;Pooling=false;";
-            try
+            string connection;
+            if(this._databasesPropias["mysql"][0].Item2 == null)
+                connection = "Server=localhost;Database=" + db_name + ";Pooling=false;";
+            else
+				connection = "Server=localhost;Database=" + db_name + 
+                    ";User ID="+this._databasesPropias["mysql"][0].Item2 +
+                                    ";Password="+this._databasesPropias["mysql"][0].Item3 +";Pooling=false;";
+			try
             {
                 MySqlConnection dbcon = new MySqlConnection(connection);
                 dbcon.Open();
@@ -241,10 +303,59 @@ namespace DatabaseLibraryS
             return check;
         }
 
+		/*
+         * Método para comprobar que está el servidor MYSQL activo
+         * */
+		public bool ComprobacionMysql(string databaseName,string usernameDatabase,string passwordDatabase)
+		{
+			bool check = false;
+
+			//Control de errores
+			if (!this._databasesPropias.ContainsKey("mysql"))
+			{
+				return false;
+			}
+
+			//Primera base de datos con mysql
+            string db_name = databaseName;
+
+			string connection;
+            if (usernameDatabase == null)
+				connection = "Server=localhost;Database=" + db_name + ";Pooling=false;";
+			else
+				connection = "Server=localhost;Database=" + db_name +
+                    ";User ID=" + usernameDatabase +
+                    ";Password=" + passwordDatabase+ ";Pooling=false;";
+			try
+			{
+				MySqlConnection dbcon = new MySqlConnection(connection);
+				dbcon.Open();
+
+				check = true;
+
+			}
+			catch (MySqlException ex)
+			{
+				check = false;
+				switch (ex.Number)
+				{
+					//http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
+					case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
+						throw new Exception(Constants.UNABLE_CONNECT_MYSQL_HOSTS);
+					case 0: // Access denied (Check DB name,username,password)
+						throw new Exception(Constants.ACCESS_DENIED_MYSQL);
+					default:
+						break;
+				}
+			}
+
+			return check;
+		}
+
         /*
          * Método para comprobar que está el servidor MongoDB activo
          * */
-        public bool ComprobacionMongodb()
+        public bool ComprobacionMongodb(string databaseName, string usernameDatabase, string passwordDatabase)
         {
 			string connectionString = "mongodb://localhost";
 
@@ -255,7 +366,7 @@ namespace DatabaseLibraryS
             }
 
             //Primera base de datos con mongodb
-            string db_name = this._databasesPropias["mongodb"][0];
+            string db_name = databaseName;
 
             //Comprobamos si está activo
             var client = new MongoClient(connectionString);
@@ -264,6 +375,30 @@ namespace DatabaseLibraryS
 
             return mongodbAlive;
         }
+
+		/*
+         * Método para comprobar que está el servidor MongoDB activo
+         * */
+		public bool ComprobacionMongodb()
+		{
+			string connectionString = "mongodb://localhost";
+
+			//Control de errores
+			if (!this._databasesPropias.ContainsKey("mongodb"))
+			{
+				return false;
+			}
+
+			//Primera base de datos con mongodb
+			string db_name = this._databasesPropias["mongodb"][0].Item1;
+
+			//Comprobamos si está activo
+			var client = new MongoClient(connectionString);
+			var server = client.GetDatabase(db_name);
+			bool mongodbAlive = server.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000);
+
+			return mongodbAlive;
+		}
 
     }
 }

@@ -96,8 +96,8 @@ namespace IDNetSoftware
 			w1.Add(this.clearAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
-			this.WidthRequest = 600;
-			this.HeightRequest = 550;
+			this.WidthRequest = 700;
+			this.HeightRequest = 700;
 			this.Name = "IDNetSoftware.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");

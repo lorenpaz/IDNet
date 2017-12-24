@@ -25,6 +25,12 @@ namespace IDNetSoftware
                 comboboxTipos.Active = 1;
             }
             entryBBDD.Text = this._bbdd[1];
+            if (this._bbdd[2] != null)
+            {
+                entryUsuario.Text = this._bbdd[2];
+                entryPassword.Text = this._bbdd[3];
+            }
+
         }
 
 		protected void OnButtonCancelClicked(object sender, EventArgs e)
@@ -36,7 +42,11 @@ namespace IDNetSoftware
 		protected void OnButtonOkClicked(object sender, EventArgs e)
 		{
 			bool add = false;
-			add = this._databases.ModifyDatabase(_bbdd, comboboxTipos.ActiveText, entryBBDD.Text);
+            if(entryUsuario.Text == "")
+			    add = this._databases.ModifyDatabase(_bbdd, comboboxTipos.ActiveText, entryBBDD.Text,null,null);
+            else
+				add = this._databases.ModifyDatabase(_bbdd, comboboxTipos.ActiveText, entryBBDD.Text,
+                                                     entryUsuario.Text, entryPassword.Text);
 			this.Destroy();
 		}
 

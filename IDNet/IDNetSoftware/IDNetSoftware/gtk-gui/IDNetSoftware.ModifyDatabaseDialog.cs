@@ -22,6 +22,22 @@ namespace IDNetSoftware
 
 		private global::Gtk.Label GtkLabel3;
 
+		private global::Gtk.Frame frame4;
+
+		private global::Gtk.Alignment GtkAlignment5;
+
+		private global::Gtk.Entry entryUsuario;
+
+		private global::Gtk.Label labelUsuario;
+
+		private global::Gtk.Frame frame3;
+
+		private global::Gtk.Alignment GtkAlignment4;
+
+		private global::Gtk.Entry entryPassword;
+
+		private global::Gtk.Label GtkLabel4;
+
 		private global::Gtk.Button buttonCancel;
 
 		private global::Gtk.Button buttonOk;
@@ -96,12 +112,65 @@ namespace IDNetSoftware
 			w8.Position = 0;
 			w8.Expand = false;
 			w8.Fill = false;
+			// Container child dialog1_VBox.Gtk.Box+BoxChild
+			this.frame4 = new global::Gtk.Frame();
+			this.frame4.Name = "frame4";
+			this.frame4.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frame4.Gtk.Container+ContainerChild
+			this.GtkAlignment5 = new global::Gtk.Alignment(0F, 0F, 1F, 1F);
+			this.GtkAlignment5.Name = "GtkAlignment5";
+			this.GtkAlignment5.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment5.Gtk.Container+ContainerChild
+			this.entryUsuario = new global::Gtk.Entry();
+			this.entryUsuario.CanFocus = true;
+			this.entryUsuario.Name = "entryUsuario";
+			this.entryUsuario.IsEditable = true;
+			this.entryUsuario.InvisibleChar = '•';
+			this.GtkAlignment5.Add(this.entryUsuario);
+			this.frame4.Add(this.GtkAlignment5);
+			this.labelUsuario = new global::Gtk.Label();
+			this.labelUsuario.Name = "labelUsuario";
+			this.labelUsuario.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Usuario</b>   (opcional)");
+			this.labelUsuario.UseMarkup = true;
+			this.frame4.LabelWidget = this.labelUsuario;
+			w1.Add(this.frame4);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(w1[this.frame4]));
+			w11.Position = 1;
+			w11.Expand = false;
+			w11.Fill = false;
+			// Container child dialog1_VBox.Gtk.Box+BoxChild
+			this.frame3 = new global::Gtk.Frame();
+			this.frame3.Name = "frame3";
+			this.frame3.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frame3.Gtk.Container+ContainerChild
+			this.GtkAlignment4 = new global::Gtk.Alignment(0F, 0F, 1F, 1F);
+			this.GtkAlignment4.Name = "GtkAlignment4";
+			this.GtkAlignment4.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment4.Gtk.Container+ContainerChild
+			this.entryPassword = new global::Gtk.Entry();
+			this.entryPassword.CanFocus = true;
+			this.entryPassword.Name = "entryPassword";
+			this.entryPassword.IsEditable = true;
+			this.entryPassword.Visibility = false;
+			this.entryPassword.InvisibleChar = '•';
+			this.GtkAlignment4.Add(this.entryPassword);
+			this.frame3.Add(this.GtkAlignment4);
+			this.GtkLabel4 = new global::Gtk.Label();
+			this.GtkLabel4.Name = "GtkLabel4";
+			this.GtkLabel4.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Contraseña</b>   (opcional)");
+			this.GtkLabel4.UseMarkup = true;
+			this.frame3.LabelWidget = this.GtkLabel4;
+			w1.Add(this.frame3);
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(w1[this.frame3]));
+			w14.Position = 2;
+			w14.Expand = false;
+			w14.Fill = false;
 			// Internal child IDNetSoftware.ModifyDatabaseDialog.ActionArea
-			global::Gtk.HButtonBox w9 = this.ActionArea;
-			w9.Name = "dialog1_ActionArea";
-			w9.Spacing = 10;
-			w9.BorderWidth = ((uint)(5));
-			w9.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w15 = this.ActionArea;
+			w15.Name = "dialog1_ActionArea";
+			w15.Spacing = 10;
+			w15.BorderWidth = ((uint)(5));
+			w15.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button();
 			this.buttonCancel.CanDefault = true;
@@ -111,9 +180,9 @@ namespace IDNetSoftware
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget(this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w9[this.buttonCancel]));
-			w10.Expand = false;
-			w10.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w16 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonCancel]));
+			w16.Expand = false;
+			w16.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button();
 			this.buttonOk.CanDefault = true;
@@ -123,10 +192,10 @@ namespace IDNetSoftware
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget(this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w11 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w9[this.buttonOk]));
-			w11.Position = 1;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w17 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonOk]));
+			w17.Position = 1;
+			w17.Expand = false;
+			w17.Fill = false;
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();

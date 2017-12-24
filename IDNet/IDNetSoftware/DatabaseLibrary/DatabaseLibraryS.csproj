@@ -35,6 +35,10 @@
       <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
       <Name>ConstantsLibraryS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CriptoLibrary\CriptoLibraryS.csproj">
+      <Project>{5CB08C2F-ED6E-4A24-9C37-19179FCDC7E5}</Project>
+      <Name>CriptoLibraryS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data" />

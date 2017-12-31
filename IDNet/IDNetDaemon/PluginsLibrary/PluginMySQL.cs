@@ -112,7 +112,7 @@ namespace PluginsLibrary
                         XmlElement columna = doc.CreateElement("col");
                         columna.SetAttribute("name",row1["COLUMN_NAME"].ToString());
                         columna.SetAttribute("type",row1["DATA_TYPE"].ToString());
-                        //tabla.AppendChild(columna);
+                        tabla.AppendChild(columna);
                     }
                  }
               }

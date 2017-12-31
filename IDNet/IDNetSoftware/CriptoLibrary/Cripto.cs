@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Xml;
+
 using ConstantsLibraryS;
 using System.IO;
 
@@ -110,21 +111,30 @@ namespace CriptoLibraryS
 
 		public static string Encryption(string text, RsaKeyParameters PublicKey)
 		{
-			IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
-			cipher.Init(true, PublicKey);
-            byte[] ct = Encoding.ASCII.GetBytes(text);
+			//IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
+			//cipher.Init(true, PublicKey);
+			RsaEngine cipher = new RsaEngine();
+            cipher.Init(true, PublicKey);
+
+			byte[] ct = Encoding.ASCII.GetBytes(text);
+
 			byte[] cipherText = cipher.ProcessBlock(ct, 0, ct.Length);
-            string cifrado = Convert.ToBase64String(cipherText);
-            return cifrado;
+
+			string cifrado = Convert.ToBase64String(cipherText);
+
+			return cifrado;
 		}
 
 		public static string Decryption(byte[] ct, RsaKeyParameters Pvtkey)
 		{
-			IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
+			//IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
+			//cipher.Init(false, Pvtkey);
+			RsaEngine cipher = new RsaEngine();
 			cipher.Init(false, Pvtkey);
+
 			byte[] cipherText = cipher.ProcessBlock(ct, 0, ct.Length);
 			string descifrado = Encoding.ASCII.GetString(cipherText);
-            return descifrado;
+			return descifrado;
 		}
 
 		/*public static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)

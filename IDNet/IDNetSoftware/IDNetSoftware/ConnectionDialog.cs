@@ -213,7 +213,7 @@ namespace IDNetSoftware
 			response = c.StartClient(msg, "localhost");
 
 			//Proceso la respuesta
-			post.ProcesarRespuesta(response);
+    			post.ProcesarRespuesta(response);
 
             this._schema.MessageRequest = post.MessageRequest;
             this._schema.MessageResponse= post.MessageResponse;

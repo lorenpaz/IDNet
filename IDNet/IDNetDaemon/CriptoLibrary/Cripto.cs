@@ -113,8 +113,10 @@ namespace CriptoLibrary
 
 		public static string Encryption(string text, RsaKeyParameters PublicKey)
 		{
-			IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
-			cipher.Init(true, PublicKey);
+            //IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
+            //cipher.Init(true, PublicKey);
+            RsaEngine cipher = new RsaEngine();
+            cipher.Init(true,PublicKey);
 
 			byte[] ct = Encoding.ASCII.GetBytes(text);
 
@@ -127,8 +129,11 @@ namespace CriptoLibrary
 
 		public static string Decryption(byte[] ct, RsaKeyParameters Pvtkey)
 		{
-			IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
-			cipher.Init(false, Pvtkey);
+			//IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
+			//cipher.Init(false, Pvtkey);
+			RsaEngine cipher = new RsaEngine();
+            cipher.Init(false,Pvtkey);
+
 			byte[] cipherText = cipher.ProcessBlock(ct, 0, ct.Length);
             string descifrado = Encoding.ASCII.GetString(cipherText);
 			return descifrado;

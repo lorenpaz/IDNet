@@ -1,6 +1,17 @@
 using System.Xml;
 using System.Security.Cryptography;
 
+using CriptoLibrary;
+
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Security;
+
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Crypto.Parameters;
+
 namespace MessageLibrary 
 {
 	public class Message
@@ -178,7 +189,7 @@ namespace MessageLibrary
         /*
          * Método para al creación de un XmlDocument a partir del mensaje de conexion
          * */
-        public XmlDocument createMessageConexion()
+        public XmlDocument createMessageConexion(Cripto keyPair)
         {
 
 			XmlDocument xmlDoc = new XmlDocument();
@@ -205,7 +216,8 @@ namespace MessageLibrary
 
 			//Creamos el elemento destino
 			XmlNode key = xmlDoc.CreateElement("key");
-            key.InnerText = "keyPrueba";
+
+            key.InnerText = keyPair.PublicKeyString();
 			elementRoot.AppendChild(key);
 
 			return xmlDoc;

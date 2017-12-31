@@ -144,8 +144,8 @@ namespace ConstantsLibraryS
 
 		public Col(XmlElement infoCol)
 		{
-			this._name = infoCol.GetElementsByTagName("name")[0].InnerText;
-			this._type = infoCol.GetElementsByTagName("type")[0].InnerText;
+            this._name = infoCol.GetAttribute("name");
+            this._type = infoCol.GetAttribute("type");
 		}
 		public string Name
 		{
@@ -214,7 +214,7 @@ namespace ConstantsLibraryS
 		{
 
 			this._cols = new List<Col>();
-			this._name = infoTable.GetElementsByTagName("name")[0].InnerText;
+            this._name = infoTable.GetAttribute("name");
 			foreach (XmlElement infoCol in infoTable.GetElementsByTagName("col"))
 			{
 				this._cols.Add(new Col(infoCol));
@@ -300,7 +300,7 @@ namespace ConstantsLibraryS
 			this._tables = new List<Table>();
 			XmlDocument x = new XmlDocument();
 			x.LoadXml(body);
-			this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
+            this._db_name = x.DocumentElement.GetAttribute("name");
 			foreach (XmlElement infoTable in x.DocumentElement.GetElementsByTagName("table"))
 			{
 				this._tables.Add(new Table(infoTable));

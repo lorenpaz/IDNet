@@ -19,6 +19,7 @@ namespace MessageLibraryS
 		private string _db_type;
 		private XmlNode _body;
 
+
 		public string Destination
 		{
 			get
@@ -202,14 +203,14 @@ namespace MessageLibraryS
                 body = this._body;
                 encripted.AppendChild(this._body);
             }
-			
+
 			return xmlDoc;
 		}
 
 		/*
          * Método para al creación de un XmlDocument a partir del mensaje
          * */
-		public XmlDocument createMessageConnection()
+		public XmlDocument createMessageConnection(string keyPair)
 		{
 			XmlDocument xmlDoc = new XmlDocument();
 			XmlElement root = xmlDoc.DocumentElement;
@@ -235,7 +236,7 @@ namespace MessageLibraryS
 
 			//Creamos el elemento nombreBBDD
 			XmlNode key = xmlDoc.CreateElement("key");
-            key.InnerText = "keyPrueba";
+            key.InnerText = keyPair;
            // int aux = BitConverter.T(this._key.Key, 0);
             //key.InnerText = Convert.ToString(aux);
 			elementRoot.AppendChild(key);

@@ -38,6 +38,9 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\packages\BouncyCastle.Crypto.dll.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MessageLibrary\MessageLibrary.csproj">
@@ -56,6 +59,13 @@
       <Project>{91B231D1-1594-4FBE-BA58-01295B2954C0}</Project>
       <Name>CriptoLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
+      <Project>{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}</Project>
+      <Name>ConstantsLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

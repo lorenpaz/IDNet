@@ -4,8 +4,11 @@ using Gtk;
 using DatabaseLibraryS;
 using MessageLibraryS;
 using ConstantsLibraryS;
+using CriptoLibraryS;
 
 using System.Collections.Generic;
+
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace IDNetSoftware
 {
@@ -16,12 +19,14 @@ namespace IDNetSoftware
     {
         Message _messageRequest;
         Message _messageResponse;
+        RsaKeyParameters _publicKey;
 
         public PipeMessage(){}
-        public PipeMessage(Message mrequest, Message mresponse)
+        public PipeMessage(Message mrequest, Message mresponse, RsaKeyParameters publicKey)
         {
             this._messageRequest = mrequest;
             this._messageResponse = mresponse;
+            this._publicKey = publicKey;
         }
         public Message MessageRequest
         {
@@ -45,6 +50,17 @@ namespace IDNetSoftware
                 this._messageResponse = value;
             }
         }
+		public RsaKeyParameters PublicKey
+		{
+			get
+			{
+                return this._publicKey;
+			}
+			set
+			{
+                this._publicKey = value;
+			}
+		}
     }
     public partial class MainWindow : Gtk.Window
     {
@@ -75,7 +91,11 @@ namespace IDNetSoftware
         //Diccionario con todos los mensajes (neighbour -> [(tipobbdd,nombrebbdd,(connection->Pipe,schema->Pipe,select->Pipe))])
         Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>> _messages;
 
-        public MainWindow() : base(Gtk.WindowType.Toplevel)
+        Cripto _claves;
+
+		Dictionary<string, RsaKeyParameters> _keyPairClients;
+
+		public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
            
@@ -86,14 +106,17 @@ namespace IDNetSoftware
 
             this._databases = new Databases();
             this._neighbours = new Neighbours();
+			this._keyPairClients = new Dictionary<string, RsaKeyParameters>();
 
-            this._messages = new Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>>();
+			this._messages = new Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>>();
 
             cargoBasesDeDatosDeLaOV();
 
 			comprobacionServidoresBaseDeDatos();
 
 			cargoBasesDeDatosPropias();
+
+            generarParDeClaves();
         }
 
         private void cargoBasesDeDatosDeLaOV()
@@ -164,6 +187,11 @@ namespace IDNetSoftware
                 this._errorServerDialog = new ErrorServersDialog(this._databases, errors);
                 this._errorServerDialog.Run();
             }
+        }
+
+        private void generarParDeClaves()
+        {
+            this._claves = new Cripto();
         }
 
         protected void OnDeleteEvent(object sender, DeleteEventArgs a)
@@ -298,18 +326,18 @@ namespace IDNetSoftware
                     PipeMessage pipeSchema = this._messages[usuario][index].Item3["schema"];
 
                     this._connectionDialog = new ConnectionDialog(
-                        usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema);
+                        usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema,this._claves);
                 }
                 else
                 {
                     PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
 
-                    this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion);
+                    this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion,this._claves);
                 }
             }
             else
             {
-                this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD);
+                this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD,this._claves);
             }
 
             this._connectionDialog.Run();
@@ -334,6 +362,13 @@ namespace IDNetSoftware
                     }else{
                         this._messages[usuario].Add(tupl);
                     }
+
+                    if(!this._keyPairClients.ContainsKey(usuario))
+                    {
+						this._keyPairClients.Add(usuario, this._connectionDialog.Connection.PublicKey);
+
+					}
+
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
                     MostrarConexion(this._connectionDialog.Connection.MessageResponse);
 

@@ -49,6 +49,9 @@
     <Reference Include="Mono.Posix" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\packages\BouncyCastle.Crypto.dll.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -92,6 +95,7 @@
     <None Include="resources\icons\006-database-2.png" />
     <None Include="resources\icons\007-database-1.png" />
     <None Include="resources\icons\iconoSoftware.png" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseLibrary\DatabaseLibraryS.csproj">
@@ -117,6 +121,10 @@
     <ProjectReference Include="..\ConstantsLibrary\ConstantsLibraryS.csproj">
       <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
       <Name>ConstantsLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CriptoLibrary\CriptoLibraryS.csproj">
+      <Project>{5CB08C2F-ED6E-4A24-9C37-19179FCDC7E5}</Project>
+      <Name>CriptoLibraryS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

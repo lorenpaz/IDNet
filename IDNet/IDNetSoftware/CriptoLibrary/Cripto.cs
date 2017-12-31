@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
@@ -6,20 +7,127 @@ using System.Xml;
 using ConstantsLibraryS;
 using System.IO;
 
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Security;
+
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace CriptoLibraryS
 {
     public class Cripto
     {
-		//private Dictionary<string, SymmetricAlgorithm> _keyMap;
+        //private Dictionary<string, SymmetricAlgorithm> _keyMap;
+
+        RsaKeyParameters _publicKey;
+        RsaKeyParameters _privateKey;
+
+		public RsaKeyParameters PublicKey
+		{
+			get
+			{
+				return this._publicKey;
+			}
+			set
+			{
+				this._publicKey = value;
+			}
+		}
+
+		public RsaKeyParameters PrivateKey
+		{
+			get
+			{
+				return this._privateKey;
+			}
+			set
+			{
+				this._privateKey = value;
+			}
+		}
 
         public Cripto()
         {
-        }
-		static byte[] entropy = System.Text.Encoding.Unicode.GetBytes("saltSalt");
+			RsaKeyPairGenerator rsa = new RsaKeyPairGenerator();
+			rsa.Init(new KeyGenerationParameters(new SecureRandom(), 2048));
+			AsymmetricCipherKeyPair asymetric = rsa.GenerateKeyPair();
 
+			//Extracting the public/private key from the pair
+            this._privateKey = (RsaKeyParameters)asymetric.Private;
+            this._publicKey = (RsaKeyParameters)asymetric.Public;
 
-		public static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
+            ExportPublicKey(this._publicKey);
+            ExportPrivateKey(this._privateKey);
+
+		}
+		public static void ExportPublicKey(RsaKeyParameters publicKey)
+		{
+			//To print the public key in pem format
+            TextWriter textWriter1 = new StreamWriter(Constants.CONFIG+"publicKeyIDNet.pem");
+			PemWriter pemWriter1 = new PemWriter(textWriter1);
+			pemWriter1.WriteObject(publicKey);
+			pemWriter1.Writer.Flush();
+			pemWriter1.Writer.Close();
+		}
+
+		public static void ExportPrivateKey(RsaKeyParameters privateKey)
+		{
+			//To print the public key in pem format
+			TextWriter textWriter1 = new StreamWriter(Constants.CONFIG +"privateKeyIDNet.pem");
+			PemWriter pemWriter1 = new PemWriter(textWriter1);
+			pemWriter1.WriteObject(privateKey);
+			pemWriter1.Writer.Flush();
+			pemWriter1.Writer.Close();
+		}
+
+		public static RsaKeyParameters ImportPublicKey(string pem)
+		{
+			PemReader pr = new PemReader(new StreamReader(pem));
+			AsymmetricKeyParameter publicKey = (AsymmetricKeyParameter)pr.ReadObject();
+			RsaKeyParameters rsaParams = (RsaKeyParameters)publicKey;
+			return rsaParams;
+		}
+		public static RsaKeyParameters ImportPrivateKey(string pem)
+		{
+			PemReader pr = new PemReader(new StreamReader(pem));
+			AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)pr.ReadObject();
+			RsaKeyParameters rsaParams = (RsaPrivateCrtKeyParameters)keyPair.Private;
+			return rsaParams;
+		}
+
+		public string PublicKeyString()
+		{
+			StringWriter str = new StringWriter();
+			PemWriter pemWriter = new PemWriter(str);
+			pemWriter.WriteObject(this._publicKey);
+			pemWriter.Writer.Close();
+
+			return str.ToString();
+		}
+
+		public static string Encryption(string text, RsaKeyParameters PublicKey)
+		{
+			IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
+			cipher.Init(true, PublicKey);
+            byte[] ct = Encoding.ASCII.GetBytes(text);
+			byte[] cipherText = cipher.ProcessBlock(ct, 0, ct.Length);
+            string cifrado = Convert.ToBase64String(cipherText);
+            return cifrado;
+		}
+
+		public static string Decryption(byte[] ct, RsaKeyParameters Pvtkey)
+		{
+			IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
+			cipher.Init(false, Pvtkey);
+			byte[] cipherText = cipher.ProcessBlock(ct, 0, ct.Length);
+			string descifrado = Encoding.ASCII.GetString(cipherText);
+            return descifrado;
+		}
+
+		/*public static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
 		{
 
 			// Check the arguments.  
@@ -141,46 +249,7 @@ namespace CriptoLibraryS
 
 			// Replace the encryptedData element with the plaintext XML element.
 			exml.ReplaceData(encryptedElement, rgbOutput);
-		}
-
-		/*public static string EncryptString(string input)
-		{
-			try
-			{
-				byte[] encryptedData = System.Security.Cryptography.ProtectedData.Protect(
-                    System.Text.Encoding.UTF8.GetBytes(input),
-					entropy,
-                    System.Security.Cryptography.DataProtectionScope.LocalMachine);
-				return Convert.ToBase64String(encryptedData);
-			}
-			catch (CryptographicException e)
-			{
-                string error = e.ToString();
-			}
-			return null;
-		}
-
-		public static string DecryptString(string encryptedData)
-		{
-			try
-			{
-				byte[] decryptedData = System.Security.Cryptography.ProtectedData.Unprotect(
-					Convert.FromBase64String(encryptedData),
-					entropy,
-                    System.Security.Cryptography.DataProtectionScope.LocalMachine);
-				return System.Text.Encoding.UTF8.GetString(decryptedData);
-			}
-			catch (CryptographicException e)
-			{
-				string error = e.ToString();
-
-			}
-			return null;
-		}
-        static void Main(){
-            string s = Cripto.EncryptString("hola");
-            string c = Cripto.DecryptString(s);
-        }*/
+		}*/
     }
 
 }

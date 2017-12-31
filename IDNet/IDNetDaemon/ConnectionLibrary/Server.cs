@@ -4,8 +4,20 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using log4net;
+using System.Collections.Generic;
 
 using PostBoxLibrary;
+using CriptoLibrary;
+using MessageLibrary;
+
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Security;
+
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Encodings;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace ConnectionLibrary
 {
@@ -26,15 +38,22 @@ namespace ConnectionLibrary
 	public class Server
 	{
 		// Thread signal.
-		public static ManualResetEvent allDone = new ManualResetEvent(false);
+		public ManualResetEvent allDone = new ManualResetEvent(false);
 		static readonly ILog log = LogManager.GetLogger(typeof(Server));
+
+         Cripto _keyPair;
+		 Dictionary<string, RsaKeyParameters> _keyPairClients;
 
 		public Server()
 		{
+			this._keyPair = new Cripto();
+			this._keyPairClients = new Dictionary<string, RsaKeyParameters>();
 		}
 
-		public static void StartListening()
+		public void StartListening()
 		{
+
+
 			// Data buffer for incoming data.
 			byte[] bytes = new Byte[1024];
 
@@ -75,7 +94,7 @@ namespace ConnectionLibrary
 			}
 		}
 
-		public static void AcceptCallback(IAsyncResult ar)
+		public void AcceptCallback(IAsyncResult ar)
 		{
 			// Signal the main thread to continue.
 			allDone.Set();
@@ -91,7 +110,7 @@ namespace ConnectionLibrary
 				new AsyncCallback(ReadCallback), state);
 		}
 
-		public static void ReadCallback(IAsyncResult ar)
+		public void ReadCallback(IAsyncResult ar)
 		{
 			String content = String.Empty;
 
@@ -129,15 +148,22 @@ namespace ConnectionLibrary
 				}
                 //string dataXml = "hola";
                 //Send(handler, dataXml);
-                log.Info("inicio");
-                PostBox post = new PostBox();
-                log.Info("despuesPostBox");
-                string respuesta = post.procesar(content);
+
+                PostBox post = new PostBox(_keyPair);
+                log.Info("aqui1");
+                string respuesta = post.procesar(content,_keyPairClients);
+                log.Info("aqui2");
+                if(!_keyPairClients.ContainsKey(post.MessageRecieve.Source))
+                {
+                    log.Info("aqui3"+post.MessageRecieve.Source);
+                    _keyPairClients.Add(post.MessageRecieve.Source,post.PublicKeyClient);
+				}
+                log.Info("aqu4");
                 Send(handler,respuesta);
 			}
 		}
 
-		private static void Send(Socket handler, String data)
+		private void Send(Socket handler, String data)
 		{
 			// Convert the string data to byte data using ASCII encoding.
 			byte[] byteData = Encoding.ASCII.GetBytes(data);
@@ -147,7 +173,7 @@ namespace ConnectionLibrary
 				new AsyncCallback(SendCallback), handler);
 		}
 
-		private static void SendCallback(IAsyncResult ar)
+		private void SendCallback(IAsyncResult ar)
 		{
 			try
 			{
@@ -170,10 +196,13 @@ namespace ConnectionLibrary
 
         /*
          * Main para probar un mensaje de tipo 002. Funciona OK (el body los < y > los pone diferente)
-         * static void Main(string[] args)
+         **/
+     /*  static void Main(string[] args)
         {
-            PostBox p = new PostBox();
-            p.procesar("<root><source>Pepe</source><destination>Lorenzo</destination><message_type>002</message_type><db_name>usuarios</db_name><db_type>mysql</db_type><body></body></root>");
+            Cripto c = new Cripto();
+            PostBox p = new PostBox(c);
+            p.procesar("<root><message_type>002</message_type><source>Lorenzo</source><destination>lorenzo</destination><encripted>LT7bFF+zqBBiHkoxVEpdIYNGFvzkbO4qmAADfCc6eqRpfxLG/8MK3lTB73Dd+n5ZPhQJ/Y7+0QFC+blL/N7bCYM3b2PVQ6Hw+X6hnzJafxt8+TcDZg9QOlqS41Nn3p2eIkdVHdyIWL51mZO7NsFCH69nE8NA7BqmPsOH/ThQR5irrgWwL+ET0Ac1+bDOWASCmkr3K1IN/eTXOEPQSytDSOfXcZdd08ggSvHNXpR8ggo3VuptdIY3cXaisszDM+p5MwXvn1x648qzMCehSc2d97YqZaaccljAow2wC6aq17flxnvGsFODXVxoYjUOEx9ymt5nHtdfOtSd6ZqT7oV7vw==</encripted></root>",null);
+            
         }*/
 
 	}

@@ -93,79 +93,48 @@ namespace PluginsLibrary
             XmlDocument doc = new XmlDocument();
 			
             XmlElement database = doc.CreateElement("database");
+            database.SetAttribute("name",dbcon.Database);
 			doc.AppendChild(database);
-			
-            //Nombre BBDD
-			XmlNode nombreBBDD = doc.CreateElement("name");
-            nombreBBDD.InnerText = dbcon.Database;
-            database.AppendChild(nombreBBDD);
 
             DataTable tableSchema = dbcon.GetSchema("Tables");
 			 foreach(DataRow row in tableSchema.Rows)
              {
-                 XmlNode tabla = doc.CreateElement("table");
-                 database.AppendChild(tabla);
+                XmlElement tabla = doc.CreateElement("table");
+                string nombreTabla = row["TABLE_NAME"].ToString();
+                tabla.SetAttribute("name",nombreTabla);
+                database.AppendChild(tabla);
 
-                 XmlNode nombreTabla = doc.CreateElement("name");
-                 nombreTabla.InnerText = row["TABLE_NAME"].ToString();
-                 tabla.AppendChild(nombreTabla);
-
-                 XmlNode columnas = doc.CreateElement("cols");
-                 tabla.AppendChild(columnas);
-
-                 // var colSchema = dbcon.GetSchema("Columns", new[] { nombreBBDD.InnerText, null, nombreTabla.InnerText });
                  var colSchema = dbcon.GetSchema("Columns");
                  foreach (DataRow row1 in colSchema.Rows)
                  {
-                        if (row1["TABLE_NAME"].ToString() == nombreTabla.InnerText)
-                        {
-                            XmlNode columna = doc.CreateElement("col");
-                            XmlNode nombreColumna = doc.CreateElement("name");
-                            XmlNode tipoColumna = doc.CreateElement("type");
-
-                            nombreColumna.InnerText = row1["COLUMN_NAME"].ToString();
-                            tipoColumna.InnerText = row1["DATA_TYPE"].ToString();
-                            
-                            columna.AppendChild(nombreColumna);
-                            columna.AppendChild(tipoColumna);
-                            columnas.AppendChild(columna);
-                        }
+                    if (row1["TABLE_NAME"].ToString() == nombreTabla)
+                    {
+                        XmlElement columna = doc.CreateElement("col");
+                        columna.SetAttribute("name",row1["COLUMN_NAME"].ToString());
+                        columna.SetAttribute("type",row1["DATA_TYPE"].ToString());
+                        //tabla.AppendChild(columna);
+                    }
                  }
               }
 			/*
               <?xml version="1.0"?>
-                <database>
-                  <name>usuarios</name>
-                  <table>
-                    <name>clientes</name>
-                    <cols>
+                <database name="usuarios">
+                  <table name="clientes">
                       <col>
                         <name>id</name>
                       </col>
-                      <col>
-                        <name>nombre</name>
+                      <col name="nombre" type="varchar">
                       </col>
-                      <col>
-                        <name>apellidos</name>
+                      <col name="apellidos" type="varchar">
                       </col>
-                    </cols>
                   </table>
-                  <table>
-                    <name>empleados</name>
-                    <cols>
-                      <col>
-                        <name>id</name>
-                        <type>NUMBER</type>
+                  <table name="empleados">
+                      <col name="id" type="int">
                       </col>
-                      <col>
-                        <name>nombre</name>
-                        <type>string</type>
+                      <col name="nombre" tipo="varchar">
                       </col>
-                      <col>
-                        <name>apellidos</name>
-                        <type>string</type>
+                      <col name="apellidos" tipo="varchar">
                       </col>
-                    </cols>
                   </table>
                 </database>
 

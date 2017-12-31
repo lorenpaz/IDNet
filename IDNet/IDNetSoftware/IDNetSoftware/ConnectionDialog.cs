@@ -7,6 +7,7 @@ using MessageLibraryS;
 using ConnectionLibraryS;
 using PostBoxLibraryS;
 using ConstantsLibraryS;
+using CriptoLibraryS;
 
 namespace IDNetSoftware
 {
@@ -22,6 +23,9 @@ namespace IDNetSoftware
         private string _db_name;
         private string _db_type;
         private XmlNode _body;
+
+        //Atributo para cifrado asimétrico
+        private Cripto _keyPair;
 
         //Atributo para saber cómo ha cerrado el diálogo
         private string _typeOutPut;
@@ -73,11 +77,22 @@ namespace IDNetSoftware
                 this._typeOutPut = value;
 			}
 		}
+        public Cripto KeyPair
+		{
+			get
+			{
+                return this._keyPair;
+			}
+			set
+			{
+                this._keyPair = value;
+			}
+		}
 
 		/*
          * Constructor del diálogo de conexión
          * */
-		public ConnectionDialog(string destination, string db_type, string db_name)
+        public ConnectionDialog(string destination, string db_type, string db_name, Cripto keyPair)
         {
             this.Build();
 
@@ -86,8 +101,9 @@ namespace IDNetSoftware
             this._db_type = db_type;
             this._body = new XmlDocument();
             this._typeOutPut = "Cancel";
+			this._keyPair = keyPair;
 
-            this._connection = new PipeMessage();
+			this._connection = new PipeMessage();
 			this._schema = new PipeMessage();
             this._select = new PipeMessage();
 
@@ -96,10 +112,10 @@ namespace IDNetSoftware
 		}
 
 		/*
-         * Constructor del diálogo de conexión
+         * Constructor del diálogo
          * */
         public ConnectionDialog(string destination, string db_type, string db_name, 
-                                PipeMessage pipeConexion)
+                                PipeMessage pipeConexion,Cripto keyPair)
 		{
 			this.Build();
 
@@ -108,6 +124,7 @@ namespace IDNetSoftware
 			this._db_type = db_type;
 			this._body = new XmlDocument();
 			this._typeOutPut = "Cancel";
+            this._keyPair = keyPair;
 
             this._connection = pipeConexion;
 			this._schema = new PipeMessage();
@@ -122,7 +139,7 @@ namespace IDNetSoftware
          * Constructor del diálogo de conexión
          * */
 		public ConnectionDialog(string destination, string db_type, string db_name,
-            PipeMessage pipeConexion, PipeMessage pipeSchema)
+                                PipeMessage pipeConexion, PipeMessage pipeSchema,Cripto keyPair)
 		{
 			this.Build();
 
@@ -131,6 +148,7 @@ namespace IDNetSoftware
 			this._db_type = db_type;
 			this._body = new XmlDocument();
 			this._typeOutPut = "Cancel";
+            this._keyPair = keyPair;
 
 			this._connection = pipeConexion;
 			this._schema = pipeSchema;
@@ -187,7 +205,7 @@ namespace IDNetSoftware
 			string msg, response;
 
 			//Proceso el envio
-            PostBox post = new PostBox("Lorenzo Jose",this._destination, "002",this._db_name,this._db_type,this._body);
+            PostBox post = new PostBox("Lorenzo",this._destination, "002",this._db_name,this._db_type,this._body,this._keyPair,this._connection.PublicKey);
 			msg = post.ProcesarEnvio();
 
 			//Creo el cliente y le envio el mensaje
@@ -209,10 +227,10 @@ namespace IDNetSoftware
             string msg, response;
 
             // Create a new Rijndael key.
-            	RijndaelManaged key = new RijndaelManaged();
+           /* 	RijndaelManaged key = new RijndaelManaged();
                 key.GenerateKey();
-                key.GenerateIV();
-			PostBox post = new PostBox("Lorenzo", this._destination, "001",key);
+                key.GenerateIV();*/
+            PostBox post = new PostBox("Lorenzo", this._destination, "001",this._keyPair);
             msg = post.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje
@@ -220,9 +238,9 @@ namespace IDNetSoftware
 			response = c.StartClient(msg, "localhost");
 
 			//Proceso la respuesta
-			post.ProcesarRespuesta(response);
+			post.ProcesarRespuestaConexion(response);
 
-            this._connection = new PipeMessage(post.MessageRequest,post.MessageResponse);
+            this._connection = new PipeMessage(post.MessageRequest,post.MessageResponse,post.PublicKeyClient);
 
             this._typeOutPut = "001";
 
@@ -248,7 +266,7 @@ namespace IDNetSoftware
                     break;
                 case "003":
 					XmlNode bodyMessage = this._selectDialog.Body;
-					PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage);
+                    PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage,this._keyPair, this._connection.PublicKey);
 					msg = post.ProcesarEnvio();
 
 					//Creo el cliente y le envio el mensaje
@@ -267,3 +285,4 @@ namespace IDNetSoftware
 
     }
 }
+    

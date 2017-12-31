@@ -32,12 +32,18 @@
   <ItemGroup>
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\packages\BouncyCastle.Crypto.dll.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConstantsLibrary\ConstantsLibraryS.csproj">
       <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
       <Name>ConstantsLibraryS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

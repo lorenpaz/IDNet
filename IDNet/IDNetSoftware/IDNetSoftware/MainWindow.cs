@@ -9,6 +9,8 @@ using CriptoLibraryS;
 using System.Collections.Generic;
 
 using Org.BouncyCastle.Crypto.Parameters;
+using System.Security.Cryptography;
+
 
 namespace IDNetSoftware
 {
@@ -20,13 +22,15 @@ namespace IDNetSoftware
         Message _messageRequest;
         Message _messageResponse;
         RsaKeyParameters _publicKey;
+        SymmetricAlgorithm _symmetricKey;
 
         public PipeMessage(){}
-        public PipeMessage(Message mrequest, Message mresponse, RsaKeyParameters publicKey)
+        public PipeMessage(Message mrequest, Message mresponse, RsaKeyParameters publicKey,SymmetricAlgorithm key)
         {
             this._messageRequest = mrequest;
             this._messageResponse = mresponse;
             this._publicKey = publicKey;
+            this._symmetricKey = key;
         }
         public Message MessageRequest
         {
@@ -61,6 +65,17 @@ namespace IDNetSoftware
                 this._publicKey = value;
 			}
 		}
+        public SymmetricAlgorithm SymmetricKey
+		{
+			get
+			{
+                return this._symmetricKey;
+			}
+			set
+			{
+                this._symmetricKey = value;
+			}
+		}
     }
     public partial class MainWindow : Gtk.Window
     {
@@ -93,7 +108,7 @@ namespace IDNetSoftware
 
         Cripto _claves;
 
-		Dictionary<string, RsaKeyParameters> _keyPairClients;
+        Dictionary<string, Tuple<RsaKeyParameters,SymmetricAlgorithm>> _keyPairClients;
 
 		public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
@@ -106,7 +121,7 @@ namespace IDNetSoftware
 
             this._databases = new Databases();
             this._neighbours = new Neighbours();
-			this._keyPairClients = new Dictionary<string, RsaKeyParameters>();
+            this._keyPairClients = new Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>>();
 
 			this._messages = new Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>>();
 
@@ -314,25 +329,37 @@ namespace IDNetSoftware
             string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
 
             //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
-            if (this._messages.ContainsKey(usuario) && devuelveTupla(usuario, tipoBBDD, nombreBBDD) != null)
+            if (this._messages.ContainsKey(usuario))
             {
                 Tuple<string, string, Dictionary<string, PipeMessage>> tupla = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
-               
-				int index = this._messages[usuario].IndexOf(tupla); 
 
-				if (comprobarTuplaConSchema(usuario, tipoBBDD, nombreBBDD))
-				{
-                    PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
-                    PipeMessage pipeSchema = this._messages[usuario][index].Item3["schema"];
+                if (tupla == null)
+                {
+                    Tuple<string, string, Dictionary<string, PipeMessage>> firstTupla = devuelvePrimeraTupla(usuario);
+                    int index = this._messages[usuario].IndexOf(firstTupla);
 
-                    this._connectionDialog = new ConnectionDialog(
-                        usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema,this._claves);
+					PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
+
+					this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
                 }
                 else
                 {
-                    PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
+                    int index = this._messages[usuario].IndexOf(tupla);
 
-                    this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion,this._claves);
+                    if (comprobarTuplaConSchema(usuario, tipoBBDD, nombreBBDD))
+                    {
+                        PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
+                        PipeMessage pipeSchema = this._messages[usuario][index].Item3["schema"];
+
+                        this._connectionDialog = new ConnectionDialog(
+                            usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema, this._claves);
+                    }
+                    else
+                    {
+                        PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
+
+                        this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                    }
                 }
             }
             else
@@ -365,8 +392,8 @@ namespace IDNetSoftware
 
                     if(!this._keyPairClients.ContainsKey(usuario))
                     {
-						this._keyPairClients.Add(usuario, this._connectionDialog.Connection.PublicKey);
-
+                        Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey,this._connectionDialog.Connection.SymmetricKey);
+						this._keyPairClients.Add(usuario,tup);
 					}
 
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
@@ -415,6 +442,14 @@ namespace IDNetSoftware
 				}
 			}
             return null;
+		}
+		private Tuple<string, string, Dictionary<string, PipeMessage>> devuelvePrimeraTupla(string usuario)
+		{
+			foreach (var tupla in this._messages[usuario])
+			{
+                return tupla;
+			}
+			return null;
 		}
 
 		private Tuple<string, string, string> devuelveTuplaDatabase(string tipoBBDD, string nombreBBDD)

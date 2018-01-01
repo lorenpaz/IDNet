@@ -137,7 +137,7 @@ namespace CriptoLibraryS
 			return descifrado;
 		}
 
-		/*public static void Encrypt(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
+		public static void EncryptSymmetric(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
 		{
 
 			// Check the arguments.  
@@ -229,7 +229,7 @@ namespace CriptoLibraryS
 			EncryptedXml.ReplaceElement(elementToEncrypt, edElement, false);
 		}
 
-		public static void Decrypt(XmlDocument Doc, SymmetricAlgorithm Alg)
+		public static void DecryptSymmetric(XmlDocument Doc, SymmetricAlgorithm Alg)
 		{
 			// Check the arguments.  
 			if (Doc == null)
@@ -259,7 +259,7 @@ namespace CriptoLibraryS
 
 			// Replace the encryptedData element with the plaintext XML element.
 			exml.ReplaceData(encryptedElement, rgbOutput);
-		}*/
-    }
+		}
+	}
 
 }

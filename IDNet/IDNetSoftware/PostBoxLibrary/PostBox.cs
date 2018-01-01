@@ -32,7 +32,11 @@ namespace PostBoxLibraryS
         //Clave pública-privada
         Cripto _keyPair;
 
+        //CLave pública del cliente
         RsaKeyParameters _publicKeyClient;
+
+        //Clave simétrica para el cifrado de los mensajes
+        SymmetricAlgorithm _symmetricKey;
 
 		public Message MessageRequest
 		{
@@ -56,33 +60,55 @@ namespace PostBoxLibraryS
                 return this._publicKeyClient;
 			}
 		}
+		public SymmetricAlgorithm SymmetricKey
+		{
+			get
+			{
+				return this._symmetricKey;
+			}
+			set
+			{
+				this._symmetricKey = value;
+			}
+		}
 
+        //Constructor para mensajes (no conexion)
 		public PostBox(string source, string destination, string tipoMensaje, string db_name,
-					  string db_type, XmlNode body, Cripto keyPair,RsaKeyParameters publicKeyClient)
+                       string db_type, XmlNode body, Cripto keyPair,SymmetricAlgorithm symmetricKey)
 		{
 			this._process = new Process();
 			this._messageRequest = new Message(source, destination, tipoMensaje, db_name, db_type, body);
 			this._messageResponse = new Message();
             this._keyPair = keyPair;
-            this._publicKeyClient = publicKeyClient;
+            this._symmetricKey = symmetricKey;
 		}
 
-        //Constructor para conexión
+        //Constructor para conexión 001a
         public PostBox(string source, string destination, string tipoMensaje, Cripto keyPair)
 		{
 			this._process = new Process();
-			this._messageRequest = new Message(source, destination, tipoMensaje,null);
+			this._messageRequest = new Message(source, destination, tipoMensaje);
 			this._messageResponse = new Message();
             this._keyPair = keyPair;
 		}
+		//Constructor para conexión 001b
+        public PostBox(string source, string destination, string tipoMensaje, Cripto keyPair,RsaKeyParameters publicKeyClient,SymmetricAlgorithm key)
+		{
+			this._process = new Process();
+			this._messageRequest = new Message(source, destination, tipoMensaje);
+			this._messageResponse = new Message();
+			this._keyPair = keyPair;
+            this._publicKeyClient = publicKeyClient;
+            this._symmetricKey = key;
+		}
 
 		/*
-        * Realizamos el envio
+        * Realizamos el envio.NO conexion
         */
 		public string ProcesarEnvio()
 		{
 			XmlDocument doc = this._messageRequest.createMessage();
-            doc = encriptarParteDelDocumento(doc);
+            doc = encriptarParteDelDocumentoSimetrico(doc);
             string respuesta = doc.InnerXml;
 
 			return respuesta;
@@ -93,9 +119,18 @@ namespace PostBoxLibraryS
         */
 		public string ProcesarEnvioConexion()
 		{
-            //Aqui falta llamar a la funcion de generar clave
-            XmlDocument doc = this._messageRequest.createMessageConnection(this._keyPair.PublicKeyString());
-			return doc.InnerXml;
+            //Si es 001a
+            if(this._symmetricKey == null)
+            {
+				XmlDocument doc = this._messageRequest.createMessageConnection(this._keyPair.PublicKeyString());
+				return doc.InnerXml;
+
+            } //Sino 001b
+            else{
+                XmlDocument doc = this._messageRequest.createMessageConnection(this._keyPair.PublicKeyString(),this._symmetricKey);
+                encriptarParteDelDocumentoAsimetrico(doc);
+                return doc.InnerXml;
+            }
 		}
 
 		/**
@@ -106,13 +141,9 @@ namespace PostBoxLibraryS
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
 
-
-            //Clave para desencriptar
-            //RijndaelManaged key = new RijndaelManaged();
-
             //Desencriptamos el mensaje
             //Security.Decrypt(xmlDoc, key);
-            DesencriptarParteDelDocumento(xmlDoc);
+            DesencriptarParteDelDocumentoSimetrico(xmlDoc);
 
 			//Parseamos el mensaje
 			this._messageResponse.parserMessageRecieve(xmlDoc);
@@ -121,7 +152,7 @@ namespace PostBoxLibraryS
 		/**
      * Procesamos la respuesta de conexión
      * */
-		public void ProcesarRespuestaConexion(string response)
+		public bool ProcesarRespuestaConexion(string response)
 		{
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
@@ -136,7 +167,13 @@ namespace PostBoxLibraryS
 			//Parseamos el mensaje
 			this._messageResponse.parserMessageRecieve(xmlDoc);
 
-            AlmacenarClavePublica(xmlDoc);
+            if(this._messageResponse.MessageType == "004a")
+            {
+				AlmacenarClavePublica(xmlDoc);
+                return true;
+            }else{
+                return ComprobarClaveSimetrica(xmlDoc);
+            }
 		}
 
         private void AlmacenarClavePublica(XmlDocument xmlDoc)
@@ -150,18 +187,37 @@ namespace PostBoxLibraryS
 			this._publicKeyClient = Cripto.ImportPublicKey(path);
 		}
 
-        private XmlDocument encriptarParteDelDocumento(XmlDocument doc)
+        private bool ComprobarClaveSimetrica(XmlDocument xmlDoc)
+        {
+            XmlDocument docDesencriptado = DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
+            string keyRecibida, keyMia,ivRecibida,ivMia;
+            keyRecibida = docDesencriptado.DocumentElement.GetElementsByTagName("key")[0].InnerText;
+            keyMia = Convert.ToBase64String(this._symmetricKey.Key);
+            ivRecibida = docDesencriptado.DocumentElement.GetElementsByTagName("IV")[0].InnerText;
+            ivMia = Convert.ToBase64String(this._symmetricKey.IV);
+
+            if(keyRecibida == keyMia && ivRecibida == ivMia)
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        private XmlDocument encriptarParteDelDocumentoAsimetrico(XmlDocument doc)
         {
             string xmlAEncriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
 
             string xmlEncriptado = Cripto.Encryption(xmlAEncriptar,this._publicKeyClient);
+            Console.WriteLine("Key:"+Encoding.ASCII.GetString(this._symmetricKey.Key));
+            Console.Write("IV:"+this._symmetricKey.IV);
 
             doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlEncriptado;
 
             return doc;
         }
 
-		private XmlDocument DesencriptarParteDelDocumento(XmlDocument doc)
+		private XmlDocument DesencriptarParteDelDocumentoAsimetrico(XmlDocument doc)
 		{
 			string xmlADesencriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
 
@@ -169,6 +225,17 @@ namespace PostBoxLibraryS
 
 			doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlDesencriptado;
 
+			return doc;
+		}
+
+		private XmlDocument DesencriptarParteDelDocumentoSimetrico(XmlDocument doc)
+		{
+			Cripto.DecryptSymmetric(doc, this._symmetricKey);
+			return doc;
+		}
+		private XmlDocument encriptarParteDelDocumentoSimetrico(XmlDocument doc)
+		{
+			Cripto.EncryptSymmetric(doc, "encripted", this._symmetricKey);
 			return doc;
 		}
 

@@ -1,5 +1,7 @@
 using System.Xml;
 using System.Security.Cryptography;
+using System.Text;
+using System;
 
 using CriptoLibrary;
 
@@ -19,7 +21,6 @@ namespace MessageLibrary
 		private string _destination;
 		private string _source;
 		private string _messageType;
-        private SymmetricAlgorithm _key;
 		private string _db_name;
         private string _db_type;
         private XmlNode _body;
@@ -90,17 +91,6 @@ namespace MessageLibrary
 				this._body = value;
 			}
 		}
-		public SymmetricAlgorithm Key
-        {
-            get
-            {
-                return this._key;
-            }
-            set
-            {
-                this._key = value;
-            }
-        }
 
 
         public void parserStartRecievedMessage(XmlDocument doc)
@@ -222,6 +212,52 @@ namespace MessageLibrary
 
 			return xmlDoc;
         }
+
+		/*
+         * Método para al creación de un XmlDocument a partir del mensaje de conexion
+         * */
+        public XmlDocument createMessageConexion(Cripto keyPair,SymmetricAlgorithm symmetricKey)
+		{
+
+			XmlDocument xmlDoc = new XmlDocument();
+			XmlElement root = xmlDoc.DocumentElement;
+
+			//Creamos elemento root
+			XmlElement elementRoot = xmlDoc.CreateElement("root");
+			xmlDoc.AppendChild(elementRoot);
+
+			//Creamos el elemento tipoDeMensaje
+			XmlNode message_type = xmlDoc.CreateElement("message_type");
+			message_type.InnerText = this._messageType;
+			elementRoot.AppendChild(message_type);
+
+			//Creamos elemento origen
+			XmlNode source = xmlDoc.CreateElement("source");
+			source.InnerText = this._source;
+			elementRoot.AppendChild(source);
+
+			//Creamos el elemento destino
+			XmlNode destination = xmlDoc.CreateElement("destination");
+			destination.InnerText = this._destination;
+			elementRoot.AppendChild(destination);
+
+			//Creamos el elemento encripted
+			XmlNode encripted = xmlDoc.CreateElement("encripted");
+			elementRoot.AppendChild(encripted);
+
+			//Creamos el elemento key
+			XmlNode key = xmlDoc.CreateElement("key");
+			key.InnerText = Convert.ToBase64String(symmetricKey.Key);
+            encripted.AppendChild(key);
+
+
+			XmlNode iv = xmlDoc.CreateElement("IV");
+			iv.InnerText = Convert.ToBase64String(symmetricKey.IV);
+
+            encripted.AppendChild(iv);
+
+			return xmlDoc;
+		}
 
         /*
          * Sirve para realizar una respuesta. Una ayuda para ello

@@ -18,6 +18,7 @@ using Org.BouncyCastle.Crypto.Encodings;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Crypto.Parameters;
+using System.Security.Cryptography;
 
 namespace ConnectionLibrary
 {
@@ -42,12 +43,12 @@ namespace ConnectionLibrary
 		static readonly ILog log = LogManager.GetLogger(typeof(Server));
 
          Cripto _keyPair;
-		 Dictionary<string, RsaKeyParameters> _keyPairClients;
+        Dictionary<string, Tuple<RsaKeyParameters,SymmetricAlgorithm>> _keyPairClients;
 
 		public Server()
 		{
 			this._keyPair = new Cripto();
-			this._keyPairClients = new Dictionary<string, RsaKeyParameters>();
+            this._keyPairClients = new Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>>();
 		}
 
 		public void StartListening()
@@ -150,13 +151,18 @@ namespace ConnectionLibrary
                 //Send(handler, dataXml);
 
                 PostBox post = new PostBox(_keyPair);
-                log.Info("aqui1");
+
                 string respuesta = post.procesar(content,_keyPairClients);
-                log.Info("aqui2");
+
                 if(!_keyPairClients.ContainsKey(post.MessageRecieve.Source))
                 {
                     log.Info("aqui3"+post.MessageRecieve.Source);
-                    _keyPairClients.Add(post.MessageRecieve.Source,post.PublicKeyClient);
+                    Tuple<RsaKeyParameters, SymmetricAlgorithm> tupla = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(post.PublicKeyClient, post.SymmetricKey);
+                    _keyPairClients.Add(post.MessageRecieve.Source,tupla);
+				}else if(this._keyPairClients[post.MessageRecieve.Source].Item2 == null)
+                {
+					Tuple<RsaKeyParameters, SymmetricAlgorithm> tupla = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(post.PublicKeyClient, post.SymmetricKey);
+					_keyPairClients[post.MessageRecieve.Source] = tupla;
 				}
                 log.Info("aqu4");
                 Send(handler,respuesta);

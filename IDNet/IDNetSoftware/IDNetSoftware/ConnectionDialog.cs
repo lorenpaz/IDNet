@@ -8,6 +8,8 @@ using ConnectionLibraryS;
 using PostBoxLibraryS;
 using ConstantsLibraryS;
 using CriptoLibraryS;
+using Org.BouncyCastle.Crypto.Parameters;
+
 
 namespace IDNetSoftware
 {
@@ -26,6 +28,11 @@ namespace IDNetSoftware
 
         //Atributo para cifrado asimétrico
         private Cripto _keyPair;
+
+        private RsaKeyParameters _publicKeyClient;
+
+        //Atributo para cifrado simétrico
+        private SymmetricAlgorithm _symmetricKey;
 
         //Atributo para saber cómo ha cerrado el diálogo
         private string _typeOutPut;
@@ -86,6 +93,24 @@ namespace IDNetSoftware
 			set
 			{
                 this._keyPair = value;
+			}
+		}
+		public RsaKeyParameters PublicKeyClient
+		{
+			get
+			{
+				return this._publicKeyClient;
+			}
+		}
+		public SymmetricAlgorithm SymmetricKey
+		{
+			get
+			{
+				return this._symmetricKey;
+			}
+			set
+			{
+				this._symmetricKey = value;
 			}
 		}
 
@@ -205,7 +230,7 @@ namespace IDNetSoftware
 			string msg, response;
 
 			//Proceso el envio
-            PostBox post = new PostBox("Lorenzo",this._destination, "002",this._db_name,this._db_type,this._body,this._keyPair,this._connection.PublicKey);
+            PostBox post = new PostBox("Lorenzo",this._destination, "002",this._db_name,this._db_type,this._body,this._keyPair,this._connection.SymmetricKey);
 			msg = post.ProcesarEnvio();
 
 			//Creo el cliente y le envio el mensaje
@@ -224,14 +249,27 @@ namespace IDNetSoftware
          * */
         protected void OnButtonConexionClicked(object sender, EventArgs e)
         {
-            string msg, response;
+
 
             // Create a new Rijndael key.
-           /* 	RijndaelManaged key = new RijndaelManaged();
-                key.GenerateKey();
-                key.GenerateIV();*/
-            PostBox post = new PostBox("Lorenzo", this._destination, "001",this._keyPair);
-            msg = post.ProcesarEnvioConexion();
+            RijndaelManaged key = new RijndaelManaged();
+            this._symmetricKey = key;
+
+            conexionPrimera();
+
+            conexionSegunda();
+
+            this._typeOutPut = "001";
+
+            this.Destroy();
+        }
+
+        private void conexionPrimera()
+        {
+			string msg, response;
+
+			PostBox post = new PostBox("Lorenzo", this._destination, "001a", this._keyPair);
+			msg = post.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje
 			Client c = new Client();
@@ -240,12 +278,25 @@ namespace IDNetSoftware
 			//Proceso la respuesta
 			post.ProcesarRespuestaConexion(response);
 
-            this._connection = new PipeMessage(post.MessageRequest,post.MessageResponse,post.PublicKeyClient);
+            this._publicKeyClient = post.PublicKeyClient;
+		}
 
-            this._typeOutPut = "001";
+        private void conexionSegunda()
+        {
+			string msg, response;
 
-            this.Destroy();
-        }
+            PostBox post = new PostBox("Lorenzo", this._destination, "001b", this._keyPair,this._publicKeyClient,this._symmetricKey);
+			msg = post.ProcesarEnvioConexion();
+
+			//Creo el cliente y le envio el mensaje
+			Client c = new Client();
+			response = c.StartClient(msg, "localhost");
+
+			//Proceso la respuesta
+			post.ProcesarRespuestaConexion(response);
+
+			this._connection = new PipeMessage(post.MessageRequest, post.MessageResponse, post.PublicKeyClient, this._symmetricKey);
+		}
 
         /*
          * Método para realizar consulta SELECT
@@ -266,7 +317,7 @@ namespace IDNetSoftware
                     break;
                 case "003":
 					XmlNode bodyMessage = this._selectDialog.Body;
-                    PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage,this._keyPair, this._connection.PublicKey);
+                    PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage,this._keyPair, this._connection.SymmetricKey);
 					msg = post.ProcesarEnvio();
 
 					//Creo el cliente y le envio el mensaje

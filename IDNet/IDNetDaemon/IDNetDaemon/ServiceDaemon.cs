@@ -2,6 +2,8 @@
 using System.ServiceProcess;
 using log4net;
 
+using ConstantsLibrary;
+
 namespace IDNetDaemon
 {
     public class ServiceDaemon : ServiceBase
@@ -24,8 +26,18 @@ namespace IDNetDaemon
 		protected override void OnStop()
 		{
 			log.Info("Service shutting down");
+            log.Info("Deleting all resources like Crytography keyPairs");
+            Constants.BorrarRecursos();
 			_scheduler.Shutdown();
 		}
-
-    }
+#if DEBUG
+		public static void Main(string[] args)
+		{
+			ServiceDaemon serv = new ServiceDaemon();
+            serv.OnStart(new string[1]);
+            ServiceBase.Run(serv);
+		}
+	}
+#endif
 }
+

@@ -133,8 +133,6 @@ namespace PostBoxLibrary
                 string usuario = this._messageRecieve.Source;
                 this._publicKeyClient = keyPairClients[usuario].Item1;
                 this._symmetricKey = keyPairClients[usuario].Item2;
-				log.Info("KEY:" + this._symmetricKey.Key);
-				log.Info("IV:" + this._symmetricKey.IV);
 
                 //Desencriptamos
                 xmlDoc = DesencriptarParteDelDocumentoSimetrico(xmlDoc);
@@ -220,20 +218,20 @@ namespace PostBoxLibrary
 			string xmlADesencriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
 
 			string xmlDesencriptado = Cripto.Decryption(Convert.FromBase64String(xmlADesencriptar), this._keyPair.PrivateKey);
-			log.Info("Ya desencriptado en el demonio:" + xmlDesencriptado);
-			doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlDesencriptado;
+
+            doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlDesencriptado;
 
 			return doc;
 		}
 		private XmlDocument encriptarParteDelDocumentoAsimetrico(XmlDocument doc)
 		{
 			string xmlAEncriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
-			log.Info("ANTES DE ENCRIPTAR:" + xmlAEncriptar);
+
             try
             {
                 string xmlEncriptado = Cripto.Encryption(xmlAEncriptar, this._publicKeyClient);
-				log.Info("despues de encriptar:" + xmlEncriptado);
-				doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlEncriptado;
+
+                doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlEncriptado;
 
 			}catch(Exception e){
                 log.Info("mensaje error:"+e.Message);
@@ -244,7 +242,6 @@ namespace PostBoxLibrary
 
 		private XmlDocument DesencriptarParteDelDocumentoSimetrico(XmlDocument doc)
 		{
-			log.Info("antes de desencriptar simetrico");
 
             try
             {
@@ -253,16 +250,13 @@ namespace PostBoxLibrary
             {
                 log.Info("error producido:"+e.Message);
             }
-                log.Info("despues de desencriptar simetrico");
 
 			return doc;
 		}
 		private XmlDocument encriptarParteDelDocumentoSimetrico(XmlDocument doc)
 		{
-            log.Info("antes de encriptar simetrico");
             log.Info(doc.InnerXml);
 			Cripto.EncryptSymmetric(doc, "encripted", this._symmetricKey);
-            log.Info("despues de encriptar simetrico");
             log.Info(doc.InnerXml);
             return doc;
 		}

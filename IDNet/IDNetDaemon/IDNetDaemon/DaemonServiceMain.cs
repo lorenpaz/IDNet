@@ -5,11 +5,13 @@ namespace IDNetDaemon
 {
     public class DaemonServiceMain
     {
-		public static void Main(string[] args)
-		{
-			ServiceBase[] ServicesToRun;
-			ServicesToRun = new ServiceBase[] { new ServiceDaemon() };
-			ServiceBase.Run(ServicesToRun);
-		}
+#if (DEBUG != true)
+        public static void Main(string[] args)
+        {
+            ServiceBase[] ServicesToRun;
+            ServicesToRun = new ServiceBase[] { new ServiceDaemon() };
+            ServiceBase.Run(ServicesToRun);
+        }
+#endif
     }
 }

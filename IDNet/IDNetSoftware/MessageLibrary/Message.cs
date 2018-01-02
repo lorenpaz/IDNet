@@ -183,6 +183,10 @@ namespace MessageLibraryS
             if(this._body.InnerXml == "")
             {
                 encripted.AppendChild(body);
+            }
+            else if(this._messageType == "003") {
+                body.InnerXml = this._body.InnerXml;
+                encripted.AppendChild(body);
             }else{
                 body = this._body;
                 encripted.AppendChild(this._body);

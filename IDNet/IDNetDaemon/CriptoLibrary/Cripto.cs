@@ -70,7 +70,7 @@ namespace CriptoLibrary
 		private static void ExportPublicKey(RsaKeyParameters publicKey)
 		{
 			//To print the public key in pem format
-            TextWriter textWriter1 = new StreamWriter(Constants.CONF+"publicKeyDaemon.pem");
+            TextWriter textWriter1 = new StreamWriter(Constants.CONF_PUBLIC_KEY);
 			PemWriter pemWriter1 = new PemWriter(textWriter1);
 			pemWriter1.WriteObject(publicKey);
 			pemWriter1.Writer.Flush();
@@ -80,7 +80,7 @@ namespace CriptoLibrary
 		private static void ExportPrivateKey(RsaKeyParameters privateKey)
 		{
 			//To print the public key in pem format
-			TextWriter textWriter1 = new StreamWriter(Constants.CONF + "privateKeyDaemon.pem");
+            TextWriter textWriter1 = new StreamWriter(Constants.CONF_PRIVATE_KEY);
 			PemWriter pemWriter1 = new PemWriter(textWriter1);
 			pemWriter1.WriteObject(privateKey);
 			pemWriter1.Writer.Flush();
@@ -267,7 +267,7 @@ namespace CriptoLibrary
 			exml.ReplaceData(encryptedElement, rgbOutput);
 		}
 
-			//Comprueba el fichero de claves para el mensaje 001
+		/*	//Comprueba el fichero de claves para el mensaje 001
 			public void CheckKey(string ip, SymmetricAlgorithm key)
 			{
 				ParseConf();
@@ -282,7 +282,7 @@ namespace CriptoLibrary
 			}
 
 		//Lee del fichero de configuración
-		private void ParseConf()
+		/*private void ParseConf()
 		{
 			//Archivo a leer
 			StreamReader conFile = File.OpenText(Constants.CONF_KEYS);
@@ -304,7 +304,7 @@ namespace CriptoLibrary
                  * 
                  */
 
-				//Leemos el parámetro
+		/*		//Leemos el parámetro
 				while (line[i] != ';')
 				{
 					//Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
@@ -327,7 +327,7 @@ namespace CriptoLibrary
                 }
 				line = conFile.ReadLine();
 			}
-		}
+		}*/
 	}
 }
 

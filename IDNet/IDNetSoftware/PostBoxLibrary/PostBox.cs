@@ -74,12 +74,11 @@ namespace PostBoxLibraryS
 
         //Constructor para mensajes (no conexion)
 		public PostBox(string source, string destination, string tipoMensaje, string db_name,
-                       string db_type, XmlNode body, Cripto keyPair,SymmetricAlgorithm symmetricKey)
+                       string db_type, XmlNode body,SymmetricAlgorithm symmetricKey)
 		{
 			this._process = new Process();
 			this._messageRequest = new Message(source, destination, tipoMensaje, db_name, db_type, body);
 			this._messageResponse = new Message();
-            this._keyPair = keyPair;
             this._symmetricKey = symmetricKey;
 		}
 

@@ -201,47 +201,11 @@ namespace IDNetSoftware
 		}
 
         /*
-         * Método para la solicitud del esquema
-         * */
-        protected void OnButtonEsquemaClicked(object sender, EventArgs e)
-        {
-            if (this._schema.MessageRequest == null)
-            {
-                solicitarEsquema();
-            }
-			this._typeOutPut = "002";
-
-            this.Destroy();
-        }
-
-        /*
          * Método del botón 'Cancel'
          * */
 		protected void OnButtonCancelClicked(object sender, EventArgs e)
 		{
 			this.Destroy();
-		}
-
-        /*
-         * Método privado para solicitar esquema
-         * */
-		private void solicitarEsquema()
-		{
-			string msg, response;
-
-			//Proceso el envio
-            PostBox post = new PostBox("Lorenzo",this._destination, "002",this._db_name,this._db_type,this._body,this._keyPair,this._connection.SymmetricKey);
-			msg = post.ProcesarEnvio();
-
-			//Creo el cliente y le envio el mensaje
-			Client c = new Client();
-			response = c.StartClient(msg, "localhost");
-
-			//Proceso la respuesta
-    			post.ProcesarRespuesta(response);
-
-            this._schema.MessageRequest = post.MessageRequest;
-            this._schema.MessageResponse= post.MessageResponse;
 		}
 
         /*
@@ -298,6 +262,42 @@ namespace IDNetSoftware
 			this._connection = new PipeMessage(post.MessageRequest, post.MessageResponse, post.PublicKeyClient, this._symmetricKey);
 		}
 
+		/*
+         * Método para la solicitud del esquema
+         * */
+		protected void OnButtonEsquemaClicked(object sender, EventArgs e)
+		{
+			if (this._schema.MessageRequest == null)
+			{
+				solicitarEsquema();
+			}
+			this._typeOutPut = "002";
+
+			this.Destroy();
+		}
+
+		/*
+         * Método privado para solicitar esquema
+         * */
+		private void solicitarEsquema()
+		{
+			string msg, response;
+
+			//Proceso el envio
+			PostBox post = new PostBox("Lorenzo", this._destination, "002", this._db_name, this._db_type, this._body, this._connection.SymmetricKey);
+			msg = post.ProcesarEnvio();
+
+			//Creo el cliente y le envio el mensaje
+			Client c = new Client();
+			response = c.StartClient(msg, "localhost");
+
+			//Proceso la respuesta
+			post.ProcesarRespuesta(response);
+
+			this._schema.MessageRequest = post.MessageRequest;
+			this._schema.MessageResponse = post.MessageResponse;
+		}
+
         /*
          * Método para realizar consulta SELECT
          */
@@ -308,7 +308,7 @@ namespace IDNetSoftware
             BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
 
 			this._selectDialog = new SelectDialog(this._destination, this._db_type, this._db_name,schema);
-            this._selectDialog.Show();
+            this._selectDialog.Run();
 
             switch (this._selectDialog.TypeOutPut)
             {
@@ -316,8 +316,8 @@ namespace IDNetSoftware
 
                     break;
                 case "003":
-					XmlNode bodyMessage = this._selectDialog.Body;
-                    PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage,this._keyPair, this._connection.SymmetricKey);
+                    XmlNode bodyMessage = this._selectDialog.Body.GetElementsByTagName("body")[0];
+                    PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage,this._connection.SymmetricKey);
 					msg = post.ProcesarEnvio();
 
 					//Creo el cliente y le envio el mensaje

@@ -1,8 +1,9 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using System.Xml;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Threading.Tasks;
 using log4net;
-using System;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace PluginsLibrary
 		}
 
 		//Realizar consulta a la BBBDD
-		public string SelectRequest()
+        public string SelectRequest(XmlNode body)
         {
             return this._salida;
         }
@@ -82,6 +83,31 @@ namespace PluginsLibrary
             this._salida = j;
         }
 
+		public class ConsultaMongo
+		{
+			string _selectTarget;
+			string _fromTarget;
+			string _whereTarget;
+			string _consulta;
+
+			public String Consulta
+			{
+				get
+				{
+					return this._consulta;
+				}
+				set
+				{
+					this._consulta = value;
+				}
+			}
+
+            public ConsultaMongo(XmlNode body)
+			{
+				XmlDocument doc = new XmlDocument();
+				doc.LoadXml(body.InnerXml);
+			}
+		}
        /* static void Main(string[] args)
 		{
             PluginMongo p = new PluginMongo("usuarios");

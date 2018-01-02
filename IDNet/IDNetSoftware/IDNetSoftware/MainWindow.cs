@@ -287,6 +287,7 @@ namespace IDNetSoftware
         //Menú opción salir
         protected void OnSalirActionActivated(object sender, EventArgs e)
         {
+            Constants.BorrarRecursos();
             Application.Quit();
         }
 

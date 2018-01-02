@@ -63,6 +63,10 @@
       <Project>{B876774A-AB7E-4B31-931F-6A17704A314A}</Project>
       <Name>ConnectionLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
+      <Project>{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}</Project>
+      <Name>ConstantsLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

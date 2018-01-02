@@ -159,7 +159,7 @@ namespace PluginsLibrary
         }
 
 		//Realizar consulta a la base de datos
-		public XmlDocument SelectRequest(string databaseType, string databaseName,string consulta)
+        public XmlDocument SelectRequest(string databaseType, string databaseName,XmlNode body)
 		{
 			XmlDocument xmldocument = new XmlDocument();
             PluginMySQL mysql;
@@ -168,21 +168,21 @@ namespace PluginsLibrary
 			{
 				case ("mongodb"):
 					mongo = new PluginMongo(databaseName);
-					xmldocument = Convertion.JsonToXml(mongo.SelectRequest());
+					xmldocument = Convertion.JsonToXml(mongo.SelectRequest(body));
 					break;
 
 				case ("mysql"):
 					string username = getUser(databaseType, databaseName);
                     string password = getPassword(databaseType, databaseName);
-                    if (username == null)
+
+					if (username == null)
                          mysql = new PluginMySQL(databaseName);
                     else
 					     mysql = new PluginMySQL(databaseName, username, password);
-					xmldocument = mysql.SelectRequest();
+                    xmldocument = mysql.SelectRequest(body);
 					break;
 			}
 			return xmldocument;
 		}
-
     }
 }

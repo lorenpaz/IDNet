@@ -147,8 +147,6 @@ namespace ConnectionLibrary
 					handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
 					new AsyncCallback(ReadCallback), state);
 				}
-                //string dataXml = "hola";
-                //Send(handler, dataXml);
 
                 PostBox post = new PostBox(_keyPair);
 
@@ -156,7 +154,7 @@ namespace ConnectionLibrary
 
                 if(!_keyPairClients.ContainsKey(post.MessageRecieve.Source))
                 {
-                    log.Info("aqui3"+post.MessageRecieve.Source);
+
                     Tuple<RsaKeyParameters, SymmetricAlgorithm> tupla = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(post.PublicKeyClient, post.SymmetricKey);
                     _keyPairClients.Add(post.MessageRecieve.Source,tupla);
 				}else if(this._keyPairClients[post.MessageRecieve.Source].Item2 == null)
@@ -164,7 +162,7 @@ namespace ConnectionLibrary
 					Tuple<RsaKeyParameters, SymmetricAlgorithm> tupla = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(post.PublicKeyClient, post.SymmetricKey);
 					_keyPairClients[post.MessageRecieve.Source] = tupla;
 				}
-                log.Info("aqu4");
+
                 Send(handler,respuesta);
 			}
 		}

@@ -31,7 +31,7 @@ namespace ProcessLibrary
                      xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
                     break;
                 case("003"):
-                    xmlDoc = this._db.SelectRequest(m.Db_type,m.Db_name,m.Body.InnerXml);
+                    xmlDoc = this._db.SelectRequest(m.Db_type,m.Db_name,m.Body);
                     break;
             }
             return xmlDoc;

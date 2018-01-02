@@ -13,7 +13,7 @@ namespace IDNetSoftware
 		private string _destination;
 		private string _db_name;
 		private string _db_type;
-		private XmlNode _body;
+        private XmlDocument _body;
 
         //Contiene la información del esquema
         private BodyRespuesta002MySQL _schema;
@@ -33,7 +33,7 @@ namespace IDNetSoftware
 			}
 		}
 
-        public XmlNode Body
+        public XmlDocument Body
 		{
 			get
 			{
@@ -63,14 +63,55 @@ namespace IDNetSoftware
 
             comboboxSelect.Sensitive = false;
             entryWhere.Sensitive = false;
+            comboboxWhere.Sensitive = false;
+            comboboxOrderBy.Sensitive = false;
+            comboboxWhereSymbols.Sensitive = false;
 
-            RellenarComboBox(null,CargarComboBoxFrom());
+            RellenarComboBox(null,CargarComboBoxFrom(),null,null);
         }
+
+		/*
+ * Método del botón 'Cancel'
+ * */
+		protected void OnButtonCancelClicked(object sender, EventArgs e)
+		{
+			this.Destroy();
+		}
+
+		/*
+         * Método del botón 'OK'
+         * */
+		protected void OnButtonOkClicked(object sender, EventArgs e)
+		{
+
+			CrearBody();
+            this._typeOutPut = "003";
+
+			this.Destroy();
+		}
+
+		protected void OnComboboxFromChanged(object sender, EventArgs e)
+		{
+			//Relleno el select,where y orderBy
+            RellenarComboBox(CargarComboBoxSelect(comboboxFrom.ActiveText), null, CargarComboBoxWhere(comboboxFrom.ActiveText), CargarComboBoxOrderBy(comboboxFrom.ActiveText));
+			comboboxSelect.Sensitive = true;
+			comboboxWhere.Sensitive = true;
+			comboboxWhereSymbols.Sensitive = true;
+			entryWhere.Sensitive = true;
+			comboboxOrderBy.Sensitive = true;
+		}
+
+		protected void OnComboboxWhereChanged(object sender, EventArgs e)
+		{
+			entryWhere.Sensitive = true;
+			comboboxWhereSymbols.Sensitive = true;
+			RellenarComboBoxSymbols(CargarComboBoxWhereSymbols(comboboxFrom.ActiveText));
+		}
 
         /*
          * Método privado para rellenar los ComboBoxs
          * */
-        private void RellenarComboBox(List<string> select, List<string> from)
+        private void RellenarComboBox(List<string> select, List<string> from,List<string> where, List<string> orderBy)
         {
             if (select != null)
             {
@@ -86,6 +127,33 @@ namespace IDNetSoftware
 					comboboxFrom.AppendText(field);
 				}
             }
+
+            if(where != null)
+            {
+                foreach (string field in where)
+                {
+                    comboboxWhere.AppendText(field);
+                }
+            }
+            if (orderBy != null)
+			{
+                foreach (string field in orderBy)
+				{
+                    comboboxOrderBy.AppendText(field);
+				}
+			}
+
+        }
+
+        private void RellenarComboBoxSymbols(List<string> whereSymbols)
+        {
+            if (whereSymbols != null)
+			{
+                foreach (string field in whereSymbols)
+				{
+                    comboboxWhereSymbols.AppendText(field);
+				}
+			} 
         }
 
 		/*
@@ -94,6 +162,8 @@ namespace IDNetSoftware
 		private List<string> CargarComboBoxSelect(string tabla)
 		{
 			List<string> select = new List<string>();
+
+            select.Add("*");
 
             foreach (var table in this._schema.Tables)
 			{
@@ -110,7 +180,7 @@ namespace IDNetSoftware
 		}
 
 		/*
-         * Método para cargar el ComboBox del Select
+         * Método para cargar el ComboBox del From
          * */
 		private List<string> CargarComboBoxFrom()
 		{
@@ -124,32 +194,121 @@ namespace IDNetSoftware
 			return from;
 		}
 
-        /*
-         * Método del botón 'Cancel'
-         * */
-		protected void OnButtonCancelClicked(object sender, EventArgs e)
+		/*
+     * Método para cargar el ComboBox del Where
+     * */
+		private List<string> CargarComboBoxWhere(string tabla)
 		{
-			this.Destroy();
+			List<string> select = new List<string>();
+
+			foreach (var table in this._schema.Tables)
+			{
+				if (tabla == table.Name)
+				{
+					foreach (var col in table.Cols)
+					{
+						select.Add(col.Name);
+					}
+				}
+			}
+
+			return select;
 		}
 
-        /*
-         * Método del botón 'OK'
+		/*
+         * Método para cargar el ComboBox del WhereSymbols
          * */
-        protected void OnButtonOkClicked(object sender, EventArgs e)
-        {
-            this.Destroy();
-        }
+		private List<string> CargarComboBoxWhereSymbols(string tabla)
+		{
+			List<string> whereSymbols = new List<string>();
 
-        protected void OnComboboxFromChanged(object sender, EventArgs e)
-        {
-            //Relleno el select
-            RellenarComboBox(CargarComboBoxSelect(comboboxFrom.ActiveText),null);
-            comboboxSelect.Sensitive = true;
-        }
+			foreach (var table in this._schema.Tables)
+			{
+				if (tabla == table.Name)
+				{
+					foreach (var col in table.Cols)
+					{
+                        if(col.Name == comboboxWhere.ActiveText)
+                        {
+							if (col.Type == "int")
+							{
+								whereSymbols.Add("=");
+								whereSymbols.Add("<");
+								whereSymbols.Add(">");
+								whereSymbols.Add("<>");
 
-        protected void OnComboboxSelectChanged(object sender, EventArgs e)
+							}
+							else if (col.Type == "varchar")
+							{
+								whereSymbols.Add("=");
+								whereSymbols.Add("<>");
+
+							}
+                            return whereSymbols;
+                        }
+					}
+				}
+			}
+
+
+			return whereSymbols;
+		}
+
+		/*
+         * Método para cargar el ComboBox del OrderBy
+         * */
+		private List<string> CargarComboBoxOrderBy(string tabla)
+		{
+			List<string> orderby = new List<string>();
+
+			foreach (var table in this._schema.Tables)
+			{
+				if (tabla == table.Name)
+				{
+					foreach (var col in table.Cols)
+					{
+                        orderby.Add(col.Name);
+					}
+				}
+			}
+
+            return orderby;
+		}
+
+        private void CrearBody()
         {
-            entryWhere.Sensitive = true;
+            XmlDocument bodyDoc = new XmlDocument();
+            XmlElement root = bodyDoc.DocumentElement;
+
+			//Creamos elemento root
+            XmlElement elementRoot = bodyDoc.CreateElement("body");
+            bodyDoc.AppendChild(elementRoot);
+
+			//Creamos elemento select
+            XmlNode select = bodyDoc.CreateElement("select");
+            select.InnerText = comboboxSelect.ActiveText;
+            elementRoot.AppendChild(select);
+
+			//Creamos elemento from
+			XmlNode from = bodyDoc.CreateElement("from");
+            from.InnerText = comboboxFrom.ActiveText;
+            elementRoot.AppendChild(from);
+
+			//Creamos elemento where
+			XmlNode where = bodyDoc.CreateElement("where");
+            if(comboboxWhere.ActiveText != "")
+                where.InnerText = comboboxWhere.ActiveText + comboboxWhereSymbols.ActiveText + entryWhere.Text;
+            elementRoot.AppendChild(where);
+
+			//Creamos elemento orderBy
+			XmlNode orderby = bodyDoc.CreateElement("orderby");
+            if (comboboxOrderBy.ActiveText == "")
+                orderby.InnerText = "ASC";
+            else
+                orderby.InnerText = comboboxOrderBy.ActiveText;
+            elementRoot.AppendChild(orderby);
+
+            this._body = bodyDoc;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+
 using MessageLibraryS;
 using System.Xml;
 using System.Collections.Generic;
@@ -11,8 +13,10 @@ namespace ConstantsLibraryS
         public const string CONFIG = @"../../../../configuration/";
         public const string ConfigFileDatabases = CONFIG + @"databases.conf";
         public const string ConfigFileNeighbours = CONFIG + @"neighbours.conf";
+        public const string CONF_PUBLIC_KEY = CONFIG + @"publicKeyIDNet.pem";
+		public const string CONF_PRIVATE_KEY = CONFIG + @"privateKeyIDNet.pem";
 
-        public const string SOLICITUD_CONEXION = @"Solicitud de conexion de base de datos";
+		public const string SOLICITUD_CONEXION = @"Solicitud de conexion de base de datos";
 		public const string RESPUESTA_CONEXION = @"Respuesta a la solicitud de conexion de base de datos";
 
 		public const string SOLICITUD_ESQUEMA = @"Solicitud de esquema de base de datos";
@@ -136,6 +140,13 @@ namespace ConstantsLibraryS
            Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n";
 
 		}
+
+		public static void BorrarRecursos()
+		{
+			File.Delete(Constants.CONF_PUBLIC_KEY);
+			File.Delete(Constants.CONF_PRIVATE_KEY);
+		}
+
     }
 	public struct Col
 	{

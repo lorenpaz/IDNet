@@ -37,8 +37,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionLibrary", "IDNetD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{E9550F20-6CE3-4C32-ACC1-2E5C1D084F46}"
 	ProjectSection(SolutionItems) = preProject
-		configuration\databases.info = configuration\databases.info
-		configuration\neighbours.info = configuration\neighbours.info
+		configuration\blackList.conf = configuration\blackList.conf
+		configuration\databases.conf = configuration\databases.conf
+		configuration\neighbours.conf = configuration\neighbours.conf
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertionLibraryS", "IDNetSoftware\ConvertionLibrary\ConvertionLibraryS.csproj", "{2F0443FD-FFBF-49DA-8C28-11DA692FF5EA}"

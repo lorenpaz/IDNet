@@ -67,7 +67,7 @@ namespace CriptoLibraryS
 		public static void ExportPublicKey(RsaKeyParameters publicKey)
 		{
 			//To print the public key in pem format
-            TextWriter textWriter1 = new StreamWriter(Constants.CONFIG+"publicKeyIDNet.pem");
+            TextWriter textWriter1 = new StreamWriter(Constants.CONF_PUBLIC_KEY);
 			PemWriter pemWriter1 = new PemWriter(textWriter1);
 			pemWriter1.WriteObject(publicKey);
 			pemWriter1.Writer.Flush();
@@ -77,7 +77,7 @@ namespace CriptoLibraryS
 		public static void ExportPrivateKey(RsaKeyParameters privateKey)
 		{
 			//To print the public key in pem format
-			TextWriter textWriter1 = new StreamWriter(Constants.CONFIG +"privateKeyIDNet.pem");
+            TextWriter textWriter1 = new StreamWriter(Constants.CONF_PRIVATE_KEY);
 			PemWriter pemWriter1 = new PemWriter(textWriter1);
 			pemWriter1.WriteObject(privateKey);
 			pemWriter1.Writer.Flush();

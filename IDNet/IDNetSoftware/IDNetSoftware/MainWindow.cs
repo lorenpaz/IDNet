@@ -103,11 +103,16 @@ namespace IDNetSoftware
         //Dialogo de conexion
         ConnectionDialog _connectionDialog;
 
+        //Numero conexiones activas
+        int _conexionesActivas;
+
         //Diccionario con todos los mensajes (neighbour -> [(tipobbdd,nombrebbdd,(connection->Pipe,schema->Pipe,select->Pipe))])
         Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>> _messages;
 
+        //Clave pública y privada
         Cripto _claves;
 
+        //Diccionario con claves públicas y simétricas de los clientes
         Dictionary<string, Tuple<RsaKeyParameters,SymmetricAlgorithm>> _keyPairClients;
 
 		public MainWindow() : base(Gtk.WindowType.Toplevel)
@@ -124,6 +129,8 @@ namespace IDNetSoftware
             this._keyPairClients = new Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>>();
 
 			this._messages = new Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>>();
+
+            this._conexionesActivas = 0;
 
             cargoBasesDeDatosDeLaOV();
 
@@ -399,6 +406,7 @@ namespace IDNetSoftware
 
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
                     MostrarConexion(this._connectionDialog.Connection.MessageResponse);
+                    IncrementarConexionesActivas();
 
                     break;
 
@@ -427,6 +435,9 @@ namespace IDNetSoftware
                     }else{
                         this._messages[usuario][index].Item3.Add("select", this._connectionDialog.Select);
 					}
+
+                    MostrarSolicitudConsulta(this._connectionDialog.Select.MessageRequest);
+                    MostrarResultadoConsulta(this._connectionDialog.Select.MessageResponse);
 
 					break;
             }
@@ -489,7 +500,23 @@ namespace IDNetSoftware
             return false;
         }
 
-        /*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/
+		/*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/
+
+		/*
+         * Método privado para mostrar la solicitud de conexión de BBDD
+         * */
+		private void MostrarSolicitudConexion(Message messageRequest)
+		{
+			infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
+		}
+
+		/*
+         * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
+         * */
+		private void MostrarConexion(Message messageResponse)
+		{
+			infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
+		}
 
         /*
          * Método privado para mostrar la solicitud de esquema de BBDD
@@ -518,20 +545,32 @@ namespace IDNetSoftware
                 infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse);
         }
 
-        /*
-         * Método privado para mostrar la solicitud de conexión de BBDD
+		/*
+         * Método privado para mostrar la solicitud de consulta
          * */
-        private void MostrarSolicitudConexion(Message messageRequest)
-        {
-            infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
-        }
+		private void MostrarSolicitudConsulta(Message messageRequest)
+		{
+			infoview.Buffer.Text += "\n" + Constants.SolicitudConsulta(messageRequest);
+		}
 
-        /*
+		/*
          * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
          * */
-        private void MostrarConexion(Message messageResponse)
+		private void MostrarResultadoConsulta(Message messageResponse)
+		{
+			infoview.Buffer.Text += "\n" + Constants.RespuestaConsulta(messageResponse);
+		}
+
+        private void IncrementarConexionesActivas()
         {
-            infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
+            this._conexionesActivas += 1;
+            if(this._conexionesActivas == 1)
+            {
+                conexionesLabel.Text = this._conexionesActivas+" conexión activa";
+
+			}else{
+				conexionesLabel.Text = this._conexionesActivas + " conexiones activas";
+			}
         }
 
         /*

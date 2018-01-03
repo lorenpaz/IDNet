@@ -34,7 +34,7 @@ namespace IDNetDaemon
 		public static void Main(string[] args)
 		{
 			ServiceDaemon serv = new ServiceDaemon();
-            serv.OnStart(new string[1]);
+                serv.OnStart(new string[1]);
             ServiceBase.Run(serv);
 		}
 	}

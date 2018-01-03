@@ -80,7 +80,7 @@ namespace IDNetSoftware
 
 		/*
          * Método del botón 'OK'
-         * */
+         * */   
 		protected void OnButtonOkClicked(object sender, EventArgs e)
 		{
 
@@ -105,8 +105,18 @@ namespace IDNetSoftware
 		{
 			entryWhere.Sensitive = true;
 			comboboxWhereSymbols.Sensitive = true;
-			RellenarComboBoxSymbols(CargarComboBoxWhereSymbols(comboboxFrom.ActiveText));
-		}
+            if (comboboxWhere.ActiveText != " ")
+            {
+                entryWhere.Sensitive = true;
+                comboboxWhereSymbols.Sensitive = true;
+                RellenarComboBoxSymbols(CargarComboBoxWhereSymbols(comboboxFrom.ActiveText));
+            }else{
+                RellenarComboBoxSymbols(null);
+                entryWhere.Text = "";
+                entryWhere.Sensitive = false;
+                comboboxWhereSymbols.Sensitive = false;
+            }
+        }
 
         /*
          * Método privado para rellenar los ComboBoxs
@@ -120,6 +130,7 @@ namespace IDNetSoftware
                     comboboxSelect.AppendText(field);
                 }
             }
+
             if (from != null)
             {
 				foreach (string field in from)
@@ -130,18 +141,23 @@ namespace IDNetSoftware
 
             if(where != null)
             {
-                foreach (string field in where)
+				foreach (string field in where)
                 {
                     comboboxWhere.AppendText(field);
                 }
+            }else{
+                comboboxWhere.Data.Clear(); 
             }
+
             if (orderBy != null)
 			{
-                foreach (string field in orderBy)
+				foreach (string field in orderBy)
 				{
                     comboboxOrderBy.AppendText(field);
 				}
-			}
+            }else{
+                comboboxOrderBy.Data.Clear();
+            }
 
         }
 
@@ -149,11 +165,13 @@ namespace IDNetSoftware
         {
             if (whereSymbols != null)
 			{
-                foreach (string field in whereSymbols)
+				foreach (string field in whereSymbols)
 				{
                     comboboxWhereSymbols.AppendText(field);
 				}
-			} 
+            }else{
+                comboboxWhereSymbols.Data.Clear();
+			}
         }
 
 		/*
@@ -200,6 +218,9 @@ namespace IDNetSoftware
 		private List<string> CargarComboBoxWhere(string tabla)
 		{
 			List<string> select = new List<string>();
+
+            //Añado el vacio
+            select.Add(" ");
 
 			foreach (var table in this._schema.Tables)
 			{
@@ -296,8 +317,10 @@ namespace IDNetSoftware
 
 			//Creamos elemento where
 			XmlNode where = bodyDoc.CreateElement("where");
-            if(comboboxWhere.ActiveText != "")
-                where.InnerText = comboboxWhere.ActiveText + comboboxWhereSymbols.ActiveText + entryWhere.Text;
+            if (comboboxWhere.ActiveText != "")
+            {
+                where.InnerText = comboboxWhere.ActiveText + comboboxWhereSymbols.ActiveText + "'" + entryWhere.Text + "'";
+            }
             elementRoot.AppendChild(where);
 
 			//Creamos elemento orderBy

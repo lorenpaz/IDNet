@@ -138,7 +138,6 @@ namespace PluginsLibrary
         {
 			XmlDocument document = null;
             MySqlConnection dbcon = null;
-			MySqlDataReader rdr = null;
 
             ConsultaMysql consultamysql = new ConsultaMysql(body);
 
@@ -150,7 +149,8 @@ namespace PluginsLibrary
 				cmd.Connection = dbcon;
                 cmd.CommandText = consultamysql.Consulta;
 
-				rdr = cmd.ExecuteReader();
+                consultamysql.ResultadoConsulta = cmd.ExecuteReader();
+                return consultamysql.ObtenerXMLResultado();
 			}
 			catch (MySqlException ex)
 			{
@@ -166,6 +166,7 @@ namespace PluginsLibrary
 					default:
 						break;
 				}
+                return consultamysql.ErrorObtenido(ex.Message);
 			}
 			finally
 			{
@@ -185,7 +186,9 @@ namespace PluginsLibrary
         string _selectTarget;
         string _fromTarget;
         string _whereTarget;
+        string _orderByTarget;
         string _consulta;
+        MySqlDataReader _resultadoConsulta;
 
 		public String  SelectTarget
 		{
@@ -221,6 +224,18 @@ namespace PluginsLibrary
 			}
 		}
 
+		public String OrderByTarget
+		{
+			get
+			{
+                return this._orderByTarget;
+			}
+			set
+			{
+                this._orderByTarget = value;
+			}
+		}
+
 		public String Consulta
 		{
 			get
@@ -233,22 +248,87 @@ namespace PluginsLibrary
 			}
 		}
 
+        public MySqlDataReader ResultadoConsulta
+		{
+			get
+			{
+                return this._resultadoConsulta;
+			}
+			set
+			{
+				this._resultadoConsulta = value;
+			}
+		}
+
         public ConsultaMysql(XmlNode body)
         {
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(body.InnerXml);
-            this._selectTarget = doc.DocumentElement.GetElementsByTagName("select")[0].InnerText;
-			this._fromTarget = doc.DocumentElement.GetElementsByTagName("from")[0].InnerText;
-			this._whereTarget = doc.DocumentElement.GetElementsByTagName("where")[0].InnerText;
+            this._selectTarget = doc.GetElementsByTagName("select")[0].InnerText;
+			this._fromTarget = doc.GetElementsByTagName("from")[0].InnerText;
+			this._whereTarget = doc.GetElementsByTagName("where")[0].InnerText;
+            this._orderByTarget = doc.GetElementsByTagName("orderby")[0].InnerText;
 
-            if(this._whereTarget != null)
+            string etiquetaSelect = "SELECT " + this._selectTarget;
+            string etiquetaFrom = " FROM " + this._fromTarget;
+            string etiquetaWhere = "",etiquetaOrderBy = "";
+
+            if(this._whereTarget != "")
             {
-				this._consulta = "SELECT " + this._selectTarget + " FROM " + this._fromTarget + " WHERE " + this._whereTarget;
+                etiquetaWhere = " WHERE " +this._whereTarget;
+			}
 
+            if(this._orderByTarget != ""){
+                etiquetaOrderBy = " ORDER BY "+this._orderByTarget;
 			}
-            else{
-				this._consulta = "SELECT " + this._selectTarget + " FROM " + this._fromTarget;
-			}
+
+            this._consulta =  etiquetaSelect + etiquetaFrom + etiquetaWhere + etiquetaOrderBy;
+		}
+
+        public XmlDocument ObtenerXMLResultado()
+        {
+            XmlDocument doc = new XmlDocument();
+			XmlElement root = doc.DocumentElement;
+
+			//Creamos elemento result
+			XmlElement elementRoot = doc.CreateElement("result");
+			doc.AppendChild(elementRoot);
+
+            var rdr = this._resultadoConsulta;
+
+            while (rdr.Read())
+            {
+				//Creamos el elemento 
+				XmlElement row = doc.CreateElement("row");
+
+                for (int i = 0; i < rdr.FieldCount; i++)
+                {
+                    string nombreCampo = rdr.GetName(i);
+                    string campo = Convert.ToString(rdr[nombreCampo]);
+                    row.SetAttribute(nombreCampo, campo);
+                }
+				elementRoot.AppendChild(row);
+            }
+
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+
+			return doc;
+        }
+
+		public XmlDocument ErrorObtenido(string error)
+		{
+			XmlDocument doc = new XmlDocument();
+			XmlElement root = doc.DocumentElement;
+
+			//Creamos elemento result
+			XmlElement elementRoot = doc.CreateElement("error");
+            elementRoot.InnerText = error;
+            doc.AppendChild(elementRoot);
+
+			return doc;
 		}
     }
 

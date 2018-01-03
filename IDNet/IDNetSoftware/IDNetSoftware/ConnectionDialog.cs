@@ -177,6 +177,7 @@ namespace IDNetSoftware
 
 			this._connection = pipeConexion;
 			this._schema = pipeSchema;
+            this._select = new PipeMessage();
 
             //Activar o desactivar los botones
             if (pipeConexion == null)
@@ -291,7 +292,7 @@ namespace IDNetSoftware
 			Client c = new Client();
 			response = c.StartClient(msg, "localhost");
 
-			//Proceso la respuesta
+			//Proceso la respuesta      
 			post.ProcesarRespuesta(response);
 
 			this._schema.MessageRequest = post.MessageRequest;
@@ -316,7 +317,7 @@ namespace IDNetSoftware
 
                     break;
                 case "003":
-                    XmlNode bodyMessage = this._selectDialog.Body.GetElementsByTagName("body")[0];
+                    XmlNode bodyMessage =  (XmlNode) this._selectDialog.Body;
                     PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage,this._connection.SymmetricKey);
 					msg = post.ProcesarEnvio();
 
@@ -327,7 +328,10 @@ namespace IDNetSoftware
 					//Proceso la respuesta
 					post.ProcesarRespuesta(response);
 
-					this._typeOutPut = "003";
+                    this._select.MessageRequest = post.MessageRequest;
+                    this._select.MessageResponse = post.MessageResponse;
+
+                    this._typeOutPut = "003";
                     break;
             }
 

@@ -13,5 +13,5 @@ namespace IDNetDaemon
             ServiceBase.Run(ServicesToRun);
         }
 #endif
-    }
+	}
 }

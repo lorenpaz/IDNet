@@ -83,6 +83,8 @@
     <Compile Include="gtk-gui\IDNetSoftware.ConnectionDialog.cs" />
     <Compile Include="SelectDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.SelectDialog.cs" />
+    <Compile Include="FindDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.FindDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

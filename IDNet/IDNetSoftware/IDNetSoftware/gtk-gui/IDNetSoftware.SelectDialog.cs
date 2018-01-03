@@ -236,6 +236,7 @@ namespace IDNetSoftware
 			this.DefaultWidth = 605;
 			this.DefaultHeight = 300;
 			this.Show();
+			this.comboboxSelect.Changed += new global::System.EventHandler(this.OnComboboxSelectChanged);
 			this.comboboxFrom.Changed += new global::System.EventHandler(this.OnComboboxFromChanged);
 			this.comboboxWhere.Changed += new global::System.EventHandler(this.OnComboboxWhereChanged);
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);

@@ -37,8 +37,12 @@ namespace IDNetSoftware
         //Atributo para saber cómo ha cerrado el diálogo
         private string _typeOutPut;
 
-        //Atributo del diálogo de consulta Select
+        //Atributo del diálogo de consulta Select-Mysql
         private SelectDialog _selectDialog;
+
+        //Atributo del diálogo de consulta Select-MongoDB
+        private FindDialog _findDialog;
+
 
 		public PipeMessage Connection
 		{
@@ -306,33 +310,70 @@ namespace IDNetSoftware
         {
 			string msg, response;
 
-            BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
-
-			this._selectDialog = new SelectDialog(this._destination, this._db_type, this._db_name,schema);
-            this._selectDialog.Run();
-
-            switch (this._selectDialog.TypeOutPut)
+            if (this._db_type == "mysql")
             {
-                case "Cancel":
 
-                    break;
-                case "003":
-                    XmlNode bodyMessage =  (XmlNode) this._selectDialog.Body;
-                    PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage,this._connection.SymmetricKey);
-					msg = post.ProcesarEnvio();
 
-					//Creo el cliente y le envio el mensaje
-					Client c = new Client();
-					response = c.StartClient(msg, "localhost");
+                BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
 
-					//Proceso la respuesta
-					post.ProcesarRespuesta(response);
+                this._selectDialog = new SelectDialog(this._destination, this._db_name, schema);
+                this._selectDialog.Run();
 
-                    this._select.MessageRequest = post.MessageRequest;
-                    this._select.MessageResponse = post.MessageResponse;
+                switch (this._selectDialog.TypeOutPut)
+                {
+                    case "Cancel":
 
-                    this._typeOutPut = "003";
-                    break;
+                        break;
+                    case "003":
+                        XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
+                        PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+                        msg = post.ProcesarEnvio();
+
+                        //Creo el cliente y le envio el mensaje
+                        Client c = new Client();
+                        response = c.StartClient(msg, "localhost");
+
+                        //Proceso la respuesta
+
+                        post.ProcesarRespuesta(response);
+
+                        this._select.MessageRequest = post.MessageRequest;
+                        this._select.MessageResponse = post.MessageResponse;
+
+                        this._typeOutPut = "003";
+                        break;
+                }
+            }else if(this._db_type == "mongodb")
+            {
+                BodyRespuesta002MongoDB schema = new BodyRespuesta002MongoDB(this._schema.MessageResponse.Body.InnerXml);
+
+                this._findDialog = new FindDialog(this._destination, this._db_name, schema);
+				this._selectDialog.Run();
+
+				switch (this._selectDialog.TypeOutPut)
+				{
+					case "Cancel":
+
+						break;
+					case "003":
+						XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
+						PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+						msg = post.ProcesarEnvio();
+
+						//Creo el cliente y le envio el mensaje
+						Client c = new Client();
+						response = c.StartClient(msg, "localhost");
+
+						//Proceso la respuesta
+
+						post.ProcesarRespuesta(response);
+
+						this._select.MessageRequest = post.MessageRequest;
+						this._select.MessageResponse = post.MessageResponse;
+
+						this._typeOutPut = "003";
+						break;
+				}
             }
 
             this.Destroy();

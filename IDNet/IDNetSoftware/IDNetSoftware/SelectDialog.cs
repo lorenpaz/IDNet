@@ -12,7 +12,6 @@ namespace IDNetSoftware
         //Atributos para la construcción de los mensajes
 		private string _destination;
 		private string _db_name;
-		private string _db_type;
         private XmlDocument _body;
 
         //Contiene la información del esquema
@@ -48,13 +47,12 @@ namespace IDNetSoftware
         /*
          * Constructor del diálogo de SELECT
          * */
-        public SelectDialog(string destination, string db_type, string db_name,
+        public SelectDialog(string destination, string db_name,
                             BodyRespuesta002MySQL schema)
         {
             this.Build();
 
             this._destination = destination;
-            this._db_type = db_type;
             this._db_name = db_name;
 			this._body = new XmlDocument();
 			this._typeOutPut = "Cancel";
@@ -66,6 +64,7 @@ namespace IDNetSoftware
             comboboxWhere.Sensitive = false;
             comboboxOrderBy.Sensitive = false;
             comboboxWhereSymbols.Sensitive = false;
+            buttonOk.Sensitive = true;
 
             RellenarComboBox(null,CargarComboBoxFrom(),null,null);
         }
@@ -90,15 +89,39 @@ namespace IDNetSoftware
 			this.Destroy();
 		}
 
+		protected void OnComboboxSelectChanged(object sender, EventArgs e)
+		{
+            if(comboboxSelect.ActiveText == "*")
+            {
+                RellenarComboBox(null,null,null,CargarComboBoxOrderBy(comboboxFrom.ActiveText));
+            }else{
+                comboboxOrderBy.Data.Clear();
+                comboboxOrderBy.AppendText(comboboxSelect.ActiveText);
+            }
+
+			comboboxOrderBy.Sensitive = true;
+
+            //Control para que solo pulse el botón 'OK' cuando mande el from y el where
+            if(comboboxFrom.ActiveText != "")
+            {
+                buttonOk.Sensitive = true;
+            }
+		}
+
 		protected void OnComboboxFromChanged(object sender, EventArgs e)
 		{
 			//Relleno el select,where y orderBy
-            RellenarComboBox(CargarComboBoxSelect(comboboxFrom.ActiveText), null, CargarComboBoxWhere(comboboxFrom.ActiveText), CargarComboBoxOrderBy(comboboxFrom.ActiveText));
+            RellenarComboBox(CargarComboBoxSelect(comboboxFrom.ActiveText), null, CargarComboBoxWhere(comboboxFrom.ActiveText), null);
 			comboboxSelect.Sensitive = true;
 			comboboxWhere.Sensitive = true;
 			comboboxWhereSymbols.Sensitive = true;
 			entryWhere.Sensitive = true;
-			comboboxOrderBy.Sensitive = true;
+
+			//Control para que solo pulse el botón 'OK' cuando mande el from y el where
+            if (comboboxSelect.ActiveText != "")
+			{
+				buttonOk.Sensitive = true;
+			}
 		}
 
 		protected void OnComboboxWhereChanged(object sender, EventArgs e)
@@ -145,8 +168,6 @@ namespace IDNetSoftware
                 {
                     comboboxWhere.AppendText(field);
                 }
-            }else{
-                comboboxWhere.Data.Clear(); 
             }
 
             if (orderBy != null)
@@ -155,8 +176,6 @@ namespace IDNetSoftware
 				{
                     comboboxOrderBy.AppendText(field);
 				}
-            }else{
-                comboboxOrderBy.Data.Clear();
             }
 
         }
@@ -213,8 +232,8 @@ namespace IDNetSoftware
 		}
 
 		/*
-     * Método para cargar el ComboBox del Where
-     * */
+         * Método para cargar el ComboBox del Where
+         * */
 		private List<string> CargarComboBoxWhere(string tabla)
 		{
 			List<string> select = new List<string>();
@@ -251,7 +270,9 @@ namespace IDNetSoftware
 					{
                         if(col.Name == comboboxWhere.ActiveText)
                         {
-							if (col.Type == "int")
+                            if (col.Type == "int" || col.Type=="smallint" || 
+                                col.Type == "decimal" || col.Type=="double" ||
+                                col.Type=="float")
 							{
 								whereSymbols.Add("=");
 								whereSymbols.Add("<");
@@ -259,7 +280,9 @@ namespace IDNetSoftware
 								whereSymbols.Add("<>");
 
 							}
-							else if (col.Type == "varchar")
+                            else if (col.Type == "varchar" || col.Type=="char"
+                                     || col.Type=="text" || col.Type=="mediumtext"
+                                     || col.Type=="longtext")
 							{
 								whereSymbols.Add("=");
 								whereSymbols.Add("<>");
@@ -317,7 +340,7 @@ namespace IDNetSoftware
 
 			//Creamos elemento where
 			XmlNode where = bodyDoc.CreateElement("where");
-            if (comboboxWhere.ActiveText != "")
+            if (comboboxWhere.ActiveText != "" && comboboxWhere.ActiveText != " ")
             {
                 where.InnerText = comboboxWhere.ActiveText + comboboxWhereSymbols.ActiveText + "'" + entryWhere.Text + "'";
             }
@@ -333,5 +356,7 @@ namespace IDNetSoftware
 
             this._body = bodyDoc;
         }
+
+
     }
 }

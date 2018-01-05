@@ -71,6 +71,12 @@
         <property name="StockId">gtk-clear</property>
         <signal name="Activated" handler="OnClearActionActivated" />
       </action>
+      <action id="refreshAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="OnRefreshActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">700</property>
@@ -115,6 +121,7 @@
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="addDatabasePngAction" />
               <node type="Toolitem" action="clearAction" />
+              <node type="Toolitem" action="refreshAction" />
             </node>
           </widget>
           <packing>
@@ -1323,7 +1330,6 @@ mongodb</property>
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
                     <property name="Items" translatable="yes" />
-                    <signal name="Changed" handler="OnComboboxProjectionChanged" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -1340,6 +1346,7 @@ mongodb</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
+                    <signal name="Toggled" handler="OnCheckbuttonProjectionToggled" />
                   </widget>
                   <packing>
                     <property name="PackType">End</property>
@@ -1409,14 +1416,14 @@ mongodb</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.SpinButton" id="spinbuttonLimit">
+                  <widget class="Gtk.ComboBox" id="comboboxLimit">
                     <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Upper">100</property>
-                    <property name="PageIncrement">10</property>
-                    <property name="StepIncrement">1</property>
-                    <property name="ClimbRate">1</property>
-                    <property name="Numeric">True</property>
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes">None
+5
+10
+20</property>
+                    <property name="Active">0</property>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -1459,6 +1466,7 @@ mongodb</property>
             <property name="Type">StockItem</property>
             <property name="StockId">gtk-cancel</property>
             <property name="ResponseId">-6</property>
+            <signal name="Clicked" handler="OnButtonCancelClicked" />
             <property name="label">gtk-cancel</property>
           </widget>
           <packing>
@@ -1475,6 +1483,7 @@ mongodb</property>
             <property name="Type">StockItem</property>
             <property name="StockId">gtk-ok</property>
             <property name="ResponseId">-5</property>
+            <signal name="Clicked" handler="OnButtonOkClicked" />
             <property name="label">gtk-ok</property>
           </widget>
           <packing>

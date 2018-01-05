@@ -45,12 +45,6 @@ namespace PluginsLibrary
             return this._salida;
 		}
 
-		//Realizar consulta a la BBBDD
-        public string SelectRequest(XmlNode body)
-        {
-            return this._salida;
-        }
-
         //Tarea para la obtención de la información de la BBDD
         async Task MainAsync()
         {
@@ -83,22 +77,126 @@ namespace PluginsLibrary
             this._salida = j;
         }
 
+		//Realizar consulta a la BBBDD
+		public string SelectRequest(XmlNode body)
+		{
+			SecondAsync(body).Wait();
+			return this._salida;
+		}
+
+        async Task SecondAsync(XmlNode body)
+        {
+            ConsultaMongo c = new ConsultaMongo(body);
+			this._client = new MongoClient();
+			this._database = this._client.GetDatabase(this._databaseName);
+
+            var collection = this._database.GetCollection<BsonDocument>(c.CollectionTarget);
+            FilterDefinition<BsonDocument> filter = null;
+            IFindFluent<BsonDocument,BsonDocument> documents = null;
+
+            if (c.FilterTarget == null)
+            {
+                 filter = FilterDefinition<BsonDocument>.Empty;
+            }else{
+                filter = c.FilterTarget;  
+            }
+
+            if(c.LimitTarget == "None")
+            {
+				documents = collection.Find(filter);
+
+			}else{
+                documents = collection.Find(filter).Limit(Int32.Parse(c.LimitTarget));
+            }
+            if(c.SortTarget != null)
+            {
+                documents = documents.Sort(c.SortTarget);
+            }
+
+            documents = documents.Project(c.ProjectionsTarget);
+
+            var documentsList = await documents.ToListAsync();
+                var j = "{\"result\": [";
+                int i = 1;
+                foreach(var doc in documentsList)
+                {
+                    doc.Remove("_id");
+
+                    if (i != documentsList.Count)
+                        j += "{\"row\":" + doc.ToJson() + "}";
+                    else
+                        j += "{\"row\":" + doc.ToJson() + "}";
+                    i += 1;
+                    j += ",";
+                }
+				j = j.Remove(j.Length - 1, 1);
+				j += "]}";
+                this._salida = j;
+            
+        }
+
+
 		public class ConsultaMongo
 		{
-			string _selectTarget;
-			string _fromTarget;
-			string _whereTarget;
-			string _consulta;
+			string _collectionTarget; 
+			string _filterTarget; 
+            string _proyectionsTarget; 
+            string _sortTarget; 
+            string _limitTarget; 
 
-			public String Consulta
+			public String CollectionTarget
 			{
 				get
 				{
-					return this._consulta;
+                    return this._collectionTarget;
 				}
 				set
 				{
-					this._consulta = value;
+					this._collectionTarget = value;
+				}
+			}
+			public String ProjectionsTarget
+			{
+				get
+				{
+					return this._proyectionsTarget;
+				}
+				set
+				{
+					this._proyectionsTarget = value;
+				}
+			}
+			public String FilterTarget
+			{
+				get
+				{
+                    return this._filterTarget;
+				}
+				set
+				{
+					this._filterTarget = value;
+				}
+			}
+			public String SortTarget
+			{
+				get
+				{
+                    return this._sortTarget;
+				}
+				set
+				{
+					this._sortTarget = value;
+				}
+			}
+			public String LimitTarget
+			{
+				get
+				{
+                    return this._limitTarget;
+				}
+				set
+				{
+					this._limitTarget = value;
 				}
 			}
 
@@ -106,6 +204,60 @@ namespace PluginsLibrary
 			{
 				XmlDocument doc = new XmlDocument();
 				doc.LoadXml(body.InnerXml);
+
+                //Collection
+                this._collectionTarget = doc.GetElementsByTagName("collection")[0].InnerText;
+
+                //Filter
+                string filterField = doc.GetElementsByTagName("filter")[0].InnerText;
+                if (filterField == "")
+                {
+                    this._filterTarget = null;
+                }
+                else
+                {
+                    string[] filter = filterField.Split();
+                    this._filterTarget = "{";
+                    if (filter[1] == "$eq" || filter[1] == "$ne")
+                    {
+                        this._filterTarget += filter[0] + " : { '" + filter[1] + "' : " + filter[2] + "} }";
+                    }
+                } 
+
+                //Projection
+                XmlAttributeCollection listAttributes = doc.GetElementsByTagName("projection")[0].Attributes;
+                this._proyectionsTarget = "{";
+                int i = 1;
+                foreach(XmlAttribute attribute in listAttributes)
+                {
+                    if(i == listAttributes.Count)
+                    {
+                        this._proyectionsTarget += attribute.Name + ": " + attribute.Value + "}";
+					}else{
+						this._proyectionsTarget += attribute.Name + ": " + attribute.Value + ",";
+					}
+                    i++;
+                }
+
+                //Sort
+               string sort  = doc.GetElementsByTagName("sort")[0].InnerText;
+                if (sort != "")
+                {
+                    this._sortTarget = "{" + sort + ": 1}";
+                }
+                else
+                {
+                    this._sortTarget = null;
+                }
+
+				//Limit
+				string limitField = doc.GetElementsByTagName("limit")[0].InnerText;
+                if(limitField == "" || limitField == "None")
+                {
+                    this._limitTarget = null;
+                }else{
+					this._limitTarget = doc.GetElementsByTagName("limit")[0].InnerText;
+				}
 			}
 		}
        /* static void Main(string[] args)

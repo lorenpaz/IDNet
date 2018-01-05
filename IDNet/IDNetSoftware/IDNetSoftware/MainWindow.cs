@@ -24,8 +24,8 @@ namespace IDNetSoftware
         RsaKeyParameters _publicKey;
         SymmetricAlgorithm _symmetricKey;
 
-        public PipeMessage(){}
-        public PipeMessage(Message mrequest, Message mresponse, RsaKeyParameters publicKey,SymmetricAlgorithm key)
+        public PipeMessage() { }
+        public PipeMessage(Message mrequest, Message mresponse, RsaKeyParameters publicKey, SymmetricAlgorithm key)
         {
             this._messageRequest = mrequest;
             this._messageResponse = mresponse;
@@ -54,28 +54,28 @@ namespace IDNetSoftware
                 this._messageResponse = value;
             }
         }
-		public RsaKeyParameters PublicKey
-		{
-			get
-			{
+        public RsaKeyParameters PublicKey
+        {
+            get
+            {
                 return this._publicKey;
-			}
-			set
-			{
+            }
+            set
+            {
                 this._publicKey = value;
-			}
-		}
+            }
+        }
         public SymmetricAlgorithm SymmetricKey
-		{
-			get
-			{
+        {
+            get
+            {
                 return this._symmetricKey;
-			}
-			set
-			{
+            }
+            set
+            {
                 this._symmetricKey = value;
-			}
-		}
+            }
+        }
     }
     public partial class MainWindow : Gtk.Window
     {
@@ -107,40 +107,40 @@ namespace IDNetSoftware
         int _conexionesActivas;
 
         //Diccionario con todos los mensajes (neighbour -> [(tipobbdd,nombrebbdd,(connection->Pipe,schema->Pipe,select->Pipe))])
-        Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>> _messages;
+        Dictionary<string, List<Tuple<string, string, Dictionary<string, PipeMessage>>>> _messages;
 
         //Clave pública y privada
         Cripto _claves;
 
         //Diccionario con claves públicas y simétricas de los clientes
-        Dictionary<string, Tuple<RsaKeyParameters,SymmetricAlgorithm>> _keyPairClients;
+        Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>> _keyPairClients;
 
-		public MainWindow() : base(Gtk.WindowType.Toplevel)
+        public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
-           
+
             infoview.ModifyFont(new Pango.FontDescription());
 
             this._infoBBDDView = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
-            this._infoBBDDownView = new ListStore(typeof(string), typeof(string),typeof(bool));
+            this._infoBBDDownView = new ListStore(typeof(string), typeof(string), typeof(bool));
 
             this._databases = new Databases();
             this._neighbours = new Neighbours();
             this._keyPairClients = new Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>>();
 
-			this._messages = new Dictionary<string, List<Tuple<string,string,Dictionary<string, PipeMessage>>>>();
+            this._messages = new Dictionary<string, List<Tuple<string, string, Dictionary<string, PipeMessage>>>>();
 
             this._conexionesActivas = 0;
 
             cargoBasesDeDatosDeLaOV();
 
-			comprobacionServidoresBaseDeDatos();
+            comprobacionServidoresBaseDeDatos();
 
-			cargoBasesDeDatosPropias();
+            cargoBasesDeDatosPropias();
 
             generarParDeClaves();
         }
-
+                
         private void cargoBasesDeDatosDeLaOV()
         {
             //AQUI HACE FALTA OBTENER BBDD de OTROS (conexion cliente con el GK para que nos dé tal información)
@@ -169,7 +169,7 @@ namespace IDNetSoftware
             //Añado las columnas
             treeviewDatabasesPropias.AppendColumn("Nombre BBDD", new CellRendererText(), "text", 0);
             treeviewDatabasesPropias.AppendColumn("Tipo BBDD", new CellRendererText(), "text", 1);
-            treeviewDatabasesPropias.AppendColumn("Funciona",new CellRendererToggle(), "active", 2);
+            treeviewDatabasesPropias.AppendColumn("Funciona", new CellRendererToggle(), "active", 2);
         }
 
         private void comprobacionServidoresBaseDeDatos()
@@ -178,7 +178,7 @@ namespace IDNetSoftware
             string messageError = "";
             Dictionary<string, string> errors = new Dictionary<string, string>();
 
-            foreach (KeyValuePair<string, List<Tuple<string,string,string>>> entry in this._databases.DatabasesPropias)
+            foreach (KeyValuePair<string, List<Tuple<string, string, string>>> entry in this._databases.DatabasesPropias)
             {
                 switch (entry.Key)
                 {
@@ -245,6 +245,12 @@ namespace IDNetSoftware
             treeviewDatabasesPropias.Model = this._infoBBDDownView;
         }
 
+        private void updateNeighbourDatabases()
+        {
+            //FUTURA IMPLEMENTACIÓN CON LOS GK
+        }
+
+
         //Menú 'Base de datos' opción 'Añadir'
         protected void OnAddActionActivated(object sender, EventArgs e)
         {
@@ -274,18 +280,20 @@ namespace IDNetSoftware
         private void addValuesOwn()
         {
             //Recorremos las bases de datos para mostrarlas
-            foreach (KeyValuePair<string, List<Tuple<string,string,string>>> entry in this._databases.DatabasesPropias)
+            foreach (KeyValuePair<string, List<Tuple<string, string, string>>> entry in this._databases.DatabasesPropias)
             {
                 foreach (Tuple<string, string, string> bbdd in entry.Value)
                 {
                     bool works = false;
-                    if (this._databases.ComprobacionServidor(entry.Key,bbdd.Item1,bbdd.Item2,bbdd.Item3))
+                    if (this._databases.ComprobacionServidor(entry.Key, bbdd.Item1, bbdd.Item2, bbdd.Item3))
                     {
                         works = true;
-                    }else{
+                    }
+                    else
+                    {
                         works = false;
                     }
-                    this._infoBBDDownView.AppendValues(bbdd.Item1, entry.Key,works);
+                    this._infoBBDDownView.AppendValues(bbdd.Item1, entry.Key, works);
                 }
                 // do something with entry.Value or entry.Key
             }
@@ -346,9 +354,9 @@ namespace IDNetSoftware
                     Tuple<string, string, Dictionary<string, PipeMessage>> firstTupla = devuelvePrimeraTupla(usuario);
                     int index = this._messages[usuario].IndexOf(firstTupla);
 
-					PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
+                    PipeMessage pipeConexion = this._messages[usuario][index].Item3["connection"];
 
-					this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                    this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
                 }
                 else
                 {
@@ -372,7 +380,7 @@ namespace IDNetSoftware
             }
             else
             {
-                this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD,this._claves);
+                this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, this._claves);
             }
 
             this._connectionDialog.Run();
@@ -386,7 +394,7 @@ namespace IDNetSoftware
                     Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
                     messageC.Add("connection", this._connectionDialog.Connection);
                     Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
-                        new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD,nombreBBDD,messageC);
+                        new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD, messageC);
 
                     if (!this._messages.ContainsKey(usuario))
                     {
@@ -394,15 +402,17 @@ namespace IDNetSoftware
                         lista.Add(tupl);
 
                         this._messages.Add(usuario, lista);
-                    }else{
+                    }
+                    else
+                    {
                         this._messages[usuario].Add(tupl);
                     }
 
-                    if(!this._keyPairClients.ContainsKey(usuario))
+                    if (!this._keyPairClients.ContainsKey(usuario))
                     {
-                        Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey,this._connectionDialog.Connection.SymmetricKey);
-						this._keyPairClients.Add(usuario,tup);
-					}
+                        Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey, this._connectionDialog.Connection.SymmetricKey);
+                        this._keyPairClients.Add(usuario, tup);
+                    }
 
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
                     MostrarConexion(this._connectionDialog.Connection.MessageResponse);
@@ -411,88 +421,115 @@ namespace IDNetSoftware
                     break;
 
                 case "002":
-                    
+
                     if (!comprobarTuplaConSchema(usuario, tipoBBDD, nombreBBDD))
                     {
-						Tuple<string, string, Dictionary<string, PipeMessage>> tuplaa = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+                        Tuple<string, string, Dictionary<string, PipeMessage>> tuplaa = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
 
-						int indexx = this._messages[usuario].IndexOf(tuplaa);
+                        int indexx = this._messages[usuario].IndexOf(tuplaa);
 
                         this._messages[usuario][indexx].Item3.Add("schema", this._connectionDialog.Schema);
                     }
 
-					MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
+                    MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
                     MostrarEsquema(this._connectionDialog.Schema.MessageResponse);
                     break;
 
                 case "003":
-					Tuple<string, string, Dictionary<string, PipeMessage>> tupla = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+                    Tuple<string, string, Dictionary<string, PipeMessage>> tupla = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
 
-					int index = this._messages[usuario].IndexOf(tupla);
-                    if(this._messages[usuario][index].Item3.ContainsKey("select"))
+                    int index = this._messages[usuario].IndexOf(tupla);
+                    if (this._messages[usuario][index].Item3.ContainsKey("select"))
                     {
                         this._messages[usuario][index].Item3["select"] = this._connectionDialog.Select;
-                    }else{
+                    }
+                    else
+                    {
                         this._messages[usuario][index].Item3.Add("select", this._connectionDialog.Select);
-					}
+                    }
 
                     MostrarSolicitudConsulta(this._connectionDialog.Select.MessageRequest);
                     MostrarResultadoConsulta(this._connectionDialog.Select.MessageResponse);
 
-					break;
+                    break;
+                default:
+
+                    MostrarErrores(this._connectionDialog.TypeOutPut);
+                    break;
             }
 
         }
 
+		/*
+         * Limpiado de consola.
+         * */
+		protected void OnClearActionActivated(object sender, EventArgs e)
+		{
+			infoview.Buffer.Clear();
+		}
+
+        /*
+         * Actualizado de toda la información.
+         * */
+		protected void OnRefreshActionActivated(object sender, EventArgs e)
+		{
+
+			comprobacionServidoresBaseDeDatos();
+
+			updateOwnDatabases();
+
+            updateNeighbourDatabases();
+		}
+
         private Tuple<string, string, Dictionary<string, PipeMessage>> devuelveTupla(string usuario, string tipoBBDD, string nombreBBDD)
         {
-			foreach (var tupla in this._messages[usuario])
-			{
-				if (tupla.Item1 == tipoBBDD && tupla.Item2 == nombreBBDD)
-				{
-					 return tupla;
-				}
-			}
+            foreach (var tupla in this._messages[usuario])
+            {
+                if (tupla.Item1 == tipoBBDD && tupla.Item2 == nombreBBDD)
+                {
+                    return tupla;
+                }
+            }
             return null;
-		}
-		private Tuple<string, string, Dictionary<string, PipeMessage>> devuelvePrimeraTupla(string usuario)
-		{
-			foreach (var tupla in this._messages[usuario])
-			{
+        }
+        private Tuple<string, string, Dictionary<string, PipeMessage>> devuelvePrimeraTupla(string usuario)
+        {
+            foreach (var tupla in this._messages[usuario])
+            {
                 return tupla;
-			}
-			return null;
-		}
+            }
+            return null;
+        }
 
-		private Tuple<string, string, string> devuelveTuplaDatabase(string tipoBBDD, string nombreBBDD)
-		{
+        private Tuple<string, string, string> devuelveTuplaDatabase(string tipoBBDD, string nombreBBDD)
+        {
             foreach (var tupla in this._databases.DatabasesPropias[tipoBBDD])
-			{
-				if (tupla.Item1 == nombreBBDD)
-				{
-					return tupla;
-				}
-			}
-			return null;
-		}
+            {
+                if (tupla.Item1 == nombreBBDD)
+                {
+                    return tupla;
+                }
+            }
+            return null;
+        }
 
-		private string getUserDatabase(string databaseType, string databaseName)
-		{
+        private string getUserDatabase(string databaseType, string databaseName)
+        {
 
             int index = this._databases.DatabasesPropias[databaseType].IndexOf(devuelveTuplaDatabase(databaseType, databaseName));
             return this._databases.DatabasesPropias[databaseType][index].Item2 == null ? null : this._databases.DatabasesPropias[databaseType][index].Item2;
-		}
-		private string getPasswordDatabase(string databaseType, string databaseName)
-		{
-			int index = this._databases.DatabasesPropias[databaseType].IndexOf(devuelveTuplaDatabase(databaseType, databaseName));
-			return this._databases.DatabasesPropias[databaseType][index].Item3 == null ? null : this._databases.DatabasesPropias[databaseType][index].Item3;
-		}
-
-        private bool comprobarTuplaConSchema(string usuario,string tipoBBDD,string nombreBBDD)
+        }
+        private string getPasswordDatabase(string databaseType, string databaseName)
         {
-			Tuple<string, string, Dictionary<string, PipeMessage>> tupl = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+            int index = this._databases.DatabasesPropias[databaseType].IndexOf(devuelveTuplaDatabase(databaseType, databaseName));
+            return this._databases.DatabasesPropias[databaseType][index].Item3 == null ? null : this._databases.DatabasesPropias[databaseType][index].Item3;
+        }
 
-            if(tupl != null && tupl.Item3.ContainsKey("schema"))
+        private bool comprobarTuplaConSchema(string usuario, string tipoBBDD, string nombreBBDD)
+        {
+            Tuple<string, string, Dictionary<string, PipeMessage>> tupl = devuelveTupla(usuario, tipoBBDD, nombreBBDD);
+
+            if (tupl != null && tupl.Item3.ContainsKey("schema"))
             {
                 return true;
             }
@@ -500,23 +537,23 @@ namespace IDNetSoftware
             return false;
         }
 
-		/*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/
+        /*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/
 
-		/*
+        /*
          * Método privado para mostrar la solicitud de conexión de BBDD
          * */
-		private void MostrarSolicitudConexion(Message messageRequest)
-		{
-			infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
-		}
+        private void MostrarSolicitudConexion(Message messageRequest)
+        {
+            infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
+        }
 
-		/*
+        /*
          * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
          * */
-		private void MostrarConexion(Message messageResponse)
-		{
-			infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
-		}
+        private void MostrarConexion(Message messageResponse)
+        {
+            infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
+        }
 
         /*
          * Método privado para mostrar la solicitud de esquema de BBDD
@@ -531,54 +568,56 @@ namespace IDNetSoftware
          * */
         private void MostrarEsquema(Message messageResponse)
         {
-		/*	TextTag tag = new TextTag("xx-small");
-            tag.Size = (int) Pango.Scale.PangoScale * 9;
-			infoview.Buffer.TagTable.Add(tag);
-			TextIter insertIter = infoview.Buffer.EndIter;*/
+            /*	TextTag tag = new TextTag("xx-small");
+                tag.Size = (int) Pango.Scale.PangoScale * 9;
+                infoview.Buffer.TagTable.Add(tag);
+                TextIter insertIter = infoview.Buffer.EndIter;*/
 
             if (messageResponse.Db_type == "mysql")
-            //    infoview.Buffer.InsertWithTags(ref insertIter,
-              //                                 "\n"+Constants.RespuestaEsquemaMySQL(messageResponse),
+                //    infoview.Buffer.InsertWithTags(ref insertIter,
+                //                                 "\n"+Constants.RespuestaEsquemaMySQL(messageResponse),
                 //                              tag);
                 infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMySQL(messageResponse);
             else
                 infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse);
         }
 
-		/*
+        /*
          * Método privado para mostrar la solicitud de consulta
          * */
-		private void MostrarSolicitudConsulta(Message messageRequest)
-		{
-			infoview.Buffer.Text += "\n" + Constants.SolicitudConsulta(messageRequest);
-		}
+        private void MostrarSolicitudConsulta(Message messageRequest)
+        {
+            infoview.Buffer.Text += "\n" + Constants.SolicitudConsulta(messageRequest);
+        }
 
-		/*
+        /*
          * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
          * */
-		private void MostrarResultadoConsulta(Message messageResponse)
-		{
-			infoview.Buffer.Text += "\n" + Constants.RespuestaConsulta(messageResponse);
-		}
+        private void MostrarResultadoConsulta(Message messageResponse)
+        {
+            infoview.Buffer.Text += "\n" + Constants.RespuestaConsulta(messageResponse);
+        }
+
+        /*
+     * Método privado para mostrar los errores
+     * */
+        private void MostrarErrores(string messageError)
+        {
+            infoview.Buffer.Text += "\n" + Constants.MostrarErrores(messageError);
+        }
 
         private void IncrementarConexionesActivas()
         {
             this._conexionesActivas += 1;
-            if(this._conexionesActivas == 1)
+            if (this._conexionesActivas == 1)
             {
-                conexionesLabel.Text = this._conexionesActivas+" conexión activa";
+                conexionesLabel.Text = this._conexionesActivas + " conexión activa";
 
-			}else{
-				conexionesLabel.Text = this._conexionesActivas + " conexiones activas";
-			}
-        }
-
-        /*
-         * Limpiado de consola
-         * */
-        protected void OnClearActionActivated(object sender, EventArgs e)
-        {
-            infoview.Buffer.Clear();
+            }
+            else
+            {
+                conexionesLabel.Text = this._conexionesActivas + " conexiones activas";
+            }
         }
     }
 }

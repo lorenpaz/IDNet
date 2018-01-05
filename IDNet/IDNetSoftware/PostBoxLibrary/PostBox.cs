@@ -135,17 +135,23 @@ namespace PostBoxLibraryS
 		/**
          * Procesamos la respuesta
          * */
-		public void ProcesarRespuesta(string response)
+		public bool ProcesarRespuesta(string response)
 		{
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
 
+            if(ComprobacionErrores(xmlDoc))
+            {
+                return false; 
+            }
+
             //Desencriptamos el mensaje
-            //Security.Decrypt(xmlDoc, key);
             DesencriptarParteDelDocumentoSimetrico(xmlDoc);
 
 			//Parseamos el mensaje
 			this._messageResponse.parserMessageRecieve(xmlDoc);
+
+            return true;
 		}
 
 		/**
@@ -153,15 +159,14 @@ namespace PostBoxLibraryS
      * */
 		public bool ProcesarRespuestaConexion(string response)
 		{
+
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
 
-
-			//Clave para desencriptar
-			//RijndaelManaged key = new RijndaelManaged();
-
-			//Desencriptamos el mensaje
-			//Security.Decrypt(xmlDoc, key);
+			if (ComprobacionErrores(xmlDoc))
+			{
+				return false;
+			}
 
 			//Parseamos el mensaje
 			this._messageResponse.parserMessageRecieve(xmlDoc);
@@ -174,6 +179,19 @@ namespace PostBoxLibraryS
                 return ComprobarClaveSimetrica(xmlDoc);
             }
 		}
+
+        private bool ComprobacionErrores(XmlDocument doc)
+        {
+            return doc.SelectSingleNode("//error") == null ? false : true;
+        }
+
+        public string erroresCausados(string response)
+        {
+			//Convertimos el string a xml
+			XmlDocument xmlDoc = Convertion.stringToXml(response);
+
+            return xmlDoc.SelectSingleNode("//error").InnerText;
+        }
 
         private void AlmacenarClavePublica(XmlDocument xmlDoc)
         {

@@ -26,6 +26,8 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action clearAction;
 
+		private global::Gtk.Action refreshAction;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -94,6 +96,8 @@ namespace IDNetSoftware
 			w1.Add(this.addAction, null);
 			this.clearAction = new global::Gtk.Action("clearAction", null, null, "gtk-clear");
 			w1.Add(this.clearAction, null);
+			this.refreshAction = new global::Gtk.Action("refreshAction", null, null, "gtk-refresh");
+			w1.Add(this.refreshAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 700;
@@ -120,8 +124,8 @@ namespace IDNetSoftware
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar1\'><toolitem name=\'addDatabasePngAction\' action=\'addDat" +
-					"abasePngAction\'/><toolitem name=\'clearAction\' action=\'clearAction\'/></toolbar></" +
-					"ui>");
+					"abasePngAction\'/><toolitem name=\'clearAction\' action=\'clearAction\'/><toolitem na" +
+					"me=\'refreshAction\' action=\'refreshAction\'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -249,6 +253,7 @@ namespace IDNetSoftware
 			this.addDatabasePngAction.Activated += new global::System.EventHandler(this.OnAddDatabasePngActionActivated);
 			this.addAction.Activated += new global::System.EventHandler(this.OnAddActionActivated);
 			this.clearAction.Activated += new global::System.EventHandler(this.OnClearActionActivated);
+			this.refreshAction.Activated += new global::System.EventHandler(this.OnRefreshActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 		}

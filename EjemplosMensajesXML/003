@@ -6,9 +6,14 @@
 		<db_name>usuarios</db_name>
 		<db_type>mysql</db_type>
 		<body>
+			<query>
 			<select>*</select>
 			<from>empleados</from>
 			<where></where>
+			<orderby>nombre</orderby>
+			</query>
 		</body>
 	</encripted>
 </root>
+
+//Todo el elemento 'encripted' está encriptado con clave simétrica.

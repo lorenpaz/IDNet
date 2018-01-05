@@ -89,7 +89,7 @@ namespace ConstantsLibraryS
            Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
 
             string rows = "";
-            int cont=0;
+            int cont=1;
             if (body.Rows.Count == 0)
             {
                 rows += "No hay resultados disponibles para su consulta.";
@@ -98,7 +98,7 @@ namespace ConstantsLibraryS
             {
                 foreach (Row r in body.Rows)
                 {
-                    rows += "ROW " + cont + "\n";
+                    rows += "Fila " + cont + "\n";
                     foreach (KeyValuePair<string, string> attr in r.Attributes)
                     {
                         rows += "Campo:" + attr.Key + " Valor:" + attr.Value + "\n";
@@ -110,6 +110,12 @@ namespace ConstantsLibraryS
             rows += "\n";
 
                 return stado + rows;
+        }
+
+        public static string MostrarErrores(string messageError)
+        {
+            return Columna("-",LENGTH_TABLE_VIEW,'-') + "\n" +
+                messageError + "\n" + Columna("-", LENGTH_TABLE_VIEW, '-');
         }
 
         public static string RespuestaEsquemaMySQL(Message messageResponse)
@@ -488,10 +494,19 @@ namespace ConstantsLibraryS
         public Row(XmlElement infoRow)
         {
             this._attributes = new Dictionary<string, string>();
-            XmlAttributeCollection attributes = infoRow.Attributes;
-            foreach (XmlAttribute attr in attributes)
+            if (!infoRow.HasChildNodes)
             {
-                this._attributes.Add(attr.Name, attr.Value);
+                XmlAttributeCollection attributes = infoRow.Attributes;
+                foreach (XmlAttribute attr in attributes)
+                {
+                    this._attributes.Add(attr.Name, attr.Value);
+                }
+            }else{
+                XmlNodeList nodes = infoRow.ChildNodes;
+                foreach(XmlNode nod in nodes)
+                {
+                    this._attributes.Add(nod.Name,nod.InnerXml);
+                }
             }
         }
     }

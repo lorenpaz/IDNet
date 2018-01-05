@@ -15,7 +15,7 @@ namespace ConnectionLibraryS
 		public string StartClient(string mensaje, string hostName)
 		{
 			// Data buffer for incoming data.
-			byte[] respuesta = new byte[1024];
+			byte[] respuesta = new byte[2048];
 
 			// Connect to a remote device.
 			try
@@ -57,11 +57,13 @@ namespace ConnectionLibraryS
 				catch (ArgumentNullException ane)
 				{
 					Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
-				}
+
+                }
 				catch (SocketException se)
 				{
 					Console.WriteLine("SocketException : {0}", se.ToString());
-				}
+                    return "<error>No se ha podido conectar con el vecino de la Organización Virtual</error>";
+                }
 				catch (Exception e)
 				{
 					Console.WriteLine("Unexpected exception : {0}", e.ToString());

@@ -1,0 +1,11 @@
+<root>
+	<message_type>004b</message_type>
+	<source>Juan</source>
+	<destination>Lorenzo</destination>
+	<encripted>
+		<key>vmofdmbfdmlmmofmhom</key>
+		<IV>FNOWNINR230UJ</IV>
+	</encripted>
+</root>
+
+//Todo el elemento 'encripted' está encriptado con claves asimétricas.

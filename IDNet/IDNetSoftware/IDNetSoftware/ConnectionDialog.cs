@@ -224,16 +224,15 @@ namespace IDNetSoftware
             RijndaelManaged key = new RijndaelManaged();
             this._symmetricKey = key;
 
-            conexionPrimera();
-
-            conexionSegunda();
-
-            this._typeOutPut = "001";
+            if(conexionPrimera())
+            {
+				conexionSegunda();
+            }
 
             this.Destroy();
         }
 
-        private void conexionPrimera()
+        private bool conexionPrimera()
         {
 			string msg, response;
 
@@ -244,10 +243,17 @@ namespace IDNetSoftware
 			Client c = new Client();
 			response = c.StartClient(msg, "localhost");
 
-			//Proceso la respuesta
-			post.ProcesarRespuestaConexion(response);
-
-            this._publicKeyClient = post.PublicKeyClient;
+            //Proceso la respuesta
+            if (!post.ProcesarRespuestaConexion(response))
+            {
+                this._typeOutPut = post.erroresCausados(response);
+                return false;
+            }
+            else
+            {
+                this._publicKeyClient = post.PublicKeyClient;
+                return true;
+            }
 		}
 
         private void conexionSegunda()
@@ -261,11 +267,17 @@ namespace IDNetSoftware
 			Client c = new Client();
 			response = c.StartClient(msg, "localhost");
 
-			//Proceso la respuesta
-			post.ProcesarRespuestaConexion(response);
-
-			this._connection = new PipeMessage(post.MessageRequest, post.MessageResponse, post.PublicKeyClient, this._symmetricKey);
-		}
+            //Proceso la respuesta
+                if (!post.ProcesarRespuestaConexion(response))
+            {
+                this._typeOutPut = post.erroresCausados(response);
+            }
+            else
+            {
+                this._connection = new PipeMessage(post.MessageRequest, post.MessageResponse, post.PublicKeyClient, this._symmetricKey);
+				this._typeOutPut = "001";
+			}
+        }
 
 		/*
          * Método para la solicitud del esquema
@@ -276,7 +288,6 @@ namespace IDNetSoftware
 			{
 				solicitarEsquema();
 			}
-			this._typeOutPut = "002";
 
 			this.Destroy();
 		}
@@ -296,11 +307,18 @@ namespace IDNetSoftware
 			Client c = new Client();
 			response = c.StartClient(msg, "localhost");
 
-			//Proceso la respuesta      
-			post.ProcesarRespuesta(response);
+            //Proceso la respuesta      
+                if (!post.ProcesarRespuesta(response))
+            {
+                this._typeOutPut = post.erroresCausados(response);
+            }
+            else
+            {
+                this._schema.MessageRequest = post.MessageRequest;
+                this._schema.MessageResponse = post.MessageResponse;
 
-			this._schema.MessageRequest = post.MessageRequest;
-			this._schema.MessageResponse = post.MessageResponse;
+                this._typeOutPut = "002";
+            }
 		}
 
         /*
@@ -312,7 +330,6 @@ namespace IDNetSoftware
 
             if (this._db_type == "mysql")
             {
-
 
                 BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
 
@@ -335,12 +352,17 @@ namespace IDNetSoftware
 
                         //Proceso la respuesta
 
-                        post.ProcesarRespuesta(response);
+                        if (!post.ProcesarRespuesta(response))
+                        {
+                            this._typeOutPut = post.erroresCausados(response);
+                        }
+                        else
+                        {
+                            this._select.MessageRequest = post.MessageRequest;
+                            this._select.MessageResponse = post.MessageResponse;
 
-                        this._select.MessageRequest = post.MessageRequest;
-                        this._select.MessageResponse = post.MessageResponse;
-
-                        this._typeOutPut = "003";
+                            this._typeOutPut = "003";
+                        }
                         break;
                 }
             }else if(this._db_type == "mongodb")
@@ -348,15 +370,15 @@ namespace IDNetSoftware
                 BodyRespuesta002MongoDB schema = new BodyRespuesta002MongoDB(this._schema.MessageResponse.Body.InnerXml);
 
                 this._findDialog = new FindDialog(this._destination, this._db_name, schema);
-				this._selectDialog.Run();
+                this._findDialog.Run();
 
-				switch (this._selectDialog.TypeOutPut)
+				switch (this._findDialog.TypeOutPut)
 				{
 					case "Cancel":
 
 						break;
 					case "003":
-						XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
+                        XmlNode bodyMessage = (XmlNode)this._findDialog.Body;
 						PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
 						msg = post.ProcesarEnvio();
 
@@ -364,14 +386,18 @@ namespace IDNetSoftware
 						Client c = new Client();
 						response = c.StartClient(msg, "localhost");
 
-						//Proceso la respuesta
+                        //Proceso la respuesta
+                        if (!post.ProcesarRespuesta(response))
+                        {
+                            this._typeOutPut = post.erroresCausados(response);
+                        }
+                        else
+                        {
+                            this._select.MessageRequest = post.MessageRequest;
+                            this._select.MessageResponse = post.MessageResponse;
 
-						post.ProcesarRespuesta(response);
-
-						this._select.MessageRequest = post.MessageRequest;
-						this._select.MessageResponse = post.MessageResponse;
-
-						this._typeOutPut = "003";
+                            this._typeOutPut = "003";
+                        }
 						break;
 				}
             }

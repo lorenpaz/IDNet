@@ -16,10 +16,18 @@ namespace ConvertionLibrary
 
         public static XmlDocument JsonToXml(string k)
         {
-           // log.Info(k);
-     
-            XmlDocument doc = JsonConvert.DeserializeXmlNode(k);
-         //   log.Info(doc.InnerXml);
+            XmlDocument doc = null;
+            if (k.Contains("error"))
+            {
+                doc = new XmlDocument();
+				XmlElement root = doc.CreateElement("result");
+				doc.AppendChild(root);
+            }
+            else
+            {
+                 doc = JsonConvert.DeserializeXmlNode(k);
+            }
+
             return doc;
         }
 

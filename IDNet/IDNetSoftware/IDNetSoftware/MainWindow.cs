@@ -449,7 +449,7 @@ namespace IDNetSoftware
                     }
 
                     MostrarSolicitudConsulta(this._connectionDialog.Select.MessageRequest);
-                    MostrarResultadoConsulta(this._connectionDialog.Select.MessageResponse);
+                        MostrarResultadoConsulta(this._connectionDialog.Select.MessageResponse);
 
                     break;
                 default:

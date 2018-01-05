@@ -136,7 +136,7 @@ namespace ConnectionLibrary
 				{
 					// All the data has been read from the 
 					// client. Display it on the console.
-					log.Info("Read " + content.Length + " bytes from socket. \n Data :" + content);
+					log.Info("Read " + content.Length + " bytes from socket. \n Data : \n" + content);
 
 					// Echo the data back to the client.
 					//Send(handler, content);

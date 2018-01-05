@@ -93,6 +93,7 @@ namespace IDNetSoftware
 
             comboboxLimit.Sensitive = true;
 
+            buttonOk.Sensitive = true;
 
         }
 
@@ -135,6 +136,8 @@ namespace IDNetSoftware
             comboboxSort.Sensitive = false;
 
             comboboxLimit.Sensitive = false;
+
+            buttonOk.Sensitive = false;
         }
 
 		/*
@@ -161,7 +164,8 @@ namespace IDNetSoftware
 
             if (projections != null)
 			{
-				comboboxFilter.Data.Clear();
+                comboboxProjection.Data.Clear();
+                this._activeProyections.Clear();    
 				foreach (string field in projections)
 				{
                     comboboxProjection.AppendText(field);
@@ -171,7 +175,7 @@ namespace IDNetSoftware
 
             if (sort != null)
 			{
-				comboboxFilter.Data.Clear();
+                comboboxSort.Data.Clear();
 
 				foreach (string field in sort)
 				{
@@ -300,7 +304,7 @@ namespace IDNetSoftware
 			XmlNode filter = bodyDoc.CreateElement("filter");
             if (comboboxFilter.ActiveText != null && comboboxFilter.ActiveText != "" && comboboxFilter.ActiveText != " ")
 			{
-                filter.InnerText = comboboxFilter.ActiveText +" "+ comboboxFilterSymbols.ActiveText + " \t" + entryFilter.Text;
+                filter.InnerText = comboboxFilter.ActiveText +" "+ comboboxFilterSymbols.ActiveText + " " + entryFilter.Text;
 			}
 			elementRoot.AppendChild(filter);
 
@@ -316,7 +320,7 @@ namespace IDNetSoftware
 			//Creamos elemento Sort
 			XmlNode sort = bodyDoc.CreateElement("sort");
             if (comboboxSort.ActiveText == "")
-				sort.InnerText = "ASC";
+				sort.InnerText = "";
 			else
                 sort.InnerText = comboboxSort.ActiveText;
 			elementRoot.AppendChild(sort);

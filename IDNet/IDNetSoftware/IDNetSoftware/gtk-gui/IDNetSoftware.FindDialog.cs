@@ -155,6 +155,7 @@ namespace IDNetSoftware
 			this.checkbuttonProjection.CanFocus = true;
 			this.checkbuttonProjection.Name = "checkbuttonProjection";
 			this.checkbuttonProjection.Label = global::Mono.Unix.Catalog.GetString("Included in results");
+			this.checkbuttonProjection.Active = true;
 			this.checkbuttonProjection.DrawIndicator = true;
 			this.checkbuttonProjection.UseUnderline = true;
 			this.hbox3.Add(this.checkbuttonProjection);

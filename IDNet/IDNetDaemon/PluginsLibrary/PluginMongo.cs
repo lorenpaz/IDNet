@@ -80,7 +80,7 @@ namespace PluginsLibrary
 		//Realizar consulta a la BBBDD
 		public string SelectRequest(XmlNode body)
 		{
-			SecondAsync(body).Wait();
+    			SecondAsync(body).Wait();
 			return this._salida;
 		}
 
@@ -100,13 +100,11 @@ namespace PluginsLibrary
             }else{
                 filter = c.FilterTarget;  
             }
+			documents = collection.Find(filter);
 
-            if(c.LimitTarget == "None")
+			if(c.LimitTarget != null)
             {
-				documents = collection.Find(filter);
-
-			}else{
-                documents = collection.Find(filter).Limit(Int32.Parse(c.LimitTarget));
+                documents = documents.Limit(Int32.Parse(c.LimitTarget));
             }
             if(c.SortTarget != null)
             {
@@ -116,9 +114,12 @@ namespace PluginsLibrary
             documents = documents.Project(c.ProjectionsTarget);
 
             var documentsList = await documents.ToListAsync();
+
+            if (documentsList.Count != 0)
+            {
                 var j = "{\"result\": [";
                 int i = 1;
-                foreach(var doc in documentsList)
+                foreach (var doc in documentsList)
                 {
                     doc.Remove("_id");
 
@@ -129,10 +130,12 @@ namespace PluginsLibrary
                     i += 1;
                     j += ",";
                 }
-				j = j.Remove(j.Length - 1, 1);
-				j += "]}";
+                j = j.Remove(j.Length - 1, 1);
+                j += "]}";
                 this._salida = j;
-            
+            }else{
+                this._salida = "<error></error>";
+            }
         }
 
 
@@ -220,7 +223,7 @@ namespace PluginsLibrary
                     this._filterTarget = "{";
                     if (filter[1] == "$eq" || filter[1] == "$ne")
                     {
-                        this._filterTarget += filter[0] + " : { '" + filter[1] + "' : " + filter[2] + "} }";
+                        this._filterTarget += filter[0] + " : { '" + filter[1] + "' : '"+ filter[2] + "' } }";
                     }
                 } 
 

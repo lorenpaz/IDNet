@@ -135,23 +135,16 @@ namespace PostBoxLibraryS
 		/**
          * Procesamos la respuesta
          * */
-		public bool ProcesarRespuesta(string response)
+		public void ProcesarRespuesta(string response)
 		{
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
-
-            if(ComprobacionErrores(xmlDoc))
-            {
-                return false; 
-            }
 
             //Desencriptamos el mensaje
             DesencriptarParteDelDocumentoSimetrico(xmlDoc);
 
 			//Parseamos el mensaje
 			this._messageResponse.parserMessageRecieve(xmlDoc);
-
-            return true;
 		}
 
 		/**
@@ -159,19 +152,13 @@ namespace PostBoxLibraryS
      * */
 		public bool ProcesarRespuestaConexion(string response)
 		{
-
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
-
-			if (ComprobacionErrores(xmlDoc))
-			{
-				return false;
-			}
 
 			//Parseamos el mensaje
 			this._messageResponse.parserMessageRecieve(xmlDoc);
 
-            if(this._messageResponse.MessageType == "004a")
+            if(this._messageResponse.MessageType == Constants.MENSAJE_RESPUESTA_CONEXION_A)
             {
 				AlmacenarClavePublica(xmlDoc);
                 return true;
@@ -180,30 +167,20 @@ namespace PostBoxLibraryS
             }
 		}
 
-        private bool ComprobacionErrores(XmlDocument doc)
-        {
-            return doc.SelectSingleNode("//error") == null ? false : true;
-        }
-
-        public string erroresCausados(string response)
-        {
-			//Convertimos el string a xml
-			XmlDocument xmlDoc = Convertion.stringToXml(response);
-
-            return xmlDoc.SelectSingleNode("//error").InnerText;
-        }
-
+        /*
+         * Método privado para almacenar la clave pública en un fichero local
+         * */
         private void AlmacenarClavePublica(XmlDocument xmlDoc)
         {
 			string path = Constants.CONFIG + "publicKey" + this._messageResponse.Source + ".pem";
-			if(!File.Exists(path))
-            {
-				string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
-				File.WriteAllText(path, publicKey);
-			}
+			string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
+			File.WriteAllText(path, publicKey);
 			this._publicKeyClient = Cripto.ImportPublicKey(path);
 		}
 
+        /*
+         * Método privado para comprobar la clave simétrica
+         * */
         private bool ComprobarClaveSimetrica(XmlDocument xmlDoc)
         {
             XmlDocument docDesencriptado = DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
@@ -221,6 +198,9 @@ namespace PostBoxLibraryS
             }
         }
 
+        /*
+         * Método privado que encripta parte del documento con encriptación asimétrica
+         * */
         private XmlDocument encriptarParteDelDocumentoAsimetrico(XmlDocument doc)
         {
             string xmlAEncriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
@@ -234,6 +214,9 @@ namespace PostBoxLibraryS
             return doc;
         }
 
+        /*
+         * Método privado que desencripta parte del documento con encriptación asimétrica
+         * */
 		private XmlDocument DesencriptarParteDelDocumentoAsimetrico(XmlDocument doc)
 		{
 			string xmlADesencriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
@@ -245,11 +228,18 @@ namespace PostBoxLibraryS
 			return doc;
 		}
 
+        /*
+         * Método privado que desencripta parte del documento con encriptación simétrica
+         * */
 		private XmlDocument DesencriptarParteDelDocumentoSimetrico(XmlDocument doc)
 		{
 			Cripto.DecryptSymmetric(doc, this._symmetricKey);
 			return doc;
 		}
+
+        /*
+         * Método privado que encripta parte del documento con encriptación simétrica
+         * */
 		private XmlDocument encriptarParteDelDocumentoSimetrico(XmlDocument doc)
 		{
 			Cripto.EncryptSymmetric(doc, "encripted", this._symmetricKey);

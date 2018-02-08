@@ -136,7 +136,6 @@ namespace PluginsLibrary
 		//Realizar consulta a la BBDD
         public XmlDocument SelectRequest(XmlNode body)
         {
-			XmlDocument document = null;
             MySqlConnection dbcon = null;
 
             ConsultaMysql consultamysql = new ConsultaMysql(body);
@@ -154,18 +153,6 @@ namespace PluginsLibrary
 			}
 			catch (MySqlException ex)
 			{
-				switch (ex.Number)
-				{
-					//http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
-					case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
-						break;
-
-					case 0: // Access denied (Check DB name,username,password)
-						throw new Exception("Access Denied: Check DB name, username, password");
-
-					default:
-						break;
-				}
                 return consultamysql.ErrorObtenido(ex.Message);
 			}
 			finally
@@ -176,9 +163,7 @@ namespace PluginsLibrary
 				}
 
 			}
-
-            return document;
-        }
+         }
     }
 
     public class ConsultaMysql

@@ -29,7 +29,7 @@ namespace ConnectionLibrary
 		// Client  socket.
 		public Socket workSocket = null;
 		// Size of receive buffer.
-		public const int BufferSize = 2048;
+		public const int BufferSize = 1024;
 		// Receive buffer.
 		public byte[] buffer = new byte[BufferSize];
 		// Received data string.
@@ -62,7 +62,8 @@ namespace ConnectionLibrary
 			// The DNS name of the computer
 			IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
 			IPAddress ipAddress = ipHostInfo.AddressList[0];
-			IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+           // IPAddress ipLocal
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
 
 			// Create a TCP/IP socket.
 			Socket listener = new Socket(AddressFamily.InterNetwork,
@@ -136,7 +137,7 @@ namespace ConnectionLibrary
 				{
 					// All the data has been read from the 
 					// client. Display it on the console.
-					log.Info("Read " + content.Length + " bytes from socket. \n Data : \n" + content);
+					log.Info("Read " + content.Length + " bytes from socket. \n Data :" + content);
 
 					// Echo the data back to the client.
 					//Send(handler, content);
@@ -163,7 +164,7 @@ namespace ConnectionLibrary
 					_keyPairClients[post.MessageRecieve.Source] = tupla;
 				}
 
-                    Send(handler,respuesta);
+                Send(handler,respuesta);
 			}
 		}
 

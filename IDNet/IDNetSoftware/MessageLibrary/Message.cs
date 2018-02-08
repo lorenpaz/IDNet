@@ -2,7 +2,7 @@
 using System;
 using System.Xml;
 using System.Security.Cryptography;
-
+ 
 
 namespace MessageLibraryS
 {
@@ -120,9 +120,6 @@ namespace MessageLibraryS
 			//Cogemos el origen del mensaje
 			this._source = doc.DocumentElement.GetElementsByTagName("source")[0].InnerText;
 
-			//Cogemos el path donde guardamos temporalmente el xml
-			//this._file_path = Constants.TEMPORAL_FILE_PATH + doc.DocumentElement.GetElementsByTagName("seq_id")[0].InnerText;
-
 			//Cogemos el código del mensaje
 			this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
 
@@ -225,15 +222,14 @@ namespace MessageLibraryS
 			//Creamos el elemento nombreBBDD
 			XmlNode key = xmlDoc.CreateElement("key");
             key.InnerText = keyPair;
-           // int aux = BitConverter.T(this._key.Key, 0);
-            //key.InnerText = Convert.ToString(aux);
+
 			elementRoot.AppendChild(key);
 
 			return xmlDoc;
 		}
 
 		/*
-         * Método para al creación de un XmlDocument a partir del mensaje
+         * Método para la creación de un XmlDocument a partir del mensaje
          * */
         public XmlDocument createMessageConnection(string keyPair,SymmetricAlgorithm symmetricKey)
 		{
@@ -268,7 +264,7 @@ namespace MessageLibraryS
             key.InnerText = Convert.ToBase64String(symmetricKey.Key);
             encripted.AppendChild(key);
 
-
+            //Creamos el elemento IV
 			XmlNode iv = xmlDoc.CreateElement("IV");
             iv.InnerText = Convert.ToBase64String(symmetricKey.IV);
 

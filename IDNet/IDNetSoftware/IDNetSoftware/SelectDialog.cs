@@ -126,6 +126,8 @@ namespace IDNetSoftware
 
 		protected void OnComboboxWhereChanged(object sender, EventArgs e)
 		{
+			entryWhere.Sensitive = true;
+			comboboxWhereSymbols.Sensitive = true;
             if (comboboxWhere.ActiveText != " ")
             {
                 entryWhere.Sensitive = true;
@@ -323,7 +325,7 @@ namespace IDNetSoftware
             XmlElement root = bodyDoc.DocumentElement;
 
 			//Creamos elemento root
-            XmlElement elementRoot = bodyDoc.CreateElement("query");
+            XmlElement elementRoot = bodyDoc.CreateElement("body");
             bodyDoc.AppendChild(elementRoot);
 
 			//Creamos elemento select
@@ -338,7 +340,7 @@ namespace IDNetSoftware
 
 			//Creamos elemento where
 			XmlNode where = bodyDoc.CreateElement("where");
-            if (comboboxWhere.ActiveText != null && comboboxWhere.ActiveText != "" && comboboxWhere.ActiveText != " ")
+            if (comboboxWhere.ActiveText != "" && comboboxWhere.ActiveText != " ")
             {
                 where.InnerText = comboboxWhere.ActiveText + comboboxWhereSymbols.ActiveText + "'" + entryWhere.Text + "'";
             }

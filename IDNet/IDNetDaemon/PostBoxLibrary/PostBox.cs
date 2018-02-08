@@ -197,12 +197,9 @@ namespace PostBoxLibrary
 		private void AlmacenarClavePublica(XmlDocument xmlDoc)
 		{
             string path = Constants.CONF + "publicKey" + this.MessageRecieve.Source + ".pem";
-            if (!File.Exists(path))
-            {
-                string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
-                File.WriteAllText(path, publicKey);
-                this._publicKeyClient = Cripto.ImportPublicKey(path);
-            }
+            string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
+            File.WriteAllText(path, publicKey);
+            this._publicKeyClient = Cripto.ImportPublicKey(path);
 		}
 
 		private void AlmacenarClaveSimetrica(XmlDocument xmlDoc)

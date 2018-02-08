@@ -263,21 +263,21 @@ namespace DatabaseLibraryS
             bool check = false;
 
 			//Control de errores
-			if (!this._databasesPropias.ContainsKey("mysql"))
+            if (!this._databasesPropias.ContainsKey(Constants.MYSQL))
 			{
 				return false;
 			}
 
 			//Primera base de datos con mysql
-            string db_name = this._databasesPropias["mysql"][0].Item1;
+            string db_name = this._databasesPropias[Constants.MYSQL][0].Item1;
 
             string connection;
-            if(this._databasesPropias["mysql"][0].Item2 == null)
+            if(this._databasesPropias[Constants.MYSQL][0].Item2 == null)
                 connection = "Server=localhost;Database=" + db_name + ";Pooling=false;";
             else
 				connection = "Server=localhost;Database=" + db_name + 
-                    ";User ID="+this._databasesPropias["mysql"][0].Item2 +
-                                    ";Password="+this._databasesPropias["mysql"][0].Item3 +";Pooling=false;";
+                    ";User ID="+this._databasesPropias[Constants.MYSQL][0].Item2 +
+                                    ";Password="+this._databasesPropias[Constants.MYSQL][0].Item3 +";Pooling=false;";
 			try
             {
                 MySqlConnection dbcon = new MySqlConnection(connection);
@@ -311,7 +311,7 @@ namespace DatabaseLibraryS
 			bool check = false;
 
 			//Control de errores
-			if (!this._databasesPropias.ContainsKey("mysql"))
+            if (!this._databasesPropias.ContainsKey(Constants.MYSQL))
 			{
 				return false;
 			}
@@ -357,10 +357,10 @@ namespace DatabaseLibraryS
          * */
         public bool ComprobacionMongodb(string databaseName, string usernameDatabase, string passwordDatabase)
         {
-			string connectionString = "mongodb://localhost";
+            string connectionString = Constants.LOCALHOST_MONGODB;
 
             //Control de errores
-            if(!this._databasesPropias.ContainsKey("mongodb"))
+            if(!this._databasesPropias.ContainsKey(Constants.MONGODB))
             {
                 return false;
             }
@@ -381,16 +381,16 @@ namespace DatabaseLibraryS
          * */
 		public bool ComprobacionMongodb()
 		{
-			string connectionString = "mongodb://localhost";
+            string connectionString = Constants.LOCALHOST_MONGODB;
 
 			//Control de errores
-			if (!this._databasesPropias.ContainsKey("mongodb"))
+            if (!this._databasesPropias.ContainsKey(Constants.MONGODB))
 			{
 				return false;
 			}
 
 			//Primera base de datos con mongodb
-			string db_name = this._databasesPropias["mongodb"][0].Item1;
+            string db_name = this._databasesPropias[Constants.MONGODB][0].Item1;
 
 			//Comprobamos si está activo
 			var client = new MongoClient(connectionString);

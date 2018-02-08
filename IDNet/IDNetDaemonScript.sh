@@ -3,6 +3,7 @@
 PATH_NAME="IDNetDaemon/IDNetDaemon/bin/Debug/"
 PROGRAM_NAME="IDNetDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
+LOG_FOLDER="logs"
 
 usage()
 {
@@ -19,6 +20,7 @@ stop()
         if [ "$rt" == "0" ]
 	        then
 			rm -rf ${LOCK_FILE}
+			rm -rf ${LOG_FOLDER}
 	                echo "IDNetDaemon stop"
 	        else
 	                echo "Error stop demon"

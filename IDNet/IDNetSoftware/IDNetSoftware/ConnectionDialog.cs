@@ -129,7 +129,7 @@ namespace IDNetSoftware
             this._db_name = db_name;
             this._db_type = db_type;
             this._body = new XmlDocument();
-            this._typeOutPut = "Cancel";
+            this._typeOutPut = Constants.CANCEL;
 			this._keyPair = keyPair;
 
 			this._connection = new PipeMessage();
@@ -152,7 +152,7 @@ namespace IDNetSoftware
 			this._db_name = db_name;
 			this._db_type = db_type;
 			this._body = new XmlDocument();
-			this._typeOutPut = "Cancel";
+            this._typeOutPut = Constants.CANCEL;
             this._keyPair = keyPair;
 
             this._connection = pipeConexion;
@@ -176,7 +176,7 @@ namespace IDNetSoftware
 			this._db_name = db_name;
 			this._db_type = db_type;
 			this._body = new XmlDocument();
-			this._typeOutPut = "Cancel";
+            this._typeOutPut = Constants.CANCEL;
             this._keyPair = keyPair;
 
 			this._connection = pipeConexion;
@@ -224,9 +224,17 @@ namespace IDNetSoftware
             RijndaelManaged key = new RijndaelManaged();
             this._symmetricKey = key;
 
-            if(conexionPrimera())
+            if (conexionPrimera())
             {
-				conexionSegunda();
+                if(conexionSegunda())
+                    this._typeOutPut = Constants.MENSAJE_CONEXION;
+                else
+                    this._typeOutPut = Constants.ERROR_CONNECTION;
+
+            }
+            else
+            {
+                this._typeOutPut = Constants.ERROR_CONNECTION;
             }
 
             this.Destroy();
@@ -236,48 +244,49 @@ namespace IDNetSoftware
         {
 			string msg, response;
 
-			PostBox post = new PostBox("Lorenzo", this._destination, "001a", this._keyPair);
+            PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_CONEXION_A, this._keyPair);
 			msg = post.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje
 			Client c = new Client();
-			response = c.StartClient(msg, "localhost");
+            bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+            if (conexion)
+            {
+                response = c.StartClient(msg, Constants.GATEKEEPER);
 
-            //Proceso la respuesta
-            if (!post.ProcesarRespuestaConexion(response))
-            {
-                this._typeOutPut = post.erroresCausados(response);
-                return false;
-            }
-            else
-            {
+                //Proceso la respuesta
+                post.ProcesarRespuestaConexion(response);
+
                 this._publicKeyClient = post.PublicKeyClient;
                 return true;
+            }else{
+                return false;
             }
 		}
 
-        private void conexionSegunda()
+        private bool conexionSegunda()
         {
 			string msg, response;
 
-            PostBox post = new PostBox("Lorenzo", this._destination, "001b", this._keyPair,this._publicKeyClient,this._symmetricKey);
+            PostBox post = new PostBox("Lorenzo", this._destination,Constants.MENSAJE_CONEXION_B, this._keyPair,this._publicKeyClient,this._symmetricKey);
 			msg = post.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje
 			Client c = new Client();
-			response = c.StartClient(msg, "localhost");
+            bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+            if (conexion)
+            {
+                response = c.StartClient(msg, Constants.GATEKEEPER);
 
-            //Proceso la respuesta
-                if (!post.ProcesarRespuestaConexion(response))
-            {
-                this._typeOutPut = post.erroresCausados(response);
-            }
-            else
-            {
+                //Proceso la respuesta
+                post.ProcesarRespuestaConexion(response);
+
                 this._connection = new PipeMessage(post.MessageRequest, post.MessageResponse, post.PublicKeyClient, this._symmetricKey);
-				this._typeOutPut = "001";
-			}
-        }
+                return true;
+            }else{
+                return false;
+            }
+		}
 
 		/*
          * Método para la solicitud del esquema
@@ -286,7 +295,10 @@ namespace IDNetSoftware
 		{
 			if (this._schema.MessageRequest == null)
 			{
-				solicitarEsquema();
+                if (solicitarEsquema())
+                    this._typeOutPut = Constants.MENSAJE_ESQUEMA;
+                else
+                    this._typeOutPut = Constants.ERROR_CONNECTION;
 			}
 
 			this.Destroy();
@@ -295,29 +307,29 @@ namespace IDNetSoftware
 		/*
          * Método privado para solicitar esquema
          * */
-		private void solicitarEsquema()
+		private bool solicitarEsquema()
 		{
 			string msg, response;
 
 			//Proceso el envio
-			PostBox post = new PostBox("Lorenzo", this._destination, "002", this._db_name, this._db_type, this._body, this._connection.SymmetricKey);
+            PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_ESQUEMA, this._db_name, this._db_type, this._body, this._connection.SymmetricKey);
 			msg = post.ProcesarEnvio();
 
 			//Creo el cliente y le envio el mensaje
 			Client c = new Client();
-			response = c.StartClient(msg, "localhost");
+            bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+            if (conexion)
+            {
+                response = c.StartClient(msg, Constants.GATEKEEPER);
 
-            //Proceso la respuesta      
-                if (!post.ProcesarRespuesta(response))
-            {
-                this._typeOutPut = post.erroresCausados(response);
-            }
-            else
-            {
+                //Proceso la respuesta      
+                post.ProcesarRespuesta(response);
+
                 this._schema.MessageRequest = post.MessageRequest;
                 this._schema.MessageResponse = post.MessageResponse;
-
-                this._typeOutPut = "002";
+                return true;
+            }else{
+                return false;
             }
 		}
 
@@ -328,9 +340,8 @@ namespace IDNetSoftware
         {
 			string msg, response;
 
-            if (this._db_type == "mysql")
+            if (this._db_type == Constants.MYSQL)
             {
-
                 BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
 
                 this._selectDialog = new SelectDialog(this._destination, this._db_name, schema);
@@ -338,67 +349,86 @@ namespace IDNetSoftware
 
                 switch (this._selectDialog.TypeOutPut)
                 {
-                    case "Cancel":
+                    case Constants.CANCEL:
 
                         break;
-                    case "003":
+                    case Constants.MENSAJE_CONSULTA:
                         XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
-                        PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+                        PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
                         msg = post.ProcesarEnvio();
 
                         //Creo el cliente y le envio el mensaje
                         Client c = new Client();
-                        response = c.StartClient(msg, "localhost");
-
-                        //Proceso la respuesta
-
-                        if (!post.ProcesarRespuesta(response))
+                        bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+                        if (conexion)
                         {
-                            this._typeOutPut = post.erroresCausados(response);
-                        }
-                        else
-                        {
+                            response = c.StartClient(msg, Constants.GATEKEEPER);
+
+                            //Proceso la respuesta
+
+                            post.ProcesarRespuesta(response);
+
                             this._select.MessageRequest = post.MessageRequest;
                             this._select.MessageResponse = post.MessageResponse;
 
-                            this._typeOutPut = "003";
+                            this._typeOutPut = Constants.MENSAJE_CONSULTA;
+                        }else{
+                            this._typeOutPut = Constants.ERROR_CONNECTION;   
                         }
+
+                        break;
+
+                    case Constants.ERROR_CONNECTION:
+
+                        this._typeOutPut = Constants.ERROR_CONNECTION;
+
                         break;
                 }
-            }else if(this._db_type == "mongodb")
+
+            }   //Caso MongoDB
+            else if(this._db_type == Constants.MONGODB)
             {
                 BodyRespuesta002MongoDB schema = new BodyRespuesta002MongoDB(this._schema.MessageResponse.Body.InnerXml);
 
                 this._findDialog = new FindDialog(this._destination, this._db_name, schema);
-                this._findDialog.Run();
+				this._selectDialog.Run();
 
-				switch (this._findDialog.TypeOutPut)
+				switch (this._selectDialog.TypeOutPut)
 				{
-					case "Cancel":
+                    case Constants.CANCEL:
 
 						break;
-					case "003":
-                        XmlNode bodyMessage = (XmlNode)this._findDialog.Body;
-						PostBox post = new PostBox("Lorenzo", this._destination, "003", this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+
+                    case Constants.MENSAJE_CONSULTA:
+						XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
+                        PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
 						msg = post.ProcesarEnvio();
 
 						//Creo el cliente y le envio el mensaje
 						Client c = new Client();
-						response = c.StartClient(msg, "localhost");
+                        bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+                        if (conexion)
+                        {
+                            response = c.StartClient(msg, Constants.GATEKEEPER);
 
-                        //Proceso la respuesta
-                        if (!post.ProcesarRespuesta(response))
-                        {
-                            this._typeOutPut = post.erroresCausados(response);
-                        }
-                        else
-                        {
+                            //Proceso la respuesta
+
+                            post.ProcesarRespuesta(response);
+
                             this._select.MessageRequest = post.MessageRequest;
                             this._select.MessageResponse = post.MessageResponse;
 
-                            this._typeOutPut = "003";
+                            this._typeOutPut = Constants.MENSAJE_CONSULTA;
+                        }else{
+                            this._typeOutPut = Constants.ERROR_CONNECTION;
                         }
 						break;
+
+                    case Constants.ERROR_CONNECTION:
+
+                        this._typeOutPut = Constants.ERROR_CONNECTION;
+
+                        break;
 				}
             }
 

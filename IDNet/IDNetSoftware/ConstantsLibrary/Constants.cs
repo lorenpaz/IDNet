@@ -13,8 +13,13 @@ namespace ConstantsLibraryS
         public const string CONFIG = @"../../../../configuration/";
         public const string ConfigFileDatabases = CONFIG + @"databases.conf";
         public const string ConfigFileNeighbours = CONFIG + @"neighbours.conf";
+        public const string ConfigFileInfoUser = CONFIG + @"info.conf";
+
         public const string CONF_PUBLIC_KEY = CONFIG + @"publicKeyIDNet.pem";
         public const string CONF_PRIVATE_KEY = CONFIG + @"privateKeyIDNet.pem";
+
+        public const string MONGODB = @"mongodb";
+        public const string MYSQL = @"mysql";
 
         public const string SOLICITUD_CONEXION = @"Solicitud de conexion de base de datos";
         public const string RESPUESTA_CONEXION = @"Respuesta a la solicitud de conexion de base de datos";
@@ -27,18 +32,50 @@ namespace ConstantsLibraryS
 
 
         public const string USUARIO_SOLICITADO = @"Solicitado al usuario: ";
-        public const string USUARIO_RESPUESTA = "Respuesta del usuario: ";
+        public const string USUARIO_RESPUESTA = @"Respuesta del usuario: ";
 
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
-        public const string ACCESS_DENIED_MYSQL = "Access Denied: Check DB name, username, password";
+        public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";
         public const string NO_ERROR_MYSQL = @"There is not error in MYSQL Server";
 
         public const string UNABLE_CONNECT_MONGODB = @"Check your MongoDB Server";
         public const string NO_ERROR_MONGODB = @"There is not error in MongoDB Server";
+        public const string LOCALHOST_MONGODB = @"mongodb://localhost";
+
+        public const string ERROR_CONNECTION = @"No se ha podido realizar la conexión con el vecino";
+
+        public const string SCHEMA = @"schema";
+        public const string CONNECTION = @"connection";
+        public const string SELECT = @"select";
+
+        public const string GATEKEEPER = @"localhost";
+
+        public const string TABLA_COLUMNA_USUARIO = @"Usuario";
+        public const string TABLA_COLUMNA_TIPOBBDD = @"Tipo BBDD";
+        public const string TABLA_COLUMNA_NOMBREBBDD = @"Nombre BBDD";
+        public const string TABLA_COLUMNA_FUNCIONA = @"Funciona";
+
+        public const string CANCEL = @"Cancel";
+
+        public const string MENSAJE_CONEXION = "001";
+        public const string MENSAJE_CONEXION_A = "001a";
+        public const string MENSAJE_CONEXION_B = "001b";
+        public const string MENSAJE_ESQUEMA = "002";
+        public const string MENSAJE_CONSULTA = "003";
+
+        public const string MENSAJE_RESPUESTA_CONEXION_A = "004a";
+        public const string MENSAJE_RESPUESTA_CONEXION_B = "004b";
 
         /*
          * A partir de aquí vienen método y estructuras para mostrar los mensajes por pantalla 
          * */
+
+        public static string Bienvenida(string nombreUsuario)
+        {
+            return "Bienvenido a la aplicación "+nombreUsuario+ ". \n"+
+                "Hemos creado una clave privada y una clave pública para todas las comunicaciones"+
+                "\n"+" que se realizarán con los vecinos." + "\n";
+        }
 
         public const int LENGTH_TABLE_VIEW = 130;
         public const string NOMBRE_BASE_DE_DATOS = @"Nombre de Base de Datos: ";
@@ -60,7 +97,9 @@ namespace ConstantsLibraryS
         {
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
             return "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_CONEXION + "\n" +
-           Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n";
+           Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
+           "Se ha realizado un intercambio de claves públicas con una posterior encriptación de claves simétricas." + "\n" + 
+          "A partir de ahora los mensajes con "+messageResponse.Destination+" estarán encriptados con clave simétrica." + "\n"; 
 
         }
 
@@ -89,7 +128,7 @@ namespace ConstantsLibraryS
            Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
 
             string rows = "";
-            int cont=1;
+            int cont=0;
             if (body.Rows.Count == 0)
             {
                 rows += "No hay resultados disponibles para su consulta.";
@@ -98,7 +137,7 @@ namespace ConstantsLibraryS
             {
                 foreach (Row r in body.Rows)
                 {
-                    rows += "Fila " + cont + "\n";
+                    rows += "ROW " + cont + "\n";
                     foreach (KeyValuePair<string, string> attr in r.Attributes)
                     {
                         rows += "Campo:" + attr.Key + " Valor:" + attr.Value + "\n";
@@ -110,12 +149,6 @@ namespace ConstantsLibraryS
             rows += "\n";
 
                 return stado + rows;
-        }
-
-        public static string MostrarErrores(string messageError)
-        {
-            return Columna("-",LENGTH_TABLE_VIEW,'-') + "\n" +
-                messageError + "\n" + Columna("-", LENGTH_TABLE_VIEW, '-');
         }
 
         public static string RespuestaEsquemaMySQL(Message messageResponse)
@@ -206,16 +239,24 @@ namespace ConstantsLibraryS
     {
         private string _db_name;
         private List<Table> _tables;
+        private bool _error;
+
         public BodyRespuesta002MySQL(string body)
         {
 
             this._tables = new List<Table>();
             XmlDocument x = new XmlDocument();
             x.LoadXml(body);
-            this._db_name = x.DocumentElement.GetAttribute("name");
-            foreach (XmlElement infoTable in x.DocumentElement.GetElementsByTagName("table"))
+            this._error = x.SelectSingleNode("/error") == null ? false : true;
+            if (!this._error)
             {
-                this._tables.Add(new Table(infoTable));
+                this._db_name = x.DocumentElement.GetAttribute("name");
+                foreach (XmlElement infoTable in x.DocumentElement.GetElementsByTagName("table"))
+                {
+                    this._tables.Add(new Table(infoTable));
+                }
+            }else{
+                this._db_name = null;
             }
         }
         public string Db_name
@@ -240,6 +281,17 @@ namespace ConstantsLibraryS
                 this._tables = value;
             }
         }
+        public bool Error
+        {
+            get
+            {
+                return this._error;
+            }
+            set
+            {
+                this._error = value;
+            }
+        }
     }
 
     /* Estructura para recoger la respuesta de 002 MongoDB
@@ -248,6 +300,7 @@ namespace ConstantsLibraryS
     {
         private string _db_name;
         private List<Collection> _collections;
+        private bool _error;
 
         public BodyRespuesta002MongoDB(string body)
         {
@@ -255,10 +308,16 @@ namespace ConstantsLibraryS
 
             XmlDocument x = new XmlDocument();
             x.LoadXml(body);
-            this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
-            foreach (XmlElement coleccion in x.DocumentElement.GetElementsByTagName("colecciones"))
+            this._error = x.SelectSingleNode("/error") == null ? false : true;
+            if (!this._error)
             {
-                this._collections.Add(new Collection(coleccion));
+                this._db_name = x.DocumentElement.GetElementsByTagName("name")[0].InnerText;
+                foreach (XmlElement coleccion in x.DocumentElement.GetElementsByTagName("colecciones"))
+                {
+                    this._collections.Add(new Collection(coleccion));
+                }
+            }else{
+                this._db_name = null;
             }
         }
         public string Db_name
@@ -281,6 +340,17 @@ namespace ConstantsLibraryS
             set
             {
                 this._collections = value;
+            }
+        }
+        public bool Error
+        {
+            get
+            {
+                return this._error;
+            }
+            set
+            {
+                this._error = value;
             }
         }
     }
@@ -494,19 +564,10 @@ namespace ConstantsLibraryS
         public Row(XmlElement infoRow)
         {
             this._attributes = new Dictionary<string, string>();
-            if (!infoRow.HasChildNodes)
+            XmlAttributeCollection attributes = infoRow.Attributes;
+            foreach (XmlAttribute attr in attributes)
             {
-                XmlAttributeCollection attributes = infoRow.Attributes;
-                foreach (XmlAttribute attr in attributes)
-                {
-                    this._attributes.Add(attr.Name, attr.Value);
-                }
-            }else{
-                XmlNodeList nodes = infoRow.ChildNodes;
-                foreach(XmlNode nod in nodes)
-                {
-                    this._attributes.Add(nod.Name,nod.InnerXml);
-                }
+                this._attributes.Add(attr.Name, attr.Value);
             }
         }
     }

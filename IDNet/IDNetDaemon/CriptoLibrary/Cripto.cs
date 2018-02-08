@@ -22,7 +22,7 @@ namespace CriptoLibrary
 {
     public class Cripto
     {
-        private Dictionary<string, SymmetricAlgorithm> _keyMap;
+      //  private Dictionary<string, SymmetricAlgorithm> _keyMap;
         static readonly ILog log = LogManager.GetLogger(typeof(Cripto));
 
 		RsaKeyParameters _publicKey;

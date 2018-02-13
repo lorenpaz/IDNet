@@ -4,9 +4,31 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using log4net;
+using System.Collections.Generic;
 
 namespace GateKeeperListener
 {
+    public class MsgQueue
+    {
+        public Queue<string> msgQueue;
+
+        public MsgQueue()
+        {
+        }
+
+        public void SetMessage(string msg)
+        {
+            msgQueue.Enqueue(msg);
+        }
+
+        public string getMessage()
+        {
+            string msg = msgQueue.Dequeue();
+            return msg;
+        }
+    }
+
+
 	// State object for reading client data asynchronously
 	public class StateObject
 	{
@@ -24,6 +46,7 @@ namespace GateKeeperListener
     {
 		public ManualResetEvent allDone = new ManualResetEvent(false);
         static readonly ILog log = LogManager.GetLogger(typeof(Listener));
+		public Queue<string> msgQueue;
 
 		public Listener()
         {
@@ -114,7 +137,7 @@ namespace GateKeeperListener
                     // All the data has been read from the 
                     // client. Display it on the console.
                     log.Info("Read " + content.Length + " bytes from socket. \n Data :" + content);
-
+                    msgQueue.Enqueue(content);
                     // Echo the data back to the client.
                     //Send(handler, content);
                 }

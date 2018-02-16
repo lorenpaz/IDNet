@@ -33,11 +33,6 @@ namespace IDNetSoftware
             }
 
         }
-
-        protected void OnButtonCancelClicked(object sender, EventArgs e)
-        {
-			this.Destroy();
-        }
         
         protected void OnButtonOKClicked(object sender, EventArgs e)
         {

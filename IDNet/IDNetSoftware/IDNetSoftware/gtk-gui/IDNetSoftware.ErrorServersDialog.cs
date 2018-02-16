@@ -14,8 +14,6 @@ namespace IDNetSoftware
 
 		private global::Gtk.TextView textviewErrorMongoDB;
 
-		private global::Gtk.Button buttonCancel;
-
 		private global::Gtk.Button buttonOK;
 
 		protected virtual void Build()
@@ -42,6 +40,7 @@ namespace IDNetSoftware
 			this.textviewErrorMysql.Editable = false;
 			this.textviewErrorMysql.CursorVisible = false;
 			this.textviewErrorMysql.AcceptsTab = false;
+			this.textviewErrorMysql.Justification = ((global::Gtk.Justification)(2));
 			this.GtkScrolledWindow.Add(this.textviewErrorMysql);
 			this.vbox2.Add(this.GtkScrolledWindow);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.GtkScrolledWindow]));
@@ -70,18 +69,6 @@ namespace IDNetSoftware
 			w7.BorderWidth = ((uint)(5));
 			w7.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonCancel = new global::Gtk.Button();
-			this.buttonCancel.CanDefault = true;
-			this.buttonCancel.CanFocus = true;
-			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.UseStock = true;
-			this.buttonCancel.UseUnderline = true;
-			this.buttonCancel.Label = "gtk-cancel";
-			this.AddActionWidget(this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonCancel]));
-			w8.Expand = false;
-			w8.Fill = false;
-			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOK = new global::Gtk.Button();
 			this.buttonOK.CanDefault = true;
 			this.buttonOK.CanFocus = true;
@@ -89,10 +76,9 @@ namespace IDNetSoftware
 			this.buttonOK.UseUnderline = true;
 			this.buttonOK.Label = global::Mono.Unix.Catalog.GetString("_OK");
 			this.AddActionWidget(this.buttonOK, 0);
-			global::Gtk.ButtonBox.ButtonBoxChild w9 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonOK]));
-			w9.Position = 1;
-			w9.Expand = false;
-			w9.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonOK]));
+			w8.Expand = false;
+			w8.Fill = false;
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();
@@ -100,7 +86,6 @@ namespace IDNetSoftware
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
 			this.Show();
-			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 			this.buttonOK.Clicked += new global::System.EventHandler(this.OnButtonOKClicked);
 		}
 	}

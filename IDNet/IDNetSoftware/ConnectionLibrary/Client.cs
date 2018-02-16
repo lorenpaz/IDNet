@@ -26,7 +26,7 @@ namespace ConnectionLibraryS
 
 				IPAddress ipAddress = ipHostInfo.AddressList[0];
 				IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
-
+                    
 				// Create a TCP/IP  socket.
 				Socket sender = new Socket(AddressFamily.InterNetwork,
 					SocketType.Stream, ProtocolType.Tcp);
@@ -90,7 +90,7 @@ namespace ConnectionLibraryS
                 // Create a TCP/IP  socket.
                 Socket sender = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
-
+                return true;
                 bool part1 = sender.Poll(1000, SelectMode.SelectRead);
                 bool part2 = (sender.Available == 0);
                 if (part1 && part2)

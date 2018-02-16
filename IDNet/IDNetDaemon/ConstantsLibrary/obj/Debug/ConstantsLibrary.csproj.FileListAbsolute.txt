@@ -8,3 +8,9 @@
 /home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemonSolution/IDNetDaemon/ConstantsLibrary/obj/Debug/ConstantsLibrary.csproj.CoreCompileInputs.cache
 /home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemonSolution/IDNetDaemon/ConstantsLibrary/obj/Debug/ConstantsLibrary.dll
 /home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemonSolution/IDNetDaemon/ConstantsLibrary/obj/Debug/ConstantsLibrary.pdb
+/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemon/ConstantsLibrary/bin/Debug/ConstantsLibrary.dll
+/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemon/ConstantsLibrary/bin/Debug/ConstantsLibrary.pdb
+/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemon/ConstantsLibrary/obj/Debug/ConstantsLibrary.csprojResolveAssemblyReference.cache
+/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemon/ConstantsLibrary/obj/Debug/ConstantsLibrary.csproj.CoreCompileInputs.cache
+/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemon/ConstantsLibrary/obj/Debug/ConstantsLibrary.dll
+/home/lorenzo/Escritorio/Proyectos/git-repos/IDNet/IDNet/IDNetDaemon/ConstantsLibrary/obj/Debug/ConstantsLibrary.pdb

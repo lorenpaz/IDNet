@@ -340,7 +340,7 @@ namespace IDNetSoftware
 
 			//Creamos elemento where
 			XmlNode where = bodyDoc.CreateElement("where");
-            if (comboboxWhere.ActiveText != "" && comboboxWhere.ActiveText != " ")
+            if (comboboxWhere.ActiveText != null && comboboxWhere.ActiveText != "" && comboboxWhere.ActiveText != " ")
             {
                 where.InnerText = comboboxWhere.ActiveText + comboboxWhereSymbols.ActiveText + "'" + entryWhere.Text + "'";
             }
@@ -348,7 +348,7 @@ namespace IDNetSoftware
 
 			//Creamos elemento orderBy
 			XmlNode orderby = bodyDoc.CreateElement("orderby");
-            if (comboboxOrderBy.ActiveText == "")
+            if (comboboxWhere.ActiveText != null && comboboxOrderBy.ActiveText == "")
                 orderby.InnerText = "ASC";
             else
                 orderby.InnerText = comboboxOrderBy.ActiveText;

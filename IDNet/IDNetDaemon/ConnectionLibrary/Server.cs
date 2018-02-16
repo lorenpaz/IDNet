@@ -90,7 +90,7 @@ namespace ConnectionLibrary
 					allDone.WaitOne();
 				}
 			}
-			catch (Exception e)
+			catch (Exception e) 
 			{
 				Console.WriteLine(e.ToString());
 			}
@@ -135,12 +135,8 @@ namespace ConnectionLibrary
 				content = state.sb.ToString();
 				if (content.IndexOf("</root>") > -1)
 				{
-					// All the data has been read from the 
 					// client. Display it on the console.
-					log.Info("Read " + content.Length + " bytes from socket. \n Data :" + content);
-
-					// Echo the data back to the client.
-					//Send(handler, content);
+					log.Info("Read " + content.Length + " bytes from socket. \n");
 				}
 				else
 				{
@@ -195,20 +191,7 @@ namespace ConnectionLibrary
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e.ToString());
 			}
 		}
-
-        /*
-         * Main para probar un mensaje de tipo 002. Funciona OK (el body los < y > los pone diferente)
-         **/
-     /*  static void Main(string[] args)
-        {
-            Cripto c = new Cripto();
-            PostBox p = new PostBox(c);
-            p.procesar("<root><message_type>002</message_type><source>Lorenzo</source><destination>lorenzo</destination><encripted>LT7bFF+zqBBiHkoxVEpdIYNGFvzkbO4qmAADfCc6eqRpfxLG/8MK3lTB73Dd+n5ZPhQJ/Y7+0QFC+blL/N7bCYM3b2PVQ6Hw+X6hnzJafxt8+TcDZg9QOlqS41Nn3p2eIkdVHdyIWL51mZO7NsFCH69nE8NA7BqmPsOH/ThQR5irrgWwL+ET0Ac1+bDOWASCmkr3K1IN/eTXOEPQSytDSOfXcZdd08ggSvHNXpR8ggo3VuptdIY3cXaisszDM+p5MwXvn1x648qzMCehSc2d97YqZaaccljAow2wC6aq17flxnvGsFODXVxoYjUOEx9ymt5nHtdfOtSd6ZqT7oV7vw==</encripted></root>",null);
-            
-        }*/
-
 	}
 }

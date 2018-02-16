@@ -203,6 +203,8 @@ namespace IDNetSoftware
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
 			this.Show();
+			this.buttonCancel.Activated += new global::System.EventHandler(this.OnButtonCancelActivated);
+			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}
 	}

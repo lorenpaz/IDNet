@@ -36,7 +36,7 @@ namespace ConstantsLibraryS
 
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
         public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";
-        public const string NO_ERROR_MYSQL = @"There is not error in MYSQL Server";
+        public const string NO_ERROR_MYSQL = @"There is no error in MYSQL Server";
 
         public const string UNABLE_CONNECT_MONGODB = @"Check your MongoDB Server";
         public const string NO_ERROR_MONGODB = @"There is not error in MongoDB Server";
@@ -66,15 +66,18 @@ namespace ConstantsLibraryS
         public const string MENSAJE_RESPUESTA_CONEXION_A = "004a";
         public const string MENSAJE_RESPUESTA_CONEXION_B = "004b";
 
+        public const string LINEA = @"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
         /*
          * A partir de aquí vienen método y estructuras para mostrar los mensajes por pantalla 
          * */
 
         public static string Bienvenida(string nombreUsuario)
         {
-            return "Bienvenido a la aplicación "+nombreUsuario+ ". \n"+
+            return LINEA+"\n"+
+                "Bienvenido a la aplicación "+nombreUsuario+ ". \n"+
                 "Hemos creado una clave privada y una clave pública para todas las comunicaciones"+
-                "\n"+" que se realizarán con los vecinos." + "\n";
+                "\n"+" que se realizarán con los vecinos." +
+                "\n"+LINEA+"\n";
         }
 
         public const int LENGTH_TABLE_VIEW = 130;
@@ -89,14 +92,14 @@ namespace ConstantsLibraryS
 
         public static string SolicitudConexion(Message messageRequest)
         {
-            return "Status: " + messageRequest.MessageType + " " + Constants.SOLICITUD_CONEXION + "\n" +
+            return "Status: 001 "+ Constants.SOLICITUD_CONEXION + "\n" +
             Constants.USUARIO_SOLICITADO + messageRequest.Destination + "\n";
         }
 
         public static string RespuestaConexion(Message messageResponse)
         {
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
-            return "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_CONEXION + "\n" +
+            return "Status: 004 " + Constants.RESPUESTA_CONEXION + "\n" +
            Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
            "Se ha realizado un intercambio de claves públicas con una posterior encriptación de claves simétricas." + "\n" + 
           "A partir de ahora los mensajes con "+messageResponse.Destination+" estarán encriptados con clave simétrica." + "\n"; 
@@ -163,47 +166,61 @@ namespace ConstantsLibraryS
             linea + "\n" +
            Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
 
-            string tables = "";
-            foreach (Table t in body.Tables)
+            if (body.Error)
             {
-                tables += "--" + NOMBRE_TABLA + t.Name + "\n";
-                tables += TABLA_COLUMNAS_CAMPOS + "\n";
-                foreach (Col c in t.Cols)
-                {
-                    //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
-                    tables += ColumnaTabla(c.Name, c.Type) + "\n";
-                }
-                tables += TABLA_COLUMNAS + "\n";
+                return stado + "\n" + body + "\n";
             }
-
-            return stado + tables;
+            else
+            {
+                string tables = "";
+                foreach (Table t in body.Tables)
+                {
+                    tables += "--" + NOMBRE_TABLA + t.Name + "\n";
+                    tables += TABLA_COLUMNAS_CAMPOS + "\n";
+                    foreach (Col c in t.Cols)
+                    {
+                        //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
+                        tables += ColumnaTabla(c.Name, c.Type) + "\n";
+                    }
+                    tables += TABLA_COLUMNAS + "\n";
+                }
+                return stado + tables;
+            }
         }
         public static string RespuestaEsquemaMongoDB(Message messageResponse)
         {
             BodyRespuesta002MongoDB body = new BodyRespuesta002MongoDB(messageResponse.Body.InnerXml);
 
-            string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
-            string status = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
-            Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
-            linea + "\n" +
-             Columna(" ", LENGTH_TABLE_VIEW, ' ') + "\n" +
-            Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
-            linea + "\n" +
-           Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
+                string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
+                string status = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
+                Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
+                linea + "\n" +
+                 Columna(" ", LENGTH_TABLE_VIEW, ' ') + "\n" +
+                Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
+                linea + "\n" +
+               Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
 
-            string collections = "";
-            foreach (Collection c in body.Collections)
+            if (body.Error)
             {
-                collections += "--" + NOMBRE_COLECCION + c.Name + "\n";
-                collections += TABLA_COLUMNAS_CAMPOS + "\n";
-                foreach (Field co in c.Fields)
-                {
-                    //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
-                    collections += ColumnaTabla(co.Name, "") + "\n";
-                }
-                collections += TABLA_COLUMNAS + "\n";
+                return status + "\n"+body+"\n";
             }
-            return status + collections;
+            else
+            {
+                string collections = "";
+                foreach (Collection c in body.Collections)
+                {
+                    collections += "--" + NOMBRE_COLECCION + c.Name + "\n";
+                    collections += TABLA_COLUMNAS_CAMPOS + "\n";
+                    foreach (Field co in c.Fields)
+                    {
+                        //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
+                        collections += ColumnaTabla(co.Name, "") + "\n";
+                    }
+                    collections += TABLA_COLUMNAS + "\n";
+                }
+                return status + collections;
+            }
+            
         }
 
         private static string Columna(string word, int NSpaces)
@@ -240,6 +257,7 @@ namespace ConstantsLibraryS
         private string _db_name;
         private List<Table> _tables;
         private bool _error;
+        private String _errorTrace;
 
         public BodyRespuesta002MySQL(string body)
         {
@@ -255,8 +273,10 @@ namespace ConstantsLibraryS
                 {
                     this._tables.Add(new Table(infoTable));
                 }
+                this._errorTrace = null;
             }else{
                 this._db_name = null;
+                this._errorTrace = x.DocumentElement.GetElementsByTagName("error")[0].InnerText;
             }
         }
         public string Db_name
@@ -292,6 +312,17 @@ namespace ConstantsLibraryS
                 this._error = value;
             }
         }
+        public String ErrorTrace
+        {
+            get
+            {
+                return this._errorTrace;
+            }
+            set
+            {
+                this._errorTrace = value;
+            }
+        }
     }
 
     /* Estructura para recoger la respuesta de 002 MongoDB
@@ -301,6 +332,7 @@ namespace ConstantsLibraryS
         private string _db_name;
         private List<Collection> _collections;
         private bool _error;
+        private string _errorTrace;
 
         public BodyRespuesta002MongoDB(string body)
         {
@@ -316,8 +348,10 @@ namespace ConstantsLibraryS
                 {
                     this._collections.Add(new Collection(coleccion));
                 }
+                this._errorTrace = null;
             }else{
                 this._db_name = null;
+                this._errorTrace = x.DocumentElement.GetElementsByTagName("error")[0].InnerText;
             }
         }
         public string Db_name
@@ -351,6 +385,17 @@ namespace ConstantsLibraryS
             set
             {
                 this._error = value;
+            }
+        }
+        public String ErrorTrace
+        {
+            get
+            {
+                return this._errorTrace;
+            }
+            set
+            {
+                this._errorTrace = value;
             }
         }
     }

@@ -118,7 +118,6 @@ namespace PostBoxLibrary
 				//Aquí iria una funcion para quitar el cifrado asimetrico
 				// cript.CheckKey(this._messageRecieve.Source, this._messageRecieve.Key);
 				respuesta = responderConexion();
-				log.Info(respuesta);
             }
             else if(this._messageRecieve.MessageType == "001b")
             {
@@ -126,7 +125,6 @@ namespace PostBoxLibrary
                 DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
                 AlmacenarClaveSimetrica(xmlDoc);
                 respuesta = responderConexion();
-                log.Info(respuesta);
             }
             else
             {
@@ -146,6 +144,9 @@ namespace PostBoxLibrary
 				//Creamos la respuesta
 				respuesta = responder(xmlDocResponse);
             }
+
+            //Mostramos la respuesta en el log
+            log.Info("\n"+respuesta+"\n");
 
             return respuesta;
 		}

@@ -213,7 +213,7 @@ namespace IDNetSoftware
 
         private void CargoBasesDeDatosDeLaOV()
         {
-            //AQUI HACE FALTA OBTENER BBDD de OTROS (conexion cliente con el GK para que nos dé tal información)
+            //AQUI HACE FALTA OBTENER BBDD de los vecinos (conexion cliente con el GK para que nos dé tal información)
 
             //Añado valores a la lista
             AddValues();
@@ -327,7 +327,7 @@ namespace IDNetSoftware
             UpdateOwnDatabases();
         }
 
-        //Añadir info de las bases de datos DE OTROS
+        //Añadir info de las bases de datos de los vecinos
         private void AddValues()
         {
             foreach (KeyValuePair<string, Dictionary<string, List<string>>> entry in this._neighbours.MiembrosOV)
@@ -594,7 +594,7 @@ namespace IDNetSoftware
          * */
 		private void MostrarSolicitudConexion(Message messageRequest)
 		{
-			infoview.Buffer.Text += "\n" + Constants.SolicitudConexion(messageRequest);
+            infoview.Buffer.Text += "\n" + Constants.LINEA+"\n" +Constants.SolicitudConexion(messageRequest);
 		}
 
 		/*
@@ -602,7 +602,7 @@ namespace IDNetSoftware
          * */
 		private void MostrarConexion(Message messageResponse)
 		{
-			infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse);
+            infoview.Buffer.Text += "\n" + Constants.RespuestaConexion(messageResponse)+Constants.LINEA+"\n";
 		}
 
         /*
@@ -610,7 +610,7 @@ namespace IDNetSoftware
          * */
         private void MostrarSolicitudEsquema(Message messageRequest)
         {
-            infoview.Buffer.Text += "\n" + Constants.SolicitudEsquema(messageRequest);
+            infoview.Buffer.Text += "\n" + Constants.LINEA + "\n" + Constants.SolicitudEsquema(messageRequest);
         }
 
         /*
@@ -622,14 +622,14 @@ namespace IDNetSoftware
             tag.Size = (int) Pango.Scale.PangoScale * 9;
 			infoview.Buffer.TagTable.Add(tag);
 			TextIter insertIter = infoview.Buffer.EndIter;*/
-
+            
             if (messageResponse.Db_type == Constants.MYSQL)
             //    infoview.Buffer.InsertWithTags(ref insertIter,
               //                                 "\n"+Constants.RespuestaEsquemaMySQL(messageResponse),
                 //                              tag);
-                infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMySQL(messageResponse);
+                infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMySQL(messageResponse)+ Constants.LINEA + "\n";
             else if(messageResponse.Db_type == Constants.MONGODB)
-                infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse);
+                infoview.Buffer.Text += "\n" + Constants.RespuestaEsquemaMongoDB(messageResponse)+ Constants.LINEA + "\n";
         }
 
 		/*
@@ -666,9 +666,9 @@ namespace IDNetSoftware
         /*
          * Método privado para mostrar los errores producidos
          * */
-        private void MostrarError(string error)
+        private void MostrarError(string errore)
         {
-            infoview.Buffer.Text += "\n" + error;
+            infoview.Buffer.Text += "\n"+Constants.LINEA +"\n"+errore+"\n"+ Constants.LINEA+"\n";
         }
 
         /*
@@ -676,7 +676,7 @@ namespace IDNetSoftware
          * */
         private void MensajeBienvenida()
         {
-            infoview.Buffer.Text =  Constants.Bienvenida(this._user.Nombre);
+            infoview.Buffer.Text =   "\n" + Constants.Bienvenida(this._user.Nombre);
         }
 
         /*

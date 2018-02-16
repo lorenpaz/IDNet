@@ -36,9 +36,6 @@
   <ItemGroup>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="Quartz">
-      <HintPath>..\packages\Quartz.2.6.1\lib\net40\Quartz.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -50,6 +47,11 @@
     <Reference Include="Common.Logging">
       <HintPath>..\..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\..\packages\Quartz.3.0.2\lib\net452\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Remoting" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -158,7 +158,7 @@ namespace IDNetSoftware
 			this.frame3.Add(this.GtkAlignment4);
 			this.labelContrasenia = new global::Gtk.Label();
 			this.labelContrasenia.Name = "labelContrasenia";
-			this.labelContrasenia.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Contraseña</b>     (opcional)");
+			this.labelContrasenia.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Contraseña</b>   (opcional)");
 			this.labelContrasenia.UseMarkup = true;
 			this.frame3.LabelWidget = this.labelContrasenia;
 			w1.Add(this.frame3);

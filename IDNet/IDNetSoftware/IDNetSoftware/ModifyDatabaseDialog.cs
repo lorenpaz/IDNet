@@ -50,5 +50,12 @@ namespace IDNetSoftware
 			this.Destroy();
 		}
 
+        /*
+         * Salgo del menú de modificar la base de datos
+         * */
+        protected void OnButtonCancelActivated(object sender, EventArgs e)
+        {
+            this.Destroy();
+        }
     }
 }

@@ -299,7 +299,9 @@ namespace IDNetSoftware
                     this._typeOutPut = Constants.MENSAJE_ESQUEMA;
                 else
                     this._typeOutPut = Constants.ERROR_CONNECTION;
-			}
+            }else{
+                this._typeOutPut = Constants.MENSAJE_ESQUEMA;
+            }
 
 			this.Destroy();
 		}

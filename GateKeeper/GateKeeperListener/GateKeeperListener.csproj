@@ -27,9 +27,10 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Listener.cs" />
+    <Compile Include="ClientListener.cs" />
     <Compile Include="Pathfinder.cs" />
     <Compile Include="Sender.cs" />
+    <Compile Include="GKListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Sockets">
@@ -40,6 +41,7 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

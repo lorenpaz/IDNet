@@ -8,27 +8,6 @@ using System.Collections.Generic;
 
 namespace GateKeeperListener
 {
-    public class MsgQueue
-    {
-        public Queue<string> msgQueue;
-
-        public MsgQueue()
-        {
-        }
-
-        public void SetMessage(string msg)
-        {
-            msgQueue.Enqueue(msg);
-        }
-
-        public string getMessage()
-        {
-            string msg = msgQueue.Dequeue();
-            return msg;
-        }
-    }
-
-
 	// State object for reading client data asynchronously
 	public class StateObject
 	{

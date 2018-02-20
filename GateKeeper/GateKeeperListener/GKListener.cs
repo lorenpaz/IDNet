@@ -22,27 +22,29 @@ namespace GateKeeperListener
 		public StringBuilder sb = new StringBuilder();
 	}
 
-    public class Listener
+    public class GKListener
     {
 		public ManualResetEvent allDone = new ManualResetEvent(false);
-        static readonly ILog log = LogManager.GetLogger(typeof(Listener));
-		public Queue<string> msgQueue;
+        static readonly ILog log = LogManager.GetLogger(typeof(GKListener));
+		public Queue<string> _msgQueue;
 
-		public Listener()
+		public GKListener()
         {
         }
 
-		public void StartListening()
+		public void StartListening(Queue<String> cola)
 		{
             // Data buffer for incoming data.
 			byte[] bytes = new Byte[1024];
+            Console.WriteLine("Het¡y");
 
+            this._msgQueue = cola;
 			// Establish the local endpoint for the socket.
 			// The DNS name of the computer
 			IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
 			IPAddress ipAddress = ipHostInfo.AddressList[0];
 			// IPAddress ipLocal
-			IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+			IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 12000);
 
 			// Create a TCP/IP socket.
 			Socket listener = new Socket(AddressFamily.InterNetwork,
@@ -65,6 +67,11 @@ namespace GateKeeperListener
 						new AsyncCallback(AcceptCallback),
 						listener);
 
+                    while (this._msgQueue.Count != 0)
+                    {
+                        Pathfinder ph = new Pathfinder(false);
+                        ph.PathDiscovery(this._msgQueue);
+                    }
 					// Wait until a connection is made before continuing.
 					allDone.WaitOne();
 				}
@@ -117,7 +124,12 @@ namespace GateKeeperListener
                     // All the data has been read from the 
                     // client. Display it on the console.
                     log.Info("Read " + content.Length + " bytes from socket. \n Data :" + content);
-                    msgQueue.Enqueue(content);
+                    //msgQueue.Enqueue(content);
+                    lock (this._msgQueue)
+                    {
+                        this._msgQueue.Enqueue(content);
+
+                    }
                     // Echo the data back to the client.
                     //Send(handler, content);
                 }

@@ -3,13 +3,16 @@ using Quartz;
 using log4net;
 using Quartz.Impl;
 using System.Configuration;
-
+using System.Threading;
+using GateKeeperListener;
+using System.Collections.Generic;
 namespace GKDaemon
 {
 	public class Scheduler
 	{
 		static readonly ILog log = LogManager.GetLogger(typeof(Scheduler));
 		static IScheduler _scheduler;
+        static Queue<string> _msgQueue;
 
 		public void Start()
 		{
@@ -28,23 +31,22 @@ namespace GKDaemon
 
 		void StartMyJob()
 		{
-			//Server s = new Server();
-			//s.StartListening();
-			//var seconds = Int16.Parse(ConfigurationManager.AppSettings["MyJobSeconds"]);
-			//log.InfoFormat("Start MyJob. Execute once in {0} seconds", seconds);
+            GKListener gk = new GKListener();
+            ClientListener cl = new ClientListener();
 
-			/*IJobDetail job = JobBuilder.Create<Jobs.MyJob>()
-                .WithIdentity("MyJob", "group1")
-                .UsingJobData("Param1", "Hello MyJob!")
-                .Build();
+            ThreadStart _ts1 = delegate { gk.StartListening(_msgQueue); };
+            ThreadStart _ts2 = delegate { cl.StartListening(_msgQueue); };
 
-            ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity("MyJobTrigger", "group1")
-                .StartNow()
-                .WithSimpleSchedule(x => x.WithIntervalInSeconds(seconds).RepeatForever())
-                .Build();
+            // Se declara los hilos
+            Thread hilo1 = new Thread(_ts1);
+            Thread hilo2 = new Thread(_ts2);
 
-            _scheduler.ScheduleJob(job, trigger);*/
+            // Se ejecutan los hilos
+            hilo1.Start();
+            hilo2.Start();
+
+            hilo1.Join();
+            hilo2.Join();
 		}
 	}
 }

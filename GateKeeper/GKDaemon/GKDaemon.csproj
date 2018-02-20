@@ -47,5 +47,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GateKeeperListener\GateKeeperListener.csproj">
+      <Project>{CD3DDC95-D0E2-472A-9F3E-4EBD44FE0301}</Project>
+      <Name>GateKeeperListener</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

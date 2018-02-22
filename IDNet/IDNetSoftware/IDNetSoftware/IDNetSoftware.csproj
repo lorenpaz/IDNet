@@ -57,6 +57,9 @@
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\databaseConnection.png">
+      <LogicalName>databaseConnection.png</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="resources\icons\addDatabase.png">
       <LogicalName>addDatabase.png</LogicalName>
     </EmbeddedResource>
@@ -65,9 +68,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="resources\icons\FInL.png">
       <LogicalName>iconoIDNetSoftware</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="resources\icons\databaseConnection.png">
-      <LogicalName>databaseConnection</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +90,10 @@
     <Compile Include="gtk-gui\IDNetSoftware.FindDialog.cs" />
     <Compile Include="ConnectionNeighboursDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.ConnectionNeighboursDialog.cs" />
+    <Compile Include="AcercadeDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.AcercadeDialog.cs" />
+    <Compile Include="UsuariosOVDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.UsuariosOVDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

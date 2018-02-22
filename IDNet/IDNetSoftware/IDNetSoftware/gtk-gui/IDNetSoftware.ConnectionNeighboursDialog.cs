@@ -103,6 +103,8 @@ namespace IDNetSoftware
 			this.DefaultHeight = 300;
 			this.Show();
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
+			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
+			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}
 	}
 }

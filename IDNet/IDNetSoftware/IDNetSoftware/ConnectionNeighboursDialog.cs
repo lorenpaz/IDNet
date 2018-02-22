@@ -15,12 +15,41 @@ namespace IDNetSoftware
         //Lista con la informacion de las bases de datos de los vecinos
         ListStore _infoBBDDView;
 
+        //Atributo para saber cómo ha cerrado el diálogo
+        private string _typeOutPut;
+
+        private TreePath _rowActivated;
+
+        public String TypeOutPut
+        {
+            get
+            {
+                return this._typeOutPut;
+            }
+            set
+            {
+                this._typeOutPut = value;
+            }
+        }
+        public TreePath RowActivated
+        {
+            get
+            {
+                return this._rowActivated;
+            }
+            set
+            {
+                this._rowActivated = value;
+            }
+        }
+
         public ConnectionNeighboursDialog(ListStore infoBBDDView, Neighbours neighbours)
         {
             this.Build();
             this._infoBBDDView = infoBBDDView;
             this._neighbours = neighbours;
             CargoBasesDeDatosDeLaOV();
+            this._rowActivated = null;
         }
 
         private void CargoBasesDeDatosDeLaOV()
@@ -60,7 +89,24 @@ namespace IDNetSoftware
          * */
         protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
         {
+            TreeIter it;
+            this._infoBBDDView.GetIter(out it, args.Path);
+           // this._rowActivated = this._infoBBDDView.GetValue(it, 0);
 
+        }
+
+        protected void OnButtonOkClicked(object sender, EventArgs e)
+        {
+            if (this._rowActivated != null)
+            {
+                this.Destroy();
+                this._typeOutPut = "OK";
+            }
+        }
+
+        protected void OnButtonCancelClicked(object sender, EventArgs e)
+        {
+            this.Destroy();
         }
     }
 }

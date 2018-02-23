@@ -34,8 +34,8 @@ namespace GKDaemon
             GKListener gk = new GKListener();
             ClientListener cl = new ClientListener();
 
-            ThreadStart _ts1 = delegate { gk.StartListening(_msgQueue); };
-            ThreadStart _ts2 = delegate { cl.StartListening(_msgQueue); };
+            ThreadStart _ts1 = delegate { gk.StartListening(); };
+            ThreadStart _ts2 = delegate { cl.StartListening(); };
 
             // Se declara los hilos
             Thread hilo1 = new Thread(_ts1);

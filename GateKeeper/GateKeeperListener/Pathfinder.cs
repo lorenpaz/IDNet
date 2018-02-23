@@ -23,34 +23,59 @@ namespace GateKeeperListener
             CargarClientes();
         }
 
-        public void PathDiscovery(Queue<string> q)
+		public Pathfinder(int port)
+		{
+            this._port = port;
+
+			CargarClientes();
+		}
+
+        public void PathDiscovery(ref Queue<string> q)
         {
-            // while(q.Count == 0){};
-            ProcessMsg(q);
             //Lanzamos un thread que procese los mensajes
-            //Thread t = new Thread(new ThreadStart(ProcessMsg(q)));
-           // t.Start();
+            Pathfinder p = new Pathfinder(this._port);
+            Thread t = new Thread( new ThreadStart( p.ProcessMsg(q)));
+			t.Start();
         }
 
-        private void ProcessMsg(Queue<string> q)
+        public void ProcessMsg(ref Queue<string> q)
         {
-            while(q.Count != 0)
-            {
-                string content = q.Dequeue();
-                //parseamos el mensaje para pasar los parámetros de conexion
-                //En este caso usaremos una IP fija para el otro GK y el puerto 12000
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.LoadXml(content);
 
-                String clienteDestino = xDoc.GetElementsByTagName("destination")[0].ToString();
-                if(this._clientes.ContainsKey(clienteDestino))
+			Queue<string> init, processed;
+
+			while (q.Count != 0)
+			{
+                string content;
+
+                do
                 {
-                    BindSocket(this._clientes[clienteDestino], content, clienteDestino);
-                }else{
-                    String clienteOrigen = xDoc.GetElementsByTagName("source")[0].ToString();
-                    BindSocket(this._clientes[clienteOrigen],"No se encuentra ese vecino en tu OV" , clienteOrigen );
-                }
-            }
+                    init = q;
+                    processed = q;
+    				content = processed.Dequeue();
+
+					// Compares q to init. If they are not equal, then another
+                    // thread has updated the running queue since this loop
+                    // started. CompareExchange does not update q.
+                    // CompareExchange returns the contents of q, which do not
+                    // equal init, so the loop executes again.
+				}while(init != Interlocked.CompareExchange(ref q, processed, init));
+
+
+				//parseamos el mensaje para pasar los parámetros de conexion
+				XmlDocument xDoc = new XmlDocument();
+				xDoc.LoadXml(content);
+
+				String clienteDestino = xDoc.GetElementsByTagName("destination")[0].ToString();
+				if (this._clientes.ContainsKey(clienteDestino))
+				{
+					BindSocket(this._clientes[clienteDestino], content, clienteDestino);
+				}
+				else
+				{
+					String clienteOrigen = xDoc.GetElementsByTagName("source")[0].ToString();
+					BindSocket(this._clientes[clienteOrigen], "No se encuentra ese vecino en tu OV", clienteOrigen);
+				}
+			}
         }
 
         private void BindSocket(IPAddress ip, string msg, string hostname)

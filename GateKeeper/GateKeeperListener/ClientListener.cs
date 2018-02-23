@@ -17,14 +17,15 @@ namespace GateKeeperListener
 
 		public ClientListener()
         {
+            _msgQueue = new Queue<string>();
         }
 
-        public void StartListening(Queue<string> cola)
+        public void StartListening()
 		{
             // Data buffer for incoming data.
 			byte[] bytes = new Byte[1024];
             Console.WriteLine("Het¡y");
-            this._msgQueue = cola;
+
 			// Establish the local endpoint for the socket.
 			// The DNS name of the computer
 			IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
@@ -53,11 +54,6 @@ namespace GateKeeperListener
 						new AsyncCallback(AcceptCallback),
 						listener);
 
-                    while (this._msgQueue.Count != 0)
-                    {
-                        Pathfinder ph = new Pathfinder(true);
-                        ph.PathDiscovery(this._msgQueue);
-                    }
 					// Wait until a connection is made before continuing.
 					allDone.WaitOne();
 				}
@@ -111,14 +107,25 @@ namespace GateKeeperListener
                     // client. Display it on the console.
                     log.Info("Read " + content.Length + " bytes from socket. \n Data :" + content);
 
-                    lock (this._msgQueue)
-                    {
-                        this._msgQueue.Enqueue(content);
-
-                    }
                     // Echo the data back to the client.
-                    //Send(handler, content);
-                }
+                    Pathfinder p = new Pathfinder(true);
+                    Queue<string> init, processed;
+					do
+					{
+                        init = _msgQueue;
+                        processed = _msgQueue;
+                        processed.Enqueue(content);
+
+						// Compares q to init. If they are not equal, then another
+						// thread has updated the running queue since this loop
+						// started. CompareExchange does not update q.
+						// CompareExchange returns the contents of q, which do not
+						// equal init, so the loop executes again.
+                    } while (init != Interlocked.CompareExchange(ref _msgQueue, processed, init));
+
+                    if (init.Count == 0 && processed.Count == 1)
+                        p.PathDiscovery(ref _msgQueue);
+				}
                 else
                 {
                     // Not all data received. Get more.

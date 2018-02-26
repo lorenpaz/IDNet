@@ -426,47 +426,47 @@ namespace IDNetSoftware
 
             this._infoBBDDView.GetIter(out t, p);
 
-            string usuario = (string)this._infoBBDDView.GetValue(t, 0);
+            string usuarioDestino = (string)this._infoBBDDView.GetValue(t, 0);
             string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
             string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
 
             //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
-            if (this._messages.ContainsKey(usuario))
+            if (this._messages.ContainsKey(usuarioDestino))
             {
-                Tuple<string, string, Dictionary<string, PipeMessage>> tupla = DevuelveTupla(usuario, tipoBBDD, nombreBBDD);
+                Tuple<string, string, Dictionary<string, PipeMessage>> tupla = DevuelveTupla(usuarioDestino, tipoBBDD, nombreBBDD);
 
                 if (tupla == null)
                 {
-                    Tuple<string, string, Dictionary<string, PipeMessage>> firstTupla = DevuelvePrimeraTupla(usuario);
-                    int index = this._messages[usuario].IndexOf(firstTupla);
+                    Tuple<string, string, Dictionary<string, PipeMessage>> firstTupla = DevuelvePrimeraTupla(usuarioDestino);
+                    int index = this._messages[usuarioDestino].IndexOf(firstTupla);
 
-                    PipeMessage pipeConexion = this._messages[usuario][index].Item3[Constants.CONNECTION];
+                    PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
 
-                    this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                    this._connectionDialog = new ConnectionDialog(this._user.Nombre,usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
                 }
                 else
                 {
-                    int index = this._messages[usuario].IndexOf(tupla);
+                    int index = this._messages[usuarioDestino].IndexOf(tupla);
 
-                    if (ComprobarTuplaConSchema(usuario, tipoBBDD, nombreBBDD))
+                    if (ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
                     {
-                        PipeMessage pipeConexion = this._messages[usuario][index].Item3[Constants.CONNECTION];
-                        PipeMessage pipeSchema = this._messages[usuario][index].Item3[Constants.SCHEMA];
+                        PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
+                        PipeMessage pipeSchema = this._messages[usuarioDestino][index].Item3[Constants.SCHEMA];
 
-                        this._connectionDialog = new ConnectionDialog(
-                            usuario, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema, this._claves);
+                        this._connectionDialog = new ConnectionDialog(this._user.Nombre,
+                            usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema, this._claves);
                     }
                     else
                     {
-                        PipeMessage pipeConexion = this._messages[usuario][index].Item3[Constants.CONNECTION];
+                        PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
 
-                        this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                        this._connectionDialog = new ConnectionDialog(this._user.Nombre,usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
                     }
                 }
             }
             else
             {
-                this._connectionDialog = new ConnectionDialog(usuario, tipoBBDD, nombreBBDD, this._claves);
+                this._connectionDialog = new ConnectionDialog(this._user.Nombre,usuarioDestino, tipoBBDD, nombreBBDD, this._claves);
             }
 
             this._connectionDialog.Run();
@@ -482,22 +482,22 @@ namespace IDNetSoftware
                     Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
                         new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD, messageC);
 
-                    if (!this._messages.ContainsKey(usuario))
+                    if (!this._messages.ContainsKey(usuarioDestino))
                     {
                         List<Tuple<string, string, Dictionary<string, PipeMessage>>> lista = new List<Tuple<string, string, Dictionary<string, PipeMessage>>>();
                         lista.Add(tupl);
 
-                        this._messages.Add(usuario, lista);
+                        this._messages.Add(usuarioDestino, lista);
                     }
                     else
                     {
-                        this._messages[usuario].Add(tupl);
+                        this._messages[usuarioDestino].Add(tupl);
                     }
 
-                    if (!this._keyPairClients.ContainsKey(usuario))
+                    if (!this._keyPairClients.ContainsKey(usuarioDestino))
                     {
                         Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey, this._connectionDialog.Connection.SymmetricKey);
-                        this._keyPairClients.Add(usuario, tup);
+                        this._keyPairClients.Add(usuarioDestino, tup);
                     }
 
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
@@ -508,13 +508,25 @@ namespace IDNetSoftware
 
                 case Constants.MENSAJE_ESQUEMA:
 
-                    if (!ComprobarTuplaConSchema(usuario, tipoBBDD, nombreBBDD))
+                    if (!ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
                     {
-                        Tuple<string, string, Dictionary<string, PipeMessage>> tuplaa = DevuelveTupla(usuario, tipoBBDD, nombreBBDD);
+                        Tuple<string, string, Dictionary<string, PipeMessage>> tuplaa = DevuelveTupla(usuarioDestino, tipoBBDD, nombreBBDD);
 
-                        int indexx = this._messages[usuario].IndexOf(tuplaa);
+                        if (tuplaa != null)
+                        {
+                            //Añadimos un nuevo pipeMessage a la tupla existente
+                            int indexx = this._messages[usuarioDestino].IndexOf(tuplaa);
+                            this._messages[usuarioDestino][indexx].Item3.Add(Constants.SCHEMA, this._connectionDialog.Schema);
+                        }else{
 
-                        this._messages[usuario][indexx].Item3.Add(Constants.SCHEMA, this._connectionDialog.Schema);
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaDiferente = DevuelvePrimeraTupla(usuarioDestino);
+
+                            //Añadimos una nueva tupla
+                            Dictionary<string, PipeMessage> diccionarioNuevo = new Dictionary<string, PipeMessage>();
+                            diccionarioNuevo.Add(Constants.CONNECTION,tuplaDiferente.Item3[Constants.CONNECTION]);
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaNueva = new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD,diccionarioNuevo);
+                            this._messages[usuarioDestino].Add(tuplaNueva);
+                        }
                     }
 
                     MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
@@ -522,16 +534,16 @@ namespace IDNetSoftware
                     break;
 
                 case Constants.MENSAJE_CONSULTA:
-                    Tuple<string, string, Dictionary<string, PipeMessage>> tupla = DevuelveTupla(usuario, tipoBBDD, nombreBBDD);
+                    Tuple<string, string, Dictionary<string, PipeMessage>> tupla = DevuelveTupla(usuarioDestino, tipoBBDD, nombreBBDD);
 
-                    int index = this._messages[usuario].IndexOf(tupla);
-                    if (this._messages[usuario][index].Item3.ContainsKey(Constants.SELECT))
+                    int index = this._messages[usuarioDestino].IndexOf(tupla);
+                    if (this._messages[usuarioDestino][index].Item3.ContainsKey(Constants.SELECT))
                     {
-                        this._messages[usuario][index].Item3[Constants.SELECT] = this._connectionDialog.Select;
+                        this._messages[usuarioDestino][index].Item3[Constants.SELECT] = this._connectionDialog.Select;
                     }
                     else
                     {
-                        this._messages[usuario][index].Item3.Add(Constants.SELECT, this._connectionDialog.Select);
+                        this._messages[usuarioDestino][index].Item3.Add(Constants.SELECT, this._connectionDialog.Select);
                     }
 
                     MostrarSolicitudConsulta(this._connectionDialog.Select.MessageRequest);

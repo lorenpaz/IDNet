@@ -57,7 +57,7 @@ namespace IDNetSoftware
             //AQUI HACE FALTA OBTENER BBDD de OTROS (conexion cliente con el GK para que nos dé tal información)
 
             //Añado valores a la lista
-            AddValues();
+          //  AddValues();
 
             //Añado al treeview la información
             treeviewDatabases.Model = this._infoBBDDView;
@@ -69,7 +69,7 @@ namespace IDNetSoftware
         }
 
         //Añadir info de las bases de datos de los vecinos
-        private void AddValues()
+      /*  private void AddValues()
         {
             foreach (KeyValuePair<string, Dictionary<string, List<string>>> entry in this._neighbours.MiembrosOV)
             {
@@ -82,7 +82,7 @@ namespace IDNetSoftware
                 }
 
             }
-        }
+        }*/
 
         /*
          * Método activado cuando se pulsa en la lista de BBDD de vecinos
@@ -90,8 +90,8 @@ namespace IDNetSoftware
         protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
         {
             TreeIter it;
-            this._infoBBDDView.GetIter(out it, args.Path);
-           // this._rowActivated = this._infoBBDDView.GetValue(it, 0);
+            // this._infoBBDDView.GetIter(out it, args.Path);
+            this._rowActivated = args.Path;
 
         }
 

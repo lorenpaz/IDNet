@@ -45,7 +45,7 @@ namespace PluginsLibrary
             {
                 MainAsync().Wait();
             }catch(Exception e){
-                this._salida = "<error>Ha ocurrido un error en el servidor del vecino</error>";
+                this._salida = "<error>Ha ocurrido un error en el vecino</error>";
             }
             return this._salida;
 		}
@@ -58,7 +58,7 @@ namespace PluginsLibrary
 
         //Tarea para la obtención de la información de la BBDD
         async Task MainAsync()
-        {
+            {
             BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
 			this._client = new MongoClient();
             this._database = this._client.GetDatabase(this._databaseName);
@@ -80,15 +80,29 @@ namespace PluginsLibrary
 					string nombreColeccion = (string) doc.SelectToken("name");
                     var coleccion = this._database.GetCollection<BsonDocument>(nombreColeccion);
 
-                    var firstDocument = coleccion.FindAsync(_ => true).Result.Single();
+                    //var firstDocument = coleccion.FindAsync(_ => true).Result.Single();
+                   // var command = new BsonDocument("usersInfo", 1);
+                    var firstDocument = await coleccion.Find(new BsonDocument()).FirstOrDefaultAsync();
                     firstDocument.Remove("_id");
-                    j += "{\"name\":"+"\""+nombreColeccion+"\""+",\"ejemploColeccion\":"+firstDocument.ToJson() +"}";
-				    j += ",";	
+                    j += "{\"name\":"+"\""+nombreColeccion+"\""+",\"ejemploColeccion\":"+firstDocument +"}";
+				    j +=    ",";	
                 }
                 j = j.Remove(j.Length - 1,1);
             }
             j += "]}";
             this._salida = j;
+        }
+
+        private String ConvertSchema(BsonDocument firstDocument)
+        {
+            Dictionary<string,Object> document = firstDocument.ToDictionary();
+
+            foreach(KeyValuePair<string,Object> entry in document)
+            {
+                firstDocument[entry.Key] = BsonValue.Create(entry.Value.GetType());
+            }
+
+            return document.ToJson();
         }
 
 		public class ConsultaMongo
@@ -116,12 +130,6 @@ namespace PluginsLibrary
 				doc.LoadXml(body.InnerXml);
 			}
 		}
-       /* static void Main(string[] args)
-		{
-            PluginMongo p = new PluginMongo("usuarios");
-            p.EstructureRequest();
-
-        }*/
 		
     }
 }

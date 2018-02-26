@@ -101,7 +101,7 @@ namespace ConstantsLibraryS
         {
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
             return "Status: 004 " + Constants.RESPUESTA_CONEXION + "\n" +
-           Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
+           Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
            "Se ha realizado un intercambio de claves públicas con una posterior encriptación de claves simétricas." + "\n" + 
           "A partir de ahora los mensajes con "+messageResponse.Destination+" estarán encriptados con clave simétrica." + "\n"; 
 
@@ -125,7 +125,7 @@ namespace ConstantsLibraryS
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
 
             string stado = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
-            Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
+           Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
             linea + "\n" + linea + "\n" +
             Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
             linea + "\n" +
@@ -161,7 +161,7 @@ namespace ConstantsLibraryS
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
 
             string stado = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
-            Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
+            Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
             linea + "\n" + linea + "\n" +
             Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
             linea + "\n" +
@@ -193,8 +193,8 @@ namespace ConstantsLibraryS
             BodyRespuesta002MongoDB body = new BodyRespuesta002MongoDB(messageResponse.Body.InnerXml);
 
                 string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
-                string status = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
-                Constants.USUARIO_RESPUESTA + messageResponse.Destination + "\n" +
+                    string status = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
+                Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
                 linea + "\n" +
                  Columna(" ", LENGTH_TABLE_VIEW, ' ') + "\n" +
                 Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +

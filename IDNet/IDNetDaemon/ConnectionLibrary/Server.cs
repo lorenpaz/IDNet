@@ -29,7 +29,7 @@ namespace ConnectionLibrary
 		// Client  socket.
 		public Socket workSocket = null;
 		// Size of receive buffer.
-		public const int BufferSize = 1024;
+		public const int BufferSize = 4096;
 		// Receive buffer.
 		public byte[] buffer = new byte[BufferSize];
 		// Received data string.
@@ -56,7 +56,7 @@ namespace ConnectionLibrary
 
 
 			// Data buffer for incoming data.
-			byte[] bytes = new Byte[1024];
+            byte[] bytes = new Byte[4096];
 
 			// Establish the local endpoint for the socket.
 			// The DNS name of the computer
@@ -87,7 +87,7 @@ namespace ConnectionLibrary
 						listener);
 
 					// Wait until a connection is made before continuing.
-					allDone.WaitOne();
+				    	allDone.WaitOne();
 				}
 			}
 			catch (Exception e) 
@@ -149,7 +149,7 @@ namespace ConnectionLibrary
 
                 string respuesta = post.procesar(content,_keyPairClients);
 
-                if(!_keyPairClients.ContainsKey(post.MessageRecieve.Source))
+                if(!this._keyPairClients.ContainsKey(post.MessageRecieve.Source))
                 {
 
                     Tuple<RsaKeyParameters, SymmetricAlgorithm> tupla = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(post.PublicKeyClient, post.SymmetricKey);
@@ -161,7 +161,7 @@ namespace ConnectionLibrary
 				}
 
                 Send(handler,respuesta);
-			}
+    			}
 		}
 
 		private void Send(Socket handler, String data)

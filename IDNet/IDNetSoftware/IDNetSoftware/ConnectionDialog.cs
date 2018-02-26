@@ -21,6 +21,7 @@ namespace IDNetSoftware
 		private PipeMessage _select;
 
         //Atributos para la construcción de los mensajes
+        private string _source;
         private string _destination;
         private string _db_name;
         private string _db_type;
@@ -121,10 +122,11 @@ namespace IDNetSoftware
 		/*
          * Constructor del diálogo de conexión
          * */
-        public ConnectionDialog(string destination, string db_type, string db_name, Cripto keyPair)
+        public ConnectionDialog(string source, string destination, string db_type, string db_name, Cripto keyPair)
         {
             this.Build();
 
+            this._source = source;
             this._destination = destination;
             this._db_name = db_name;
             this._db_type = db_type;
@@ -143,11 +145,12 @@ namespace IDNetSoftware
 		/*
          * Constructor del diálogo
          * */
-        public ConnectionDialog(string destination, string db_type, string db_name, 
+        public ConnectionDialog(string source,string destination, string db_type, string db_name, 
                                 PipeMessage pipeConexion,Cripto keyPair)
 		{
 			this.Build();
 
+            this._source = source;
 			this._destination = destination;
 			this._db_name = db_name;
 			this._db_type = db_type;
@@ -167,11 +170,12 @@ namespace IDNetSoftware
 		/*
          * Constructor del diálogo de conexión
          * */
-		public ConnectionDialog(string destination, string db_type, string db_name,
+		public ConnectionDialog(string source,string destination, string db_type, string db_name,
                                 PipeMessage pipeConexion, PipeMessage pipeSchema,Cripto keyPair)
 		{
 			this.Build();
 
+            this._source = source;
 			this._destination = destination;
 			this._db_name = db_name;
 			this._db_type = db_type;
@@ -244,7 +248,7 @@ namespace IDNetSoftware
         {
 			string msg, response;
 
-            PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_CONEXION_A, this._keyPair);
+            PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONEXION_A, this._keyPair);
 			msg = post.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje
@@ -268,7 +272,7 @@ namespace IDNetSoftware
         {
 			string msg, response;
 
-            PostBox post = new PostBox("Lorenzo", this._destination,Constants.MENSAJE_CONEXION_B, this._keyPair,this._publicKeyClient,this._symmetricKey);
+            PostBox post = new PostBox(this._source, this._destination,Constants.MENSAJE_CONEXION_B, this._keyPair,this._publicKeyClient,this._symmetricKey);
 			msg = post.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje
@@ -314,7 +318,7 @@ namespace IDNetSoftware
 			string msg, response;
 
 			//Proceso el envio
-            PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_ESQUEMA, this._db_name, this._db_type, this._body, this._connection.SymmetricKey);
+            PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_ESQUEMA, this._db_name, this._db_type, this._body, this._connection.SymmetricKey);
 			msg = post.ProcesarEnvio();
 
 			//Creo el cliente y le envio el mensaje
@@ -356,7 +360,7 @@ namespace IDNetSoftware
                         break;
                     case Constants.MENSAJE_CONSULTA:
                         XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
-                        PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+                        PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
                         msg = post.ProcesarEnvio();
 
                         //Creo el cliente y le envio el mensaje
@@ -403,7 +407,7 @@ namespace IDNetSoftware
 
                     case Constants.MENSAJE_CONSULTA:
 						XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
-                        PostBox post = new PostBox("Lorenzo", this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+                        PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
 						msg = post.ProcesarEnvio();
 
 						//Creo el cliente y le envio el mensaje

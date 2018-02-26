@@ -9,8 +9,8 @@ namespace IDNetSoftware
     public partial class FindDialog : Gtk.Dialog
     {
 
-		//Atributos para la construcción de los mensajes
-		private string _destination;
+        //Atributos para la construcción de los mensajes
+        private string _destination;
 		private string _db_name;
 		private XmlDocument _body;
 

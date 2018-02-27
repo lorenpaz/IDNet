@@ -2,20 +2,25 @@
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using System.Threading;
+using log4net;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 namespace GateKeeperListener
 {
-    public class Sender
+    public class PeriodicAnnouncer
     {
-        private Socket sender;
+		public ManualResetEvent allDone = new ManualResetEvent(false);
+        static readonly ILog log = LogManager.GetLogger(typeof(PeriodicAnnouncer));
 
-        public Sender(Socket s)
+        public PeriodicAnnouncer()
         {
-            sender = s;
+            
         }
 
 		//Le pasas el mensaje y el host a quién nos vamos a conectar
-        public string Send(string mensaje, string hostName, IPEndPoint remoteEP)
+		public string StartClient(string mensaje, string hostName)
 		{
 			// Data buffer for incoming data.
 			byte[] respuesta = new byte[4096];
@@ -23,6 +28,17 @@ namespace GateKeeperListener
 			// Connect to a remote device.
 			try
 			{
+				// Establish the remote endpoint for the socket.
+				// This example uses port 11000 on the local computer.
+				IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+
+				IPAddress ipAddress = ipHostInfo.AddressList[0];
+				IPEndPoint remoteEP = new IPEndPoint(ipAddress, 12000);
+
+				// Create a TCP/IP  socket.
+				Socket sender = new Socket(AddressFamily.InterNetwork,
+					SocketType.Stream, ProtocolType.Tcp);
+
 				// Connect the socket to the remote endpoint. Catch any errors.
 				try
 				{
@@ -67,20 +83,25 @@ namespace GateKeeperListener
 			return System.Text.Encoding.UTF8.GetString(respuesta);
 		}
 
-		public bool comprobarConexion()
+		public bool comprobarConexion(string hostName)
 		{
 			// Connect to a remote device.
 			try
 			{
-				bool part1 = sender.Poll(1000, SelectMode.SelectRead);
-				bool part2 = (sender.Available == 0);
-				if (part1 && part2)
-					return false;
-				else
-					return true;
+				// Establish the remote endpoint for the socket.
+				// This example uses port 11000 on the local computer.
+				IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+
+				IPAddress ipAddress = ipHostInfo.AddressList[0];
+				IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
+
+				Ping pingSender = new Ping();
+				PingReply reply = pingSender.Send(ipAddress);
+
+				return reply.Status == IPStatus.Success;
 
 			}
-            catch (Exception)
+			catch (Exception)
 			{
 				return false;
 			}

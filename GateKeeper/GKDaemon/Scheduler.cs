@@ -12,7 +12,6 @@ namespace GKDaemon
 	{
 		static readonly ILog log = LogManager.GetLogger(typeof(Scheduler));
 		static IScheduler _scheduler;
-        static Queue<string> _msgQueue;
 
 		public void Start()
 		{
@@ -33,12 +32,15 @@ namespace GKDaemon
 		{
             GKListener gk = new GKListener();
             ClientListener cl = new ClientListener();
+            PeriodicAnnouncer pa = new PeriodicAnnouncer();
 
             ThreadStart _ts1 = delegate { gk.StartListening(); };
             ThreadStart _ts2 = delegate { cl.StartListening(); };
+            ThreadStart _ts3 = delegate { pa.StartClient(Pathfinder.CargarClientesD()); };
 
-            // Se declara los hilos
-            Thread hilo1 = new Thread(_ts1);
+
+			// Se declara los hilos
+			Thread hilo1 = new Thread(_ts1);
             Thread hilo2 = new Thread(_ts2);
 
             // Se ejecutan los hilos

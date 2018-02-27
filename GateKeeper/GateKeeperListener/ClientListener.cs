@@ -108,12 +108,16 @@ namespace GateKeeperListener
                     log.Info("Read " + content.Length + " bytes from socket. \n Data :" + content);
 
                     // Echo the data back to the client.
-                    Pathfinder p = new Pathfinder(true);
+                    this._msgQueue.Enqueue(content);
+
+                    if (this._msgQueue.Count == 1)
+                        TratarMensaje();
+                    /*
                     Queue<string> init, processed;
 					do
 					{
-                        init = _msgQueue;
-                        processed = _msgQueue;
+                        init = new Queue<string>(_msgQueue);
+                        processed = new Queue<string>(_msgQueue);
                         processed.Enqueue(content);
 
 						// Compares q to init. If they are not equal, then another
@@ -121,10 +125,15 @@ namespace GateKeeperListener
 						// started. CompareExchange does not update q.
 						// CompareExchange returns the contents of q, which do not
 						// equal init, so the loop executes again.
-                    } while (init != Interlocked.CompareExchange(ref _msgQueue, processed, init));
+                    } while (init == Interlocked.CompareExchange(ref _msgQueue, processed, init));
 
                     if (init.Count == 0 && processed.Count == 1)
+                    {
+                        _msgQueue = processed;  
                         p.PathDiscovery(ref _msgQueue);
+                    }
+                    */
+
 				}
                 else
                 {
@@ -133,6 +142,13 @@ namespace GateKeeperListener
                     new AsyncCallback(ReadCallback), state);
                 }
             }
+        }
+
+        private void TratarMensaje()
+        {
+            Pathfinder p = new Pathfinder(true);
+            while (_msgQueue.Count > 0)
+                p.ProcessMsg(_msgQueue.Dequeue());
         }
     }
 }

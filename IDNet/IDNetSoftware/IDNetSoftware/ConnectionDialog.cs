@@ -397,16 +397,16 @@ namespace IDNetSoftware
                 BodyRespuesta002MongoDB schema = new BodyRespuesta002MongoDB(this._schema.MessageResponse.Body.InnerXml);
 
                 this._findDialog = new FindDialog(this._destination, this._db_name, schema);
-				this._selectDialog.Run();
+                this._findDialog.Run();
 
-				switch (this._selectDialog.TypeOutPut)
+                    switch (this._findDialog.TypeOutPut)
 				{
                     case Constants.CANCEL:
 
 						break;
 
                     case Constants.MENSAJE_CONSULTA:
-						XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
+                        XmlNode bodyMessage = (XmlNode)this._findDialog.Body;
                         PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
 						msg = post.ProcesarEnvio();
 
@@ -430,7 +430,7 @@ namespace IDNetSoftware
                         }
 						break;
 
-                    case Constants.ERROR_CONNECTION:
+                    case Constants.ERROR_CONNECTION:    
 
                         this._typeOutPut = Constants.ERROR_CONNECTION;
 

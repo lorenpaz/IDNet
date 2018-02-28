@@ -48,7 +48,7 @@ namespace ConstantsLibraryS
         public const string CONNECTION = @"connection";
         public const string SELECT = @"select";
 
-        public const string GATEKEEPER = @"localhost";
+        public const string GATEKEEPER = @"127.0.0.1";
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
         public const string TABLA_COLUMNA_USUARIO = @"Usuario";
@@ -215,7 +215,7 @@ namespace ConstantsLibraryS
                     foreach (Field co in c.Fields)
                     {
                         //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
-                        collections += ColumnaTabla(co.Name, "") + "\n";
+                        collections += ColumnaTabla(co.Name, co.Type) + "\n";
                     }
                     collections += TABLA_COLUMNAS + "\n";
                 }
@@ -419,7 +419,7 @@ namespace ConstantsLibraryS
 
         public List<Row> Rows
         {
-            get
+            get 
             {
                 return this._rows;
             }
@@ -470,12 +470,12 @@ namespace ConstantsLibraryS
     public struct Field
     {
         private string _name;
-        //string _type;
+        string _type;
 
         public Field(XmlNode infoField)
         {
             this._name = infoField.Name;
-            //this._type = infoCol.GetElementsByTagName("type")[0].InnerText;
+            this._type = infoField.InnerText;
         }
         public string Name
         {
@@ -488,7 +488,7 @@ namespace ConstantsLibraryS
                 this._name = value;
             }
         }
-        /*public string Type
+        public string Type
         {
             get
             {
@@ -498,7 +498,7 @@ namespace ConstantsLibraryS
             {
                 this._type = value;
             }
-        }*/
+        }
     }
 
     public struct Table

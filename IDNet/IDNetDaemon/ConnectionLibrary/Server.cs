@@ -188,7 +188,7 @@ namespace ConnectionLibrary
 				handler.Shutdown(SocketShutdown.Both);
 				handler.Close();
 
-			}
+			}   
 			catch (Exception e)
 			{
 			}

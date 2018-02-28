@@ -40,7 +40,7 @@ namespace IDNetSoftware
 
 		private global::Gtk.Label labelLimit;
 
-		private global::Gtk.SpinButton spinbuttonLimit;
+		private global::Gtk.ComboBox comboboxLimit;
 
 		private global::Gtk.Button buttonCancel;
 
@@ -93,7 +93,7 @@ namespace IDNetSoftware
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.labelFilter = new global::Gtk.Label();
 			this.labelFilter.Name = "labelFilter";
-			this.labelFilter.LabelProp = global::Mono.Unix.Catalog.GetString("FIlter");
+			this.labelFilter.LabelProp = global::Mono.Unix.Catalog.GetString("Filter");
 			this.hbox2.Add(this.labelFilter);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.labelFilter]));
 			w5.Position = 0;
@@ -206,14 +206,16 @@ namespace IDNetSoftware
 			w17.Expand = false;
 			w17.Fill = false;
 			// Container child hbox5.Gtk.Box+BoxChild
-			this.spinbuttonLimit = new global::Gtk.SpinButton(0D, 100D, 1D);
-			this.spinbuttonLimit.CanFocus = true;
-			this.spinbuttonLimit.Name = "spinbuttonLimit";
-			this.spinbuttonLimit.Adjustment.PageIncrement = 10D;
-			this.spinbuttonLimit.ClimbRate = 1D;
-			this.spinbuttonLimit.Numeric = true;
-			this.hbox5.Add(this.spinbuttonLimit);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.spinbuttonLimit]));
+			this.comboboxLimit = global::Gtk.ComboBox.NewText();
+			this.comboboxLimit.AppendText(global::Mono.Unix.Catalog.GetString("10"));
+			this.comboboxLimit.AppendText(global::Mono.Unix.Catalog.GetString("20"));
+			this.comboboxLimit.AppendText(global::Mono.Unix.Catalog.GetString("30"));
+			this.comboboxLimit.AppendText(global::Mono.Unix.Catalog.GetString("40"));
+			this.comboboxLimit.AppendText(global::Mono.Unix.Catalog.GetString("50"));
+			this.comboboxLimit.Name = "comboboxLimit";
+			this.comboboxLimit.Active = 0;
+			this.hbox5.Add(this.comboboxLimit);
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.comboboxLimit]));
 			w18.Position = 1;
 			w18.Expand = false;
 			w18.Fill = false;
@@ -268,6 +270,8 @@ namespace IDNetSoftware
 			this.comboboxCollection.Changed += new global::System.EventHandler(this.OnComboboxCollectionChanged);
 			this.comboboxFilter.Changed += new global::System.EventHandler(this.OnComboboxFilterChanged);
 			this.comboboxProjection.Changed += new global::System.EventHandler(this.OnComboboxProjectionChanged);
+			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
+			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}
 	}
 }

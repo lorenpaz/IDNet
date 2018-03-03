@@ -275,8 +275,11 @@ namespace IDNetSoftware
                         if (col.Name == comboboxWhere.ActiveText)
                         {
                             if (col.Type == "int" || col.Type == "smallint" ||
+                                col.Type == "tinyint" || col.Type == "mediumint" ||
+                                col.Type == "bigint" ||
                                 col.Type == "decimal" || col.Type == "double" ||
-                                col.Type == "float")
+                                col.Type == "float" || col.Type == "timestamp" ||
+                                col.Type == "time" || col.Type == "year")
                             {
                                 whereSymbols.Add("=");
                                 whereSymbols.Add("<");
@@ -286,12 +289,19 @@ namespace IDNetSoftware
                             }
                             else if (col.Type == "varchar" || col.Type == "char"
                                      || col.Type == "text" || col.Type == "mediumtext"
-                                     || col.Type == "longtext")
+                                     || col.Type == "longtext" || col.Type == "tinytext" ||
+                                     col.Type == "binary" || col.Type == "varbinary" ||
+                                     col.Type == "enum" || col.Type == "set")
                             {
                                 whereSymbols.Add("=");
                                 whereSymbols.Add("<>");
 
+                            }else if(col.Type == "bool")
+                            {
+                                whereSymbols.Add("IS");
+                                whereSymbols.Add("IS NOT");
                             }
+                            //A blob, mediumblob, tinyblob y longblob no se les deja hacer el where
                             return whereSymbols;
                         }
                     }

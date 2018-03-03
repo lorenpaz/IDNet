@@ -27,6 +27,9 @@ namespace IDNetSoftware
         private string _db_type;
         private XmlNode _body;
 
+        //Auxiliar
+        PostBox _auxiliarConexion;
+
         //Atributo para cifrado asimétrico
         private Cripto _keyPair;
 
@@ -248,8 +251,8 @@ namespace IDNetSoftware
         {
 			string msg, response;
 
-            PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONEXION_A, this._keyPair);
-			msg = post.ProcesarEnvioConexion();
+            this._auxiliarConexion = new PostBox(this._source, this._destination, Constants.MENSAJE_CONEXION_A, this._keyPair);
+            msg = this._auxiliarConexion.ProcesarEnvioConexion();
 
 			//Creo el cliente y le envio el mensaje
 			Client c = new Client();
@@ -259,9 +262,9 @@ namespace IDNetSoftware
                 response = c.StartClient(msg, Constants.GATEKEEPER);
 
                 //Proceso la respuesta
-                post.ProcesarRespuestaConexion(response);
+                this._auxiliarConexion.ProcesarRespuestaConexion(response);
 
-                this._publicKeyClient = post.PublicKeyClient;
+                this._publicKeyClient = this._auxiliarConexion.PublicKeyClient;
                 return true;
             }else{
                 return false;
@@ -285,7 +288,7 @@ namespace IDNetSoftware
                 //Proceso la respuesta
                 post.ProcesarRespuestaConexion(response);
 
-                this._connection = new PipeMessage(post.MessageRequest, post.MessageResponse, post.PublicKeyClient, this._symmetricKey);
+                this._connection = new PipeMessage(this._auxiliarConexion.MessageRequest,this._auxiliarConexion.MessageResponse,post.MessageRequest, post.MessageResponse, post.PublicKeyClient, this._symmetricKey);
                 return true;
             }else{
                 return false;

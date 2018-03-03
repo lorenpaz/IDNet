@@ -32,6 +32,8 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action databaseConnectionPngAction;
 
+		private global::Gtk.Action MensajesEnviadosAction;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -108,6 +110,9 @@ namespace IDNetSoftware
 			w1.Add(this.MostrarUsuariosAction, null);
 			this.databaseConnectionPngAction = new global::Gtk.Action("databaseConnectionPngAction", null, null, "databaseConnection.png");
 			w1.Add(this.databaseConnectionPngAction, null);
+			this.MensajesEnviadosAction = new global::Gtk.Action("MensajesEnviadosAction", global::Mono.Unix.Catalog.GetString("Mensajes Enviados"), null, null);
+			this.MensajesEnviadosAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Mensajes Enviados");
+			w1.Add(this.MensajesEnviadosAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 700;
@@ -124,7 +129,7 @@ namespace IDNetSoftware
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar2'><menu name='ArchivoAction' action='ArchivoAction'><menuitem name='salirAction' action='salirAction'/></menu><menu name='BasesDeDatosAction' action='BasesDeDatosAction'><menuitem name='addAction' action='addAction'/></menu><menu name='OVAction' action='OVAction'><menuitem name='MostrarUsuariosAction' action='MostrarUsuariosAction'/></menu><menu name='AyudaAction' action='AyudaAction'><menuitem name='AcercaDeAction' action='AcercaDeAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar2'><menu name='ArchivoAction' action='ArchivoAction'><menuitem name='salirAction' action='salirAction'/></menu><menu name='BasesDeDatosAction' action='BasesDeDatosAction'><menuitem name='addAction' action='addAction'/></menu><menu name='OVAction' action='OVAction'><menuitem name='MostrarUsuariosAction' action='MostrarUsuariosAction'/><menuitem name='MensajesEnviadosAction' action='MensajesEnviadosAction'/></menu><menu name='AyudaAction' action='AyudaAction'><menuitem name='AcercaDeAction' action='AcercaDeAction'/></menu></menubar></ui>");
 			this.menubar2 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget("/menubar2")));
 			this.menubar2.Name = "menubar2";
 			this.vbox1.Add(this.menubar2);
@@ -267,6 +272,7 @@ namespace IDNetSoftware
 			this.AcercaDeAction.Activated += new global::System.EventHandler(this.OnAcercaDeActionActivated);
 			this.MostrarUsuariosAction.Activated += new global::System.EventHandler(this.OnMostrarUsuariosActionActivated);
 			this.databaseConnectionPngAction.Activated += new global::System.EventHandler(this.OnDatabaseConnectionPngActionActivated);
+			this.MensajesEnviadosAction.Activated += new global::System.EventHandler(this.OnMensajesEnviadosActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 		}

@@ -16,7 +16,7 @@ namespace MessageLibraryS
 		private string _db_name;
 		private string _db_type;
 		private XmlNode _body;
-
+        private string _keyPair;
 
 		public string Destination
 		{
@@ -84,6 +84,17 @@ namespace MessageLibraryS
 				this._body = value;
 			}
 		}
+        public string KeyPair
+        {
+            get
+            {
+                return this._keyPair;
+            }
+            set
+            {
+                this._keyPair = value;
+            }
+        }
 
         public Message()
         {
@@ -131,6 +142,10 @@ namespace MessageLibraryS
 			if (doc.DocumentElement.GetElementsByTagName("db_name").Count > 0)
 				this._db_name = doc.DocumentElement.GetElementsByTagName("db_name")[0].InnerText;
 
+            //Si existe, guardamos keypair de la base de datos
+            if (doc.DocumentElement.GetElementsByTagName("key").Count > 0)
+                this._keyPair = doc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
+            
 			this._body = doc.DocumentElement.GetElementsByTagName("body")[0];
 		}
 
@@ -222,7 +237,7 @@ namespace MessageLibraryS
 			//Creamos el elemento nombreBBDD
 			XmlNode key = xmlDoc.CreateElement("key");
             key.InnerText = keyPair;
-
+            this._keyPair = keyPair;
 			elementRoot.AppendChild(key);
 
 			return xmlDoc;

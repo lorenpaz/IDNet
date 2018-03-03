@@ -107,6 +107,7 @@ namespace PostBoxLibraryS
 		public string ProcesarEnvio()
 		{
 			XmlDocument doc = this._messageRequest.createMessage();
+
             doc = encriptarParteDelDocumentoSimetrico(doc);
             string respuesta = doc.InnerXml;
 
@@ -174,7 +175,9 @@ namespace PostBoxLibraryS
         {
 			string path = Constants.CONFIG + "publicKey" + this._messageResponse.Source + ".pem";
 			string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
-			File.WriteAllText(path, publicKey);
+            if (File.Exists(path))
+                File.Delete(path);
+            File.WriteAllText(path, publicKey);
 			this._publicKeyClient = Cripto.ImportPublicKey(path);
 		}
 

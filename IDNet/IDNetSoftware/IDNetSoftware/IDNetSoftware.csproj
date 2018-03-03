@@ -94,6 +94,10 @@
     <Compile Include="gtk-gui\IDNetSoftware.AcercadeDialog.cs" />
     <Compile Include="UsuariosOVDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.UsuariosOVDialog.cs" />
+    <Compile Include="ShowMessagesSentDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentDialog.cs" />
+    <Compile Include="ShowMessagesSentWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

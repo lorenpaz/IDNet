@@ -21,6 +21,8 @@ namespace IDNetSoftware
      * */
     public class PipeMessage
     {
+        Message _messageRequestConexion;
+        Message _messageResponseConexion;
         Message _messageRequest;
         Message _messageResponse;
         RsaKeyParameters _publicKey;
@@ -29,6 +31,15 @@ namespace IDNetSoftware
         public PipeMessage() { }
         public PipeMessage(Message mrequest, Message mresponse, RsaKeyParameters publicKey, SymmetricAlgorithm key)
         {
+            this._messageRequest = mrequest;
+            this._messageResponse = mresponse;
+            this._publicKey = publicKey;
+            this._symmetricKey = key;
+        }
+        public PipeMessage(Message mrequestConexion, Message mresponseConexion,Message mrequest, Message mresponse, RsaKeyParameters publicKey, SymmetricAlgorithm key)
+        {
+            this._messageRequestConexion = mrequestConexion;
+            this._messageResponseConexion = mresponseConexion;
             this._messageRequest = mrequest;
             this._messageResponse = mresponse;
             this._publicKey = publicKey;
@@ -54,6 +65,28 @@ namespace IDNetSoftware
             set
             {
                 this._messageResponse = value;
+            }
+        }
+        public Message MessageRequestConexion
+        {
+            get
+            {
+                return this._messageRequestConexion;
+            }
+            set
+            {
+                this._messageRequestConexion = value;
+            }
+        }
+        public Message MessageResponseConexion
+        {
+            get
+            {
+                return this._messageResponseConexion;
+            }
+            set
+            {
+                this._messageResponseConexion = value;
             }
         }
         public RsaKeyParameters PublicKey
@@ -178,6 +211,9 @@ namespace IDNetSoftware
 
         //Diálogo de AcercaDe
         AcercadeDialog _acercaDeDialog;
+
+        //Diálogo de MostrarMensajes
+        ShowMessagesSentWindow _showMessagesSentWindow;
 
         //Numero conexiones activas
         int _conexionesActivas;
@@ -414,7 +450,7 @@ namespace IDNetSoftware
         protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
         {
             TreeIter t;
-            TreePath p=null;
+            TreePath p = null;
             if (args != null)
             {
                 p = args.Path;
@@ -442,7 +478,7 @@ namespace IDNetSoftware
 
                     PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
 
-                    this._connectionDialog = new ConnectionDialog(this._user.Nombre,usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                    this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
                 }
                 else
                 {
@@ -460,13 +496,13 @@ namespace IDNetSoftware
                     {
                         PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
 
-                        this._connectionDialog = new ConnectionDialog(this._user.Nombre,usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                        this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
                     }
                 }
             }
             else
             {
-                this._connectionDialog = new ConnectionDialog(this._user.Nombre,usuarioDestino, tipoBBDD, nombreBBDD, this._claves);
+                this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, this._claves);
             }
 
             this._connectionDialog.Run();
@@ -517,14 +553,17 @@ namespace IDNetSoftware
                             //Añadimos un nuevo pipeMessage a la tupla existente
                             int indexx = this._messages[usuarioDestino].IndexOf(tuplaa);
                             this._messages[usuarioDestino][indexx].Item3.Add(Constants.SCHEMA, this._connectionDialog.Schema);
-                        }else{
+                        }
+                        else
+                        {
 
                             Tuple<string, string, Dictionary<string, PipeMessage>> tuplaDiferente = DevuelvePrimeraTupla(usuarioDestino);
 
                             //Añadimos una nueva tupla
                             Dictionary<string, PipeMessage> diccionarioNuevo = new Dictionary<string, PipeMessage>();
-                            diccionarioNuevo.Add(Constants.CONNECTION,tuplaDiferente.Item3[Constants.CONNECTION]);
-                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaNueva = new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD,diccionarioNuevo);
+                            diccionarioNuevo.Add(Constants.CONNECTION, tuplaDiferente.Item3[Constants.CONNECTION]);
+                            diccionarioNuevo.Add(Constants.SCHEMA, this._connectionDialog.Schema);
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaNueva = new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD, diccionarioNuevo);
                             this._messages[usuarioDestino].Add(tuplaNueva);
                         }
                     }
@@ -636,6 +675,32 @@ namespace IDNetSoftware
             this._usuariosOVDialog.Run();
         }
 
+        protected void OnDatabaseConnectionPngActionActivated(object sender, EventArgs e)
+        {
+            this._connectionNeighboursDialog = new ConnectionNeighboursDialog(this._infoBBDDView, this._neighbours);
+            this._connectionNeighboursDialog.Run();
+
+            switch (this._connectionNeighboursDialog.TypeOutPut)
+            {
+                case Constants.CANCEL:
+                    break;
+
+                default:
+                    if (this._connectionNeighboursDialog.RowActivated != null)
+                    {
+                        OnTreeviewDatabasesRowActivated(null, null);
+                    }
+
+                    break;
+            }
+
+        }
+
+        protected void OnMensajesEnviadosActionActivated(object sender, EventArgs e)
+        {
+            this._showMessagesSentWindow = new ShowMessagesSentWindow(this._messages);
+        }
+
         /*A PARTIR DE AQUI SON METODOS PARA MOSTRAR RESULTADOS DE LAS ACCIONES*/
 
         /*
@@ -736,27 +801,6 @@ namespace IDNetSoftware
         protected void OnClearActionActivated(object sender, EventArgs e)
         {
             infoview.Buffer.Clear();
-        }
-
-        protected void OnDatabaseConnectionPngActionActivated(object sender, EventArgs e)
-        {
-            this._connectionNeighboursDialog = new ConnectionNeighboursDialog(this._infoBBDDView,this._neighbours);
-            this._connectionNeighboursDialog.Run();
-
-            switch(this._connectionNeighboursDialog.TypeOutPut)
-            {
-                case Constants.CANCEL:
-                    break;
-
-                default:
-                    if(this._connectionNeighboursDialog.RowActivated != null)
-                    {
-                         OnTreeviewDatabasesRowActivated(null, null);
-                    }
-
-                    break;
-            }
-
         }
     }
 }

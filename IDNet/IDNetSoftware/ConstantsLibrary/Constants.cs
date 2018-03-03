@@ -52,7 +52,10 @@ namespace ConstantsLibraryS
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
         public const string TABLA_COLUMNA_USUARIO = @"Usuario";
+        public const string TABLA_COLUMNA_USUARIO_ORIGEN = @"Usuario origen";
+        public const string TABLA_COLUMNA_USUARIO_DESTINO = @"Usuario destino";
         public const string TABLA_COLUMNA_TIPOBBDD = @"Tipo BBDD";
+        public const string TABLA_COLUMNA_TIPO_MENSAJE = @"Tipo Mensaje";
         public const string TABLA_COLUMNA_NOMBREBBDD = @"Nombre BBDD";
         public const string TABLA_COLUMNA_FUNCIONA = @"Funciona";
 

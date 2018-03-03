@@ -199,7 +199,8 @@ namespace PostBoxLibrary
 		{
             string path = Constants.CONF + "publicKey" + this.MessageRecieve.Source + ".pem";
             string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
-                File.WriteAllText(path, publicKey);
+            File.Delete(path);
+            File.WriteAllText(path, publicKey);
             this._publicKeyClient = Cripto.ImportPublicKey(path);
 		}
 

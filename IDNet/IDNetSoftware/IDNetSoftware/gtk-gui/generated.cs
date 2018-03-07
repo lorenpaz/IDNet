@@ -16,6 +16,8 @@ namespace Stetic
 				w1.Add("addDatabase.png", w2);
 				global::Gtk.IconSet w3 = new global::Gtk.IconSet(global::Gdk.Pixbuf.LoadFromResource("databaseConnection.png"));
 				w1.Add("databaseConnection.png", w3);
+				global::Gtk.IconSet w4 = new global::Gtk.IconSet(global::Gdk.Pixbuf.LoadFromResource("updateDatabase.png"));
+				w1.Add("updateDatabase.png", w4);
 				w1.AddDefault();
 			}
 		}

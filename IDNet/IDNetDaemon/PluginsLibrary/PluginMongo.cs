@@ -131,7 +131,8 @@ namespace PluginsLibrary
                 {
                     doc.Remove("_id");
 
-                    j += AttributesJson(doc.ToJson());
+                    // j += AttributesJson(doc.ToJson());
+                    j += doc.ToJson();
                     i += 1;
                     j += ",";
                 }

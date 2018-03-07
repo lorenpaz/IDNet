@@ -58,6 +58,8 @@ namespace ConstantsLibraryS
         public const string TABLA_COLUMNA_TIPO_MENSAJE = @"Tipo Mensaje";
         public const string TABLA_COLUMNA_NOMBREBBDD = @"Nombre BBDD";
         public const string TABLA_COLUMNA_FUNCIONA = @"Funciona";
+        public const string TABLA_COLUMNA_ICONOS = @"Símbolos";
+        public const string TABLA_COLUMNA_EXPLICACION = @"Significado";
 
         public const string CANCEL = @"Cancel";
 
@@ -145,9 +147,9 @@ namespace ConstantsLibraryS
                 foreach (Row r in body.Rows)
                 {
                     rows += "ROW " + cont + "\n";
-                    foreach (KeyValuePair<string, string> attr in r.Attributes)
+                    foreach (KeyValuePair<string, object> attr in r.Attributes)
                     {
-                        rows += "Campo:" + attr.Key + " Valor:" + attr.Value + "\n";
+                        rows += MostrarValorFirst(messageResponse.Db_type,attr) + "\n";
                     }
 
                     cont += 1;
@@ -183,7 +185,6 @@ namespace ConstantsLibraryS
                     tables += TABLA_COLUMNAS_CAMPOS + "\n";
                     foreach (Col c in t.Cols)
                     {
-                        //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
                         tables += ColumnaTabla(c.Name, c.Type) + "\n";
                     }
                     tables += TABLA_COLUMNAS + "\n";
@@ -225,6 +226,42 @@ namespace ConstantsLibraryS
                 return status + collections;
             }
             
+        }
+
+        public static string MostrarValorFirst(string db_type, object value)
+        {
+            KeyValuePair<string, object> attr = (KeyValuePair<string, object>)value;
+            string key = attr.Key;
+            object valor = attr.Value;
+
+            return MostrarValor(key,db_type, valor);
+        }
+
+        public static string MostrarValor(string key,string db_type, object value)
+        {
+           string resultado = null;
+            if(db_type == MYSQL)
+            {
+                return value.ToString();
+            }
+            else if(db_type == MONGODB){
+                XmlNode c = (XmlNode)value;
+                if(!c.HasChildNodes)
+                {
+                    if(c.ParentNode.Name != key)
+                        return "Campo: " + key +"."+ c.ParentNode.Name +" Valor:" + c.Value+"\n";
+                    else       
+                        return "Campo: " + key + " Valor:" +c.Value+"\n";
+                }
+                resultado = "";
+                XmlNodeList nodes = c.ChildNodes;
+                foreach(XmlNode node in nodes)
+                {
+                    resultado += MostrarValor(key,db_type, node);
+                }
+                return resultado;
+            }
+            return resultado;
         }
 
         private static string Columna(string word, int NSpaces)
@@ -556,11 +593,7 @@ namespace ConstantsLibraryS
 
             this._fields = new List<Field>();
             this._name = infoCollection.GetElementsByTagName("name")[0].InnerText;
-            /*foreach (XmlElement infoField in infoCollection.GetElementsByTagName("field"))
-            {
-                this._fields.Add(new Field(infoField));
 
-            }*/
             XmlNode ejemploColeccion = infoCollection.GetElementsByTagName("ejemploColeccion")[0];
             foreach (XmlNode node in ejemploColeccion.ChildNodes)
             {
@@ -596,9 +629,9 @@ namespace ConstantsLibraryS
     public struct Row
     {
         //Atributo-> valor. Example: nombre->lorenzo
-        private Dictionary<string, string> _attributes;
+        private Dictionary<string, Object> _attributes;
 
-        public Dictionary<string,string> Attributes
+        public Dictionary<string,Object> Attributes
 		{
 			get
 			{
@@ -612,11 +645,19 @@ namespace ConstantsLibraryS
 
         public Row(XmlElement infoRow)
         {
-            this._attributes = new Dictionary<string, string>();
-            XmlAttributeCollection attributes = infoRow.Attributes;
-            foreach (XmlAttribute attr in attributes)
+            this._attributes = new Dictionary<string, Object>();
+            /*  XmlAttributeCollection attributes = infoRow.Attributes;
+              foreach (XmlAttribute attr in attributes)
+              {
+                  this._attributes.Add(attr.Name, attr.Value);
+              }*/
+            XmlNodeList a = infoRow.ChildNodes;
+            foreach(XmlNode r in a)
             {
-                this._attributes.Add(attr.Name, attr.Value);
+                if (r.HasChildNodes)
+                    this._attributes.Add(r.Name, r);
+                else
+                    this._attributes.Add(r.Name, r.InnerText);
             }
         }
     }

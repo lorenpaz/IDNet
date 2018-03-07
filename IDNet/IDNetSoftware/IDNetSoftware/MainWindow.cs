@@ -36,7 +36,7 @@ namespace IDNetSoftware
             this._publicKey = publicKey;
             this._symmetricKey = key;
         }
-        public PipeMessage(Message mrequestConexion, Message mresponseConexion,Message mrequest, Message mresponse, RsaKeyParameters publicKey, SymmetricAlgorithm key)
+        public PipeMessage(Message mrequestConexion, Message mresponseConexion, Message mrequest, Message mresponse, RsaKeyParameters publicKey, SymmetricAlgorithm key)
         {
             this._messageRequestConexion = mrequestConexion;
             this._messageResponseConexion = mresponseConexion;
@@ -202,12 +202,16 @@ namespace IDNetSoftware
 
         //Dialogo de conexion
         ConnectionDialog _connectionDialog;
+        ConnectionWindow _connectionWindow;
 
         //Dialogo alternativo de conexion
         ConnectionNeighboursDialog _connectionNeighboursDialog;
 
         //Diálogo usuarios O.V.
         UsuariosOVDialog _usuariosOVDialog;
+
+        //Diálogo de Simbologia
+        SimbologiaDialog _simbologiaDialog;
 
         //Diálogo de AcercaDe
         AcercadeDialog _acercaDeDialog;
@@ -373,6 +377,12 @@ namespace IDNetSoftware
             UpdateOwnDatabases();
         }
 
+        //Icono actualizarBaseDeDatos
+        protected void OnUpdateDatabasePngActionActivated(object sender, EventArgs e)
+        {
+            UpdateOwnDatabases();
+        }
+
         //Añadir info de las bases de datos de los vecinos
         private void AddValues()
         {
@@ -505,6 +515,11 @@ namespace IDNetSoftware
                 this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, this._claves);
             }
 
+            /*  this._connectionDialog.Present();
+               this._connectionDialog.ShowAll();
+              this._connectionDialog.ShowNow();
+               this._connectionDialog.Show();*/
+            //this._connectionDialog
             this._connectionDialog.Run();
 
             switch (this._connectionDialog.TypeOutPut)
@@ -561,7 +576,7 @@ namespace IDNetSoftware
 
                             //Añadimos una nueva tupla
                             Dictionary<string, PipeMessage> diccionarioNuevo = new Dictionary<string, PipeMessage>();
-                            diccionarioNuevo.Add(Constants.CONNECTION, tuplaDiferente.Item3[Constants.CONNECTION]);
+                            //diccionarioNuevo.Add(Constants.CONNECTION, tuplaDiferente.Item3[Constants.CONNECTION]);
                             diccionarioNuevo.Add(Constants.SCHEMA, this._connectionDialog.Schema);
                             Tuple<string, string, Dictionary<string, PipeMessage>> tuplaNueva = new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD, diccionarioNuevo);
                             this._messages[usuarioDestino].Add(tuplaNueva);
@@ -802,5 +817,17 @@ namespace IDNetSoftware
         {
             infoview.Buffer.Clear();
         }
-    }
+
+        protected void OnShown(object sender, EventArgs e)
+        {
+            var a = 0;
+
+        }
+
+        protected void OnSimbologiaActionActivated(object sender, EventArgs e)
+        {
+            this._simbologiaDialog = new SimbologiaDialog();
+            this._simbologiaDialog.Run();
+        }
+    } 
 }

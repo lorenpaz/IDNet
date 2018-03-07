@@ -131,8 +131,8 @@ namespace IDNetSoftware
             if( tuplaBuscar.Item1 == mensaje.Source && 
                    tuplaBuscar.Item2 == mensaje.Destination &&
                     tuplaBuscar.Item3 == mensaje.MessageType &&
-               ((mensaje.Db_type !=null && tuplaBuscar.Item4 == mensaje.Db_type) || mensaje.Db_type==null) &&
-               ((mensaje.Db_name != null && tuplaBuscar.Item5 == mensaje.Db_name) || mensaje.Db_name == null))
+               ((tuplaBuscar.Item4 !=null && tuplaBuscar.Item4 == mensaje.Db_type) || tuplaBuscar.Item4==null) &&
+               ((tuplaBuscar.Item5 != null && tuplaBuscar.Item5 == mensaje.Db_name) || tuplaBuscar.Item5 == null))
             {
                 return true;   
             }else{

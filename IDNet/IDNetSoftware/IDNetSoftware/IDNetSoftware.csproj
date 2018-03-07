@@ -69,6 +69,9 @@
     <EmbeddedResource Include="resources\icons\FInL.png">
       <LogicalName>iconoIDNetSoftware</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\updateDatabase.png">
+      <LogicalName>updateDatabase.png</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -98,6 +101,10 @@
     <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentDialog.cs" />
     <Compile Include="ShowMessagesSentWindow.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentWindow.cs" />
+    <Compile Include="ConnectionWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ConnectionWindow.cs" />
+    <Compile Include="SimbologiaDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.SimbologiaDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />
@@ -108,7 +115,6 @@
     <None Include="resources\icons\004-database-3.png" />
     <None Include="resources\icons\updateDatabase.png" />
     <None Include="resources\icons\006-database-2.png" />
-    <None Include="resources\icons\007-database-1.png" />
     <None Include="resources\icons\iconoSoftware.png" />
     <None Include="packages.config" />
   </ItemGroup>

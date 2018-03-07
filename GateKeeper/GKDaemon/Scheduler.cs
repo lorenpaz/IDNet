@@ -28,15 +28,15 @@ namespace GKDaemon
 				_scheduler.Shutdown();
 		}
 
-		void StartMyJob()
+		public void StartMyJob()
 		{
-            GKListener gk = new GKListener();
-            ClientListener cl = new ClientListener();
+            Listener gk = new Listener(false);
+            Listener cl = new Listener(true);
             PeriodicAnnouncer pa = new PeriodicAnnouncer();
 
             ThreadStart _ts1 = delegate { gk.StartListening(); };
             ThreadStart _ts2 = delegate { cl.StartListening(); };
-            ThreadStart _ts3 = delegate { pa.StartClient(Pathfinder.CargarClientesD()); };
+            ThreadStart _ts3 = delegate { pa.StartListening(); };
 
 
 			// Se declara los hilos

@@ -112,9 +112,10 @@ namespace GateKeeperListener
 
                 line = conFile.ReadLine();
             }
-        conFile.Close();
+            conFile.Close();
         }
-        public static Dictionary<string,IPAddress> CargarClientesD()
+
+        public static Dictionary<string,IPAddress> CargarVecinosD()
 		{
 			//Archivo a leer
 			StreamReader conFile = File.OpenText("clients.conf");

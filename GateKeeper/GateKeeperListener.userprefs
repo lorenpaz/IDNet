@@ -1,12 +1,11 @@
 ﻿<Properties StartupConfiguration="{E0B09AC3-21FD-46D6-A088-45A4378CC071}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GKDaemon/Scheduler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GateKeeperListener/Pathfinder.cs">
     <Files>
-      <File FileName="GateKeeperListener/ClientListener.cs" Line="14" Column="1" />
-      <File FileName="GateKeeperListener/Pathfinder.cs" Line="14" Column="57" />
-      <File FileName="GateKeeperListener/GKListener.cs" Line="136" Column="10" />
-      <File FileName="GateKeeperListener/Sender.cs" Line="82" Column="3" />
-      <File FileName="GKDaemon/Scheduler.cs" Line="39" Column="45" />
-      <File FileName="GateKeeperListener/PeriodicAnnouncer.cs" Line="104" Column="20" />
+      <File FileName="GateKeeperListener/Listener.cs" Line="119" Column="40" />
+      <File FileName="GKDaemon/Scheduler.cs" Line="44" Column="1" />
+      <File FileName="GateKeeperListener/PeriodicAnnouncer.cs" Line="17" Column="9" />
+      <File FileName="GateKeeperListener/Pathfinder.cs" Line="117" Column="9" />
+      <File FileName="GateKeeperListener/Sender.cs" Line="18" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />

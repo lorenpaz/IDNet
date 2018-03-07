@@ -11,74 +11,16 @@ namespace GateKeeperListener
 
     public class ClientListener
     {
-		public ManualResetEvent allDone = new ManualResetEvent(false);
-        static readonly ILog log = LogManager.GetLogger(typeof(ClientListener));
-		public Queue<string> _msgQueue;
+		private static readonly ILog log = LogManager.GetLogger(typeof(ClientListener));
+		private ManualResetEvent allDone = new ManualResetEvent(false);
 
-		public ClientListener()
-        {
-            _msgQueue = new Queue<string>();
+		public ClientListener():base(){}
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
-
-        public void StartListening()
-		{
-            // Data buffer for incoming data.
-			byte[] bytes = new Byte[1024];
-            Console.WriteLine("Het¡y");
-
-			// Establish the local endpoint for the socket.
-			// The DNS name of the computer
-			IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-			IPAddress ipAddress = ipHostInfo.AddressList[0];
-			// IPAddress ipLocal
-			IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
-
-			// Create a TCP/IP socket.
-			Socket listener = new Socket(AddressFamily.InterNetwork,
-				SocketType.Stream, ProtocolType.Tcp);
-
-			// Bind the socket to the local endpoint and listen for incoming connections.
-			try
-			{
-				listener.Bind(localEndPoint);
-				listener.Listen(100);
-
-				while (true)
-				{
-					// Set the event to nonsignaled state.
-					allDone.Reset();
-
-					// Start an asynchronous socket to listen for connections.
-					log.Info("Waiting for a connection...");
-					listener.BeginAccept(
-						new AsyncCallback(AcceptCallback),
-						listener);
-
-					// Wait until a connection is made before continuing.
-					allDone.WaitOne();
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.ToString());
-			}
-		}
-
-		public void AcceptCallback(IAsyncResult ar)
-		{
-			// Signal the main thread to continue.
-			allDone.Set();
-
-			// Get the socket that handles the client request.
-			Socket listener = (Socket)ar.AsyncState;
-			Socket handler = listener.EndAccept(ar);
-
-			// Create the state object.
-			StateObject state = new StateObject();
-			state.workSocket = handler;
-			handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-				new AsyncCallback(ReadCallback), state);
-		}
 
         public void ReadCallback(IAsyncResult ar)
         {
@@ -142,13 +84,6 @@ namespace GateKeeperListener
                     new AsyncCallback(ReadCallback), state);
                 }
             }
-        }
-
-        private void TratarMensaje()
-        {
-            Pathfinder p = new Pathfinder(true);
-            while (_msgQueue.Count > 0)
-                p.ProcessMsg(_msgQueue.Dequeue());
         }
     }
 }

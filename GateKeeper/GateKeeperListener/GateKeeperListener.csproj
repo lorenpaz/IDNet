@@ -27,11 +27,10 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ClientListener.cs" />
     <Compile Include="Pathfinder.cs" />
     <Compile Include="Sender.cs" />
-    <Compile Include="GKListener.cs" />
     <Compile Include="PeriodicAnnouncer.cs" />
+    <Compile Include="Listener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Sockets">

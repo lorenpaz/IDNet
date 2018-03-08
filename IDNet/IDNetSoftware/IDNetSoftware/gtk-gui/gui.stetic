@@ -1380,6 +1380,7 @@ mongodb</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
+                    <signal name="Toggled" handler="OnCheckbuttonProjectionToggled" />
                   </widget>
                   <packing>
                     <property name="PackType">End</property>
@@ -1726,7 +1727,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="IDNetSoftware.UsuariosOVDialog" design-size="400 300">
+  <widget class="Gtk.Dialog" id="IDNetSoftware.UsuariosOVDialog" design-size="233 300">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>
@@ -1742,7 +1743,7 @@ mongodb</property>
             <child>
               <widget class="Gtk.Label" id="labelTitulo">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Usuarios Organización VIrtual</property>
+                <property name="LabelProp" translatable="yes">Usuarios Organización Virtual</property>
                 <property name="Justify">Center</property>
               </widget>
               <packing>
@@ -2085,7 +2086,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="IDNetSoftware.SimbologiaDialog" design-size="400 300">
+  <widget class="Gtk.Dialog" id="IDNetSoftware.SimbologiaDialog" design-size="684 498">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>
@@ -2151,7 +2152,7 @@ mongodb</property>
             <property name="Type">StockItem</property>
             <property name="StockId">gtk-ok</property>
             <property name="ResponseId">-5</property>
-            <signal name="Activated" handler="OnButtonOkActivated" />
+            <signal name="Clicked" handler="OnButtonOkClicked" />
             <property name="label">gtk-ok</property>
           </widget>
           <packing>

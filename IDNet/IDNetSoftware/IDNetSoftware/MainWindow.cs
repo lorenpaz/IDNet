@@ -496,7 +496,18 @@ namespace IDNetSoftware
 
                     if (ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
                     {
-                        PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
+                        PipeMessage pipeConexion = null;
+                        if(this._messages[usuarioDestino][index].Item3.ContainsKey(Constants.CONNECTION))
+                        {
+                            pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
+
+                        }else{
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaAuxiliar = DevuelveTupla(usuarioDestino, tipoBBDD==Constants.MONGODB ? Constants.MYSQL:Constants.MONGODB, nombreBBDD);
+
+                            int indexAuxiliar = this._messages[usuarioDestino].IndexOf(tuplaAuxiliar);
+                            pipeConexion = this._messages[usuarioDestino][indexAuxiliar].Item3[Constants.CONNECTION];
+
+                        }
                         PipeMessage pipeSchema = this._messages[usuarioDestino][index].Item3[Constants.SCHEMA];
 
                         this._connectionDialog = new ConnectionDialog(this._user.Nombre,
@@ -824,7 +835,7 @@ namespace IDNetSoftware
 
         }
 
-        protected void OnSimbologiaActionActivated(object sender, EventArgs e)
+        protected void OnSimbologaActionActivated(object sender, EventArgs e)
         {
             this._simbologiaDialog = new SimbologiaDialog();
             this._simbologiaDialog.Run();

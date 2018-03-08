@@ -37,7 +37,7 @@ namespace IDNetSoftware
                 treeviewMessage.AppendColumn(Constants.TABLA_COLUMNA_NOMBREBBDD, new CellRendererText(), "text", 4);
 
                 this._messageView.AppendValues(this._message.Source, this._message.Destination, this._message.MessageType, this._message.Db_type, this._message.Db_name);
-                labelCuerpo.LabelProp = this._message.Body == null ? "No hay cuerpo del mensaje" : this._message.Body.ToString();
+                labelCuerpo.LabelProp = this._message.Body == null ? "No hay cuerpo del mensaje" : this._message.Body.InnerXml;
 
             }else{
                 this._messageView = new ListStore(typeof(string), typeof(string), typeof(string));
@@ -60,7 +60,7 @@ namespace IDNetSoftware
                         treeviewMessage.AppendColumn(Constants.TABLA_COLUMNA_USUARIO_DESTINO, new CellRendererText(), "text", 1);
                         treeviewMessage.AppendColumn(Constants.TABLA_COLUMNA_TIPO_MENSAJE, new CellRendererText(), "text", 2);
                         this._messageView.AppendValues(this._message.Source, this._message.Destination, this._message.MessageType);
-                        labelCuerpo.LabelProp = "En este mensaje "+this._message.Source +" envió la clave simétrica encriptada con la clave pública de "+ this._message.Destination+" :"+this._message.Destination;
+                        labelCuerpo.LabelProp = "En este mensaje "+this._message.Source +" envió la clave simétrica encriptada con la clave pública de "+ this._message.Destination;
                         labelCuerpo.LabelProp += "\n"+"Por motivos de seguridad, no vamos a mostrar la clave simétrica \n";
                         break;
                     case Constants.MENSAJE_RESPUESTA_CONEXION_A:
@@ -78,7 +78,7 @@ namespace IDNetSoftware
                         treeviewMessage.AppendColumn(Constants.TABLA_COLUMNA_USUARIO_DESTINO, new CellRendererText(), "text", 1);
                         treeviewMessage.AppendColumn(Constants.TABLA_COLUMNA_TIPO_MENSAJE, new CellRendererText(), "text", 2);
                         this._messageView.AppendValues(this._message.Source, this._message.Destination, this._message.MessageType);
-                        labelCuerpo.LabelProp = "En este mensaje "+this._message.Source +" envió la clave simétrica encriptada con la clave pública de "+ this._message.Destination+" :"+this._message.Destination;
+                        labelCuerpo.LabelProp = "En este mensaje "+this._message.Source +" envió la clave simétrica encriptada con la clave pública de "+ this._message.Destination;
                         labelCuerpo.LabelProp += "\n"+"Por motivos de seguridad, no vamos a mostrar la clave simétrica \n";
                  
                         break;

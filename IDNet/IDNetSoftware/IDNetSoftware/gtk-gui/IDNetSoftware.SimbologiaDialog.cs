@@ -74,10 +74,10 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 400;
-			this.DefaultHeight = 300;
+			this.DefaultWidth = 684;
+			this.DefaultHeight = 498;
 			this.Show();
-			this.buttonOk.Activated += new global::System.EventHandler(this.OnButtonOkActivated);
+			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}
 	}
 }

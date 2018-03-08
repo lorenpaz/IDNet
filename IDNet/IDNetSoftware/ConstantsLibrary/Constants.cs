@@ -72,6 +72,17 @@ namespace ConstantsLibraryS
         public const string MENSAJE_RESPUESTA_CONEXION_A = "004a";
         public const string MENSAJE_RESPUESTA_CONEXION_B = "004b";
 
+        public const string INFORMACION_ICONO_ADDATABASE = @"Icono para añadir una base de datos con su información, con el fin de que los vecinos puedan realizar consultas a su base de datos."+
+            "Durante la inserción de la base de datos, se le informará de la información que debe de adquirir para añadir la base de datos (nombre,tipo de base de datos,usuario y contraseña)";
+        public const string INFORMACION_ICONO_UPDATEDATABASE = @"Icono para actualizar el estado de las bases de datos."+"\n"+"Los estados en los que se puede encontrar una base de datos propia son los siguientes: Disponible y No disponible."+"\n"+
+            "Si le notifica que no está disponible su base de datos, consulta el estado de su servidor de bases de datos junto con la información proporcionada para conectarse a aquella base de datos.";
+        public const string INFORMACION_ICONO_CONNECTIONDATABASE = @"Icono para realizar la conexión con un vecino de la Organización Virtual. También, se puede realizar la conexión pulsando en una base de datos en el cuadro de la derecha del menu principal."+"\n"
+            +"Una vez se haya conectado a un vecino, podrá realizar consultas a sus bases de datos.";
+        public const string ICONO_ADDATABASE = @"../../resources/icons/addDatabase.png";
+        public const string ICONO_UPDATEDATABASE = @"../../resources/icons/updateDatabase.png";
+        public const string ICONO_CONNECTIONDATABASE = @"../../resources/icons/databaseConnection.png";
+
+
         public const string LINEA = @"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
         /*
          * A partir de aquí vienen método y estructuras para mostrar los mensajes por pantalla 

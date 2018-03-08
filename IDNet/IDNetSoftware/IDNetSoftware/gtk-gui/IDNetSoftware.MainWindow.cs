@@ -281,7 +281,7 @@ namespace IDNetSoftware
 			this.databaseConnectionPngAction.Activated += new global::System.EventHandler(this.OnDatabaseConnectionPngActionActivated);
 			this.MensajesAction.Activated += new global::System.EventHandler(this.OnMensajesEnviadosActionActivated);
 			this.updateDatabasePngAction.Activated += new global::System.EventHandler(this.OnUpdateDatabasePngActionActivated);
-			this.SimbologiaAction.Activated += new global::System.EventHandler(this.OnSimbologiaActionActivated);
+			this.SimbologiaAction.Activated += new global::System.EventHandler(this.OnSimbologaActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 		}

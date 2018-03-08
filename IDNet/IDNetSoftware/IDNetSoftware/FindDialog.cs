@@ -1,8 +1,10 @@
 ﻿using System;
+using Gdk;
 using System.Xml;
 using System.Collections.Generic;
 
 using ConstantsLibraryS;
+using Gtk;
 
 namespace IDNetSoftware
 {
@@ -80,11 +82,15 @@ namespace IDNetSoftware
 
         protected void OnComboboxCollectionChanged(object sender, EventArgs e)
         {
+            LimpiarCombobox(comboboxFilter);
+            LimpiarCombobox(comboboxFilterSymbols);
             RellenarComboBox(null, CargarComboBoxFilter(comboboxCollection.ActiveText),
                              CargarComboBoxProjections(comboboxCollection.ActiveText),
                              CargarComboBoxProjections(comboboxCollection.ActiveText));
 
             comboboxFilter.Sensitive = true;
+
+            comboboxFilterSymbols.Sensitive = false;
 
             comboboxSort.Sensitive = true;
 
@@ -110,6 +116,7 @@ namespace IDNetSoftware
                 RellenarComboBoxFilterSymbols(null);
                 entryFilter.Text = "";
                 comboboxFilterSymbols.Sensitive = false;
+                LimpiarCombobox(comboboxFilterSymbols);
                 entryFilter.Sensitive = false;
             }
         }
@@ -140,6 +147,12 @@ namespace IDNetSoftware
             buttonOk.Sensitive = false;
         }
 
+        private void LimpiarCombobox(ComboBox combo)
+        {
+            ListStore ClearList = new ListStore(typeof(string));
+            combo.Model = ClearList;
+        }
+
         /*
         * Método privado para rellenar los ComboBoxs
         * */
@@ -155,7 +168,7 @@ namespace IDNetSoftware
 
             if (filter != null)
             {
-                comboboxFilter.Data.Clear();
+                LimpiarCombobox(comboboxFilter);
                 foreach (string field in filter)
                 {
                     comboboxFilter.AppendText(field);
@@ -164,7 +177,7 @@ namespace IDNetSoftware
 
             if (projections != null)
             {
-                comboboxProjection.Data.Clear();
+                LimpiarCombobox(comboboxProjection);
                 this._activeProyections.Clear();
                 foreach (string field in projections)
                 {
@@ -175,7 +188,7 @@ namespace IDNetSoftware
 
             if (sort != null)
             {
-                comboboxSort.Data.Clear();
+                LimpiarCombobox(comboboxSort);
 
                 foreach (string field in sort)
                 {
@@ -188,7 +201,7 @@ namespace IDNetSoftware
         {
             if (filterSymbols != null)
             {
-                comboboxFilterSymbols.Data.Clear();
+                LimpiarCombobox(comboboxFilterSymbols);
                 foreach (string field in filterSymbols)
                 {
                     comboboxFilterSymbols.AppendText(field);
@@ -196,7 +209,7 @@ namespace IDNetSoftware
             }
             else
             {
-                comboboxFilterSymbols.Data.Clear();
+                LimpiarCombobox(comboboxFilterSymbols);
             }
         }
 

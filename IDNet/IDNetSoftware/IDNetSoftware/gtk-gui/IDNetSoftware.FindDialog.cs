@@ -270,6 +270,7 @@ namespace IDNetSoftware
 			this.comboboxCollection.Changed += new global::System.EventHandler(this.OnComboboxCollectionChanged);
 			this.comboboxFilter.Changed += new global::System.EventHandler(this.OnComboboxFilterChanged);
 			this.comboboxProjection.Changed += new global::System.EventHandler(this.OnComboboxProjectionChanged);
+			this.checkbuttonProjection.Toggled += new global::System.EventHandler(this.OnCheckbuttonProjectionToggled);
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}

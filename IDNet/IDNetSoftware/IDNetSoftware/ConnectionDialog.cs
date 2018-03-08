@@ -13,7 +13,7 @@ using Org.BouncyCastle.Crypto.Parameters;
 
 namespace IDNetSoftware
 {
-    public partial class ConnectionDialog : Gtk.Dialog
+    public partial class    ConnectionDialog : Gtk.Dialog
     {
         //Pipes de mensajes
         private PipeMessage _connection;

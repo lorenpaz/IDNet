@@ -4,85 +4,60 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using log4net;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
+using System.Xml;
 
 namespace GateKeeperListener
 {
     public class PeriodicAnnouncer
     {
-		public ManualResetEvent allDone = new ManualResetEvent(false);
-        static readonly ILog log = LogManager.GetLogger(typeof(PeriodicAnnouncer));
-        String _msg;
+		private ManualResetEvent allDone = new ManualResetEvent(false);
+        private static readonly ILog log = LogManager.GetLogger(typeof(PeriodicAnnouncer));
+        private static String _msg;
 
         public PeriodicAnnouncer()
         { }
 
-		//Iniciamos el servicio escuchando por el puerto. Lanzamos un hilo con
-        //el temporizador.
-		public string StartClient()
+		public static void StartListening()
 		{
-			ThreadStart _ts1 = delegate { timedAnnounce(); };
-			Thread temporizador = new Thread(_ts1);
 
+			ThreadStart _ts1 = delegate { TSender(); };
 
-			// Data buffer for incoming data.
+			// Se declara los hilos
+			Thread th1 = new Thread(_ts1);
 
-            // Connect to a remote device.
-            send();
-			return System.Text.Encoding.UTF8.GetString(respuesta);
-		}
+			// Data buffer for incoming data.  
+			byte[] bytes = new Byte[1024];
 
-        private void send()
-        {
-			byte[] respuesta = new byte[4096];
+			// Establish the local endpoint for the socket.  
+			// The DNS name of the computer  
+			// running the listener is "host.contoso.com".  
+			IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+			IPAddress ipAddress = ipHostInfo.AddressList[0];
+			IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
 
+			// Create a TCP/IP socket.  
+			Socket listener = new Socket(ipAddress.AddressFamily,
+				SocketType.Stream, ProtocolType.Tcp);
+
+			// Bind the socket to the local endpoint and listen for incoming connections.  
 			try
 			{
-				// Establish the remote endpoint for the socket.
-				// This example uses port 11000 on the local computer.
-				IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+				listener.Bind(localEndPoint);
+				listener.Listen(100);
 
-				IPAddress ipAddress = ipHostInfo.AddressList[0];
-				IPEndPoint remoteEP = new IPEndPoint(ipAddress, 12000);
-
-				// Create a TCP/IP  socket.
-				Socket sender = new Socket(AddressFamily.InterNetwork,
-					SocketType.Stream, ProtocolType.Tcp);
-
-				// Connect the socket to the remote endpoint. Catch any errors.
-				try
+				while (true)
 				{
-					sender.Connect(remoteEP);
+					// Set the event to nonsignaled state.  
+					allDone.Reset();
 
-					Console.WriteLine("Socket connected to {0}",
-						sender.RemoteEndPoint.ToString());
+					// Start an asynchronous socket to listen for connections.  
+					Console.WriteLine("Waiting for a connection...");
+					listener.BeginAccept(
+						new AsyncCallback(AcceptCallback),
+						listener);
 
-					// Encode the data string into a byte array.
-					byte[] msg = Encoding.ASCII.GetBytes(_msg);
-
-					// Send the data through the socket.
-					int bytesSent = sender.Send(msg);
-
-					// Receive the response from the remote device.
-					Console.WriteLine("Echoed test = {0}",
-						Encoding.ASCII.GetString(respuesta, 0, bytesRec));
-
-					// Release the socket.
-					sender.Shutdown(SocketShutdown.Both);
-					sender.Close();
-				}
-				catch (ArgumentNullException ane)
-				{
-					Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
-				}
-				catch (SocketException se)
-				{
-					Console.WriteLine("SocketException : {0}", se.ToString());
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine("Unexpected exception : {0}", e.ToString());
+					// Wait until a connection is made before continuing.  
+					allDone.WaitOne();
 				}
 
 			}
@@ -90,142 +65,152 @@ namespace GateKeeperListener
 			{
 				Console.WriteLine(e.ToString());
 			}
-        }
 
-        private void timedAnnounce()
+			Console.WriteLine("\nPress ENTER to continue...");
+			Console.Read();
+
+		}
+
+        private static void TSender()
         {
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Elapsed += new ElapsedEventHandler(Sender.send(msg));
+			System.Timers.Timer aTimer = new System.Timers.Timer(5000);
+            aTimer.Elapsed += SendRoutingTables;
+			aTimer.Enabled = true;
         }
 
-        public bool comprobarConexion(string hostName)
+        public static void AcceptCallback(IAsyncResult ar)
 		{
-			// Connect to a remote device.
-			try
+			// Signal the main thread to continue.  
+			allDone.Set();
+
+			// Get the socket that handles the client request.  
+			Socket listener = (Socket)ar.AsyncState;
+			Socket handler = listener.EndAccept(ar);
+
+			// Create the state object.  
+			StateObject state = new StateObject();
+			state.workSocket = handler;
+			handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+				new AsyncCallback(ReadCallback), state);
+		}
+
+		public static void ReadCallback(IAsyncResult ar)
+		{
+			String content = String.Empty;
+
+			// Retrieve the state object and the handler socket  
+			// from the asynchronous state object.  
+			StateObject state = (StateObject)ar.AsyncState;
+			Socket handler = state.workSocket;
+
+			// Read data from the client socket.   
+			int bytesRead = handler.EndReceive(ar);
+
+			if (bytesRead > 0)
 			{
-				// Establish the remote endpoint for the socket.
-				// This example uses port 11000 on the local computer.
-				IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+				// There  might be more data, so store the data received so far.  
+				state.sb.Append(Encoding.ASCII.GetString(
+					state.buffer, 0, bytesRead));
 
-				IPAddress ipAddress = ipHostInfo.AddressList[0];
-				IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
+				// Check for end-of-file tag. If it is not there, read   
+				// more data.  
+				content = state.sb.ToString();
+				if (content.IndexOf("<EOF>") > -1)
+				{
+					// All the data has been read from the   
+					// client. Display it on the console.  
+					Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
+						content.Length, content);
 
-				Ping pingSender = new Ping();
-				PingReply reply = pingSender.Send(ipAddress);
-
-				return reply.Status == IPStatus.Success;
-
-			}
-			catch (Exception)
-			{
-				return false;
+                    //We want to merge the content of this file with ours
+                    merge(content);
+				}
+				else
+				{
+					// Not all data received. Get more.  
+					handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+					new AsyncCallback(ReadCallback), state);
+				}
 			}
 		}
 
+        private static void merge(string content)
+        {
+            //Loads both, our routes.xml file and the routing information
+            //received in the message onto a XmlDocument object.
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(content);
 
-		private void CargarClientes()
+            XmlDocument routes = new XmlDocument();
+            routes.LoadXml("./Config/routes.xml");
+
+            XmlNodeList d = doc.GetElementsByTagName("route");
+
+            for (int i = 0; i < d.Count; i++)
+            {
+                //Load the routing information from the message received
+                String dir_dest = d[i].ChildNodes[0].Value;
+                String dir_hop = d[i].ChildNodes[1].Value;
+                int distance = Int32.Parse(d[i].ChildNodes[2].Value);
+
+                XmlNodeList r = routes.GetElementsByTagName("route");
+
+                /* If the distance to dir_dest through dir_hop is less than
+                 * the distance to dir_dest which is already store in our file.
+                 * We switch them onto our routes.xml file and update the value.
+                 * */
+                for (int j = 0; j < r.Count; j++)
+                {
+                    if(r[j].ChildNodes[0].Value == dir_dest)
+                    {
+                        if(Int32.Parse(r[j].LastChild.Value) > distance)
+                        {
+                            r[j].ChildNodes[0].Value = dir_dest;
+                            r[j].ChildNodes[1].Value = dir_hop;
+                            r[j].ChildNodes[3].Value = distance.ToString();
+						}
+                    }
+                }
+            }
+
+            //Saves the file
+            routes.Save("./Config/routes.xml");
+        }
+
+
+		private static void SendRoutingTables(Object source, System.Timers.ElapsedEventArgs e)
 		{
-			//Archivo a leer
-			StreamReader conFile = File.OpenText("clients.conf");
-			string line = conFile.ReadLine();
-			this._clientes = new Dictionary<string, IPAddress>();
+            String routingTable;
+			Pathfinder p = new Pathfinder(true);
 
-			//Voy leyendo línea por línea
-			while (line != null)
-			{
-				int i = 0;
-				bool param = true;
-				string parameter = "", valor = "";
-				/*
-                 * 
-                 * nameClient=ipClient;
-                 * 
-                 * Ejemplos:
-                 * lorenzo=172.16.0.34;
-                 * pepe=172.16.3.45;
-                 * 
-                 */
+            XmlDocument neighbours = new XmlDocument();
+            neighbours.LoadXml("./Config/neighbours.xml");
 
-				//Leemos el parámetro
-				while (line[i] != ';')
-				{
-					//Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-					if (line[i] == '=')
-					{
-						param = false;
-					}
-					else if (param)
-					{
-						parameter += line[i];
-					}
-					else
-					{
-						valor += line[i];
-					}
-					i++;
-				}
+            XmlDocument routes = new XmlDocument();
+            routes.LoadXml("./Config/routes.xlm");
 
-				if (!this._clientes.ContainsKey(parameter))
-				{
-					this._clientes.Add(parameter, IPAddress.Parse(valor));
-				}
+            XmlNodeList n = neighbours.GetElementsByTagName("node");
+            XmlNodeList r = routes.GetElementsByTagName("route");
 
-				line = conFile.ReadLine();
+            foreach(XmlNode neigh in n)
+            {
+                XmlDocument table = new XmlDocument();
+
+                table.AppendChild(new XmlNode());
+                String dir_neighbour = n[i].Value;
+                foreach(XmlNode route in r)
+                {
+					String dir_dest = r[j].ChildNodes[0].Value;
+					String dir_hop = r[j].ChildNodes[1].Value;
+					int distance = Int32.Parse(r[j].ChildNodes[2].Value);
+
+                    if(dir_hop != dir_neighbour)
+                    {
+                        
+                    }
+                }
+				p.ProcessMsg(routingTable);
 			}
-			conFile.Close();
 		}
-
-		public static Dictionary<string, IPAddress> CargarClientesD()
-		{
-			//Archivo a leer
-			StreamReader conFile = File.OpenText("clients.conf");
-			string line = conFile.ReadLine();
-			Dictionary<string, IPAddress> ipdict = new Dictionary<string, IPAddress>();
-
-			//Voy leyendo línea por línea
-			while (line != null)
-			{
-				int i = 0;
-				bool param = true;
-				string parameter = "", valor = "";
-				/*
-                 * 
-                 * nameClient=ipClient;
-                 * 
-                 * Ejemplos:
-                 * lorenzo=172.16.0.34;
-                 * pepe=172.16.3.45;
-                 * 
-                 */
-
-				//Leemos el parámetro
-				while (line[i] != ';')
-				{
-					//Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-					if (line[i] == '=')
-					{
-						param = false;
-					}
-					else if (param)
-					{
-						parameter += line[i];
-					}
-					else
-					{
-						valor += line[i];
-					}
-					i++;
-				}
-
-				if (!ipdict.ContainsKey(parameter))
-				{
-					ipdict.Add(parameter, IPAddress.Parse(valor));
-				}
-
-				line = conFile.ReadLine();
-			}
-			conFile.Close();
-			return ipdict;
-		}
-    }
+	}
 }

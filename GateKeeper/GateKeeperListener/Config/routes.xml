@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+    <route>
+        <d_node>127.0.0.1</d_node>
+        <n_node>192.168.0.5</n_node>
+		<distance>2</distance>
+    </route>
+</routes>

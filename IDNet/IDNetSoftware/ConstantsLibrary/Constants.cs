@@ -68,6 +68,7 @@ namespace ConstantsLibraryS
         public const string MENSAJE_CONEXION_B = "001b";
         public const string MENSAJE_ESQUEMA = "002";
         public const string MENSAJE_CONSULTA = "003";
+        public const string MENSAJE_CONSULTA_BBDD_VECINOS = "000";
 
         public const string MENSAJE_RESPUESTA_CONEXION_A = "004a";
         public const string MENSAJE_RESPUESTA_CONEXION_B = "004b";

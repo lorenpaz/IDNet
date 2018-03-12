@@ -15,6 +15,9 @@ namespace IDNetSoftware
         //Lista para mostrar el mensaje
         ListStore _messageView;
 
+        /**
+         * Constructor para la construcción del diálogo
+         * */
         public ShowMessagesSentDialog(Message message)
         {
             this.Build();
@@ -22,6 +25,9 @@ namespace IDNetSoftware
             ShowMessage();
         }
 
+        /**
+         * Método privado para mostrar el mensaje
+         * */
         private void ShowMessage()
         {
             if (this._message.MessageType != Constants.MENSAJE_CONEXION_A && this._message.MessageType != Constants.MENSAJE_CONEXION_B &&
@@ -88,6 +94,9 @@ namespace IDNetSoftware
 
         }
 
+        /**
+         * Método de evento de pulsación en el botón Ok
+         * */
         protected void OnButtonOkClicked(object sender, EventArgs e)
         {
             this.Destroy();

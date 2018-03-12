@@ -1,7 +1,7 @@
 ﻿using System;
 using Gtk;
 using System.IO;
-
+using System.Net;
 
 using DatabaseLibraryS;
 using MessageLibraryS;
@@ -12,7 +12,8 @@ using System.Collections.Generic;
 
 using Org.BouncyCastle.Crypto.Parameters;
 using System.Security.Cryptography;
-
+using PostBoxLibraryS;
+using ConnectionLibraryS;
 
 namespace IDNetSoftware
 {
@@ -115,6 +116,7 @@ namespace IDNetSoftware
     public class Usuario
     {
         private string _nombre;
+        private IPAddress _ip;
         public string Nombre
         {
             get
@@ -126,10 +128,24 @@ namespace IDNetSoftware
                 this._nombre = value;
             }
         }
+        public IPAddress IP
+        {
+            get
+            {
+                return this._ip;
+            }
+            set
+            {
+                this._ip = value;
+            }
+        }
 
         public Usuario()
         {
             ParseConf();
+
+            //IP tuya
+            this._ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
         }
 
         //Lee del fichero de configuración
@@ -185,6 +201,9 @@ namespace IDNetSoftware
         //Lista que se muestra de las BBDD propias
         ListStore _infoBBDDownView;
 
+        //Lista que muestra los vecinos
+        ListStore _infoNeighboursView;
+
         //Atributo de las bases de datos propias
         Databases _databases;
 
@@ -231,6 +250,9 @@ namespace IDNetSoftware
         //Diccionario con claves públicas y simétricas de los clientes
         Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>> _keyPairClients;
 
+        /**
+         * Constructor de la ventana
+         * */
         public MainWindow() : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
@@ -241,9 +263,9 @@ namespace IDNetSoftware
 
             this._infoBBDDView = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
             this._infoBBDDownView = new ListStore(typeof(string), typeof(string), typeof(bool));
+            this._infoNeighboursView = new ListStore(typeof(string));
 
             this._databases = new Databases();
-            this._neighbours = new Neighbours();
             this._keyPairClients = new Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>>();
 
             this._messages = new Dictionary<string, List<Tuple<string, string, Dictionary<string, PipeMessage>>>>();
@@ -251,6 +273,7 @@ namespace IDNetSoftware
             this._conexionesActivas = 0;
 
             CargoBasesDeDatosDeLaOV();
+            this._neighbours = new Neighbours();
 
             ComprobacionServidoresBaseDeDatos();
 
@@ -261,22 +284,64 @@ namespace IDNetSoftware
             MensajeBienvenida();
         }
 
+        /**
+         * Método privado para cargar las bases de datos de la OV
+         * */
         private void CargoBasesDeDatosDeLaOV()
         {
-            //AQUI HACE FALTA OBTENER BBDD de los vecinos (conexion cliente con el GK para que nos dé tal información)
+            if (SolicitarVecinos())
+            {
+                CargoVecinosVO();
 
-            //Añado valores a la lista
-            AddValues();
+                //Añado valores a la lista
+                AddValues();
 
-            //Añado al treeview la información
-            treeviewDatabases.Model = this._infoBBDDView;
+                //Añado al treeview la información
+                treeviewDatabases.Model = this._infoBBDDView;
 
-            //Añado las columnas
-            treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_USUARIO, new CellRendererText(), "text", 0);
-            treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_TIPOBBDD, new CellRendererText(), "text", 1);
-            treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_NOMBREBBDD, new CellRendererText(), "text", 2);
+                //Añado las columnas
+                treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_USUARIO, new CellRendererText(), "text", 0);
+                treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_TIPOBBDD, new CellRendererText(), "text", 1);
+                treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_NOMBREBBDD, new CellRendererText(), "text", 2);
+            }
         }
 
+        private void CargoVecinosVO()
+        {
+            foreach (string entry in this._neighbours.VecinosVO)
+            {
+                this._infoNeighboursView.AppendValues(entry);
+            }
+        }
+
+        private bool SolicitarVecinos()
+        {
+            string msg, response;
+
+            //Proceso el envio
+            PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
+                                       Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
+            msg = post.ProcesarEnvio(this._user.IP.ToString());
+
+            //Creo el cliente y le envio el mensaje
+            Client c = new Client();
+            bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+            if (conexion)
+            {
+                response = c.StartClient(msg, Constants.GATEKEEPER);
+                post.ProcesarRespuesta(response);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        /**
+         * Método privado para cargar las bases de datos propias
+         * */
         private void CargoBasesDeDatosPropias()
         {
 
@@ -334,18 +399,37 @@ namespace IDNetSoftware
             }
         }
 
+        /**
+         * Método privado para la generación del par de claves (pública y privada)
+         * */
         private void GenerarParDeClaves()
         {
             this._claves = new Cripto();
         }
 
+        /*
+         * Método borrado de ventana
+         * */
         protected void OnDeleteEvent(object sender, DeleteEventArgs a)
         {
+            Constants.BorrarRecursos();
             Application.Quit();
             a.RetVal = true;
         }
 
-        //Icono añadirBasededatos
+        /*
+         * Método destrucción de la ventana
+         * */
+        protected void OnDestroyEvent(object o, DestroyEventArgs args)
+        {
+            Constants.BorrarRecursos();
+            Application.Quit();
+            args.RetVal = true;
+        }
+
+        /*
+         * Método de acción del icono añadirBasededatos
+         * */
         protected void OnAddDatabasePngActionActivated(object sender, EventArgs e)
         {
             this._addDatabaseDialog = new AddDatabaseDialog(this._databases);
@@ -368,7 +452,9 @@ namespace IDNetSoftware
             treeviewDatabasesPropias.Model = this._infoBBDDownView;
         }
 
-        //Menú 'Base de datos' opción 'Añadir'
+        /*
+         * Menú 'Base de datos' opción 'Añadir'
+         * */
         protected void OnAddActionActivated(object sender, EventArgs e)
         {
             this._addDatabaseDialog = new AddDatabaseDialog(this._databases);
@@ -377,7 +463,9 @@ namespace IDNetSoftware
             UpdateOwnDatabases();
         }
 
-        //Icono actualizarBaseDeDatos
+        /*
+         * Método de la acción del icono de actualizarBaseDeDatos
+         **/
         protected void OnUpdateDatabasePngActionActivated(object sender, EventArgs e)
         {
             UpdateOwnDatabases();
@@ -525,7 +613,6 @@ namespace IDNetSoftware
             {
                 this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, this._claves);
             }
-
             /*  this._connectionDialog.Present();
                this._connectionDialog.ShowAll();
               this._connectionDialog.ShowNow();
@@ -840,5 +927,7 @@ namespace IDNetSoftware
             this._simbologiaDialog = new SimbologiaDialog();
             this._simbologiaDialog.Run();
         }
+
+
     } 
 }

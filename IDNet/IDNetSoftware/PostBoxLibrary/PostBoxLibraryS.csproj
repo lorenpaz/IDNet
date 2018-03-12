@@ -28,6 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="PostBox.cs" />
+    <Compile Include="PostBoxGK.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConvertionLibrary\ConvertionLibraryS.csproj">

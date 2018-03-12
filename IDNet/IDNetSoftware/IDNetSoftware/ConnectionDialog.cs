@@ -348,7 +348,7 @@ namespace IDNetSoftware
         protected void OnButtonSelectClicked(object sender, EventArgs e)
         {
 			string msg, response;
-
+            this.Hide();
             if (this._db_type == Constants.MYSQL)
             {
                 BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);

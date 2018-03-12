@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using ConstantsLibraryS;
+using System.Net.Sockets;
+using System.Net;
 
 namespace DatabaseLibraryS
 {
@@ -10,6 +12,8 @@ namespace DatabaseLibraryS
     {
         //Diccionario usuario -> (tipoBBDD -> [nombreBBDD1,nombreBBDD2])
         private Dictionary<string, Dictionary<string, List<string>>> _miembrosOV;
+
+        private List<string> _vecinosVO;
 
         public Dictionary<string, Dictionary<string, List<string>>> MiembrosOV
         {
@@ -23,15 +27,66 @@ namespace DatabaseLibraryS
                 this._miembrosOV = value;
             }
         }
+        public List<string> VecinosVO
+        {
+            get
+            {
+                return this._vecinosVO;
+            }
+            set
+            {
+
+                this._vecinosVO = value;
+            }
+        }
 
         public Neighbours()
         {
-            ObtenerMiembrosOV();
             ParseConf();
         }
 
         //Lee del fichero de configuración
         private void ParseConf()
+        {
+            //Archivo a leer
+            StreamReader conFile = File.OpenText(Constants.ConfigFileNeighbours);
+            string line = conFile.ReadLine();
+
+            //Inicializamos el atributo
+            this._vecinosVO = new List<string>();
+
+            //Voy leyendo línea por línea
+            while (line != null)
+            {
+                int i = 0;
+                string name = "";
+                /*
+                 * 
+                 * nombreUsuario;
+                 * 
+                 * Ejemplo:
+                 * lorenzo;
+                 * 
+                 */
+
+                //Leemos el parámetro
+                while (line[i] != ';')
+                {
+                    name += line[i];
+                    i++;
+                }
+
+                if(!this._vecinosVO.Contains(name))
+                {
+                    this._vecinosVO.Add(name);
+                }
+
+                line = conFile.ReadLine();
+            }
+        }
+
+        //Lee del fichero de configuración avanzado
+        private void ParseConfAdvanced()
         {
             //Archivo a leer
             StreamReader conFile = File.OpenText(Constants.ConfigFileNeighbours);
@@ -102,13 +157,6 @@ namespace DatabaseLibraryS
 
                 line = conFile.ReadLine();
             }
-        }
-
-        private void ObtenerMiembrosOV()
-        {
-            /*AQUI SE DEBERÍA REALIZAR LA CONEXIÓN CON EL GK PARA OBTENER INFORMACIÓN DE LOS MIEMBROS DE LA OV
-			 * Y GUARDARLA EN UN ARCHIVO DE CONFIGURACIÓN LLAMADO neighbours.conf. MIRAR EL PARSERCONF
-            */
         }
     }
 }

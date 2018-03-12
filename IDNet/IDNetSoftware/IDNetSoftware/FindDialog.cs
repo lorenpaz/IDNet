@@ -22,6 +22,7 @@ namespace IDNetSoftware
         //Atributo para saber cómo ha cerrado el diálogo
         private string _typeOutPut;
 
+        //Diccionario con las proyecciones activadas
         private Dictionary<string, bool> _activeProyections;
 
         public String TypeOutPut
@@ -66,20 +67,29 @@ namespace IDNetSoftware
             this._activeProyections = new Dictionary<string, bool>();
         }
 
-
+        /*
+         * Método de evento de pulsación en el botón Cancel
+         * */
         protected void OnButtonCancelClicked(object sender, EventArgs e)
         {
             this.Destroy();
         }
 
+        /*
+         * Método de evento de pulsación en el botón Ok
+         * */
         protected void OnButtonOkClicked(object sender, EventArgs e)
         {
+            //Creamos el body
             CrearBody();
             this._typeOutPut = "003";
 
             this.Destroy();
         }
 
+        /*
+         * Método de evento de pulsación en el combobox de colecciones
+         * */
         protected void OnComboboxCollectionChanged(object sender, EventArgs e)
         {
             LimpiarCombobox(comboboxFilter);
@@ -103,6 +113,9 @@ namespace IDNetSoftware
 
         }
 
+        /*
+         * Método de evento del cambio del filtrado del comboBoxFilter
+         * */
         protected void OnComboboxFilterChanged(object sender, EventArgs e)
         {
             if (comboboxFilter.ActiveText != " ")
@@ -121,16 +134,25 @@ namespace IDNetSoftware
             }
         }
 
+        /*
+         * Método de evento del cambio de proyección del comboBoxProjection
+         * */
         protected void OnComboboxProjectionChanged(object sender, EventArgs e)
         {
             checkbuttonProjection.Active = this._activeProyections[comboboxProjection.ActiveText];
         }
 
+        /*
+         * Método de evento del cambio del toggle del checkBoxProjection
+         * */
         protected void OnCheckbuttonProjectionToggled(object sender, EventArgs e)
         {
             this._activeProyections[comboboxProjection.ActiveText] = checkbuttonProjection.Active;
         }
 
+        /*
+         * Método privado para deshabilitar desde el inicio algunos widgets
+         * */
         private void DeshabilitarInicio()
         {
             comboboxFilter.Sensitive = false;
@@ -147,6 +169,9 @@ namespace IDNetSoftware
             buttonOk.Sensitive = false;
         }
 
+        /*
+         * Método privado para limpiar el comboBox pasado por parámetro
+         * */
         private void LimpiarCombobox(ComboBox combo)
         {
             ListStore ClearList = new ListStore(typeof(string));
@@ -197,6 +222,9 @@ namespace IDNetSoftware
             }
         }
 
+        /*
+         * Método privado para rellenar el comboBoxFilter
+         * */
         private void RellenarComboBoxFilterSymbols(List<string> filterSymbols)
         {
             if (filterSymbols != null)
@@ -298,7 +326,9 @@ namespace IDNetSoftware
             return filterSymbols;
         }
 
-
+        /*
+         * Método privado para crear el cuerpo del mensaje
+         * */
         private void CrearBody()
         {
             XmlDocument bodyDoc = new XmlDocument();

@@ -272,6 +272,7 @@ namespace IDNetSoftware
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.Shown += new global::System.EventHandler(this.OnShown);
+			this.DestroyEvent += new global::Gtk.DestroyEventHandler(this.OnDestroyEvent);
 			this.salirAction.Activated += new global::System.EventHandler(this.OnSalirActionActivated);
 			this.addDatabasePngAction.Activated += new global::System.EventHandler(this.OnAddDatabasePngActionActivated);
 			this.addAction.Activated += new global::System.EventHandler(this.OnAddActionActivated);

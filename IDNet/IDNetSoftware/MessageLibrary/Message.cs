@@ -243,6 +243,39 @@ namespace MessageLibraryS
 			return xmlDoc;
 		}
 
+        public XmlDocument createMessageNeighbour(string ip)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlElement root = xmlDoc.DocumentElement;
+
+            //Creamos elemento root
+            XmlElement elementRoot = xmlDoc.CreateElement("root");
+            xmlDoc.AppendChild(elementRoot);
+
+            //Creamos el elemento tipoDeMensaje
+            XmlNode message_type = xmlDoc.CreateElement("message_type");
+            message_type.InnerText = this._messageType;
+            elementRoot.AppendChild(message_type);
+
+            //Creamos elemento origen
+            XmlNode source = xmlDoc.CreateElement("source");
+            source.InnerText = this._source;
+            elementRoot.AppendChild(source);
+
+            //Creamos el elemento destino
+            XmlNode destination = xmlDoc.CreateElement("destination");
+            destination.InnerText = this._destination;
+            elementRoot.AppendChild(destination);
+
+            //Creamos el elemento IP
+            XmlNode ipNode = xmlDoc.CreateElement("ip");
+            destination.InnerText = ip;
+            elementRoot.AppendChild(ipNode);
+
+            return xmlDoc;
+        }
+
+
 		/*
          * Método para la creación de un XmlDocument a partir del mensaje
          * */

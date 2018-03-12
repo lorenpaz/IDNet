@@ -37,16 +37,59 @@ namespace GateKeeperListener
 			xDoc.LoadXml(content);
 
             String clienteDestino = xDoc.GetElementsByTagName("destination")[0].InnerText;
+
+			// Get host name
+			String strHostName = Dns.GetHostName();
+
+			// Find host by name
+            IPHostEntry iphostentry = Dns.GetHostEntry(strHostName);
+
+			// Enumerate IP addresses
+			String  nIP;
+			foreach (IPAddress ipaddress in iphostentry.AddressList){
+				nIP = ipaddress.ToString();
+                if (clienteDestino == nIP && this._port == 12000)
+                    AnunciarTablas(xDoc, content);
+			}
+                
 			if (this._clientes.ContainsKey(clienteDestino))
 			{
 				BindSocket(this._clientes[clienteDestino], content, clienteDestino);
 			}
 			else
 			{
-                String clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
+				String clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
 				BindSocket(this._clientes[clienteOrigen], "No se encuentra ese vecino en tu OV", clienteOrigen);
 			}
         }
+
+        private void AnunciarTablas(XmlDocument xDoc, String content)
+        {
+            XmlDocument doc = new XmlDocument();
+			doc.LoadXml("./Config/routes.xml");
+
+            if(xDoc.GetElementsByTagName("message_type")[0].InnerText == "00"){
+				String nombre = xDoc.GetElementsByTagName("source")[0].InnerText;
+				String ip_dest = xDoc.GetElementsByTagName("ip")[0].InnerText;
+
+                //Quitamos el propio nodo
+				XmlNodeList existe = doc.SelectNodes("/route[d_node='" + ip_dest + "']");
+				doc.RemoveChild(existe[0]);
+
+				//Quitamos los hops
+				XmlNodeList hop = doc.GetElementsByTagName("dir_hop");
+                foreach(XmlNode h in hop)
+                    doc.RemoveChild(h);
+
+                //Quitamos las distancias
+				XmlNodeList distance = doc.GetElementsByTagName("distance");
+				foreach (XmlNode d in distance)
+					doc.RemoveChild(d);
+
+
+                BindSocket(IPAddress.Parse(ip_dest), content, nombre);
+			}
+		}
 
         private void BindSocket(IPAddress ip, string msg, string hostname)
         {

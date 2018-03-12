@@ -34,8 +34,8 @@ namespace GKDaemon
             Listener cl = new Listener(true);
             PeriodicAnnouncer pa = new PeriodicAnnouncer();
 
-            ThreadStart _ts1 = delegate { gk.StartListening(); };
-            ThreadStart _ts2 = delegate { cl.StartListening(); };
+            ThreadStart _ts1 = delegate { Listener.StartListening(gk); };
+            ThreadStart _ts2 = delegate { Listener.StartListening(cl); };
             ThreadStart _ts3 = delegate { pa.StartListening(); };
 
 

@@ -51,6 +51,10 @@
       <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
       <Name>ConstantsLibraryS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseLibrary\DatabaseLibraryS.csproj">
+      <Project>{32EC6214-3022-4103-82E5-0E882F4497F8}</Project>
+      <Name>DatabaseLibraryS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Xml" />

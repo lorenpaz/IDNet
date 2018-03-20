@@ -12,8 +12,6 @@ using System.Collections.Generic;
 
 using Org.BouncyCastle.Crypto.Parameters;
 using System.Security.Cryptography;
-using PostBoxLibraryS;
-using ConnectionLibraryS;
 
 namespace IDNetSoftware
 {
@@ -273,7 +271,6 @@ namespace IDNetSoftware
             this._conexionesActivas = 0;
 
             CargoBasesDeDatosDeLaOV();
-            this._neighbours = new Neighbours();
 
             ComprobacionServidoresBaseDeDatos();
 
@@ -298,8 +295,11 @@ namespace IDNetSoftware
 
                 //Añado al treeview la información
                 treeviewDatabases.Model = this._infoBBDDView;
+                treeviewNeighbours.Model = this._infoNeighboursView;
+
 
                 //Añado las columnas
+                treeviewNeighbours.AppendColumn(Constants.TABLA_COLUMNA_USUARIO, new CellRendererText(), "text", 0);
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_USUARIO, new CellRendererText(), "text", 0);
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_TIPOBBDD, new CellRendererText(), "text", 1);
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_NOMBREBBDD, new CellRendererText(), "text", 2);
@@ -308,6 +308,7 @@ namespace IDNetSoftware
 
         private void CargoVecinosVO()
         {
+            this._neighbours = new Neighbours();
             foreach (string entry in this._neighbours.VecinosVO)
             {
                 this._infoNeighboursView.AppendValues(entry);
@@ -316,6 +317,7 @@ namespace IDNetSoftware
 
         private bool SolicitarVecinos()
         {
+            /*
             string msg, response;
 
             //Proceso el envio
@@ -335,7 +337,8 @@ namespace IDNetSoftware
             else
             {
                 return false;
-            }
+            }*/
+            return true;
         }
 
 
@@ -471,21 +474,32 @@ namespace IDNetSoftware
             UpdateOwnDatabases();
         }
 
-        //Añadir info de las bases de datos de los vecinos
+        //Añadir los vecinos
         private void AddValues()
         {
-            foreach (KeyValuePair<string, Dictionary<string, List<string>>> entry in this._neighbours.MiembrosOV)
+            foreach (var vecino in this._neighbours.VecinosVO)
             {
-                foreach (KeyValuePair<string, List<string>> entryTwo in entry.Value)
-                {
-                    foreach (string bbdd in entryTwo.Value)
-                    {
-                        this._infoBBDDView.AppendValues(entry.Key, entryTwo.Key, bbdd);
-                    }
-                }
-
+                this._infoNeighboursView.AppendValues(vecino);
             }
         }
+
+        //Añadir las bases de datos de los vecinos
+        private void LoadValues()
+        {
+            this._neighbours.LoadNeighbourDatabases();
+
+            foreach (var vecino in this._neighbours.MiembrosOV)
+            {
+                foreach(var type in vecino.Value)
+                {
+                    foreach(var bbdd in type.Value)
+                    {
+                        this._infoBBDDView.AppendValues(vecino.Key, type.Key, bbdd);
+                    }
+                }
+            } 
+        }
+
 
         //Añadir info de las bases de datos PROPIAS
         private void AddValuesOwn()
@@ -540,6 +554,76 @@ namespace IDNetSoftware
             this._modifyDatabaseDialog.Run();
 
             UpdateOwnDatabases();
+        }
+
+        /*
+         * Método activado cuando se pulsa en la lista de vecinos
+        */
+        protected void OnTreeviewNeighboursRowActivated(object o, RowActivatedArgs args)
+        {
+            TreeIter t;
+            TreePath p = null;
+            if (args != null)
+            {
+                p = args.Path;
+            }
+            else
+            {
+                p = this._connectionNeighboursDialog.RowActivated;
+            }
+
+            this._infoNeighboursView.GetIter(out t, p);
+
+            string vecino = (string)this._infoNeighboursView.GetValue(t, 0);
+
+            //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
+            if (!this._messages.ContainsKey(vecino))
+            {
+                this._connectionDialog = new ConnectionDialog(this._user.Nombre, vecino, null, null, this._claves);
+
+                this._connectionDialog.Run();
+
+
+                switch (this._connectionDialog.TypeOutPut)
+                {
+                    case Constants.CANCEL:
+
+                        break;
+                    case Constants.MENSAJE_CONEXION:
+                        Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
+                        messageC.Add(Constants.CONNECTION, this._connectionDialog.Connection);
+                        Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
+                            new Tuple<string, string, Dictionary<string, PipeMessage>>(null, null, messageC);
+
+                        if (!this._messages.ContainsKey(vecino))
+                        {
+                            List<Tuple<string, string, Dictionary<string, PipeMessage>>> lista = new List<Tuple<string, string, Dictionary<string, PipeMessage>>>();
+                            lista.Add(tupl);
+
+                            this._messages.Add(vecino, lista);
+                        }
+                        else
+                        {
+                            this._messages[vecino].Add(tupl);
+                        }
+
+                        if (!this._keyPairClients.ContainsKey(vecino))
+                        {
+                            Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey, this._connectionDialog.Connection.SymmetricKey);
+                            this._keyPairClients.Add(vecino, tup);
+                        }
+
+                        this._neighbours.SaveNeighbourDatabases(this._connectionDialog.Connection.MessageResponse);
+
+                        AddValues();
+
+                        MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
+                        MostrarConexion(this._connectionDialog.Connection.MessageResponse);
+                        IncrementarConexionesActivas();
+
+                        break;
+                }
+            }
         }
 
         /*
@@ -609,10 +693,10 @@ namespace IDNetSoftware
                     }
                 }
             }
-            else
+          /*  else
             {
                 this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, this._claves);
-            }
+            }*/
             /*  this._connectionDialog.Present();
                this._connectionDialog.ShowAll();
               this._connectionDialog.ShowNow();
@@ -625,7 +709,7 @@ namespace IDNetSoftware
                 case Constants.CANCEL:
 
                     break;
-                case Constants.MENSAJE_CONEXION:
+              /*  case Constants.MENSAJE_CONEXION:
                     Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
                     messageC.Add(Constants.CONNECTION, this._connectionDialog.Connection);
                     Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
@@ -649,11 +733,13 @@ namespace IDNetSoftware
                         this._keyPairClients.Add(usuarioDestino, tup);
                     }
 
+                    this._neighbours.SaveNeighbourDatabases(this._connectionDialog.Connection.MessageResponseConexion);
+
                     MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
                     MostrarConexion(this._connectionDialog.Connection.MessageResponse);
                     IncrementarConexionesActivas();
 
-                    break;
+                    break;*/
 
                 case Constants.MENSAJE_ESQUEMA:
 
@@ -927,7 +1013,5 @@ namespace IDNetSoftware
             this._simbologiaDialog = new SimbologiaDialog();
             this._simbologiaDialog.Run();
         }
-
-
     } 
 }

@@ -216,7 +216,7 @@ namespace MessageLibrary
 		/*
          * Método para al creación de un XmlDocument a partir del mensaje de conexion
          * */
-        public XmlDocument createMessageConexion(Cripto keyPair,SymmetricAlgorithm symmetricKey)
+        public XmlDocument createMessageConexion()
 		{
 
 			XmlDocument xmlDoc = new XmlDocument();
@@ -245,16 +245,18 @@ namespace MessageLibrary
 			XmlNode encripted = xmlDoc.CreateElement("encripted");
 			elementRoot.AppendChild(encripted);
 
-			//Creamos el elemento key
-			XmlNode key = xmlDoc.CreateElement("key");
-			key.InnerText = Convert.ToBase64String(symmetricKey.Key);
-            encripted.AppendChild(key);
+            //Creamos el elemento Cuerpo
+            XmlNode body = xmlDoc.CreateElement("body");
+            if (this._body == null || this._body.InnerXml == "")
+            {
+                encripted.AppendChild(body);
+            }
+            else
+            {
+                body.InnerXml = this._body.InnerXml;
 
-
-			XmlNode iv = xmlDoc.CreateElement("IV");
-			iv.InnerText = Convert.ToBase64String(symmetricKey.IV);
-
-            encripted.AppendChild(iv);
+                encripted.AppendChild(body);
+            }
 
 			return xmlDoc;
 		}

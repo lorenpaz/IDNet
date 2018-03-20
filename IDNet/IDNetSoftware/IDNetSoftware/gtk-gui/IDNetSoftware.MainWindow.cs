@@ -58,6 +58,14 @@ namespace IDNetSoftware
 
 		private global::Gtk.TreeView treeviewDatabasesPropias;
 
+		private global::Gtk.VBox vbox3;
+
+		private global::Gtk.Label labelVecinosNombres;
+
+		private global::Gtk.ScrolledWindow GtkScrolledWindow3;
+
+		private global::Gtk.TreeView treeviewNeighbours;
+
 		private global::Gtk.VBox vbox8;
 
 		private global::Gtk.Label labelVecinos;
@@ -206,18 +214,48 @@ namespace IDNetSoftware
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox7]));
 			w9.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
+			this.vbox3 = new global::Gtk.VBox();
+			this.vbox3.Name = "vbox3";
+			this.vbox3.Spacing = 6;
+			// Container child vbox3.Gtk.Box+BoxChild
+			this.labelVecinosNombres = new global::Gtk.Label();
+			this.labelVecinosNombres.Name = "labelVecinosNombres";
+			this.labelVecinosNombres.LabelProp = global::Mono.Unix.Catalog.GetString("Vecinos VO");
+			this.vbox3.Add(this.labelVecinosNombres);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.labelVecinosNombres]));
+			w10.Position = 0;
+			w10.Expand = false;
+			w10.Fill = false;
+			// Container child vbox3.Gtk.Box+BoxChild
+			this.GtkScrolledWindow3 = new global::Gtk.ScrolledWindow();
+			this.GtkScrolledWindow3.Name = "GtkScrolledWindow3";
+			this.GtkScrolledWindow3.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child GtkScrolledWindow3.Gtk.Container+ContainerChild
+			this.treeviewNeighbours = new global::Gtk.TreeView();
+			this.treeviewNeighbours.CanFocus = true;
+			this.treeviewNeighbours.Name = "treeviewNeighbours";
+			this.GtkScrolledWindow3.Add(this.treeviewNeighbours);
+			this.vbox3.Add(this.GtkScrolledWindow3);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.GtkScrolledWindow3]));
+			w12.Position = 1;
+			this.hbox1.Add(this.vbox3);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
+			w13.Position = 1;
+			w13.Expand = false;
+			w13.Fill = false;
+			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox8 = new global::Gtk.VBox();
 			this.vbox8.Name = "vbox8";
 			this.vbox8.Spacing = 6;
 			// Container child vbox8.Gtk.Box+BoxChild
 			this.labelVecinos = new global::Gtk.Label();
 			this.labelVecinos.Name = "labelVecinos";
-			this.labelVecinos.LabelProp = global::Mono.Unix.Catalog.GetString("Vecinos VO");
+			this.labelVecinos.LabelProp = global::Mono.Unix.Catalog.GetString("BBDD Vecinos");
 			this.vbox8.Add(this.labelVecinos);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.labelVecinos]));
-			w10.Position = 0;
-			w10.Expand = false;
-			w10.Fill = false;
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.labelVecinos]));
+			w14.Position = 0;
+			w14.Expand = false;
+			w14.Fill = false;
 			// Container child vbox8.Gtk.Box+BoxChild
 			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
@@ -228,14 +266,14 @@ namespace IDNetSoftware
 			this.treeviewDatabases.Name = "treeviewDatabases";
 			this.GtkScrolledWindow1.Add(this.treeviewDatabases);
 			this.vbox8.Add(this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.GtkScrolledWindow1]));
-			w12.Position = 1;
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.GtkScrolledWindow1]));
+			w16.Position = 1;
 			this.hbox1.Add(this.vbox8);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox8]));
-			w13.Position = 1;
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox8]));
+			w17.Position = 2;
 			this.vbox1.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
-			w14.Position = 3;
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+			w18.Position = 3;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar = new global::Gtk.Statusbar();
 			this.statusbar.Name = "statusbar";
@@ -246,24 +284,24 @@ namespace IDNetSoftware
 			this.conexionesLabel.Name = "conexionesLabel";
 			this.conexionesLabel.LabelProp = global::Mono.Unix.Catalog.GetString("0 conexiones activas");
 			this.statusbar.Add(this.conexionesLabel);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.conexionesLabel]));
-			w15.Position = 1;
-			w15.Expand = false;
-			w15.Fill = false;
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.conexionesLabel]));
+			w19.Position = 1;
+			w19.Expand = false;
+			w19.Fill = false;
 			// Container child statusbar.Gtk.Box+BoxChild
 			this.brandLabel = new global::Gtk.Label();
 			this.brandLabel.Name = "brandLabel";
 			this.brandLabel.LabelProp = global::Mono.Unix.Catalog.GetString("IDNet Software");
 			this.statusbar.Add(this.brandLabel);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.brandLabel]));
-			w16.Position = 2;
-			w16.Expand = false;
-			w16.Fill = false;
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.brandLabel]));
+			w20.Position = 2;
+			w20.Expand = false;
+			w20.Fill = false;
 			this.vbox1.Add(this.statusbar);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar]));
-			w17.Position = 4;
-			w17.Expand = false;
-			w17.Fill = false;
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar]));
+			w21.Position = 4;
+			w21.Expand = false;
+			w21.Fill = false;
 			this.Add(this.vbox1);
 			if ((this.Child != null))
 			{
@@ -284,6 +322,7 @@ namespace IDNetSoftware
 			this.updateDatabasePngAction.Activated += new global::System.EventHandler(this.OnUpdateDatabasePngActionActivated);
 			this.SimbologiaAction.Activated += new global::System.EventHandler(this.OnSimbologaActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
+			this.treeviewNeighbours.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewNeighboursRowActivated);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 		}
 	}

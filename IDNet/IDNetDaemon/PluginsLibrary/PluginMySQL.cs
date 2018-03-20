@@ -308,7 +308,7 @@ namespace PluginsLibrary
 			XmlDocument doc = new XmlDocument();
 			XmlElement root = doc.DocumentElement;
 
-			//Creamos elemento result
+			//Creamos elemento error
 			XmlElement elementRoot = doc.CreateElement("error");
             elementRoot.InnerText = error;
             doc.AppendChild(elementRoot);

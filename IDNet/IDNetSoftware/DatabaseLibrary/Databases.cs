@@ -10,6 +10,8 @@ using MongoDB.Driver;
 using System.Data;
 using MySql.Data.MySqlClient;
 
+using System.Xml;
+
 namespace DatabaseLibraryS
 {
 
@@ -89,9 +91,7 @@ namespace DatabaseLibraryS
 					usuario = null;
                 if (contrasenia == "")
                     contrasenia = null;
-                /*else
-                    contrasenia = Cripto.DecryptString(contrasenia);*/
-                
+                        
 				if (this._databasesPropias.ContainsKey(parameter))
 				{
 					Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
@@ -109,6 +109,7 @@ namespace DatabaseLibraryS
 			}
             conFile.Close();
 		}
+
         /*
          * Método para actualizar las bases de datos
          * */
@@ -152,7 +153,6 @@ namespace DatabaseLibraryS
                     w.WriteLine(tipoBBDD + "*" + nombreBBDD + ";");
                 else
                 {
-                   // passwordDatabase = Cripto.EncryptString(passwordDatabase);
                     w.WriteLine(tipoBBDD + "*" + nombreBBDD + "|" + usuarioDatabase + "*" + passwordDatabase + ";");
                 }
 
@@ -208,7 +208,6 @@ namespace DatabaseLibraryS
                 lineToWrite = nuevoTipoBBDD + "*" + nuevoNombreBBDD + ";";
             else
             {
-                //nuevoPasswordDatabase = Cripto.EncryptString(nuevoPasswordDatabase);
                 lineToWrite = nuevoTipoBBDD + "*" + nuevoNombreBBDD + "|" + nuevoUserDatabase + "*" + nuevoPasswordDatabase + ";";
             }
             //Escribo en un archivo temporal mientras que leo

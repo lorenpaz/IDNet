@@ -188,7 +188,14 @@ namespace PostBoxLibrary
             }else{
 				this._messageResponse.MessageType = "004b";
 
-                XmlDocument xmlDocRespuesta = this._messageResponse.createMessageConexion(this._keyPair,this._symmetricKey);
+                XmlDocument xmlDocBodyRespuesta = this._process.ejecutar(this.MessageRecieve);
+
+                //Si hay cuerpo de la respuesta
+                if (xmlDocBodyRespuesta != null)
+                {
+                    this._messageResponse.Body = xmlDocBodyRespuesta as XmlNode;
+                }
+                XmlDocument xmlDocRespuesta = this._messageResponse.createMessageConexion();
                 encriptarParteDelDocumentoAsimetrico(xmlDocRespuesta);
 				return xmlDocRespuesta.InnerXml;
             }

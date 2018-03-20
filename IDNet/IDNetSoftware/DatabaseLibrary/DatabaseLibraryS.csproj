@@ -39,6 +39,10 @@
       <Project>{5CB08C2F-ED6E-4A24-9C37-19179FCDC7E5}</Project>
       <Name>CriptoLibraryS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MessageLibrary\MessageLibraryS.csproj">
+      <Project>{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}</Project>
+      <Name>MessageLibraryS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data" />
@@ -55,6 +59,7 @@
       <HintPath>resources\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

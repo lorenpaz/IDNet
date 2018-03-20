@@ -13,6 +13,7 @@ namespace ConstantsLibraryS
         public const string CONFIG = @"../../../../configuration/";
         public const string ConfigFileDatabases = CONFIG + @"databases.conf";
         public const string ConfigFileNeighbours = CONFIG + @"neighbours.conf";
+        public const string ConfigFileNeighboursDatabases = CONFIG + @"neighboursDatabases.conf";
         public const string ConfigFileInfoUser = CONFIG + @"info.conf";
 
         public const string CONF_PUBLIC_KEY = CONFIG + @"publicKeyIDNet.pem";

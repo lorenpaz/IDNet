@@ -272,6 +272,7 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
+                        <signal name="RowActivated" handler="OnTreeviewNeighboursRowActivated" />
                       </widget>
                     </child>
                   </widget>
@@ -279,9 +280,6 @@
                     <property name="Position">1</property>
                     <property name="AutoSize">True</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder />
                 </child>
               </widget>
               <packing>

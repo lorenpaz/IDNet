@@ -7,6 +7,7 @@ using ProcessLibraryS;
 using ConvertionLibraryS;
 using CriptoLibraryS;
 using ConstantsLibraryS;
+using DatabaseLibraryS;
 
 using System.Xml;
 using System.Security.Cryptography;
@@ -156,16 +157,22 @@ namespace PostBoxLibraryS
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
 
-			//Parseamos el mensaje
-			this._messageResponse.parserMessageRecieve(xmlDoc);
-
-            if(this._messageResponse.MessageType == Constants.MENSAJE_RESPUESTA_CONEXION_A)
+            //Parseamos el mensaje
+            this._messageResponse.parserMessageRecieve(xmlDoc);
+            if (this._messageResponse.MessageType == Constants.MENSAJE_RESPUESTA_CONEXION_A)
             {
-				AlmacenarClavePublica(xmlDoc);
+                AlmacenarClavePublica(xmlDoc);
                 return true;
-            }else{
-                return ComprobarClaveSimetrica(xmlDoc);
             }
+            else
+            {
+                XmlDocument docDesencriptado = DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
+
+                //Parseamos el mensaje de nuevo
+                this._messageResponse.parserMessageRecieve(docDesencriptado);
+            }
+
+            return true;
 		}
 
         /*
@@ -184,7 +191,7 @@ namespace PostBoxLibraryS
         /*
          * Método privado para comprobar la clave simétrica
          * */
-        private bool ComprobarClaveSimetrica(XmlDocument xmlDoc)
+       /* private bool ComprobarClaveSimetrica(XmlDocument xmlDoc)
         {
             XmlDocument docDesencriptado = DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
             string keyRecibida, keyMia,ivRecibida,ivMia;
@@ -199,7 +206,7 @@ namespace PostBoxLibraryS
             }else{
                 return false;
             }
-        }
+        }*/
 
         /*
          * Método privado que encripta parte del documento con encriptación asimétrica

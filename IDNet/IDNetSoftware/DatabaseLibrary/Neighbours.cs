@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System;
+
 using ConstantsLibraryS;
-using System.Net.Sockets;
-using System.Net;
+using MessageLibraryS;
 
 namespace DatabaseLibraryS
 {
@@ -42,7 +43,41 @@ namespace DatabaseLibraryS
 
         public Neighbours()
         {
+            this._miembrosOV = new Dictionary<string, Dictionary<string, List<string>>>();
+            this._vecinosVO = new List<string>();
             ParseConf();
+        }
+
+        public void LoadNeighbourDatabases()
+        {
+            ParseConfAdvanced();    
+        }
+
+        public void SaveNeighbourDatabases(Message messageResponse)
+        {
+            string source = messageResponse.Source;
+            XmlDocument aux = new XmlDocument();
+            aux = messageResponse.Body.OwnerDocument;
+            List<Tuple<string, string>> bbdd = new List<Tuple<string, string>>();
+            Dictionary<string, string> lineToWrite = new Dictionary<string, string>();
+
+            foreach(XmlElement bd in aux.DocumentElement.GetElementsByTagName("database"))
+            {
+                Tuple<string, string> tupl = new Tuple<string, string>(bd.GetAttribute("db_type"),bd.InnerText);
+                bbdd.Add(tupl);
+            }
+
+            List<string> lineExactly = new List<string>();
+
+            if (!File.Exists(Constants.ConfigFileNeighboursDatabases))
+            {
+                File.Create(Constants.ConfigFileNeighboursDatabases);
+            }
+            foreach (var bd in bbdd)
+            {
+                //lorenzo = mongodb,empleados;
+                    File.AppendAllText(Constants.ConfigFileNeighboursDatabases, source + " = " + bd.Item1 + "," + bd.Item2 + "\n");
+            }
         }
 
         //Lee del fichero de configuración
@@ -51,9 +86,6 @@ namespace DatabaseLibraryS
             //Archivo a leer
             StreamReader conFile = File.OpenText(Constants.ConfigFileNeighbours);
             string line = conFile.ReadLine();
-
-            //Inicializamos el atributo
-            this._vecinosVO = new List<string>();
 
             //Voy leyendo línea por línea
             while (line != null)
@@ -89,7 +121,7 @@ namespace DatabaseLibraryS
         private void ParseConfAdvanced()
         {
             //Archivo a leer
-            StreamReader conFile = File.OpenText(Constants.ConfigFileNeighbours);
+            StreamReader conFile = File.OpenText(Constants.ConfigFileNeighboursDatabases);
             string line = conFile.ReadLine();
 
             //Inicializamos el atributo

@@ -353,6 +353,7 @@ namespace IDNetSoftware
             {
                 BodyRespuesta002MySQL schema = new BodyRespuesta002MySQL(this._schema.MessageResponse.Body.InnerXml);
 
+                this.Hide();
                 this._selectDialog = new SelectDialog(this._destination, this._db_name, schema);
                 this._selectDialog.Run();
 
@@ -398,7 +399,7 @@ namespace IDNetSoftware
             else if(this._db_type == Constants.MONGODB)
             {
                 BodyRespuesta002MongoDB schema = new BodyRespuesta002MongoDB(this._schema.MessageResponse.Body.InnerXml);
-
+                this.Hide();
                 this._findDialog = new FindDialog(this._destination, this._db_name, schema);
                 this._findDialog.Run();
 

@@ -67,16 +67,18 @@ namespace DatabaseLibraryS
                 bbdd.Add(tupl);
             }
 
+            //Si existe se borra
+            if(File.Exists(Constants.ConfigFileNeighboursDatabases))
+            {
+                File.Delete(Constants.ConfigFileNeighboursDatabases);
+            }
+
             List<string> lineExactly = new List<string>();
 
-            if (!File.Exists(Constants.ConfigFileNeighboursDatabases))
-            {
-                File.Create(Constants.ConfigFileNeighboursDatabases);
-            }
             foreach (var bd in bbdd)
             {
                 //lorenzo = mongodb,empleados;
-                    File.AppendAllText(Constants.ConfigFileNeighboursDatabases, source + " = " + bd.Item1 + "," + bd.Item2 + "\n");
+                File.AppendAllText(Constants.ConfigFileNeighboursDatabases, source + "=" + bd.Item1 + "," + bd.Item2 + ";"+"\n");
             }
         }
 

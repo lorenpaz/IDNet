@@ -38,6 +38,8 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action SimbologiaAction;
 
+		private global::Gtk.Action yesAction;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -130,6 +132,8 @@ namespace IDNetSoftware
 			this.SimbologiaAction = new global::Gtk.Action("SimbologiaAction", global::Mono.Unix.Catalog.GetString("Simbología"), null, null);
 			this.SimbologiaAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Simbología");
 			w1.Add(this.SimbologiaAction, null);
+			this.yesAction = new global::Gtk.Action("yesAction", null, null, "gtk-yes");
+			w1.Add(this.yesAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 700;
@@ -155,7 +159,7 @@ namespace IDNetSoftware
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='clearAction' action='clearAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/></toolbar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='clearAction' action='clearAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='yesAction' action='yesAction'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -321,8 +325,10 @@ namespace IDNetSoftware
 			this.MensajesAction.Activated += new global::System.EventHandler(this.OnMensajesEnviadosActionActivated);
 			this.updateDatabasePngAction.Activated += new global::System.EventHandler(this.OnUpdateDatabasePngActionActivated);
 			this.SimbologiaAction.Activated += new global::System.EventHandler(this.OnSimbologaActionActivated);
+			this.yesAction.Activated += new global::System.EventHandler(this.OnYesActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 			this.treeviewNeighbours.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewNeighboursRowActivated);
+			this.treeviewNeighbours.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnTreeviewNeighboursButtonReleaseEvent);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 		}
 	}

@@ -219,7 +219,6 @@ namespace IDNetSoftware
 
         //Dialogo de conexion
         ConnectionDialog _connectionDialog;
-        ConnectionWindow _connectionWindow;
 
         //Dialogo alternativo de conexion
         ConnectionNeighboursDialog _connectionNeighboursDialog;
@@ -269,6 +268,7 @@ namespace IDNetSoftware
             this._messages = new Dictionary<string, List<Tuple<string, string, Dictionary<string, PipeMessage>>>>();
 
             this._conexionesActivas = 0;
+            this.yesAction.Sensitive = false;
 
             CargoBasesDeDatosDeLaOV();
 
@@ -289,9 +289,6 @@ namespace IDNetSoftware
             if (SolicitarVecinos())
             {
                 CargoVecinosVO();
-
-                //Añado valores a la lista
-                AddValues();
 
                 //Añado al treeview la información
                 treeviewDatabases.Model = this._infoBBDDView;
@@ -474,17 +471,8 @@ namespace IDNetSoftware
             UpdateOwnDatabases();
         }
 
-        //Añadir los vecinos
-        private void AddValues()
-        {
-            foreach (var vecino in this._neighbours.VecinosVO)
-            {
-                this._infoNeighboursView.AppendValues(vecino);
-            }
-        }
-
         //Añadir las bases de datos de los vecinos
-        private void LoadValues()
+        private void AddValuesDatabasesNeighbours()
         {
             this._neighbours.LoadNeighbourDatabases();
 
@@ -567,10 +555,6 @@ namespace IDNetSoftware
             {
                 p = args.Path;
             }
-            else
-            {
-                p = this._connectionNeighboursDialog.RowActivated;
-            }
 
             this._infoNeighboursView.GetIter(out t, p);
 
@@ -615,12 +599,15 @@ namespace IDNetSoftware
 
                         this._neighbours.SaveNeighbourDatabases(this._connectionDialog.Connection.MessageResponse);
 
-                        AddValues();
+                        AddValuesDatabasesNeighbours();
 
                         MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
                         MostrarConexion(this._connectionDialog.Connection.MessageResponse);
                         IncrementarConexionesActivas();
 
+                        break;
+                    case Constants.ERROR_CONNECTION:
+                        MostrarError(this._connectionDialog.TypeOutPut);
                         break;
                 }
             }
@@ -636,10 +623,6 @@ namespace IDNetSoftware
             if (args != null)
             {
                 p = args.Path;
-            }
-            else
-            {
-                p = this._connectionNeighboursDialog.RowActivated;
             }
 
             this._infoBBDDView.GetIter(out t, p);
@@ -674,7 +657,7 @@ namespace IDNetSoftware
                             pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
 
                         }else{
-                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaAuxiliar = DevuelveTupla(usuarioDestino, tipoBBDD==Constants.MONGODB ? Constants.MYSQL:Constants.MONGODB, nombreBBDD);
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaAuxiliar = DevuelveTupla(usuarioDestino, null,null);
 
                             int indexAuxiliar = this._messages[usuarioDestino].IndexOf(tuplaAuxiliar);
                             pipeConexion = this._messages[usuarioDestino][indexAuxiliar].Item3[Constants.CONNECTION];
@@ -693,15 +676,7 @@ namespace IDNetSoftware
                     }
                 }
             }
-          /*  else
-            {
-                this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, this._claves);
-            }*/
-            /*  this._connectionDialog.Present();
-               this._connectionDialog.ShowAll();
-              this._connectionDialog.ShowNow();
-               this._connectionDialog.Show();*/
-            //this._connectionDialog
+
             this._connectionDialog.Run();
 
             switch (this._connectionDialog.TypeOutPut)
@@ -785,7 +760,7 @@ namespace IDNetSoftware
                     }
 
                     MostrarSolicitudConsulta(this._connectionDialog.Select.MessageRequest);
-                    MostrarResultadoConsulta(this._connectionDialog.Select.MessageResponse);
+                    MostrarResultadoConsulta(this._connectionDialog.Select.MessageRequest,this._connectionDialog.Select.MessageResponse);
 
                     break;
 
@@ -874,6 +849,9 @@ namespace IDNetSoftware
             this._usuariosOVDialog.Run();
         }
 
+        /*
+         * Método que incorpora la función de OnTreeviewDatabasesRowActivated
+         * */
         protected void OnDatabaseConnectionPngActionActivated(object sender, EventArgs e)
         {
             this._connectionNeighboursDialog = new ConnectionNeighboursDialog(this._infoBBDDView, this._neighbours);
@@ -885,10 +863,7 @@ namespace IDNetSoftware
                     break;
 
                 default:
-                    if (this._connectionNeighboursDialog.RowActivated != null)
-                    {
-                        OnTreeviewDatabasesRowActivated(null, null);
-                    }
+                    
 
                     break;
             }
@@ -956,9 +931,9 @@ namespace IDNetSoftware
         /*
          * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
          * */
-        private void MostrarResultadoConsulta(Message messageResponse)
+        private void MostrarResultadoConsulta(Message messageRequest,Message messageResponse)
         {
-            infoview.Buffer.Text += "\n" + Constants.RespuestaConsulta(messageResponse);
+            infoview.Buffer.Text += "\n" + Constants.RespuestaConsulta(messageRequest,messageResponse);
         }
 
         /*
@@ -1012,6 +987,76 @@ namespace IDNetSoftware
         {
             this._simbologiaDialog = new SimbologiaDialog();
             this._simbologiaDialog.Run();
+        }
+
+        protected void OnTreeviewNeighboursButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
+        {
+            this.yesAction.Sensitive = true;
+        }
+
+        /*
+         * Método que realiza la misma función que el método OnTreeviewNeighboursRowActivated
+         * */
+        protected void OnYesActionActivated(object sender, EventArgs e)
+        {
+            TreeIter t;
+            TreePath p = treeviewNeighbours.Selection.GetSelectedRows()[0];
+
+            this._infoNeighboursView.GetIter(out t, p);
+
+            string vecino = (string)this._infoNeighboursView.GetValue(t, 0);
+
+            //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
+            if (!this._messages.ContainsKey(vecino))
+            {
+                this._connectionDialog = new ConnectionDialog(this._user.Nombre, vecino, null, null, this._claves);
+
+                this._connectionDialog.Run();
+
+
+                switch (this._connectionDialog.TypeOutPut)
+                {
+                    case Constants.CANCEL:
+
+                        break;
+                    case Constants.MENSAJE_CONEXION:
+                        Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
+                        messageC.Add(Constants.CONNECTION, this._connectionDialog.Connection);
+                        Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
+                            new Tuple<string, string, Dictionary<string, PipeMessage>>(null, null, messageC);
+
+                        if (!this._messages.ContainsKey(vecino))
+                        {
+                            List<Tuple<string, string, Dictionary<string, PipeMessage>>> lista = new List<Tuple<string, string, Dictionary<string, PipeMessage>>>();
+                            lista.Add(tupl);
+
+                            this._messages.Add(vecino, lista);
+                        }
+                        else
+                        {
+                            this._messages[vecino].Add(tupl);
+                        }
+
+                        if (!this._keyPairClients.ContainsKey(vecino))
+                        {
+                            Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey, this._connectionDialog.Connection.SymmetricKey);
+                            this._keyPairClients.Add(vecino, tup);
+                        }
+
+                        this._neighbours.SaveNeighbourDatabases(this._connectionDialog.Connection.MessageResponse);
+
+                        AddValuesDatabasesNeighbours();
+
+                        MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
+                        MostrarConexion(this._connectionDialog.Connection.MessageResponse);
+                        IncrementarConexionesActivas();
+
+                        break;
+                    case Constants.ERROR_CONNECTION:
+                        MostrarError(this._connectionDialog.TypeOutPut);
+                        break;
+                }
+            }
         }
     } 
 }

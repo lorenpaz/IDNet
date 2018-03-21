@@ -137,9 +137,9 @@ namespace ConstantsLibraryS
                 Constants.USUARIO_SOLICITADO + messageRequest.Destination + "\n";
         }
 
-        public static String RespuestaConsulta(Message messageResponse)
+        public static String RespuestaConsulta(Message messageRequest,Message messageResponse)
         {
-            BodyRespuesta003 body = new BodyRespuesta003(messageResponse.Body.InnerXml);
+            BodyRespuesta003 body = new BodyRespuesta003(messageRequest.Body.InnerXml,messageResponse.Body.InnerXml);
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
 
             string stado = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
@@ -147,7 +147,8 @@ namespace ConstantsLibraryS
             linea + "\n" + linea + "\n" +
             Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
             linea + "\n" +
-           Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
+           Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n" +
+           messageResponse.Db_type== MYSQL?Columna(NOMBRE_TABLA + body.TableCollection, linea.Length):Columna(NOMBRE_TABLA + messageResponse, linea.Length) + "\n";
 
             string rows = "";
             int cont=0;
@@ -255,7 +256,7 @@ namespace ConstantsLibraryS
            string resultado = null;
             if(db_type == MYSQL)
             {
-                return value.ToString();
+                return key+ ":"+value.ToString();
             }
             else if(db_type == MONGODB){
                 XmlNode c = (XmlNode)value;
@@ -457,17 +458,32 @@ namespace ConstantsLibraryS
     public struct BodyRespuesta003
     {
         private List<Row> _rows;
+        private string _tableCollection;
 
-        public BodyRespuesta003(string body)
+        public BodyRespuesta003(string bodyRequest,string bodyResponse)
         {
             XmlDocument x = new XmlDocument();
-            x.LoadXml(body);
+            x.LoadXml(bodyResponse);
+
+            XmlDocument z = new XmlDocument();
+            z.LoadXml(bodyRequest);
+
+            //MYSQL
+            if(z.DocumentElement.GetElementsByTagName("db_type")[0].InnerText == Constants.MYSQL){
+                this._tableCollection = z.DocumentElement.GetElementsByTagName("body")[0].OwnerDocument.GetElementsByTagName("from")[0].InnerText;
+            }
+            //MONGODB
+            else if(z.DocumentElement.GetElementsByTagName("db_type")[0].InnerText == Constants.MONGODB){
+                this._tableCollection = z.DocumentElement.GetElementsByTagName("body")[0].OwnerDocument.GetElementsByTagName("collection")[0].InnerText;
+            }else{
+                this._tableCollection = null;
+            }
 
             this._rows = new List<Row>();
             foreach (XmlElement row in x.DocumentElement.GetElementsByTagName("row"))
             {
                 this._rows.Add(new Row(row));
-            }
+            } 
         }
 
         public List<Row> Rows
@@ -479,6 +495,17 @@ namespace ConstantsLibraryS
             set
             {
                 this._rows = value;
+            }
+        }
+        public string TableCollection
+        {
+            get
+            {
+                return this._tableCollection;
+            }
+            set
+            {
+                this._tableCollection = value;
             }
         }
 
@@ -659,18 +686,26 @@ namespace ConstantsLibraryS
         public Row(XmlElement infoRow)
         {
             this._attributes = new Dictionary<string, Object>();
-            /*  XmlAttributeCollection attributes = infoRow.Attributes;
-              foreach (XmlAttribute attr in attributes)
-              {
-                  this._attributes.Add(attr.Name, attr.Value);
-              }*/
-            XmlNodeList a = infoRow.ChildNodes;
-            foreach(XmlNode r in a)
+
+            //MYSQL
+            if (infoRow.HasAttributes)
             {
-                if (r.HasChildNodes)
-                    this._attributes.Add(r.Name, r);
-                else
-                    this._attributes.Add(r.Name, r.InnerText);
+                  XmlAttributeCollection attributes = infoRow.Attributes;
+                  foreach (XmlAttribute attr in attributes)
+                  {
+                      this._attributes.Add(attr.Name, attr.Value);
+                  }
+            }
+            else //MONGODB
+            {
+                XmlNodeList a = infoRow.ChildNodes;
+                foreach (XmlNode r in a)
+                {
+                    if (r.HasChildNodes)
+                        this._attributes.Add(r.Name, r);
+                    else
+                        this._attributes.Add(r.Name, r.InnerText);
+                }
             }
         }
     }

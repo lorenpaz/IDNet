@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.Collections.Generic;
+using Gtk;
 
 using ConstantsLibraryS;
 
@@ -70,8 +71,8 @@ namespace IDNetSoftware
         }
 
         /*
- * Método del botón 'Cancel'
- * */
+         * Método del botón 'Cancel'
+         * */
         protected void OnButtonCancelClicked(object sender, EventArgs e)
         {
             this.Destroy();
@@ -93,11 +94,12 @@ namespace IDNetSoftware
         {
             if (comboboxSelect.ActiveText == "*")
             {
+                LimpiarCombobox(comboboxOrderBy);
                 RellenarComboBox(null, null, null, CargarComboBoxOrderBy(comboboxFrom.ActiveText));
             }
             else
             {
-                comboboxOrderBy.Data.Clear();
+                LimpiarCombobox(comboboxOrderBy);
                 comboboxOrderBy.AppendText(comboboxSelect.ActiveText);
             }
 
@@ -136,7 +138,7 @@ namespace IDNetSoftware
             }
             else
             {
-                RellenarComboBoxSymbols(null);
+                LimpiarCombobox(comboboxWhereSymbols);
                 entryWhere.Text = "";
                 entryWhere.Sensitive = false;
                 comboboxWhereSymbols.Sensitive = false;
@@ -150,6 +152,8 @@ namespace IDNetSoftware
         {
             if (select != null)
             {
+                LimpiarCombobox(comboboxSelect);
+
                 foreach (string field in select)
                 {
                     comboboxSelect.AppendText(field);
@@ -158,6 +162,8 @@ namespace IDNetSoftware
 
             if (from != null)
             {
+                LimpiarCombobox(comboboxFrom);
+
                 foreach (string field in from)
                 {
                     comboboxFrom.AppendText(field);
@@ -166,20 +172,29 @@ namespace IDNetSoftware
 
             if (where != null)
             {
+                LimpiarCombobox(comboboxOrderBy);
+
                 foreach (string field in where)
-                {
                     comboboxWhere.AppendText(field);
-                }
             }
 
             if (orderBy != null)
             {
+                LimpiarCombobox(comboboxOrderBy);
                 foreach (string field in orderBy)
                 {
                     comboboxOrderBy.AppendText(field);
                 }
             }
 
+    }
+        /*
+         * Método privado para limpiar el comboBox pasado por parámetro
+         * */
+        private void LimpiarCombobox(ComboBox combo)
+        {
+            ListStore ClearList = new ListStore(typeof(string));
+            combo.Model = ClearList;
         }
 
         private void RellenarComboBoxSymbols(List<string> whereSymbols)
@@ -191,10 +206,6 @@ namespace IDNetSoftware
                     comboboxWhereSymbols.AppendText(field);
                 }
             }
-            else
-            {
-                comboboxWhereSymbols.Data.Clear();
-            }
         }
 
         /*
@@ -203,7 +214,7 @@ namespace IDNetSoftware
         private List<string> CargarComboBoxSelect(string tabla)
         {
             List<string> select = new List<string>();
-
+            LimpiarCombobox(comboboxSelect);
             select.Add("*");
 
             foreach (var table in this._schema.Tables)
@@ -226,6 +237,7 @@ namespace IDNetSoftware
         private List<string> CargarComboBoxFrom()
         {
             List<string> from = new List<string>();
+            LimpiarCombobox(comboboxFrom);
 
             foreach (var table in this._schema.Tables)
             {
@@ -241,7 +253,7 @@ namespace IDNetSoftware
         private List<string> CargarComboBoxWhere(string tabla)
         {
             List<string> select = new List<string>();
-
+            LimpiarCombobox(comboboxWhere);
             //Añado el vacio
             select.Add(" ");
 
@@ -265,7 +277,7 @@ namespace IDNetSoftware
         private List<string> CargarComboBoxWhereSymbols(string tabla)
         {
             List<string> whereSymbols = new List<string>();
-
+            LimpiarCombobox(comboboxWhereSymbols);
             foreach (var table in this._schema.Tables)
             {
                 if (tabla == table.Name)
@@ -371,6 +383,6 @@ namespace IDNetSoftware
             this._body = bodyDoc;
         }
 
-
+    
     }
 }

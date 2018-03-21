@@ -277,7 +277,10 @@ namespace PluginsLibrary
 
 			//Creamos elemento result
 			XmlElement elementRoot = doc.CreateElement("result");
-			doc.AppendChild(elementRoot);
+            XmlAttribute nombreTabla = doc.CreateAttribute("table");
+            nombreTabla.Value = this._fromTarget;
+            elementRoot.Attributes.Append(nombreTabla);
+            doc.AppendChild(elementRoot);
 
             var rdr = this._resultadoConsulta;
 

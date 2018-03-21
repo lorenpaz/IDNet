@@ -101,8 +101,6 @@
     <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentDialog.cs" />
     <Compile Include="ShowMessagesSentWindow.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentWindow.cs" />
-    <Compile Include="ConnectionWindow.cs" />
-    <Compile Include="gtk-gui\IDNetSoftware.ConnectionWindow.cs" />
     <Compile Include="SimbologiaDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.SimbologiaDialog.cs" />
   </ItemGroup>

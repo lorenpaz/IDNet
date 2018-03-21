@@ -118,6 +118,12 @@
         <property name="ShortLabel" translatable="yes">Simbología</property>
         <signal name="Activated" handler="OnSimbologaActionActivated" />
       </action>
+      <action id="yesAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-yes</property>
+        <signal name="Activated" handler="OnYesActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">700</property>
@@ -171,6 +177,7 @@
               <node type="Toolitem" action="clearAction" />
               <node type="Toolitem" action="databaseConnectionPngAction" />
               <node type="Toolitem" action="updateDatabasePngAction" />
+              <node type="Toolitem" action="yesAction" />
             </node>
           </widget>
           <packing>
@@ -273,6 +280,7 @@
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
                         <signal name="RowActivated" handler="OnTreeviewNeighboursRowActivated" />
+                        <signal name="ButtonReleaseEvent" handler="OnTreeviewNeighboursButtonReleaseEvent" />
                       </widget>
                     </child>
                   </widget>
@@ -2016,111 +2024,6 @@ mongodb</property>
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.ConnectionWindow" design-size="402 158">
-    <property name="MemberName" />
-    <property name="Title" translatable="yes">ConnectionWindow</property>
-    <property name="WindowPosition">Center</property>
-    <child>
-      <widget class="Gtk.VBox" id="vbox2">
-        <property name="MemberName" />
-        <property name="Spacing">6</property>
-        <child>
-          <widget class="Gtk.Button" id="buttonConexion">
-            <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Establecer conexión</property>
-            <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonConexionClicked" />
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Button" id="buttonEsquema">
-            <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Solicitar Esquema de la BBDD</property>
-            <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonEsquemaClicked" />
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Button" id="buttonSelect">
-            <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Realizar consulta</property>
-            <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonSelectClicked" />
-          </widget>
-          <packing>
-            <property name="Position">2</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.HBox" id="hbox1">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.Fixed" id="fixed1">
-                <property name="MemberName" />
-                <property name="HasWindow">False</property>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Fixed" id="fixed2">
-                <property name="MemberName" />
-                <property name="HasWindow">False</property>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Button" id="buttonCancel">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">Cancel</property>
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnButtonCancelClicked" />
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">3</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>

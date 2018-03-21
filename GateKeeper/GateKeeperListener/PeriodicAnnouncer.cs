@@ -8,17 +8,21 @@ using System.Xml;
 
 namespace GateKeeperListener
 {
+
+
     public class PeriodicAnnouncer
     {
-		private ManualResetEvent allDone = new ManualResetEvent(false);
+		private static ManualResetEvent allDone = new ManualResetEvent(false);
         private static readonly ILog log = LogManager.GetLogger(typeof(PeriodicAnnouncer));
         private static String _msg;
 
         public PeriodicAnnouncer()
         { }
 
-		public static void StartListening()
-		{
+#pragma warning disable RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
+        public static void StartListening()
+#pragma warning restore RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
+        {
 
 			ThreadStart _ts1 = delegate { TSender(); };
 
@@ -115,7 +119,7 @@ namespace GateKeeperListener
 				// Check for end-of-file tag. If it is not there, read   
 				// more data.  
 				content = state.sb.ToString();
-				if (content.IndexOf("<EOF>") > -1)
+				if (content.IndexOf("<EOF>", StringComparison.Ordinal) > -1)
 				{
 					// All the data has been read from the   
 					// client. Display it on the console.  
@@ -146,12 +150,13 @@ namespace GateKeeperListener
 
             XmlNodeList d = doc.GetElementsByTagName("route");
 
-            for (int i = 0; i < d.Count; i++)
+            foreach (XmlNode node in d)
             {
                 //Load the routing information from the message received
-                String dir_dest = d[i].ChildNodes[0].Value;
-                String dir_hop = d[i].ChildNodes[1].Value;
-                int distance = Int32.Parse(d[i].ChildNodes[2].Value);
+                String dir_dest = node.ChildNodes[0].InnerText;
+                String dir_hop = node.ChildNodes[1].InnerText;
+                String nombre = node.ChildNodes[2].InnerText;
+                int distance = Int32.Parse(node.ChildNodes[3].InnerText);
 
                 XmlNodeList r = routes.GetElementsByTagName("route");
 
@@ -159,16 +164,24 @@ namespace GateKeeperListener
                  * the distance to dir_dest which is already store in our file.
                  * We switch them onto our routes.xml file and update the value.
                  * */
-                for (int j = 0; j < r.Count; j++)
+                foreach (XmlNode route in r)
                 {
-                    if(r[j].ChildNodes[0].Value == dir_dest)
-                    {
-                        if(Int32.Parse(r[j].LastChild.Value) > distance)
-                        {
-                            r[j].ChildNodes[0].Value = dir_dest;
-                            r[j].ChildNodes[1].Value = dir_hop;
-                            r[j].ChildNodes[3].Value = distance.ToString();
-						}
+                    XmlNodeList existe = routes.SelectNodes("/route[d_node='" + dir_dest + "']");
+
+                    if (existe.Count > 0){
+                        
+                        if (route.ChildNodes[0].InnerText == dir_dest){
+                            
+                            if (Int32.Parse(route.LastChild.InnerText) > distance){
+                                route.ChildNodes[0].InnerText = dir_dest;
+                                route.ChildNodes[1].InnerText = dir_hop;
+                                route.ChildNodes[2].InnerText = nombre;
+                                route.ChildNodes[3].InnerText = distance.ToString();
+                            }
+                        }
+                    }
+                    else{
+                        AñadirATablaRutas(routes, dir_dest, dir_hop, distance, nombre, routes.DocumentElement);
                     }
                 }
             }
@@ -180,7 +193,6 @@ namespace GateKeeperListener
 
 		private static void SendRoutingTables(Object source, System.Timers.ElapsedEventArgs e)
 		{
-            String routingTable;
 			Pathfinder p = new Pathfinder(true);
 
             XmlDocument neighbours = new XmlDocument();
@@ -192,25 +204,57 @@ namespace GateKeeperListener
             XmlNodeList n = neighbours.GetElementsByTagName("node");
             XmlNodeList r = routes.GetElementsByTagName("route");
 
-            foreach(XmlNode neigh in n)
-            {
-                XmlDocument table = new XmlDocument();
+			XmlDocument table = new XmlDocument();
 
-                table.AppendChild(new XmlNode());
-                String dir_neighbour = n[i].Value;
+			//Creamos el nodo routes
+			XmlElement elementRoot = table.CreateElement("routes");
+			table.AppendChild(elementRoot);
+
+            //Para cada nodo
+			foreach(XmlNode neigh in n)
+            {
+                String dir_neighbour = neigh.InnerText;
                 foreach(XmlNode route in r)
                 {
-					String dir_dest = r[j].ChildNodes[0].Value;
-					String dir_hop = r[j].ChildNodes[1].Value;
-					int distance = Int32.Parse(r[j].ChildNodes[2].Value);
+                    String dir_dest = route.ChildNodes[0].InnerText;
+                    String dir_hop = route.ChildNodes[1].InnerText;
+                    String nombre = route.ChildNodes[2].InnerText;
+					int distance = Int32.Parse(route.ChildNodes[3].InnerText);
 
-                    if(dir_hop != dir_neighbour)
+                    if (dir_hop != dir_neighbour)
                     {
-                        
+                        AñadirATablaRutas(table, dir_dest, dir_hop, distance, nombre, elementRoot);
                     }
                 }
-				p.ProcessMsg(routingTable);
+                p.ProcessMsg(table.ToString());
 			}
 		}
+
+        private static void AñadirATablaRutas(XmlDocument table, string dir_dest, string dir_hop, int distance, String nombre, XmlElement root)
+        {
+            //Creamos el elemento route
+            XmlNode route = table.CreateElement("route");
+            root.AppendChild(route);
+
+            //Creamos el nodo con la dirección destino
+            XmlNode dest = table.CreateElement("d_node");
+            dest.InnerText = dir_dest;
+            route.AppendChild(dest);
+
+            //Creamos el nodo con la dirección de salto
+            XmlNode hop = table.CreateElement("d_hop");
+            hop.InnerText = dir_hop;
+            route.AppendChild(hop);
+
+			//Creamos el nodo con la dirección de salto
+			XmlNode name = table.CreateElement("name");
+			name.InnerText = nombre;
+			route.AppendChild(name);
+
+            //Creamos el nodo con la distancia
+            XmlNode distancia = table.CreateElement("distance");
+            distancia.InnerText = distance.ToString();
+            route.AppendChild(distancia);
+        }
 	}
 }

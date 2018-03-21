@@ -8,6 +8,19 @@ using log4net;
 
 namespace GateKeeperListener
 {
+	// State object for reading client data asynchronously
+	public class StateObject
+	{
+		// Client  socket.
+		public Socket workSocket = null;
+		// Size of receive buffer.
+		public const int BufferSize = 4096;
+		// Receive buffer.
+		public byte[] buffer = new byte[BufferSize];
+		// Received data string.
+		public StringBuilder sb = new StringBuilder();
+	}
+
     public class Listener
     {
         private ManualResetEvent allDone = new ManualResetEvent(false);
@@ -24,7 +37,9 @@ namespace GateKeeperListener
                 this._port = 12000;
 		}
 
+#pragma warning disable RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         public void StartListening()
+#pragma warning restore RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         {
 			// Data buffer for incoming data.
 			byte[] bytes = new Byte[1024];
@@ -106,7 +121,7 @@ namespace GateKeeperListener
                 // Check for end-of-file tag. If it is not there, read 
                 // more data.
                 content = state.sb.ToString();
-                if (content.IndexOf("</root>") > -1)
+                if (content.IndexOf("</root>", StringComparison.Ordinal) > -1)
                 {
                     // All the data has been read from the 
                     // client. Display it on the console.

@@ -53,8 +53,6 @@ namespace ConnectionLibrary
 
 		public void StartListening()
 		{
-
-
 			// Data buffer for incoming data.
             byte[] bytes = new Byte[4096];
 

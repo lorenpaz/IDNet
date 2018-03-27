@@ -2,21 +2,69 @@
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using System.Net.NetworkInformation;
+using System.Xml;
+using ConstantsLibrary;
 
-namespace ConnectionLibraryS
+namespace ConnectionLibrary
 {
-    public class Client
+    public class RegisterClient
     {
-        public Client()
+        //Mensaje
+        private XmlDocument _mensaje;
+
+        /*
+         * Constructor
+         * */
+        public RegisterClient()
         {
+            ConstruccionMensajeRegistro();
+        }
+
+        /*
+         * Método privado para la construcción del mensaje de registro
+         * */
+        private void ConstruccionMensajeRegistro()
+        {
+            this._mensaje = new XmlDocument();
+
+            XmlElement root = this._mensaje.DocumentElement;
+
+            //Creamos elemento root
+            XmlElement elementRoot = this._mensaje.CreateElement("root");
+            this._mensaje.AppendChild(elementRoot);
+
+            //Creamos el elemento message_type
+            XmlNode message_type = this._mensaje.CreateElement("message_type");
+            message_type.InnerText = Constants.MENSAJE_REGISTRO;
+            elementRoot.AppendChild(message_type);
+
+            //Creamos elemento origen
+            XmlNode source = this._mensaje.CreateElement("source");
+            source.InnerText = Constants.usuario.Nombre;
+            elementRoot.AppendChild(source);
+
+            //Creamos el elemento destino
+            XmlNode ip = this._mensaje.CreateElement("ip");
+            ip.InnerText = Constants.usuario.IP.ToString();
+            elementRoot.AppendChild(ip);
+
+            //Creamos el elemento destino
+            XmlNode destination = this._mensaje.CreateElement("destination");
+            destination.InnerText = Constants.GATEKEEPER;
+            elementRoot.AppendChild(destination);
+
+            //Creamos elemento code
+            XmlNode code = this._mensaje.CreateElement("code");
+            code.InnerText = "0123456789";
+            elementRoot.AppendChild(code);
+
         }
 
         /*
          * Método para comenzar la conexión del cliente al servidor
          * Le pasamos como argumento el mensaje junto con el hostDestino
          * */
-        public string StartClient(string mensaje, string hostName)
+        public string StartClient(string hostName)
         {
             // Data buffer for incoming data.
             byte[] respuesta = new byte[4096];
@@ -28,9 +76,9 @@ namespace ConnectionLibraryS
                 // This example uses port 11000 on the local computer.
                 //IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
 
-               // IPAddress ipAddress = ipHostInfo.AddressList[0];
+                //IPAddress ipAddress = ipHostInfo.AddressList[0];
                 IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), 11000);
-                    
+
                 // Create a TCP/IP  socket.
                 Socket sender = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
@@ -44,7 +92,7 @@ namespace ConnectionLibraryS
                         sender.RemoteEndPoint.ToString());
 
                     // Encode the data string into a byte array.
-                    byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                    byte[] msg = Encoding.ASCII.GetBytes(this._mensaje.InnerXml);
 
                     // Send the data through the socket.
                     int bytesSent = sender.Send(msg);
@@ -93,22 +141,19 @@ namespace ConnectionLibraryS
             // Create a TCP/IP  socket.
             Socket sender = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream, ProtocolType.Tcp);
-                
+
             // Connect the socket to the remote endpoint. Catch any errors.
             try
             {
                 sender.Connect(remoteEP);
                 return true;
-            }catch(Exception){
+            }
+            catch (Exception)
+            {
                 return false;
             }
 
         }
-        /*public static int Main(String[] args)
-        {
-            string msg="<root><source>Pepe</source><destination>Lorenzo</destination><message_type>002</message_type><db_name>usuarios</db_name><db_type>mysql</db_type><body></body></root>";
-            StartClient();
-            return 0;
-        }*/
+
     }
 }

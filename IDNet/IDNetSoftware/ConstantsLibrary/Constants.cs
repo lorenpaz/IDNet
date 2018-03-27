@@ -49,7 +49,8 @@ namespace ConstantsLibraryS
         public const string CONNECTION = @"connection";
         public const string SELECT = @"select";
 
-        public const string GATEKEEPER = @"127.0.0.1";
+        //public const string GATEKEEPER = @"127.0.0.1";
+        public const string GATEKEEPER = @"192.168.1.85";
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
         public const string TABLA_COLUMNA_USUARIO = @"Usuario";
@@ -69,7 +70,7 @@ namespace ConstantsLibraryS
         public const string MENSAJE_CONEXION_B = "001b";
         public const string MENSAJE_ESQUEMA = "002";
         public const string MENSAJE_CONSULTA = "003";
-        public const string MENSAJE_CONSULTA_BBDD_VECINOS = "000";
+        public const string MENSAJE_CONSULTA_BBDD_VECINOS = "011";
 
         public const string MENSAJE_RESPUESTA_CONEXION_A = "004a";
         public const string MENSAJE_RESPUESTA_CONEXION_B = "004b";
@@ -109,12 +110,18 @@ namespace ConstantsLibraryS
         public const string NOMBRE_COLECCION = @"Nombre colección: ";
         public const string NOMBRE_CAMPO = @"Nombre del campo: ";
 
+        /*
+         * Método estático para devolver la solicitud de conexión en String
+         * */
         public static string SolicitudConexion(Message messageRequest)
         {
             return "Status: 001 "+ Constants.SOLICITUD_CONEXION + "\n" +
             Constants.USUARIO_SOLICITADO + messageRequest.Destination + "\n";
         }
 
+        /*
+         * Método estático para devolver la respuesta de conexión en String
+         * */
         public static string RespuestaConexion(Message messageResponse)
         {
             string linea = Columna("-", LENGTH_TABLE_VIEW, '-');
@@ -125,18 +132,27 @@ namespace ConstantsLibraryS
 
         }
 
+        /*
+         * Método estático para devolver la solicitud de esquema en String
+         * */
         public static string SolicitudEsquema(Message messageRequest)
         {
             return "Status: " + messageRequest.MessageType + " " + Constants.SOLICITUD_ESQUEMA + "\n" +
                 Constants.USUARIO_SOLICITADO + messageRequest.Destination + "\n";
         }
 
+        /*
+         * Método estático para devolver la solicitud de consulta en String
+         * */
         public static string SolicitudConsulta(Message messageRequest)
         {
             return "Status: " + messageRequest.MessageType + " " + Constants.SOLICITUD_CONSULTA + "\n" +
                 Constants.USUARIO_SOLICITADO + messageRequest.Destination + "\n";
         }
 
+        /*
+         * Método estático para devolver la respuesta de consulta en String
+         * */
         public static String RespuestaConsulta(Message messageRequest,Message messageResponse)
         {
             BodyRespuesta003 body = new BodyRespuesta003(messageRequest.Body.InnerXml,messageResponse.Body.InnerXml);
@@ -174,6 +190,9 @@ namespace ConstantsLibraryS
                 return stado + rows;
         }
 
+        /*
+         * Método estático para devolver la respuesta de esquema MySQL en String
+         * */
         public static string RespuestaEsquemaMySQL(Message messageResponse)
         {
             BodyRespuesta002MySQL body = new BodyRespuesta002MySQL(messageResponse.Body.InnerXml);
@@ -206,6 +225,10 @@ namespace ConstantsLibraryS
                 return stado + tables;
             }
         }
+
+        /*
+         * Método estático para devolver la respuesta de esquema MongoDB en String
+         * */
         public static string RespuestaEsquemaMongoDB(Message messageResponse)
         {
             BodyRespuesta002MongoDB body = new BodyRespuesta002MongoDB(messageResponse.Body.InnerXml);
@@ -242,7 +265,7 @@ namespace ConstantsLibraryS
             
         }
 
-        public static string MostrarValorFirst(string db_type, object value)
+        private static string MostrarValorFirst(string db_type, object value)
         {
             KeyValuePair<string, object> attr = (KeyValuePair<string, object>)value;
             string key = attr.Key;
@@ -251,7 +274,7 @@ namespace ConstantsLibraryS
             return MostrarValor(key,db_type, valor);
         }
 
-        public static string MostrarValor(string key,string db_type, object value)
+        private static string MostrarValor(string key,string db_type, object value)
         {
            string resultado = null;
             if(db_type == MYSQL)
@@ -297,6 +320,9 @@ namespace ConstantsLibraryS
             return "| " + campo + " | " + tipoCampo + " |";
         }
 
+        /*
+         * Método estático público para el borrado de recursos
+         * */
         public static void BorrarRecursos()
         {
             File.Delete(Constants.CONF_PUBLIC_KEY);

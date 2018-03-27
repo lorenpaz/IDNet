@@ -7,6 +7,8 @@ using DatabaseLibraryS;
 using MessageLibraryS;
 using ConstantsLibraryS;
 using CriptoLibraryS;
+using PostBoxLibraryS;
+using ConnectionLibraryS;
 
 using System.Collections.Generic;
 
@@ -303,6 +305,9 @@ namespace IDNetSoftware
             }
         }
 
+        /*
+         * Método privado para cargar los vecinos de la OV en la vista
+         * */
         private void CargoVecinosVO()
         {
             this._neighbours = new Neighbours();
@@ -312,9 +317,11 @@ namespace IDNetSoftware
             }
         }
 
+        /*
+         * Método privado para solicitar los vecinos
+         * */
         private bool SolicitarVecinos()
         {
-            /*
             string msg, response;
 
             //Proceso el envio
@@ -334,8 +341,7 @@ namespace IDNetSoftware
             else
             {
                 return false;
-            }*/
-            return true;
+            }
         }
 
 
@@ -489,7 +495,10 @@ namespace IDNetSoftware
         }
 
 
-        //Añadir info de las bases de datos PROPIAS
+        /*
+         * Método privado para añadir información
+         * de las bases de datos PROPIAS a la vista
+         * */
         private void AddValuesOwn()
         {
             //Recorremos las bases de datos para mostrarlas
@@ -512,7 +521,9 @@ namespace IDNetSoftware
             }
         }
 
-        //Menú opción salir
+        /*
+         * Menú opción salir
+         * */
         protected void OnSalirActionActivated(object sender, EventArgs e)
         {
             Constants.BorrarRecursos();
@@ -684,38 +695,6 @@ namespace IDNetSoftware
                 case Constants.CANCEL:
 
                     break;
-              /*  case Constants.MENSAJE_CONEXION:
-                    Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
-                    messageC.Add(Constants.CONNECTION, this._connectionDialog.Connection);
-                    Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
-                        new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD, messageC);
-
-                    if (!this._messages.ContainsKey(usuarioDestino))
-                    {
-                        List<Tuple<string, string, Dictionary<string, PipeMessage>>> lista = new List<Tuple<string, string, Dictionary<string, PipeMessage>>>();
-                        lista.Add(tupl);
-
-                        this._messages.Add(usuarioDestino, lista);
-                    }
-                    else
-                    {
-                        this._messages[usuarioDestino].Add(tupl);
-                    }
-
-                    if (!this._keyPairClients.ContainsKey(usuarioDestino))
-                    {
-                        Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey, this._connectionDialog.Connection.SymmetricKey);
-                        this._keyPairClients.Add(usuarioDestino, tup);
-                    }
-
-                    this._neighbours.SaveNeighbourDatabases(this._connectionDialog.Connection.MessageResponseConexion);
-
-                    MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
-                    MostrarConexion(this._connectionDialog.Connection.MessageResponse);
-                    IncrementarConexionesActivas();
-
-                    break;*/
-
                 case Constants.MENSAJE_ESQUEMA:
 
                     if (!ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))

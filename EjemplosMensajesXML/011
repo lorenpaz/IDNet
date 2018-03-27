@@ -1,0 +1,9 @@
+<root>
+	<message_type>011</message_type>
+	<source>Lorenzo</source>
+	<destination>192.168.0.2</destination>
+</root>
+
+MENSAJE PARA LA SOLICITUD DE LOS VECINOS DE MI ORGANIZACIÓN VIRTUAL
+SE ENVIA DE IDNETSOFTWARE AL GK
+192.168.0.2 ES IP DE GATEKEEPER

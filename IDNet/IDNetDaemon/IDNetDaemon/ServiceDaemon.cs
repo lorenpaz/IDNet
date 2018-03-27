@@ -8,21 +8,33 @@ namespace IDNetDaemon
 {
     public class ServiceDaemon : ServiceBase
     {
+        //Objeto para mostrar información
 		static readonly ILog log = LogManager.GetLogger(typeof(ServiceDaemon));
-		Scheduler _scheduler;
+		
+        //Planificación del demonio
+        Scheduler _scheduler;
 
+        /*
+         * Constructor del demonio
+         * */
 		public ServiceDaemon()
 		{
 			ServiceName = "IDNetDaemon";
 			_scheduler = new Scheduler();
 		}
 
+        /*
+         * Método para iniciar el demonio
+         * */
 		protected override void OnStart(string[] args)
 		{
 			log.Info("Service starting");
 			_scheduler.Start();
 		}
 
+        /*
+         * Método para parar el demonio
+         * */
 		protected override void OnStop()
 		{
 			log.Info("Service shutting down");

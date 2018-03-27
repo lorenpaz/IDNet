@@ -69,6 +69,9 @@ namespace PostBoxLibraryS
             GuardarEnArchivoConfiguracion(xmlDoc);
         }
 
+        /*
+         * Método privado para guardar en un archivo de configuración los vecinos
+         * */
         private void GuardarEnArchivoConfiguracion(XmlDocument xmlDoc)
         {
             if(File.Exists(Constants.ConfigFileNeighbours))

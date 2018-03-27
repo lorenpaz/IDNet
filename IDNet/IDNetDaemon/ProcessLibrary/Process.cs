@@ -8,13 +8,22 @@ namespace ProcessLibrary
 {
     public class Process
     {
+        /*
+         * Objeto Databases
+         * */
 		private Database _db;
 
+        /*
+         * Construtor
+         * */
         public Process()
         {
             _db = new Database();            
         }
 
+        /*
+         * Método principal que ejecuta la orden de un mensaje
+         * */
         public XmlDocument ejecutar(Message m)
         {
             XmlDocument xmlDoc = null;
@@ -38,6 +47,9 @@ namespace ProcessLibrary
             return xmlDoc;
         }
 
+        /*
+         * Método privado para obtener la información de todas las bases de datos
+         * */
         private XmlDocument GetInfoAllDatabases() {
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.DocumentElement;

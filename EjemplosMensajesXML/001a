@@ -14,4 +14,6 @@ uwIDAQAB
 </key>
 </root>
 
-//Le pasamos la clave pública
+MENSAJE PRIMERO DE CONEXIÓN.
+Se envia del IDNetSoftware del clienteA al IDNetDaemon del clienteB
+LE ENVIAMOS NUESTRA CLAVE PÚBLICA

@@ -1,18 +1,6 @@
 using System.Xml;
-using System.Security.Cryptography;
-using System.Text;
-using System;
 
 using CriptoLibrary;
-
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Security;
-
-using Org.BouncyCastle.Crypto.Engines;
-using Org.BouncyCastle.Crypto.Encodings;
-using Org.BouncyCastle.Crypto.Generators;
-using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.Crypto.Parameters;
 
 namespace MessageLibrary 
 {
@@ -92,14 +80,14 @@ namespace MessageLibrary
 			}
 		}
 
-
+        /*
+         * Método para parsear el mensaje recibido
+         * */
         public void parserStartRecievedMessage(XmlDocument doc)
         {
 			this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
 			this._source = doc.DocumentElement.GetElementsByTagName("source")[0].InnerText;
-			this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;
-           /* if(this._messageType == "001")
-                this._key = SymmetricAlgorithm.Create(doc.DocumentElement.GetElementsByTagName("key")[0].InnerText);*/
+			this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;          
         }
 
 

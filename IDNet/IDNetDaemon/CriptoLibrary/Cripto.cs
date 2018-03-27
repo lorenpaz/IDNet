@@ -28,6 +28,9 @@ namespace CriptoLibrary
 		RsaKeyParameters _publicKey;
 		RsaKeyParameters _privateKey;
 
+        /*
+         * Constructor
+         * */
 		public Cripto()
 		{
 			RsaKeyPairGenerator rsa = new RsaKeyPairGenerator();
@@ -67,6 +70,9 @@ namespace CriptoLibrary
 			}
 		}
 
+        /*
+         * Método privado estático para exportar la clave pública
+         * */
 		private static void ExportPublicKey(RsaKeyParameters publicKey)
 		{
 			//To print the public key in pem format
@@ -77,6 +83,9 @@ namespace CriptoLibrary
 			pemWriter1.Writer.Close();
 		}
 
+        /*
+         * Método privado estático para exportar la clave privada
+         * */
 		private static void ExportPrivateKey(RsaKeyParameters privateKey)
 		{
 			//To print the public key in pem format
@@ -87,6 +96,9 @@ namespace CriptoLibrary
 			pemWriter1.Writer.Close();
 		}
 
+        /*
+         * Método público estático para importar la clave pública
+         * */
 		public static RsaKeyParameters ImportPublicKey(string pem)
 		{
 			PemReader pr = new PemReader(new StreamReader(pem));
@@ -94,6 +106,10 @@ namespace CriptoLibrary
 			RsaKeyParameters rsaParams = (RsaKeyParameters)publicKey;
 			return rsaParams;
 		}
+
+        /*
+         * Método público estático para importar la clave privada
+         * */
 		public static RsaKeyParameters ImportPrivateKey(string pem)
 		{
 			PemReader pr = new PemReader(new StreamReader(pem));
@@ -102,6 +118,9 @@ namespace CriptoLibrary
 			return rsaParams;
 		}
 
+        /*
+         * Método para conversión de una clave pública a String
+         * */
         public string PublicKeyString(){
 			StringWriter str = new StringWriter();
 			PemWriter pemWriter = new PemWriter(str);
@@ -111,11 +130,11 @@ namespace CriptoLibrary
             return str.ToString();
         }
 
-
+        /*
+         * Método estático para la encriptaicón
+         * */
 		public static string Encryption(string text, RsaKeyParameters PublicKey)
 		{
-            //IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
-            //cipher.Init(true, PublicKey);
             RsaEngine cipher = new RsaEngine();
             cipher.Init(true,PublicKey);
 
@@ -128,10 +147,11 @@ namespace CriptoLibrary
             return cifrado;
 		}
 
+        /*
+         * Método estático para desencriptar
+         * */
 		public static string Decryption(byte[] ct, RsaKeyParameters Pvtkey)
 		{
-			//IAsymmetricBlockCipher cipher = new OaepEncoding(new RsaEngine());
-			//cipher.Init(false, Pvtkey);
 			RsaEngine cipher = new RsaEngine();
             cipher.Init(false,Pvtkey);
 
@@ -140,7 +160,9 @@ namespace CriptoLibrary
 			return descifrado;
 		}
 
-
+        /*
+         * Método estático para encriptar simétricamente un XMLDocument
+         * */
         public static void EncryptSymmetric(XmlDocument Doc, string ElementName, SymmetricAlgorithm Key)
 		{
 			// Create a new Rijndael key.
@@ -235,6 +257,9 @@ namespace CriptoLibrary
 			EncryptedXml.ReplaceElement(elementToEncrypt, edElement, false);
 		}
 
+        /*
+         * Método estático para desencriptar simétricamente un XMLDocument
+         * */
 		public static void DecryptSymmetric(XmlDocument Doc, SymmetricAlgorithm Alg)
 		{
 			// Check the arguments.  

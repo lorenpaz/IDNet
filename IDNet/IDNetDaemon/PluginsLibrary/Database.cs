@@ -34,7 +34,9 @@ namespace PluginsLibrary
             }
         }
 
-        //Lee del fichero de configuración
+        /*
+         * Método privado para leer el fichero de configuración
+         * */
 		private void ParseConf()
 		{
             //Archivo a leer
@@ -108,7 +110,10 @@ namespace PluginsLibrary
             conFile.Close();
 		}
 
-
+        /*
+         * Método privado para devolver la primera tupla que coincida
+         * el nombre de la base de datos
+         * */
 		private Tuple<string, string,string> devuelveTupla(string tipoBBDD, string nombreBBDD)
 		{
             foreach (var tupla in this._databases[tipoBBDD])
@@ -121,17 +126,26 @@ namespace PluginsLibrary
 			return null;
 		}
 
+        /*
+         * Método privado para la obtención del nombre de un usuario
+         * */
         private string getUser(string databaseType, string databaseName){
             int index = this._databases[databaseType].IndexOf(devuelveTupla(databaseType, databaseName));
             return this._databases[databaseType][index].Item2 == null ? null: this._databases[databaseType][index].Item2;
         }
+
+        /*
+         * Método privado para la obtención de la contraseña de un usuario
+         * */
 		private string getPassword(string databaseType, string databaseName)
 		{
 			int index = this._databases[databaseType].IndexOf(devuelveTupla(databaseType, databaseName));
 			return this._databases[databaseType][index].Item3 == null ? null : this._databases[databaseType][index].Item3;
 		}
 
-		//Solicitud de la estructura de la base de datos
+		/*
+		 * Método público para la solicitud de la estructura de la base de datos
+		 * */
 		public XmlDocument EstructureRequest(string databaseType, string databaseName)
         {
             XmlDocument xmldocument = new XmlDocument();
@@ -158,7 +172,9 @@ namespace PluginsLibrary
             return xmldocument;
         }
 
-		//Realizar consulta a la base de datos
+		/*
+		 * Método público para realizar consultas a la base de datos
+		 * */
         public XmlDocument SelectRequest(string databaseType, string databaseName,XmlNode body)
 		{
 			XmlDocument xmldocument = new XmlDocument();

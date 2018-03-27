@@ -11,6 +11,9 @@ namespace SecurityLibrary
 		{
 		}
 
+        /*
+         * Método booleano para comprobar 'la lista negra'
+         * */
 		public bool checkBlackList(string ip)
 		{
 			bool encontrado = false;

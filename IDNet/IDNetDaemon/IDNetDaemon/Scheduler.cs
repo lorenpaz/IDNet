@@ -4,14 +4,21 @@ using log4net;
 using Quartz.Impl;
 using System.Configuration;
 using ConnectionLibrary;
+using ConstantsLibrary;
 
 namespace IDNetDaemon
 {
     public class Scheduler
     {
+        //Objeto para mostrar información
 		static readonly ILog log = LogManager.GetLogger(typeof(Scheduler));
-		static IScheduler _scheduler;
+		
+        //Planificación- interfaz
+        static IScheduler _scheduler;
 
+        /*
+         * Método para comenzar la planificación
+         * */
 		public void Start()
 		{
             StdSchedulerFactory factory = new StdSchedulerFactory();
@@ -20,32 +27,29 @@ namespace IDNetDaemon
 			StartMyJob();
 		}
 
-
+        /*
+         * Método para parar la planificación
+         * */
 		public void Shutdown()
 		{
 			if (null != _scheduler)
 				_scheduler.Shutdown();
 		}
 
+        /*
+         * Método para comenzar el trabajo
+         * */
 		void StartMyJob()
 		{
+
+            //Registramos el demonio en el GateKeeper
+            RegisterClient register = new RegisterClient();
+            if(register.comprobarConexion(Constants.GATEKEEPER))
+                register.StartClient(Constants.GATEKEEPER);
+
+            //Empieza a escuchar el demonio
             Server s = new Server();
             s.StartListening();
-			//var seconds = Int16.Parse(ConfigurationManager.AppSettings["MyJobSeconds"]);
-			//log.InfoFormat("Start MyJob. Execute once in {0} seconds", seconds);
-
-			/*IJobDetail job = JobBuilder.Create<Jobs.MyJob>()
-				.WithIdentity("MyJob", "group1")
-				.UsingJobData("Param1", "Hello MyJob!")
-				.Build();
-
-			ITrigger trigger = TriggerBuilder.Create()
-				.WithIdentity("MyJobTrigger", "group1")
-				.StartNow()
-				.WithSimpleSchedule(x => x.WithIntervalInSeconds(seconds).RepeatForever())
-				.Build();
-
-			_scheduler.ScheduleJob(job, trigger);*/
 		}
     }
 }

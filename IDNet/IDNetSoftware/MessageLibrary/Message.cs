@@ -6,8 +6,9 @@ using System.Security.Cryptography;
 
 namespace MessageLibraryS
 {
-
-
+    /*
+     * Clase con información de los mensajes
+     * */
 	public class Message
 	{
 		private string _destination;
@@ -101,6 +102,9 @@ namespace MessageLibraryS
             
         }
 
+        /*
+         * Constructor
+         * */
         public Message(string source, string destination,string messageType,string db_name,
                        string db_type, XmlNode body)
         {
@@ -243,6 +247,9 @@ namespace MessageLibraryS
 			return xmlDoc;
 		}
 
+        /*
+         * Mensaje para la creación de un mesaje para solicitar los vecinos
+         * */
         public XmlDocument createMessageNeighbour(string ip)
         {
             XmlDocument xmlDoc = new XmlDocument();

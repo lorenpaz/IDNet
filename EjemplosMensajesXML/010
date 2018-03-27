@@ -1,0 +1,13 @@
+<root>
+	<message_type>010</message_type>
+	<source>Lorenzo</source>
+	<ip>192.168.0.3</ip>
+	<destination>192.168.0.2</destination>
+	<code>0123456789</code>
+</root>
+
+MENSAJE PARA EL REGISTRO DE MI CLIENTE EN LA ORGANIZACIÓN VIRTUAL
+SE ENVIA DEL IDNETDAEMON AL GK
+
+192.168.0.3 ES IP DEL CLIENTE
+192.168.0.2 ES IP DE GATEKEEPER

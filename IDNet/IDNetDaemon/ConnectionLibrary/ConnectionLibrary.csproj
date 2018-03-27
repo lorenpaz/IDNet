@@ -28,6 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Server.cs" />
+    <Compile Include="RegisterClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Sockets">
@@ -45,6 +46,7 @@
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -61,6 +63,10 @@
     <ProjectReference Include="..\MessageLibrary\MessageLibrary.csproj">
       <Project>{224FDCF4-3FE4-424C-9DD6-BCC763FBDE4E}</Project>
       <Name>MessageLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
+      <Project>{F9B16A1F-783D-4E0B-8C95-B6B261450BAD}</Project>
+      <Name>ConstantsLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

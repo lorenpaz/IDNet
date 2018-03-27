@@ -20,7 +20,9 @@ namespace PluginsLibrary
         private string _databaseName;
         private string _salida;
 
-        //Constructor
+        /*
+         * Constructor
+         * */
         public PluginMongo(string databaseName)
         {
             this._databaseName = databaseName;
@@ -38,14 +40,18 @@ namespace PluginsLibrary
             }
         }
 
-        //Solicitud de la estructura de la BBDD
+        /*
+         * Método para la solicitud de la estructura de la BBDD
+         * */
         public string EstructureRequest()
         {
             MainAsync().Wait();
             return this._salida;
         }
 
-        //Tarea para la obtención de la información de la BBDD
+        /*
+         * Tarea asíncrona para la obtención de la información de la BBDD
+         * */
         async Task MainAsync()
         {
             BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
@@ -82,13 +88,19 @@ namespace PluginsLibrary
             this._salida = j;
         }
 
-        //Realizar consulta a la BBBDD
+        /*
+         * Método público para realizar consultas a la BBBDD
+         * */
         public string SelectRequest(XmlNode body)
         {
             SecondAsync(body).Wait();
             return this._salida;
         }
 
+        /*
+         * Tarea asíncrona para la obtención de la información de la BBDD
+         * sobre una consulta
+         * */
         async Task SecondAsync(XmlNode body)
         {
             BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
@@ -146,6 +158,9 @@ namespace PluginsLibrary
             }
         }
 
+        /*
+         * Método privado auxiliar para la obtención de los atributos
+         * */
         private string AttributesJson(string json)
         {
             JObject c = JObject.Parse(json);
@@ -158,6 +173,9 @@ namespace PluginsLibrary
             return auxiliar.ToString();
         }
 
+        /*
+         * Método privado para convertir un schema
+         * */
         private String ConvertSchema(BsonDocument firstDocument)
         {
             JObject c = JsonConvert.DeserializeObject<JObject>(firstDocument.ToJson());

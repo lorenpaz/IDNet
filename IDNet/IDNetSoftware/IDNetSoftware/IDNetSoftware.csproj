@@ -72,6 +72,15 @@
     <EmbeddedResource Include="resources\icons\updateDatabase.png">
       <LogicalName>updateDatabase.png</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\connection.png">
+      <LogicalName>connection.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\schema.png">
+      <LogicalName>schema.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\select.png">
+      <LogicalName>select.png</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />

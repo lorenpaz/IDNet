@@ -23,6 +23,21 @@
         <property name="Image">resource:updateDatabase.png</property>
       </source>
     </icon-set>
+    <icon-set id="connection.png">
+      <source>
+        <property name="Image">resource:connection.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="schema.png">
+      <source>
+        <property name="Image">resource:schema.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="select.png">
+      <source>
+        <property name="Image">resource:select.png</property>
+      </source>
+    </icon-set>
   </icon-factory>
   <widget class="Gtk.Window" id="IDNetSoftware.MainWindow" design-size="750 7000">
     <action-group name="Default">
@@ -124,6 +139,34 @@
         <property name="StockId">gtk-yes</property>
         <signal name="Activated" handler="OnYesActionActivated" />
       </action>
+      <action id="connectionPngAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">connection.png</property>
+      </action>
+      <action id="justifyRightAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-justify-right</property>
+      </action>
+      <action id="connectionPng">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">connection.png</property>
+        <signal name="Activated" handler="OnConnectionPngAction1Activated" />
+      </action>
+      <action id="schemaPngAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">schema.png</property>
+        <signal name="Activated" handler="OnSchemaPngActionActivated" />
+      </action>
+      <action id="selectPngAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">select.png</property>
+        <signal name="Activated" handler="OnSelectPngActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">700</property>
@@ -172,12 +215,15 @@
           <widget class="Gtk.Toolbar" id="toolbar1">
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
+            <property name="IconSize">Dialog</property>
             <node name="toolbar1" type="Toolbar">
-              <node type="Toolitem" action="addDatabasePngAction" />
               <node type="Toolitem" action="clearAction" />
-              <node type="Toolitem" action="databaseConnectionPngAction" />
+              <node type="Toolitem" action="addDatabasePngAction" />
               <node type="Toolitem" action="updateDatabasePngAction" />
-              <node type="Toolitem" action="yesAction" />
+              <node type="Toolitem" action="databaseConnectionPngAction" />
+              <node type="Toolitem" action="connectionPng" />
+              <node type="Toolitem" action="schemaPngAction" />
+              <node type="Toolitem" action="selectPngAction" />
             </node>
           </widget>
           <packing>
@@ -323,6 +369,7 @@
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
                         <signal name="RowActivated" handler="OnTreeviewDatabasesRowActivated" />
+                        <signal name="ButtonReleaseEvent" handler="OnTreeviewDatabasesButtonReleaseEvent" />
                       </widget>
                     </child>
                   </widget>
@@ -827,7 +874,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="IDNetSoftware.ErrorServersDialog" design-size="400 300">
+  <widget class="Gtk.Dialog" id="IDNetSoftware.ErrorServersDialog" design-size="328 177">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>

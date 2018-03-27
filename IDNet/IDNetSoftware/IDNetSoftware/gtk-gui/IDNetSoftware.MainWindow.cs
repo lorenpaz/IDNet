@@ -40,6 +40,16 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action yesAction;
 
+		private global::Gtk.Action connectionPngAction;
+
+		private global::Gtk.Action justifyRightAction;
+
+		private global::Gtk.Action connectionPng;
+
+		private global::Gtk.Action schemaPngAction;
+
+		private global::Gtk.Action selectPngAction;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -134,6 +144,16 @@ namespace IDNetSoftware
 			w1.Add(this.SimbologiaAction, null);
 			this.yesAction = new global::Gtk.Action("yesAction", null, null, "gtk-yes");
 			w1.Add(this.yesAction, null);
+			this.connectionPngAction = new global::Gtk.Action("connectionPngAction", null, null, "connection.png");
+			w1.Add(this.connectionPngAction, null);
+			this.justifyRightAction = new global::Gtk.Action("justifyRightAction", null, null, "gtk-justify-right");
+			w1.Add(this.justifyRightAction, null);
+			this.connectionPng = new global::Gtk.Action("connectionPng", null, null, "connection.png");
+			w1.Add(this.connectionPng, null);
+			this.schemaPngAction = new global::Gtk.Action("schemaPngAction", null, null, "schema.png");
+			w1.Add(this.schemaPngAction, null);
+			this.selectPngAction = new global::Gtk.Action("selectPngAction", null, null, "select.png");
+			w1.Add(this.selectPngAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 700;
@@ -159,10 +179,11 @@ namespace IDNetSoftware
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='clearAction' action='clearAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='yesAction' action='yesAction'/></toolbar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='clearAction' action='clearAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='connectionPng' action='connectionPng'/><toolitem name='schemaPngAction' action='schemaPngAction'/><toolitem name='selectPngAction' action='selectPngAction'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
+			this.toolbar1.IconSize = ((global::Gtk.IconSize)(6));
 			this.vbox1.Add(this.toolbar1);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.toolbar1]));
 			w3.Position = 1;
@@ -325,11 +346,14 @@ namespace IDNetSoftware
 			this.MensajesAction.Activated += new global::System.EventHandler(this.OnMensajesEnviadosActionActivated);
 			this.updateDatabasePngAction.Activated += new global::System.EventHandler(this.OnUpdateDatabasePngActionActivated);
 			this.SimbologiaAction.Activated += new global::System.EventHandler(this.OnSimbologaActionActivated);
-			this.yesAction.Activated += new global::System.EventHandler(this.OnYesActionActivated);
+			this.connectionPng.Activated += new global::System.EventHandler(this.OnConnectionPngAction1Activated);
+			this.schemaPngAction.Activated += new global::System.EventHandler(this.OnSchemaPngActionActivated);
+			this.selectPngAction.Activated += new global::System.EventHandler(this.OnSelectPngActionActivated);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 			this.treeviewNeighbours.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewNeighboursRowActivated);
 			this.treeviewNeighbours.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnTreeviewNeighboursButtonReleaseEvent);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
+			this.treeviewDatabases.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnTreeviewDatabasesButtonReleaseEvent);
 		}
 	}
 }

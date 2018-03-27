@@ -83,8 +83,8 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 400;
-			this.DefaultHeight = 300;
+			this.DefaultWidth = 328;
+			this.DefaultHeight = 177;
 			this.Show();
 			this.buttonOK.Clicked += new global::System.EventHandler(this.OnButtonOKClicked);
 		}

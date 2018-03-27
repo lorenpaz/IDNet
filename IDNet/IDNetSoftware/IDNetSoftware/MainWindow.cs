@@ -269,9 +269,6 @@ namespace IDNetSoftware
 
             this._messages = new Dictionary<string, List<Tuple<string, string, Dictionary<string, PipeMessage>>>>();
 
-            this._conexionesActivas = 0;
-            this.yesAction.Sensitive = false;
-
             CargoBasesDeDatosDeLaOV();
 
             ComprobacionServidoresBaseDeDatos();
@@ -279,6 +276,8 @@ namespace IDNetSoftware
             CargoBasesDeDatosPropias();
 
             GenerarParDeClaves();
+
+            DesactivadoBotones();
 
             MensajeBienvenida();
         }
@@ -322,26 +321,27 @@ namespace IDNetSoftware
          * */
         private bool SolicitarVecinos()
         {
-            string msg, response;
+            /*  string msg, response;
 
-            //Proceso el envio
-            PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
-                                       Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
-            msg = post.ProcesarEnvio(this._user.IP.ToString());
+              //Proceso el envio
+              PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
+                                         Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
+              msg = post.ProcesarEnvio(this._user.IP.ToString());
 
-            //Creo el cliente y le envio el mensaje
-            Client c = new Client();
-            bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
-            if (conexion)
-            {
-                response = c.StartClient(msg, Constants.GATEKEEPER);
-                post.ProcesarRespuesta(response);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+              //Creo el cliente y le envio el mensaje
+              Client c = new Client();
+              bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+              if (conexion)
+              {
+                  response = c.StartClient(msg, Constants.GATEKEEPER);
+                  post.ProcesarRespuesta(response);
+                  return true;
+              }
+              else
+              {
+                  return false;
+              }*/
+            return true;
         }
 
 
@@ -484,14 +484,14 @@ namespace IDNetSoftware
 
             foreach (var vecino in this._neighbours.MiembrosOV)
             {
-                foreach(var type in vecino.Value)
+                foreach (var type in vecino.Value)
                 {
-                    foreach(var bbdd in type.Value)
+                    foreach (var bbdd in type.Value)
                     {
                         this._infoBBDDView.AppendValues(vecino.Key, type.Key, bbdd);
                     }
                 }
-            } 
+            }
         }
 
 
@@ -663,12 +663,14 @@ namespace IDNetSoftware
                     if (ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
                     {
                         PipeMessage pipeConexion = null;
-                        if(this._messages[usuarioDestino][index].Item3.ContainsKey(Constants.CONNECTION))
+                        if (this._messages[usuarioDestino][index].Item3.ContainsKey(Constants.CONNECTION))
                         {
                             pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
 
-                        }else{
-                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaAuxiliar = DevuelveTupla(usuarioDestino, null,null);
+                        }
+                        else
+                        {
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaAuxiliar = DevuelveTupla(usuarioDestino, null, null);
 
                             int indexAuxiliar = this._messages[usuarioDestino].IndexOf(tuplaAuxiliar);
                             pipeConexion = this._messages[usuarioDestino][indexAuxiliar].Item3[Constants.CONNECTION];
@@ -739,7 +741,7 @@ namespace IDNetSoftware
                     }
 
                     MostrarSolicitudConsulta(this._connectionDialog.Select.MessageRequest);
-                    MostrarResultadoConsulta(this._connectionDialog.Select.MessageRequest,this._connectionDialog.Select.MessageResponse);
+                    MostrarResultadoConsulta(this._connectionDialog.Select.MessageRequest, this._connectionDialog.Select.MessageResponse);
 
                     break;
 
@@ -842,11 +844,293 @@ namespace IDNetSoftware
                     break;
 
                 default:
-                    
+
 
                     break;
             }
 
+        }
+
+        protected void OnTreeviewNeighboursButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
+        {
+            TreeIter t;
+            TreePath p = treeviewNeighbours.Selection.GetSelectedRows()[0];
+
+            this._infoNeighboursView.GetIter(out t, p);
+
+            string vecino = (string)this._infoNeighboursView.GetValue(t, 0);
+
+
+            if (!this._messages.ContainsKey(vecino))
+                this.connectionPng.Sensitive = true;
+            else
+                this.connectionPng.Sensitive = false;
+        }
+
+        /*
+         * Método que realiza la misma función que el método OnTreeviewNeighboursRowActivated
+         * */
+        protected void OnConnectionPngAction1Activated(object sender, EventArgs e)
+        {
+            TreeIter t;
+            TreePath p = treeviewNeighbours.Selection.GetSelectedRows()[0];
+
+            this._infoNeighboursView.GetIter(out t, p);
+
+            string vecino = (string)this._infoNeighboursView.GetValue(t, 0);
+
+            //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
+            if (!this._messages.ContainsKey(vecino))
+            {
+                this._connectionDialog = new ConnectionDialog(this._user.Nombre, vecino, null, null, this._claves);
+
+                this._connectionDialog.Run();
+
+
+                switch (this._connectionDialog.TypeOutPut)
+                {
+                    case Constants.CANCEL:
+
+                        break;
+                    case Constants.MENSAJE_CONEXION:
+                        Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
+                        messageC.Add(Constants.CONNECTION, this._connectionDialog.Connection);
+                        Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
+                            new Tuple<string, string, Dictionary<string, PipeMessage>>(null, null, messageC);
+
+                        if (!this._messages.ContainsKey(vecino))
+                        {
+                            List<Tuple<string, string, Dictionary<string, PipeMessage>>> lista = new List<Tuple<string, string, Dictionary<string, PipeMessage>>>();
+                            lista.Add(tupl);
+
+                            this._messages.Add(vecino, lista);
+                        }
+                        else
+                        {
+                            this._messages[vecino].Add(tupl);
+                        }
+
+                        if (!this._keyPairClients.ContainsKey(vecino))
+                        {
+                            Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey, this._connectionDialog.Connection.SymmetricKey);
+                            this._keyPairClients.Add(vecino, tup);
+                        }
+
+                        this._neighbours.SaveNeighbourDatabases(this._connectionDialog.Connection.MessageResponse);
+
+                        AddValuesDatabasesNeighbours();
+
+                        MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
+                        MostrarConexion(this._connectionDialog.Connection.MessageResponse);
+                        IncrementarConexionesActivas();
+
+                        break;
+                    case Constants.ERROR_CONNECTION:
+                        MostrarError(this._connectionDialog.TypeOutPut);
+                        break;
+                }
+            }
+        }
+
+        /*
+         * Método evento para solicitar esquema BBDD
+         * */
+        protected void OnSchemaPngActionActivated(object sender, EventArgs e)
+        {
+            TreeIter t;
+            TreePath p = treeviewDatabases.Selection.GetSelectedRows()[0];
+
+            this._infoBBDDView.GetIter(out t, p);
+
+            string usuarioDestino = (string)this._infoBBDDView.GetValue(t, 0);
+            string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
+            string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
+
+            //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
+            if (this._messages.ContainsKey(usuarioDestino))
+            {
+                Tuple<string, string, Dictionary<string, PipeMessage>> tupla = DevuelveTupla(usuarioDestino, tipoBBDD, nombreBBDD);
+
+                if (tupla == null)
+                {
+                    Tuple<string, string, Dictionary<string, PipeMessage>> firstTupla = DevuelvePrimeraTupla(usuarioDestino);
+                    int index = this._messages[usuarioDestino].IndexOf(firstTupla);
+
+                    PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
+
+                    this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                }
+                else
+                {
+                    int index = this._messages[usuarioDestino].IndexOf(tupla);
+
+                    if (!ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
+                    {
+                        PipeMessage pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
+
+                        this._connectionDialog = new ConnectionDialog(this._user.Nombre, usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, this._claves);
+                    }
+                }
+            }
+
+            this._connectionDialog.Run();
+
+            switch (this._connectionDialog.TypeOutPut)
+            {
+                case Constants.CANCEL:
+
+                    break;
+                case Constants.MENSAJE_ESQUEMA:
+
+                    if (!ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
+                    {
+                        Tuple<string, string, Dictionary<string, PipeMessage>> tuplaa = DevuelveTupla(usuarioDestino, tipoBBDD, nombreBBDD);
+
+                        if (tuplaa != null)
+                        {
+                            //Añadimos un nuevo pipeMessage a la tupla existente
+                            int indexx = this._messages[usuarioDestino].IndexOf(tuplaa);
+                            this._messages[usuarioDestino][indexx].Item3.Add(Constants.SCHEMA, this._connectionDialog.Schema);
+                        }
+                        else
+                        {
+
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaDiferente = DevuelvePrimeraTupla(usuarioDestino);
+
+                            //Añadimos una nueva tupla
+                            Dictionary<string, PipeMessage> diccionarioNuevo = new Dictionary<string, PipeMessage>();
+                            //diccionarioNuevo.Add(Constants.CONNECTION, tuplaDiferente.Item3[Constants.CONNECTION]);
+                            diccionarioNuevo.Add(Constants.SCHEMA, this._connectionDialog.Schema);
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaNueva = new Tuple<string, string, Dictionary<string, PipeMessage>>(tipoBBDD, nombreBBDD, diccionarioNuevo);
+                            this._messages[usuarioDestino].Add(tuplaNueva);
+                        }
+                    }
+
+                    MostrarSolicitudEsquema(this._connectionDialog.Schema.MessageRequest);
+                    MostrarEsquema(this._connectionDialog.Schema.MessageResponse);
+                    break;
+
+                case Constants.ERROR_CONNECTION:
+                    MostrarError(this._connectionDialog.TypeOutPut);
+                    break;
+            }
+        }
+
+        /*
+         * Método evento para solicitar consulta BBDD
+         * */
+        protected void OnSelectPngActionActivated(object sender, EventArgs e)
+        {
+            TreeIter t;
+            TreePath p = treeviewDatabases.Selection.GetSelectedRows()[0];
+
+            this._infoBBDDView.GetIter(out t, p);
+
+
+            string usuarioDestino = (string)this._infoBBDDView.GetValue(t, 0);
+            string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
+            string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
+
+            //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
+            if (this._messages.ContainsKey(usuarioDestino))
+            {
+                Tuple<string, string, Dictionary<string, PipeMessage>> tupla = DevuelveTupla(usuarioDestino, tipoBBDD, nombreBBDD);
+
+                if (tupla != null)
+                {
+                    int index = this._messages[usuarioDestino].IndexOf(tupla);
+
+                    if (ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
+                    {
+                        PipeMessage pipeConexion = null;
+                        if (this._messages[usuarioDestino][index].Item3.ContainsKey(Constants.CONNECTION))
+                        {
+                            pipeConexion = this._messages[usuarioDestino][index].Item3[Constants.CONNECTION];
+
+                        }
+                        else
+                        {
+                            Tuple<string, string, Dictionary<string, PipeMessage>> tuplaAuxiliar = DevuelveTupla(usuarioDestino, null, null);
+
+                            int indexAuxiliar = this._messages[usuarioDestino].IndexOf(tuplaAuxiliar);
+                            pipeConexion = this._messages[usuarioDestino][indexAuxiliar].Item3[Constants.CONNECTION];
+
+                        }
+                        PipeMessage pipeSchema = this._messages[usuarioDestino][index].Item3[Constants.SCHEMA];
+
+                        this._connectionDialog = new ConnectionDialog(this._user.Nombre,
+                            usuarioDestino, tipoBBDD, nombreBBDD, pipeConexion, pipeSchema, this._claves);
+                    }
+                }
+            }
+
+            this._connectionDialog.Run();
+
+            switch (this._connectionDialog.TypeOutPut)
+            {
+                case Constants.CANCEL:
+
+                    break;
+
+                case Constants.MENSAJE_CONSULTA:
+                    Tuple<string, string, Dictionary<string, PipeMessage>> tupla = DevuelveTupla(usuarioDestino, tipoBBDD, nombreBBDD);
+
+                    int index = this._messages[usuarioDestino].IndexOf(tupla);
+                    if (this._messages[usuarioDestino][index].Item3.ContainsKey(Constants.SELECT))
+                    {
+                        this._messages[usuarioDestino][index].Item3[Constants.SELECT] = this._connectionDialog.Select;
+                    }
+                    else
+                    {
+                        this._messages[usuarioDestino][index].Item3.Add(Constants.SELECT, this._connectionDialog.Select);
+                    }
+
+                    MostrarSolicitudConsulta(this._connectionDialog.Select.MessageRequest);
+                    MostrarResultadoConsulta(this._connectionDialog.Select.MessageRequest, this._connectionDialog.Select.MessageResponse);
+
+                    break;
+
+                case Constants.ERROR_CONNECTION:
+                    MostrarError(this._connectionDialog.TypeOutPut);
+                    break;
+            }
+
+        }
+
+        /*
+         * Método evento cuando pulsas en el treeview de BBDDVecinos
+         * */
+        protected void OnTreeviewDatabasesButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
+        {
+            TreeIter t;
+            TreePath p = treeviewDatabases.Selection.GetSelectedRows()[0];
+
+            this._infoBBDDView.GetIter(out t, p);
+
+            this._infoBBDDView.GetIter(out t, p);
+
+            string usuarioDestino = (string)this._infoBBDDView.GetValue(t, 0);
+            string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
+            string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
+
+            //Comprobamos su existencia: que se haya realizado previamente conexión
+            if (this._messages.ContainsKey(usuarioDestino))
+            {
+                this.connectionPng.Sensitive = false;
+
+                //Comprobamos si existe ya un esquema
+                if (ComprobarTuplaConSchema(usuarioDestino,tipoBBDD,nombreBBDD))
+                {
+                    this.selectPngAction.Sensitive = true;
+                    this.schemaPngAction.Sensitive = true;
+
+                }else 
+                    //Si no existe esquema
+                {
+                    this.selectPngAction.Sensitive = false;
+                    this.schemaPngAction.Sensitive = true;
+                }
+            }
         }
 
         protected void OnMensajesEnviadosActionActivated(object sender, EventArgs e)
@@ -910,9 +1194,9 @@ namespace IDNetSoftware
         /*
          * Método privado para mostrar la respuesta a la solicitud de esquema de BBDD
          * */
-        private void MostrarResultadoConsulta(Message messageRequest,Message messageResponse)
+        private void MostrarResultadoConsulta(Message messageRequest, Message messageResponse)
         {
-            infoview.Buffer.Text += "\n" + Constants.RespuestaConsulta(messageRequest,messageResponse);
+            infoview.Buffer.Text += "\n" + Constants.RespuestaConsulta(messageRequest, messageResponse);
         }
 
         /*
@@ -968,74 +1252,12 @@ namespace IDNetSoftware
             this._simbologiaDialog.Run();
         }
 
-        protected void OnTreeviewNeighboursButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
+        private void DesactivadoBotones()
         {
-            this.yesAction.Sensitive = true;
-        }
-
-        /*
-         * Método que realiza la misma función que el método OnTreeviewNeighboursRowActivated
-         * */
-        protected void OnYesActionActivated(object sender, EventArgs e)
-        {
-            TreeIter t;
-            TreePath p = treeviewNeighbours.Selection.GetSelectedRows()[0];
-
-            this._infoNeighboursView.GetIter(out t, p);
-
-            string vecino = (string)this._infoNeighboursView.GetValue(t, 0);
-
-            //Comprobamos que está el usuario y si la tupla que tiene es del mismo (tipoBBDD,nombreBBDD)
-            if (!this._messages.ContainsKey(vecino))
-            {
-                this._connectionDialog = new ConnectionDialog(this._user.Nombre, vecino, null, null, this._claves);
-
-                this._connectionDialog.Run();
-
-
-                switch (this._connectionDialog.TypeOutPut)
-                {
-                    case Constants.CANCEL:
-
-                        break;
-                    case Constants.MENSAJE_CONEXION:
-                        Dictionary<string, PipeMessage> messageC = new Dictionary<string, PipeMessage>();
-                        messageC.Add(Constants.CONNECTION, this._connectionDialog.Connection);
-                        Tuple<string, string, Dictionary<string, PipeMessage>> tupl =
-                            new Tuple<string, string, Dictionary<string, PipeMessage>>(null, null, messageC);
-
-                        if (!this._messages.ContainsKey(vecino))
-                        {
-                            List<Tuple<string, string, Dictionary<string, PipeMessage>>> lista = new List<Tuple<string, string, Dictionary<string, PipeMessage>>>();
-                            lista.Add(tupl);
-
-                            this._messages.Add(vecino, lista);
-                        }
-                        else
-                        {
-                            this._messages[vecino].Add(tupl);
-                        }
-
-                        if (!this._keyPairClients.ContainsKey(vecino))
-                        {
-                            Tuple<RsaKeyParameters, SymmetricAlgorithm> tup = new Tuple<RsaKeyParameters, SymmetricAlgorithm>(this._connectionDialog.Connection.PublicKey, this._connectionDialog.Connection.SymmetricKey);
-                            this._keyPairClients.Add(vecino, tup);
-                        }
-
-                        this._neighbours.SaveNeighbourDatabases(this._connectionDialog.Connection.MessageResponse);
-
-                        AddValuesDatabasesNeighbours();
-
-                        MostrarSolicitudConexion(this._connectionDialog.Connection.MessageRequest);
-                        MostrarConexion(this._connectionDialog.Connection.MessageResponse);
-                        IncrementarConexionesActivas();
-
-                        break;
-                    case Constants.ERROR_CONNECTION:
-                        MostrarError(this._connectionDialog.TypeOutPut);
-                        break;
-                }
-            }
+            this._conexionesActivas = 0;
+            this.connectionPng.Sensitive = false;
+            this.selectPngAction.Sensitive = false;
+            this.schemaPngAction.Sensitive = false;
         }
     } 
 }

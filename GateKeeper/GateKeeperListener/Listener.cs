@@ -24,7 +24,8 @@ namespace GateKeeperListener
     public class Listener
     {
         private ManualResetEvent allDone = new ManualResetEvent(false);
-        ILog log;
+		ILog log = LogManager.GetLogger(typeof(PeriodicAnnouncer));
+
 		private  Queue<string> _msgQueue;
         private int _port;
 
@@ -59,7 +60,7 @@ namespace GateKeeperListener
 			try
 			{
 				listener.Bind(localEndPoint);
-				listener.Listen(100);
+				listener.Listen(this._port);
 
 				while (true)
 				{
@@ -67,6 +68,7 @@ namespace GateKeeperListener
 					allDone.Reset();
 
 					// Start an asynchronous socket to listen for connections.
+
 					log.Info("Waiting for a connection...");
 					listener.BeginAccept(
 						new AsyncCallback(AcceptCallback),
@@ -84,20 +86,18 @@ namespace GateKeeperListener
 
         public void AcceptCallback(IAsyncResult ar)
 		{
-			{
-				// Signal the main thread to continue.
-				allDone.Set();
+			// Signal the main thread to continue.
+			allDone.Set();
 
-				// Get the socket that handles the client request.
-				Socket listener = (Socket)ar.AsyncState;
-				Socket handler = listener.EndAccept(ar);
+			// Get the socket that handles the client request.
+			Socket listener = (Socket)ar.AsyncState;
+			Socket handler = listener.EndAccept(ar);
 
-				// Create the state object.
-				StateObject state = new StateObject();
-				state.workSocket = handler;
-				handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-					new AsyncCallback(ReadCallback), state);
-			}
+			// Create the state object.
+			StateObject state = new StateObject();
+			state.workSocket = handler;
+			handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+				new AsyncCallback(ReadCallback), state);
 		}
 
         public void ReadCallback(IAsyncResult ar)
@@ -144,7 +144,12 @@ namespace GateKeeperListener
 
 		private void TratarMensaje()
 		{
-			Pathfinder p = new Pathfinder(true);
+            Pathfinder p;
+            if(this._port == 11000)
+			    p = new Pathfinder(false);
+            else
+				p = new Pathfinder(true);
+
 			while (_msgQueue.Count > 0)
 				p.ProcessMsg(_msgQueue.Dequeue());
 		}

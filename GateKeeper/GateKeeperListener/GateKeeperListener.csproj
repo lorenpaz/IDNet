@@ -31,6 +31,7 @@
     <Compile Include="Sender.cs" />
     <Compile Include="PeriodicAnnouncer.cs" />
     <Compile Include="Listener.cs" />
+    <Compile Include="RouteXML.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Sockets">

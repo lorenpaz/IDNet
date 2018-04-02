@@ -2162,7 +2162,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.SplashWindow" design-size="512 554">
+  <widget class="Gtk.Window" id="IDNetSoftware.SplashWindow" design-size="512 582">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Bienvenido al mundo IDNet!</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
@@ -2183,6 +2183,20 @@ mongodb</property>
           </packing>
         </child>
         <child>
+          <widget class="Gtk.Label" id="labelInfoTFG">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Trabajo de Fin de Grado en el grado de Ingeniería Informática
+Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
+            <property name="Justify">Center</property>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
             <property name="Spacing">6</property>
@@ -2198,7 +2212,7 @@ mongodb</property>
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">2</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>

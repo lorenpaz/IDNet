@@ -8,6 +8,8 @@ namespace IDNetSoftware
 
 		private global::Gtk.Image IDNetimage;
 
+		private global::Gtk.Label labelInfoTFG;
+
 		private global::Gtk.HBox hbox1;
 
 		private global::Gtk.ProgressBar progressbar;
@@ -33,6 +35,17 @@ namespace IDNetSoftware
 			w1.Position = 0;
 			w1.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
+			this.labelInfoTFG = new global::Gtk.Label();
+			this.labelInfoTFG.Name = "labelInfoTFG";
+			this.labelInfoTFG.LabelProp = global::Mono.Unix.Catalog.GetString("Trabajo de Fin de Grado en el grado de Ingeniería Informática\nAlumnos: Juan Mas A" +
+					"guilar y Lorenzo José de la Paz Suárez");
+			this.labelInfoTFG.Justify = ((global::Gtk.Justification)(2));
+			this.vbox1.Add(this.labelInfoTFG);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.labelInfoTFG]));
+			w2.Position = 1;
+			w2.Expand = false;
+			w2.Fill = false;
+			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
@@ -41,20 +54,20 @@ namespace IDNetSoftware
 			this.progressbar.Name = "progressbar";
 			this.progressbar.Text = global::Mono.Unix.Catalog.GetString("Cargando...");
 			this.hbox1.Add(this.progressbar);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.progressbar]));
-			w2.Position = 0;
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.progressbar]));
+			w3.Position = 0;
 			this.vbox1.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
-			w3.Position = 1;
-			w3.Expand = false;
-			w3.Fill = false;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+			w4.Position = 2;
+			w4.Expand = false;
+			w4.Fill = false;
 			this.Add(this.vbox1);
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 512;
-			this.DefaultHeight = 554;
+			this.DefaultHeight = 582;
 			this.Show();
 		}
 	}

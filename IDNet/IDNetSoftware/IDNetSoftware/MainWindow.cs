@@ -301,6 +301,8 @@ namespace IDNetSoftware
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_USUARIO, new CellRendererText(), "text", 0);
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_TIPOBBDD, new CellRendererText(), "text", 1);
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_NOMBREBBDD, new CellRendererText(), "text", 2);
+            }else{
+                
             }
         }
 
@@ -321,7 +323,7 @@ namespace IDNetSoftware
          * */
         private bool SolicitarVecinos()
         {
-            /*  string msg, response;
+              string msg, response;
 
               //Proceso el envio
               PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
@@ -340,8 +342,8 @@ namespace IDNetSoftware
               else
               {
                   return false;
-              }*/
-            return true;
+              }
+            //return true;
         }
 
 
@@ -559,10 +561,10 @@ namespace IDNetSoftware
             UpdateOwnDatabases();
             if(this._modifyDatabaseDialog.TypeTask == Constants.TYPE_MODIFY)
             {
-                ModifyBBDD(this._modifyDatabaseDialog.BBDD[1],this._modifyDatabaseDialog.Success);
+                ModifyBBDD(this._modifyDatabaseDialog.BBDD,this._modifyDatabaseDialog.Success);
             }else if (this._modifyDatabaseDialog.TypeTask == Constants.TYPE_DELETE)
             {
-                DeleteBBDD(this._modifyDatabaseDialog.BBDD[1], this._modifyDatabaseDialog.Success);
+                DeleteBBDD(this._modifyDatabaseDialog.BBDD, this._modifyDatabaseDialog.Success);
             }
            
         }
@@ -1227,6 +1229,14 @@ namespace IDNetSoftware
         }
 
         /*
+         * Método privado para informar del fallo en la carga de vecinos
+         * */
+        private void FalloCargaVecinos()
+        {
+            infoview.Buffer.Text += "\n" + Constants.FalloCargaVecinos();
+        }
+
+        /*
          * Método privado para incrementar las conexiones activas
          * */
         private void IncrementarConexionesActivas()
@@ -1251,15 +1261,15 @@ namespace IDNetSoftware
             infoview.Buffer.Text += "\n" + Constants.Actualizacion();
         }
 
-        private void AdiccionBBDD(string bbdd, bool success)
+        private void AdiccionBBDD(List<string> bbdd, bool success)
         {
             infoview.Buffer.Text += "\n" + Constants.AdiccionBBDD(bbdd,success);
         }
-        private void ModifyBBDD(string bbdd, bool success)
+        private void ModifyBBDD(List<string> bbdd, bool success)
         {
             infoview.Buffer.Text += "\n" + Constants.ModifyBBDD(bbdd, success);
         }
-        private void DeleteBBDD(string bbdd, bool success)
+        private void DeleteBBDD(List<string> bbdd, bool success)
         {
             infoview.Buffer.Text += "\n" + Constants.DeleteBBDD(bbdd, success);
         }

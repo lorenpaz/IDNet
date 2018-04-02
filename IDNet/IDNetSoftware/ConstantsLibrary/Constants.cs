@@ -10,6 +10,7 @@ namespace ConstantsLibraryS
     //Clase con las constantes
     public static class Constants
     {
+        public const string IDNETDAEMON = @"IDNetDaemon";
         public const string CONFIG = @"../../../../configuration/";
         public const string ConfigFileDatabases = CONFIG + @"databases.conf";
         public const string ConfigFileNeighbours = CONFIG + @"neighbours.conf";
@@ -110,22 +111,27 @@ namespace ConstantsLibraryS
             return LINEA + "\n" +ACTUALIZACION +"\n" + LINEA + "\n";
         }
 
-        public static string AdiccionBBDD(string bbdd, bool success)
+        public static string AdiccionBBDD(List<string> bbdd, bool success)
         {
-            return success?LINEA + "\n" + "Se ha añadido satisfactoriamente la base de datos "+bbdd+" " + "\n" + LINEA + "\n":
+            return success?LINEA + "\n" + "Se ha añadido satisfactoriamente la base de datos '"+bbdd[1]+"' de tipo '"+bbdd[0]+"' " + "\n" + LINEA + "\n":
                 LINEA + "\n" + "No se ha podido añadir la base de datos. Revise los campos requeridos para la base de datos." +"\n" + LINEA + "\n";
         }
 
-        public static string ModifyBBDD(string bbdd, bool success)
+        public static string ModifyBBDD(List<string> bbdd, bool success)
         {
-            return success ? LINEA + "\n" + "Se ha modificado satisfactoriamente la base de datos " + bbdd + " " + "\n" + LINEA + "\n" :
+            return success ? LINEA + "\n" + "Se ha modificado satisfactoriamente la base de datos '" + bbdd[1] + "' de tipo '"+ bbdd[0] +"'. " + "\n" + LINEA + "\n" :
                 LINEA + "\n" + "No se ha podido modificar la base de datos. Revise los campos de la la base de datos." + "\n" + LINEA + "\n";
         }
 
-        public static string DeleteBBDD(string bbdd, bool success)
+        public static string DeleteBBDD(List<string> bbdd, bool success)
         {
-            return success ? LINEA + "\n" + "Se ha borrado satisfactoriamente la base de datos " + bbdd + " " + "\n" + LINEA + "\n" :
+            return success ? LINEA + "\n" + "Se ha borrado satisfactoriamente la base de datos '" + bbdd[1] + "' de tipo '"+ bbdd[0] +"'. " + "\n" + LINEA + "\n" :
                 LINEA + "\n" + "No se ha podido borrar la base de datos. Revise los campos de la base de datos." + "\n" + LINEA + "\n";
+        }
+
+        public static string FalloCargaVecinos()
+        {
+            return LINEA + "\n" + "Se ha producido un fallo a la hora de cargar los vecinos de la Organización Virtual."+"\n" + "Consulte con el administrador" +"\n" + LINEA + "\n";
         }
 
         public const int LENGTH_TABLE_VIEW = 130;

@@ -1,6 +1,7 @@
 <root>
 	<message_type>011</message_type>
 	<source>Lorenzo</source>
+	<ip>192.168.1.105</ip>
 	<destination>192.168.0.2</destination>
 </root>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Gtk;
 
 namespace IDNetSoftware
 {
@@ -11,7 +12,7 @@ namespace IDNetSoftware
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build();
-
+            labelInfoTFG.ModifyFg(StateType.Normal, new Gdk.Color(1, 1, 1));
             ThreadStart tStart = new ThreadStart(this.Cargando);
             Thread t = new Thread(tStart);
             t.Start();

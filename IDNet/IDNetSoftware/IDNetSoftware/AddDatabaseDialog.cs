@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DatabaseLibraryS;
 
 namespace IDNetSoftware
@@ -6,15 +7,15 @@ namespace IDNetSoftware
     public partial class AddDatabaseDialog : Gtk.Dialog
     {
 		//Atributo de las bases de datos propias
-		Databases _databases;
+		private Databases _databases;
 
         //Nombre base de datos a añadir
-        String _bbdd;
+        private List<String> _bbdd;
 
         //Tarea con exito
-        bool _success;
+        private bool _success;
 
-        public String BBDD{
+        public List<String> BBDD{
 
             get{
                 return this._bbdd;
@@ -39,7 +40,7 @@ namespace IDNetSoftware
             this.Build();
 
             this._databases = databases;
-            this._bbdd = null;
+            this._bbdd = new List<string>();
             this._success = false;
         }
 
@@ -53,19 +54,30 @@ namespace IDNetSoftware
         {
             if (entryNombreBBDD.Text != "")
             {
-                this._bbdd = entryNombreBBDD.Text;
-
+                Adiccion();
                 if (entryUsername.Text == "")
                 {
-                    this._success = this._databases.addDatabase(comboboxTipos.ActiveText, this._bbdd, null, null);
+                    this._success = this._databases.addDatabase(comboboxTipos.ActiveText, entryNombreBBDD.Text, null, null);
                 }
                 else
                 {
-                    this._success = this._databases.addDatabase(comboboxTipos.ActiveText, this._bbdd,
+                    this._success = this._databases.addDatabase(comboboxTipos.ActiveText, entryNombreBBDD.Text,
                                                      entryUsername.Text, entryContrasenia.Text);
                 }
             }       
 			this.Destroy();
+        }
+
+        private void Adiccion()
+        {
+            this._bbdd.Clear();
+            this._bbdd[0] = comboboxTipos.ActiveText;
+            this._bbdd[1] = entryNombreBBDD.Text;
+            if (entryUsername.Text != "")
+            {
+                this._bbdd[2] = entryUsername.Text;
+                this._bbdd[3] = entryContrasenia.Text;
+            }
         }
     }
 }

@@ -269,15 +269,15 @@ namespace MessageLibraryS
             source.InnerText = this._source;
             elementRoot.AppendChild(source);
 
+            //Creamos el elemento IP
+            XmlNode ipNode = xmlDoc.CreateElement("ip");
+            ipNode.InnerText = ip;
+            elementRoot.AppendChild(ipNode);
+
             //Creamos el elemento destino
             XmlNode destination = xmlDoc.CreateElement("destination");
             destination.InnerText = this._destination;
             elementRoot.AppendChild(destination);
-
-            //Creamos el elemento IP
-            XmlNode ipNode = xmlDoc.CreateElement("ip");
-            destination.InnerText = ip;
-            elementRoot.AppendChild(ipNode);
 
             return xmlDoc;
         }

@@ -41,7 +41,6 @@ namespace IDNetDaemon
          * */
 		void StartMyJob()
 		{
-
             //Registramos el demonio en el GateKeeper
             RegisterClient register = new RegisterClient();
             if(register.comprobarConexion(Constants.GATEKEEPER))

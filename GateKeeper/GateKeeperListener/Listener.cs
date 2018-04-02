@@ -103,6 +103,7 @@ namespace GateKeeperListener
         public void ReadCallback(IAsyncResult ar)
         {
 			String content = String.Empty;
+            String respuesta;
 
 			// Retrieve the state object and the handler socket
 			// from the asynchronous state object.
@@ -121,6 +122,7 @@ namespace GateKeeperListener
                 // Check for end-of-file tag. If it is not there, read 
                 // more data.
                 content = state.sb.ToString();
+                respuesta = content;
                 if (content.IndexOf("</root>", StringComparison.Ordinal) > -1)
                 {
                     // All the data has been read from the 
@@ -131,7 +133,7 @@ namespace GateKeeperListener
                     this._msgQueue.Enqueue(content);
 
                     if (this._msgQueue.Count == 1)
-                        TratarMensaje();
+                        respuesta = TratarMensaje(respuesta);
                 }
                 else
                 {
@@ -139,10 +141,13 @@ namespace GateKeeperListener
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
                 }
+
+                if(respuesta != "")
+                    Sender.Send(handler, respuesta);
             }
         }
 
-		private void TratarMensaje()
+		private String TratarMensaje(String respuesta)
 		{
             Pathfinder p;
             if(this._port == 11000)
@@ -151,7 +156,9 @@ namespace GateKeeperListener
 				p = new Pathfinder(true);
 
 			while (_msgQueue.Count > 0)
-				p.ProcessMsg(_msgQueue.Dequeue());
+				respuesta = p.ProcessMsg(_msgQueue.Dequeue(), respuesta);
+
+            return respuesta;
 		}
     }
 }

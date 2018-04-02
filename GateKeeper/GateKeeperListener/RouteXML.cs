@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Xml;
 using System.Net;
+using System.IO;
 
 namespace GateKeeperListener
 {
-    public class RouteXML
-    {
-        public RouteXML()
-        {
-        }
+	public class RouteXML
+	{
+		public RouteXML()
+		{
+		}
 
 		public static void merge(string content)
 		{
@@ -18,7 +19,10 @@ namespace GateKeeperListener
 			doc.LoadXml(content);
 
 			XmlDocument routes = new XmlDocument();
-			routes.LoadXml("./Config/routes.xml");
+
+			FileStream stream = File.OpenRead("../../../Config/routes.xml");
+			routes.Load(stream);
+			stream.Close();
 
 			XmlNodeList d = doc.GetElementsByTagName("route");
 
@@ -38,7 +42,7 @@ namespace GateKeeperListener
                  * */
 				foreach (XmlNode route in r)
 				{
-					XmlNodeList existe = routes.SelectNodes("/route[d_node='" + dir_dest + "']");
+					XmlNodeList existe = routes.SelectNodes("//route[d_node='" + dir_dest + "']");
 
 					if (existe.Count > 0)
 					{
@@ -63,7 +67,7 @@ namespace GateKeeperListener
 			}
 
 			//Saves the file
-			routes.Save("./Config/routes.xml");
+			routes.Save("../../../Config/routes.xml");
 		}
 
 
@@ -73,10 +77,16 @@ namespace GateKeeperListener
 			Pathfinder p = new Pathfinder(true);
 
 			XmlDocument neighbours = new XmlDocument();
-			neighbours.LoadXml("./Config/neighbours.xml");
+
+			FileStream stream = File.OpenRead("../../../Config/neighbours.xml");
+			neighbours.Load(stream);
+			stream.Close();
 
 			XmlDocument routes = new XmlDocument();
-			routes.LoadXml("./Config/routes.xlm");
+
+			FileStream streamR = File.OpenRead("../../../Config/routes.xml");
+			routes.Load(streamR);
+			streamR.Close();
 
 			XmlNodeList n = neighbours.GetElementsByTagName("node");
 			XmlNodeList r = routes.GetElementsByTagName("route");
@@ -106,7 +116,7 @@ namespace GateKeeperListener
 						AñadirATablaRutas(table, dir_dest, dir_hop, distance, nombre, elementRoot);
 					}
 				}
-				p.ProcessMsg(table.ToString());
+				p.ProcessMsg(table.ToString(), "");
 			}
 		}
 
@@ -140,9 +150,12 @@ namespace GateKeeperListener
 		public static IPAddress CargarIP(string clienteDestino)
 		{
 			XmlDocument doc = new XmlDocument();
-			doc.LoadXml("./Config/routes.xml");
 
-			XmlNodeList existe = doc.SelectNodes("/route[name='" + clienteDestino + "']");
+			FileStream stream = File.OpenRead("../../../Config/routes.xml");
+			doc.Load(stream);
+			stream.Close();
+
+			XmlNodeList existe = doc.SelectNodes("//route[name='" + clienteDestino + "']");
 
 			return IPAddress.Parse(existe[0].ChildNodes[0].InnerText);
 		}
@@ -150,13 +163,18 @@ namespace GateKeeperListener
 		public static void PrepararRuta(string nom_cliente, string ip_cliente)
 		{
 			XmlDocument doc = new XmlDocument();
-			doc.LoadXml("./Config/routes.xml");
+
+			FileStream stream = File.OpenRead("../../../Config/routes.xml");
+			doc.Load(stream);
+			stream.Close();
 
 			XmlElement root = doc.DocumentElement;
 
-			AñadirATablaRutas(doc, ip_cliente, "127.0.0.1", 0, nom_cliente, root);
+            XmlNodeList existe = doc.SelectNodes("//route[name='" + nom_cliente + "']");
+			if (existe[0] == null)
+				AñadirATablaRutas(doc, ip_cliente, "127.0.0.1", 0, nom_cliente, root);
 
-			doc.Save("./Config/routes.xml");
+			doc.Save("../../../Config/routes.xml");
 		}
 	}
 }

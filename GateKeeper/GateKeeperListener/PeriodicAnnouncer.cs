@@ -23,7 +23,7 @@ namespace GateKeeperListener
 
         private static void TSender()
         {
-			System.Timers.Timer aTimer = new System.Timers.Timer(5000);
+			System.Timers.Timer aTimer = new System.Timers.Timer(100);
             aTimer.Elapsed += RouteXML.SendRoutingTables;
 			aTimer.Enabled = true;
         }

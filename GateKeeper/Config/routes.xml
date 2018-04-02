@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+  <route>
+    <d_node>127.0.0.1</d_node>
+    <d_hop>127.0.0.1</d_hop>
+    <name>Juan</name>
+    <distance>1</distance>
+  </route>
+  <route>
+    <d_node>192.168.1.105</d_node>
+    <d_hop>127.0.0.1</d_hop>
+    <name>Lorenzo</name>
+    <distance>0</distance>
+  </route>
+</routes>

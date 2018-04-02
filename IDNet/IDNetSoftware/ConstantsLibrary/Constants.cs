@@ -35,6 +35,11 @@ namespace ConstantsLibraryS
         public const string USUARIO_SOLICITADO = @"Solicitado al usuario: ";
         public const string USUARIO_RESPUESTA = @"Respuesta del usuario: ";
 
+        public const string ACTUALIZACION =@"Actualizada la disponibilidad de los servidores";
+
+        public const string TYPE_MODIFY = @"type";
+        public const string TYPE_DELETE = @"delete";
+
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
         public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";
         public const string NO_ERROR_MYSQL = @"There is no error in MYSQL Server";
@@ -98,6 +103,29 @@ namespace ConstantsLibraryS
                 "Hemos creado una clave privada y una clave pública para todas las comunicaciones"+
                 "\n"+" que se realizarán con los vecinos." +
                 "\n"+LINEA+"\n";
+        }
+
+        public static string Actualizacion()
+        {
+            return LINEA + "\n" +ACTUALIZACION +"\n" + LINEA + "\n";
+        }
+
+        public static string AdiccionBBDD(string bbdd, bool success)
+        {
+            return success?LINEA + "\n" + "Se ha añadido satisfactoriamente la base de datos "+bbdd+" " + "\n" + LINEA + "\n":
+                LINEA + "\n" + "No se ha podido añadir la base de datos. Revise los campos requeridos para la base de datos." +"\n" + LINEA + "\n";
+        }
+
+        public static string ModifyBBDD(string bbdd, bool success)
+        {
+            return success ? LINEA + "\n" + "Se ha modificado satisfactoriamente la base de datos " + bbdd + " " + "\n" + LINEA + "\n" :
+                LINEA + "\n" + "No se ha podido modificar la base de datos. Revise los campos de la la base de datos." + "\n" + LINEA + "\n";
+        }
+
+        public static string DeleteBBDD(string bbdd, bool success)
+        {
+            return success ? LINEA + "\n" + "Se ha borrado satisfactoriamente la base de datos " + bbdd + " " + "\n" + LINEA + "\n" :
+                LINEA + "\n" + "No se ha podido borrar la base de datos. Revise los campos de la base de datos." + "\n" + LINEA + "\n";
         }
 
         public const int LENGTH_TABLE_VIEW = 130;

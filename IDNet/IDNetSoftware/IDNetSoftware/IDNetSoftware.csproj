@@ -112,6 +112,8 @@
     <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentWindow.cs" />
     <Compile Include="SimbologiaDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.SimbologiaDialog.cs" />
+    <Compile Include="SplashWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.SplashWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

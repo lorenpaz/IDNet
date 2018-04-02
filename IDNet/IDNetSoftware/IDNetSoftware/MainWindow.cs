@@ -248,7 +248,7 @@ namespace IDNetSoftware
 
         //Diccionario con claves públicas y simétricas de los clientes
         Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>> _keyPairClients;
-
+         
         /**
          * Constructor de la ventana
          * */
@@ -271,13 +271,13 @@ namespace IDNetSoftware
 
             CargoBasesDeDatosDeLaOV();
 
-            ComprobacionServidoresBaseDeDatos();
-
-            CargoBasesDeDatosPropias();
-
             GenerarParDeClaves();
 
             DesactivadoBotones();
+
+            ComprobacionServidoresBaseDeDatos();
+
+            CargoBasesDeDatosPropias();
 
             MensajeBienvenida();
         }
@@ -442,6 +442,8 @@ namespace IDNetSoftware
             this._addDatabaseDialog.Run();
 
             UpdateOwnDatabases();
+
+            AdiccionBBDD(this._addDatabaseDialog.BBDD,this._addDatabaseDialog.Success);
         }
 
         /*
@@ -467,6 +469,7 @@ namespace IDNetSoftware
             this._addDatabaseDialog.Run();
 
             UpdateOwnDatabases();
+            AdiccionBBDD(this._addDatabaseDialog.BBDD,this._addDatabaseDialog.Success);
         }
 
         /*
@@ -475,6 +478,7 @@ namespace IDNetSoftware
         protected void OnUpdateDatabasePngActionActivated(object sender, EventArgs e)
         {
             UpdateOwnDatabases();
+            Actualizacion();
         }
 
         //Añadir las bases de datos de los vecinos
@@ -553,6 +557,14 @@ namespace IDNetSoftware
             this._modifyDatabaseDialog.Run();
 
             UpdateOwnDatabases();
+            if(this._modifyDatabaseDialog.TypeTask == Constants.TYPE_MODIFY)
+            {
+                ModifyBBDD(this._modifyDatabaseDialog.BBDD[1],this._modifyDatabaseDialog.Success);
+            }else if (this._modifyDatabaseDialog.TypeTask == Constants.TYPE_DELETE)
+            {
+                DeleteBBDD(this._modifyDatabaseDialog.BBDD[1], this._modifyDatabaseDialog.Success);
+            }
+           
         }
 
         /*
@@ -851,20 +863,29 @@ namespace IDNetSoftware
 
         }
 
+        /*
+         * Evento producido cuando pulsas en los vecinos
+         * */
         protected void OnTreeviewNeighboursButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
         {
             TreeIter t;
-            TreePath p = treeviewNeighbours.Selection.GetSelectedRows()[0];
+            if (treeviewNeighbours.Selection.GetSelectedRows().Length > 0)
+            {
+                TreePath p = treeviewNeighbours.Selection.GetSelectedRows()[0];
 
-            this._infoNeighboursView.GetIter(out t, p);
+                this._infoNeighboursView.GetIter(out t, p);
 
-            string vecino = (string)this._infoNeighboursView.GetValue(t, 0);
+                string vecino = (string)this._infoNeighboursView.GetValue(t, 0);
 
 
-            if (!this._messages.ContainsKey(vecino))
-                this.connectionPng.Sensitive = true;
-            else
-                this.connectionPng.Sensitive = false;
+                if (!this._messages.ContainsKey(vecino))
+                    this.connectionPng.Sensitive = true;
+                else
+                    this.connectionPng.Sensitive = false;
+
+                this.addDatabasePngAction.Sensitive = false;
+                this.updateDatabasePngAction.Sensitive = false;
+            }
         }
 
         /*
@@ -1103,33 +1124,39 @@ namespace IDNetSoftware
         protected void OnTreeviewDatabasesButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
         {
             TreeIter t;
-            TreePath p = treeviewDatabases.Selection.GetSelectedRows()[0];
-
-            this._infoBBDDView.GetIter(out t, p);
-
-            this._infoBBDDView.GetIter(out t, p);
-
-            string usuarioDestino = (string)this._infoBBDDView.GetValue(t, 0);
-            string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
-            string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
-
-            //Comprobamos su existencia: que se haya realizado previamente conexión
-            if (this._messages.ContainsKey(usuarioDestino))
+            if (treeviewDatabases.Selection.GetSelectedRows().Length > 0)
             {
-                this.connectionPng.Sensitive = false;
+                TreePath p = treeviewDatabases.Selection.GetSelectedRows()[0];
 
-                //Comprobamos si existe ya un esquema
-                if (ComprobarTuplaConSchema(usuarioDestino,tipoBBDD,nombreBBDD))
+                this._infoBBDDView.GetIter(out t, p);
+
+                this._infoBBDDView.GetIter(out t, p);
+
+                string usuarioDestino = (string)this._infoBBDDView.GetValue(t, 0);
+                string tipoBBDD = (string)this._infoBBDDView.GetValue(t, 1);
+                string nombreBBDD = (string)this._infoBBDDView.GetValue(t, 2);
+
+                //Comprobamos su existencia: que se haya realizado previamente conexión
+                if (this._messages.ContainsKey(usuarioDestino))
                 {
-                    this.selectPngAction.Sensitive = true;
-                    this.schemaPngAction.Sensitive = true;
+                    this.connectionPng.Sensitive = false;
 
-                }else 
+                    //Comprobamos si existe ya un esquema
+                    if (ComprobarTuplaConSchema(usuarioDestino, tipoBBDD, nombreBBDD))
+                    {
+                        this.selectPngAction.Sensitive = true;
+                        this.schemaPngAction.Sensitive = true;
+
+                    }
+                    else
                     //Si no existe esquema
-                {
-                    this.selectPngAction.Sensitive = false;
-                    this.schemaPngAction.Sensitive = true;
+                    {
+                        this.selectPngAction.Sensitive = false;
+                        this.schemaPngAction.Sensitive = true;
+                    }
                 }
+                this.addDatabasePngAction.Sensitive = false;
+                this.updateDatabasePngAction.Sensitive = false;
             }
         }
 
@@ -1217,6 +1244,26 @@ namespace IDNetSoftware
         }
 
         /*
+         * Método privdo para mostrar la actualizacion de los servidores
+         * */
+        private void Actualizacion()
+        {
+            infoview.Buffer.Text += "\n" + Constants.Actualizacion();
+        }
+
+        private void AdiccionBBDD(string bbdd, bool success)
+        {
+            infoview.Buffer.Text += "\n" + Constants.AdiccionBBDD(bbdd,success);
+        }
+        private void ModifyBBDD(string bbdd, bool success)
+        {
+            infoview.Buffer.Text += "\n" + Constants.ModifyBBDD(bbdd, success);
+        }
+        private void DeleteBBDD(string bbdd, bool success)
+        {
+            infoview.Buffer.Text += "\n" + Constants.DeleteBBDD(bbdd, success);
+        }
+        /*
          * Método privado para mostrar los errores producidos
          * */
         private void MostrarError(string errore)
@@ -1240,12 +1287,6 @@ namespace IDNetSoftware
             infoview.Buffer.Clear();
         }
 
-        protected void OnShown(object sender, EventArgs e)
-        {
-            var a = 0;
-
-        }
-
         protected void OnSimbologaActionActivated(object sender, EventArgs e)
         {
             this._simbologiaDialog = new SimbologiaDialog();
@@ -1259,5 +1300,32 @@ namespace IDNetSoftware
             this.selectPngAction.Sensitive = false;
             this.schemaPngAction.Sensitive = false;
         }
+
+        /*
+         * Evento ocurrido cuando pulsas en el treeview de BBDD propias
+         * */
+        protected void OnTreeviewDatabasesPropiasButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
+        {
+            //Activamos/desactivamos los respectivos botones
+            connectionPng.Sensitive = false;
+            schemaPngAction.Sensitive = false;
+            selectPngAction.Sensitive = false;
+            addDatabasePngAction.Sensitive = true;
+            updateDatabasePngAction.Sensitive = true;
+        }
+
+        /*
+         * Evento ocurrido cuando pulsas en el infoview
+         * */
+        protected void OnInfoviewButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
+        {
+            //Activamos/desactivamos los respectivos botones
+            connectionPng.Sensitive = false;
+            schemaPngAction.Sensitive = false;
+            selectPngAction.Sensitive = false;
+            addDatabasePngAction.Sensitive = false;
+            updateDatabasePngAction.Sensitive = false;
+        }
+
     } 
 }

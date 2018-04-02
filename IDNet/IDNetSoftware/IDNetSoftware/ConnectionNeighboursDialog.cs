@@ -50,6 +50,7 @@ namespace IDNetSoftware
             this._neighbours = neighbours;
             CargoBasesDeDatosDeLaOV();
             this._rowActivated = null;
+            this._typeOutPut = "Cancel";
         }
 
         private void CargoBasesDeDatosDeLaOV()

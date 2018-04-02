@@ -38,10 +38,6 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action SimbologiaAction;
 
-		private global::Gtk.Action yesAction;
-
-		private global::Gtk.Action connectionPngAction;
-
 		private global::Gtk.Action justifyRightAction;
 
 		private global::Gtk.Action connectionPng;
@@ -142,10 +138,6 @@ namespace IDNetSoftware
 			this.SimbologiaAction = new global::Gtk.Action("SimbologiaAction", global::Mono.Unix.Catalog.GetString("Simbología"), null, null);
 			this.SimbologiaAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Simbología");
 			w1.Add(this.SimbologiaAction, null);
-			this.yesAction = new global::Gtk.Action("yesAction", null, null, "gtk-yes");
-			w1.Add(this.yesAction, null);
-			this.connectionPngAction = new global::Gtk.Action("connectionPngAction", null, null, "connection.png");
-			w1.Add(this.connectionPngAction, null);
 			this.justifyRightAction = new global::Gtk.Action("justifyRightAction", null, null, "gtk-justify-right");
 			w1.Add(this.justifyRightAction, null);
 			this.connectionPng = new global::Gtk.Action("connectionPng", null, null, "connection.png");
@@ -179,7 +171,7 @@ namespace IDNetSoftware
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='clearAction' action='clearAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='connectionPng' action='connectionPng'/><toolitem name='schemaPngAction' action='schemaPngAction'/><toolitem name='selectPngAction' action='selectPngAction'/></toolbar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='connectionPng' action='connectionPng'/><toolitem name='schemaPngAction' action='schemaPngAction'/><toolitem name='selectPngAction' action='selectPngAction'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -334,7 +326,6 @@ namespace IDNetSoftware
 			}
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
-			this.Shown += new global::System.EventHandler(this.OnShown);
 			this.DestroyEvent += new global::Gtk.DestroyEventHandler(this.OnDestroyEvent);
 			this.salirAction.Activated += new global::System.EventHandler(this.OnSalirActionActivated);
 			this.addDatabasePngAction.Activated += new global::System.EventHandler(this.OnAddDatabasePngActionActivated);
@@ -349,7 +340,9 @@ namespace IDNetSoftware
 			this.connectionPng.Activated += new global::System.EventHandler(this.OnConnectionPngAction1Activated);
 			this.schemaPngAction.Activated += new global::System.EventHandler(this.OnSchemaPngActionActivated);
 			this.selectPngAction.Activated += new global::System.EventHandler(this.OnSelectPngActionActivated);
+			this.infoview.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnInfoviewButtonReleaseEvent);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
+			this.treeviewDatabasesPropias.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnTreeviewDatabasesPropiasButtonReleaseEvent);
 			this.treeviewNeighbours.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewNeighboursRowActivated);
 			this.treeviewNeighbours.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnTreeviewNeighboursButtonReleaseEvent);
 			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);

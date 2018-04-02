@@ -86,9 +86,7 @@ namespace ConnectionLibraryS
         public bool comprobarConexion(string hostName)
         {
             // Connect to a remote device.
-            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
+            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), 11000);
 
             // Create a TCP/IP  socket.
             Socket sender = new Socket(AddressFamily.InterNetwork,
@@ -104,11 +102,5 @@ namespace ConnectionLibraryS
             }
 
         }
-        /*public static int Main(String[] args)
-        {
-            string msg="<root><source>Pepe</source><destination>Lorenzo</destination><message_type>002</message_type><db_name>usuarios</db_name><db_type>mysql</db_type><body></body></root>";
-            StartClient();
-            return 0;
-        }*/
     }
 }

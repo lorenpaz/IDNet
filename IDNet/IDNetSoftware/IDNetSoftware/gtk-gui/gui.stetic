@@ -133,17 +133,6 @@
         <property name="ShortLabel" translatable="yes">Simbología</property>
         <signal name="Activated" handler="OnSimbologaActionActivated" />
       </action>
-      <action id="yesAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-yes</property>
-        <signal name="Activated" handler="OnYesActionActivated" />
-      </action>
-      <action id="connectionPngAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">connection.png</property>
-      </action>
       <action id="justifyRightAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
@@ -178,7 +167,6 @@
     <property name="DefaultWidth">700</property>
     <property name="DefaultHeight">750</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
-    <signal name="Shown" handler="OnShown" />
     <signal name="DestroyEvent" handler="OnDestroyEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -247,6 +235,7 @@
                 <property name="CursorVisible">False</property>
                 <property name="AcceptsTab">False</property>
                 <property name="Text" translatable="yes" />
+                <signal name="ButtonReleaseEvent" handler="OnInfoviewButtonReleaseEvent" />
               </widget>
             </child>
           </widget>
@@ -286,6 +275,7 @@
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
                         <signal name="RowActivated" handler="OnTreeviewDatabasesPropiasRowActivated" />
+                        <signal name="ButtonReleaseEvent" handler="OnTreeviewDatabasesPropiasButtonReleaseEvent" />
                       </widget>
                     </child>
                   </widget>
@@ -655,7 +645,7 @@ mongodb</property>
   <widget class="Gtk.Dialog" id="IDNetSoftware.ModifyDatabaseDialog" design-size="400 300">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="Buttons">2</property>
+    <property name="Buttons">3</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
@@ -833,8 +823,23 @@ mongodb</property>
         <property name="MemberName" />
         <property name="Spacing">10</property>
         <property name="BorderWidth">5</property>
-        <property name="Size">2</property>
+        <property name="Size">3</property>
         <property name="LayoutStyle">End</property>
+        <child>
+          <widget class="Gtk.Button" id="buttonBorrar">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Borrar</property>
+            <property name="UseUnderline">True</property>
+            <property name="ResponseId">0</property>
+            <signal name="Clicked" handler="OnButtonBorrarClicked" />
+          </widget>
+          <packing>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
         <child>
           <widget class="Gtk.Button" id="buttonCancel">
             <property name="MemberName" />
@@ -849,6 +854,7 @@ mongodb</property>
             <property name="label">gtk-cancel</property>
           </widget>
           <packing>
+            <property name="Position">1</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
@@ -866,7 +872,7 @@ mongodb</property>
             <property name="label">gtk-ok</property>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">2</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
@@ -2149,6 +2155,51 @@ mongodb</property>
             <property name="label">gtk-ok</property>
           </widget>
           <packing>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Window" id="IDNetSoftware.SplashWindow" design-size="512 554">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">Bienvenido al mundo IDNet!</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
+    <child>
+      <widget class="Gtk.VBox" id="vbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.Image" id="IDNetimage">
+            <property name="MemberName" />
+            <property name="Pixbuf">resource:iconoIDNetSoftware</property>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.ProgressBar" id="progressbar">
+                <property name="MemberName" />
+                <property name="Text" translatable="yes">Cargando...</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>

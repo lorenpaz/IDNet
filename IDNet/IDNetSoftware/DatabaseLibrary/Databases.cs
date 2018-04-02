@@ -236,6 +236,59 @@ namespace DatabaseLibraryS
             return true;
         }
 
+        /*
+         * Método para borrar una base de datos
+         * */
+        public bool DeleteDatabase(List<string> bbdd, string antiguoTipoBBDD, string antiguoNombreBBDD, string antiguoUserDatabase, string antiguoPasswordDatabase)
+        {
+            if (!this._databasesPropias.ContainsKey(bbdd[0]) ||
+                !this._databasesPropias[bbdd[0]].Contains(devuelveTupla(bbdd[0], bbdd[1])))
+            {
+                return false;
+            }
+
+            if (!File.Exists(Constants.ConfigFileDatabases))
+            {
+                throw new Exception("No hay archivo de configuración");
+            }
+
+            string tempFile = Constants.CONFIG + "temp.txt";
+
+            string[] lines = File.ReadAllLines(Constants.ConfigFileDatabases);
+            string lineExactly = null;
+
+            foreach (string linea in lines)
+            {
+                if (linea.Contains(bbdd[0]) && linea.Contains(bbdd[1]))
+                {
+                    lineExactly = linea;
+                }
+            }
+
+            string line = null;
+
+            //Escribo en un archivo temporal mientras que leo
+            using (StreamReader reader = new StreamReader(Constants.ConfigFileDatabases))
+            using (StreamWriter writer = new StreamWriter(tempFile))
+            {
+                while ((line = reader.ReadLine()) != null)
+                {
+                    //Sustituyo la linea que he modificado
+                    if (line != lineExactly)
+                    {
+                        writer.WriteLine(line);
+                    }
+                }
+            }
+
+            //Borro el original,copio creando el original y borro el temporal
+            File.Delete(Constants.ConfigFileDatabases);
+            File.Copy(tempFile, Constants.ConfigFileDatabases);
+            File.Delete(tempFile);
+
+            return true;
+        }
+
         public bool ComprobacionServidor(string databaseType, string databaseName,
             string usernameDatabase, string passwordDatabase){
             try

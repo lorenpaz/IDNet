@@ -1,5 +1,5 @@
-﻿using System;
-using Gtk;
+﻿using Gtk;
+using System.Threading;
 
 namespace IDNetSoftware
 {
@@ -8,8 +8,8 @@ namespace IDNetSoftware
         public static void Main(string[] args)
         {
             Application.Init();
-            MainWindow win = new MainWindow();
-            win.Show();
+            SplashWindow splash = new SplashWindow();
+            splash.Show();
             Application.Run();
         }
     }

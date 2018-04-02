@@ -38,6 +38,8 @@ namespace IDNetSoftware
 
 		private global::Gtk.Label GtkLabel4;
 
+		private global::Gtk.Button buttonBorrar;
+
 		private global::Gtk.Button buttonCancel;
 
 		private global::Gtk.Button buttonOk;
@@ -172,6 +174,16 @@ namespace IDNetSoftware
 			w15.BorderWidth = ((uint)(5));
 			w15.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
+			this.buttonBorrar = new global::Gtk.Button();
+			this.buttonBorrar.CanFocus = true;
+			this.buttonBorrar.Name = "buttonBorrar";
+			this.buttonBorrar.UseUnderline = true;
+			this.buttonBorrar.Label = global::Mono.Unix.Catalog.GetString("Borrar");
+			this.AddActionWidget(this.buttonBorrar, 0);
+			global::Gtk.ButtonBox.ButtonBoxChild w16 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonBorrar]));
+			w16.Expand = false;
+			w16.Fill = false;
+			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button();
 			this.buttonCancel.CanDefault = true;
 			this.buttonCancel.CanFocus = true;
@@ -180,9 +192,10 @@ namespace IDNetSoftware
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget(this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w16 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonCancel]));
-			w16.Expand = false;
-			w16.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w17 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonCancel]));
+			w17.Position = 1;
+			w17.Expand = false;
+			w17.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button();
 			this.buttonOk.CanDefault = true;
@@ -192,10 +205,10 @@ namespace IDNetSoftware
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget(this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w17 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonOk]));
-			w17.Position = 1;
-			w17.Expand = false;
-			w17.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w18 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonOk]));
+			w18.Position = 2;
+			w18.Expand = false;
+			w18.Fill = false;
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();
@@ -203,6 +216,7 @@ namespace IDNetSoftware
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
 			this.Show();
+			this.buttonBorrar.Clicked += new global::System.EventHandler(this.OnButtonBorrarClicked);
 			this.buttonCancel.Activated += new global::System.EventHandler(this.OnButtonCancelActivated);
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);

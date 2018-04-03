@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 
 using ConstantsLibraryS;
-using CriptoLibraryS;
 
 using MongoDB.Bson;
 using MongoDB.Driver;

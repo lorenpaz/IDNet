@@ -7,7 +7,8 @@ namespace IDNetSoftware
     public partial class SplashWindow : Gtk.Window
     {
         MainWindow _main;
-            
+        LoginWindow _login;
+
         public SplashWindow() :
                 base(Gtk.WindowType.Toplevel)
         {
@@ -39,6 +40,7 @@ namespace IDNetSoftware
         private void NewWindow()
         {
             this._main = new MainWindow();
+            //this._login = new LoginWindow();
             this.Destroy();
         }
     }

@@ -29,6 +29,7 @@
   <ItemGroup>
     <Compile Include="Databases.cs" />
     <Compile Include="Neighbours.cs" />
+    <Compile Include="RemoteDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConstantsLibrary\ConstantsLibraryS.csproj">

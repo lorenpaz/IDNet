@@ -260,6 +260,13 @@ namespace CriptoLibraryS
 			// Replace the encryptedData element with the plaintext XML element.
 			exml.ReplaceData(encryptedElement, rgbOutput);
 		}
+
+        public static byte[] EncryptSHA256(string password)
+        {
+            SHA256 mySHA256 = SHA256Managed.Create();
+
+            return mySHA256.ComputeHash(Encoding.UTF8.GetBytes(password));
+        }
 	}
 
 }

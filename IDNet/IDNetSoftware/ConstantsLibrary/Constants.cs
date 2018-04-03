@@ -11,14 +11,14 @@ namespace ConstantsLibraryS
     public static class Constants
     {
         public const string IDNETDAEMON = @"IDNetDaemon";
-        public const string CONFIG = @"../../../../configuration/";
-        public const string ConfigFileDatabases = CONFIG + @"databases.conf";
-        public const string ConfigFileNeighbours = CONFIG + @"neighbours.conf";
-        public const string ConfigFileNeighboursDatabases = CONFIG + @"neighboursDatabases.conf";
-        public const string ConfigFileInfoUser = CONFIG + @"info.conf";
+        public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"/configuration");
+        public static string ConfigFileDatabases = Path.Combine(CONFIG, @"databases.conf");
+        public static string ConfigFileNeighbours = Path.Combine(CONFIG, @"neighbours.conf");
+        public static string ConfigFileNeighboursDatabases = Path.Combine(CONFIG, @"neighboursDatabases.conf");
+        public static string ConfigFileInfoUser = Path.Combine(CONFIG, @"info.conf");
 
-        public const string CONF_PUBLIC_KEY = CONFIG + @"publicKeyIDNet.pem";
-        public const string CONF_PRIVATE_KEY = CONFIG + @"privateKeyIDNet.pem";
+        public static string CONF_PUBLIC_KEY = Path.Combine(CONFIG, @"publicKeyIDNet.pem");
+        public static string CONF_PRIVATE_KEY = Path.Combine(CONFIG, @"privateKeyIDNet.pem");
 
         public const string MONGODB = @"mongodb";
         public const string MYSQL = @"mysql";
@@ -32,15 +32,30 @@ namespace ConstantsLibraryS
         public const string SOLICITUD_CONSULTA = @"Solicitud de consulta de base de datos";
         public const string RESPUESTA_CONSULTA = @"Respuesta a la solicitud de consulta de la base de datos";
 
-
         public const string USUARIO_SOLICITADO = @"Solicitado al usuario: ";
         public const string USUARIO_RESPUESTA = @"Respuesta del usuario: ";
 
-        public const string ACTUALIZACION =@"Actualizada la disponibilidad de los servidores";
+        public const string ACTUALIZACION = @"Actualizada la disponibilidad de los servidores";
 
         public const string TYPE_MODIFY = @"type";
         public const string TYPE_DELETE = @"delete";
 
+        public const string MYSQ_REMOTE_NAMEBBDD = @"IDNet";
+        public const string MYSQ_REMOTE_SERVERBBDD = @"databases.000webhost.com";
+        public const string MYSQL_REMOTE = @"Server="+MYSQ_REMOTE_SERVERBBDD+";Database="+MYSQ_REMOTE_NAMEBBDD+";User ID=root;Password=admin12;Pooling=false;";
+        public const string MYSQL_REMOTE_ERROR_INICIO_SESION = @"Usuario y/o contraseña no válidos.";
+        public const string MYSQL_REMOTE_ERROR_REGISTRARSE_CONTRASEÑA = @"Fallo en la repetición de la contraseña.";
+        public const string MYSQL_REMOTE_LOGIN_SUCCESS = @"Se ha iniciado correctamente.";
+        public const string MYSQL_REMOTE_REGISTER_SUCCESS = @"Se ha registrado correctamente.";
+        public const string MYSQL_REMOTE_REGISTER_EXISTS = @"Ya existe ese nombre de usuario.";
+
+        public static string MysqlRemoteSelect(string username)
+        {
+            return "SELECT * FROM IDNet WHERE username='" + username + "'";
+        }
+        public static string MysqlRemoteInsert(string username,byte[] password){
+            return "INSERT INTO IDNet VALUES('"+username+"', '"+password+"')";
+        }
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
         public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";
         public const string NO_ERROR_MYSQL = @"There is no error in MYSQL Server";

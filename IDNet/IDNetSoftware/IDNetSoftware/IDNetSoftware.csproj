@@ -114,6 +114,10 @@
     <Compile Include="gtk-gui\IDNetSoftware.SimbologiaDialog.cs" />
     <Compile Include="SplashWindow.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.SplashWindow.cs" />
+    <Compile Include="LoginWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.LoginWindow.cs" />
+    <Compile Include="RegisterWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.RegisterWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

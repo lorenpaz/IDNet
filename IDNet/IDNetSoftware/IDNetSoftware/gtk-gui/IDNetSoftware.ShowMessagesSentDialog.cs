@@ -57,7 +57,6 @@ namespace IDNetSoftware
 			// Container child GtkAlignment1.Gtk.Container+ContainerChild
 			this.labelCuerpo = new global::Gtk.Label();
 			this.labelCuerpo.Name = "labelCuerpo";
-			this.labelCuerpo.LabelProp = "";
 			this.GtkAlignment1.Add(this.labelCuerpo);
 			this.frame1.Add(this.GtkAlignment1);
 			this.labelBody = new global::Gtk.Label();

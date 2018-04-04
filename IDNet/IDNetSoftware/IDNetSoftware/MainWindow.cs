@@ -325,7 +325,7 @@ namespace IDNetSoftware
         {
               string msg, response;
 
-              //Proceso el envio
+            /*  //Proceso el envio
               PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
                                          Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
               msg = post.ProcesarEnvio(this._user.IP.ToString());
@@ -342,8 +342,8 @@ namespace IDNetSoftware
               else
               {
                   return false;
-              }
-            //return true;
+              }*/
+            return true;
         }
 
 

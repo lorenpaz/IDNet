@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MySql.Data.MySqlClient;
 
 using ConstantsLibraryS;
@@ -36,10 +37,13 @@ namespace DatabaseLibrary
                 this._mysql.Open();
 
                 //QUery
-                string query = Constants.MysqlRemoteSelect(username);
+                string query = Constants.MysqlRemoteSelect();
 
                 //Create Command
-                MySqlCommand cmd = new MySqlCommand(query, this._mysql);
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = this._mysql;
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("username",username);
 
                 //Create a data reader and Execute the command
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -50,9 +54,11 @@ namespace DatabaseLibrary
                 //Read the data and check password
                 while (dataReader.Read())
                 {
-                    ok = passwordBytes == dataReader["password"];
+                    string usuario = (String) dataReader["username"];
+                    byte[] passwordRemote = (byte[]) dataReader["password"];
+                    ok = passwordBytes.SequenceEqual(passwordRemote);
                 }
-
+                                                      
                 //close Data Reader
                 dataReader.Close();
 
@@ -83,10 +89,14 @@ namespace DatabaseLibrary
                 byte[] passwordBytes = Cripto.EncryptSHA256(password);
 
                 //Query
-                string query = Constants.MysqlRemoteInsert(username,passwordBytes);
+                string query = Constants.MysqlRemoteInsert();
 
                 //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand(query, this._mysql);
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = this._mysql;
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("username",username);
+                cmd.Parameters.AddWithValue("password",passwordBytes);
 
                 //Execute command
                 ok = cmd.ExecuteNonQuery()==1;
@@ -95,8 +105,8 @@ namespace DatabaseLibrary
                 this._mysql.Close();
 
 
-            }catch (MySqlException ){
-                
+            }catch (MySqlException e){
+                string error = e.StackTrace;
             }
 
             return ok;

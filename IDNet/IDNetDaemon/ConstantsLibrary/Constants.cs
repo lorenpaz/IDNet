@@ -111,6 +111,7 @@ namespace ConstantsLibrary
 		public static string ACKSELECT = "006";
 
         public static string GATEKEEPER = @"192.168.1.85";
+        public static int GATEKEEPER_PORT = 11000;
 
         public static Usuario usuario = new Usuario();
 

@@ -39,8 +39,9 @@ namespace IDNetSoftware
 
         private void NewWindow()
         {
-            this._main = new MainWindow();
-            //this._login = new LoginWindow();
+            //this._main = new MainWindow();
+            this._login = new LoginWindow();
+            this._login.Show();
             this.Destroy();
         }
     }

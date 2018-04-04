@@ -2,6 +2,8 @@
 using DatabaseLibrary;
 using ConstantsLibraryS;
 
+using Gdk;
+
 namespace IDNetSoftware
 {
     public partial class LoginWindow : Gtk.Window
@@ -12,7 +14,7 @@ namespace IDNetSoftware
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build();
-
+            RedimensionarImagen();
             this._remoteDatabase = new RemoteDatabase();
         }
 
@@ -53,6 +55,11 @@ namespace IDNetSoftware
         private void MostrarMensaje(string mensaje)
         {
             labelState.Text = mensaje;
+        }
+
+        private void RedimensionarImagen()
+        {
+         //   imageIDNet.Pixbuf.ScaleSimple(100, 500, InterpType.Bilinear);
         }
     }
 }

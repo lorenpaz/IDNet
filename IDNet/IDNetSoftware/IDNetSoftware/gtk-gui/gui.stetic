@@ -1952,7 +1952,6 @@ mongodb</property>
                     <child>
                       <widget class="Gtk.Label" id="labelCuerpo">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes" />
                       </widget>
                     </child>
                   </widget>
@@ -2222,7 +2221,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.LoginWindow" design-size="330 171">
+  <widget class="Gtk.Window" id="IDNetSoftware.LoginWindow" design-size="330 182">
     <property name="MemberName" />
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
@@ -2328,6 +2327,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
+                <property name="Visibility">False</property>
                 <property name="InvisibleChar">•</property>
               </widget>
               <packing>
@@ -2366,7 +2366,6 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
             <child>
               <widget class="Gtk.Label" id="labelState">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes" />
                 <property name="Justify">Center</property>
               </widget>
               <packing>
@@ -2493,6 +2492,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
+                <property name="Visibility">False</property>
                 <property name="InvisibleChar">•</property>
               </widget>
               <packing>
@@ -2530,6 +2530,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
+                <property name="Visibility">False</property>
                 <property name="InvisibleChar">•</property>
               </widget>
               <packing>
@@ -2566,7 +2567,6 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
             <child>
               <widget class="Gtk.Label" id="labelState">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes" />
                 <property name="Justify">Center</property>
               </widget>
               <packing>

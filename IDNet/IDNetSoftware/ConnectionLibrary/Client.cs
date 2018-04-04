@@ -4,6 +4,8 @@ using System.Net;
 using System.Text;
 using System.Net.NetworkInformation;
 
+using ConstantsLibraryS;
+
 namespace ConnectionLibraryS
 {
     public class Client
@@ -25,11 +27,7 @@ namespace ConnectionLibraryS
             try
             {
                 // Establish the remote endpoint for the socket.
-                // This example uses port 11000 on the local computer.
-                //IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-
-               // IPAddress ipAddress = ipHostInfo.AddressList[0];
-                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), 11000);
+                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), Constants.GATEKEEPER_PORT);
                     
                 // Create a TCP/IP  socket.
                 Socket sender = new Socket(AddressFamily.InterNetwork,
@@ -86,7 +84,7 @@ namespace ConnectionLibraryS
         public bool comprobarConexion(string hostName)
         {
             // Connect to a remote device.
-            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), 11000);
+            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), Constants.GATEKEEPER_PORT);
 
             // Create a TCP/IP  socket.
             Socket sender = new Socket(AddressFamily.InterNetwork,

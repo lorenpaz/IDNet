@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using PostBoxLibrary;
 using CriptoLibrary;
 using MessageLibrary;
-
+using ConstantsLibrary;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
 
@@ -61,7 +61,7 @@ namespace ConnectionLibrary
 			IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
 			IPAddress ipAddress = ipHostInfo.AddressList[0];
            // IPAddress ipLocal
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, Constants.GATEKEEPER_PORT);
 
 			// Create a TCP/IP socket.
 			Socket listener = new Socket(AddressFamily.InterNetwork,

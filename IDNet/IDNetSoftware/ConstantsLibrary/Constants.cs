@@ -11,7 +11,7 @@ namespace ConstantsLibraryS
     public static class Constants
     {
         public const string IDNETDAEMON = @"IDNetDaemon";
-        public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"/configuration");
+        public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"./configuration");
         public static string ConfigFileDatabases = Path.Combine(CONFIG, @"databases.conf");
         public static string ConfigFileNeighbours = Path.Combine(CONFIG, @"neighbours.conf");
         public static string ConfigFileNeighboursDatabases = Path.Combine(CONFIG, @"neighboursDatabases.conf");
@@ -40,21 +40,22 @@ namespace ConstantsLibraryS
         public const string TYPE_MODIFY = @"type";
         public const string TYPE_DELETE = @"delete";
 
-        public const string MYSQ_REMOTE_NAMEBBDD = @"IDNet";
-        public const string MYSQ_REMOTE_SERVERBBDD = @"databases.000webhost.com";
-        public const string MYSQL_REMOTE = @"Server="+MYSQ_REMOTE_SERVERBBDD+";Database="+MYSQ_REMOTE_NAMEBBDD+";User ID=root;Password=admin12;Pooling=false;";
+        public const string MYSQL_REMOTE_NAMEBBDD = @"IDNet";
+        public const string MYSQL_REMOTE_SERVERBBDD = @"mysqlinstance.crfd5ylvvpz8.eu-west-2.rds.amazonaws.com";
+        public const string MYSQL_REMOTE_NAMETABLE = @"usuariosIDNet";
+        public const string MYSQL_REMOTE = @"Server="+MYSQL_REMOTE_SERVERBBDD+";Database="+MYSQL_REMOTE_NAMEBBDD+";User ID=root;Password=admin1234;Pooling=false;";
         public const string MYSQL_REMOTE_ERROR_INICIO_SESION = @"Usuario y/o contraseña no válidos.";
         public const string MYSQL_REMOTE_ERROR_REGISTRARSE_CONTRASEÑA = @"Fallo en la repetición de la contraseña.";
         public const string MYSQL_REMOTE_LOGIN_SUCCESS = @"Se ha iniciado correctamente.";
         public const string MYSQL_REMOTE_REGISTER_SUCCESS = @"Se ha registrado correctamente.";
         public const string MYSQL_REMOTE_REGISTER_EXISTS = @"Ya existe ese nombre de usuario.";
 
-        public static string MysqlRemoteSelect(string username)
+        public static string MysqlRemoteSelect()
         {
-            return "SELECT * FROM IDNet WHERE username='" + username + "'";
+            return "SELECT * FROM "+MYSQL_REMOTE_NAMETABLE+" WHERE username=@username";
         }
-        public static string MysqlRemoteInsert(string username,byte[] password){
-            return "INSERT INTO IDNet VALUES('"+username+"', '"+password+"')";
+        public static string MysqlRemoteInsert(){
+            return "INSERT INTO " + MYSQL_REMOTE_NAMETABLE + "(username,password) VALUES(@username, @password)";
         }
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
         public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";
@@ -72,6 +73,7 @@ namespace ConstantsLibraryS
 
         //public const string GATEKEEPER = @"127.0.0.1";
         public const string GATEKEEPER = @"192.168.1.85";
+        public const int GATEKEEPER_PORT = 11000;
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
         public const string TABLA_COLUMNA_USUARIO = @"Usuario";

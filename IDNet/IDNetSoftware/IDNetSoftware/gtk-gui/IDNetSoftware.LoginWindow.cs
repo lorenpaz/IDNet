@@ -120,6 +120,7 @@ namespace IDNetSoftware
 			this.entryPassword.CanFocus = true;
 			this.entryPassword.Name = "entryPassword";
 			this.entryPassword.IsEditable = true;
+			this.entryPassword.Visibility = false;
 			this.entryPassword.InvisibleChar = '•';
 			this.hbox2.Add(this.entryPassword);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.entryPassword]));
@@ -147,7 +148,6 @@ namespace IDNetSoftware
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.labelState = new global::Gtk.Label();
 			this.labelState.Name = "labelState";
-			this.labelState.LabelProp = "";
 			this.labelState.Justify = ((global::Gtk.Justification)(2));
 			this.hbox3.Add(this.labelState);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.labelState]));
@@ -175,7 +175,7 @@ namespace IDNetSoftware
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 330;
-			this.DefaultHeight = 171;
+			this.DefaultHeight = 182;
 			this.Show();
 			this.buttonRegister.Clicked += new global::System.EventHandler(this.OnButtonRegisterClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);

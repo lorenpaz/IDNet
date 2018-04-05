@@ -300,7 +300,7 @@ namespace DatabaseLibraryS
                 {
                     return ComprobacionMongodb(databaseName, usernameDatabase, passwordDatabase);
                 }
-            }catch(Exception e){
+            }catch(Exception){
                 return false;
             }
             return false;

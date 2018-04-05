@@ -9,10 +9,6 @@
           <Builder>
             <ChildEntries>
               <SolutionItemReference>
-                <path>IDNet.sln</path>
-                <id>{5A5A9017-3B06-4701-BA8B-A5A4588FA02E}</id>
-              </SolutionItemReference>
-              <SolutionItemReference>
                 <path>IDNetDaemon\IDNetDaemon\IDNetDaemon.csproj</path>
               </SolutionItemReference>
               <SolutionItemReference>
@@ -43,10 +39,6 @@
                 <path>IDNetDaemon\ConnectionLibrary\ConnectionLibrary.csproj</path>
               </SolutionItemReference>
               <SolutionItemReference>
-                <path>IDNet.sln</path>
-                <id>{A383337B-D495-44B7-9105-E25F3D5EEB6C}</id>
-              </SolutionItemReference>
-              <SolutionItemReference>
                 <path>IDNetSoftware\IDNetSoftware\IDNetSoftware.csproj</path>
               </SolutionItemReference>
               <SolutionItemReference>
@@ -72,6 +64,14 @@
               </SolutionItemReference>
               <SolutionItemReference>
                 <path>IDNetSoftware\CriptoLibrary\CriptoLibraryS.csproj</path>
+              </SolutionItemReference>
+              <SolutionItemReference>
+                <path>IDNet.sln</path>
+                <id>{5A5A9017-3B06-4701-BA8B-A5A4588FA02E}</id>
+              </SolutionItemReference>
+              <SolutionItemReference>
+                <path>IDNet.sln</path>
+                <id>{A383337B-D495-44B7-9105-E25F3D5EEB6C}</id>
               </SolutionItemReference>
             </ChildEntries>
             <RootEntry>

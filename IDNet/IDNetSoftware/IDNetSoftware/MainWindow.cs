@@ -2,13 +2,12 @@
 using Gtk;
 using System.IO;
 using System.Net;
+using System.Xml;
 
 using DatabaseLibraryS;
 using MessageLibraryS;
 using ConstantsLibraryS;
 using CriptoLibraryS;
-using PostBoxLibraryS;
-using ConnectionLibraryS;
 
 using System.Collections.Generic;
 
@@ -117,6 +116,7 @@ namespace IDNetSoftware
     {
         private string _nombre;
         private IPAddress _ip;
+        private int _code;
         public string Nombre
         {
             get
@@ -126,6 +126,17 @@ namespace IDNetSoftware
             set
             {
                 this._nombre = value;
+            }
+        }
+        public int Code
+        {
+            get
+            {
+                return this._code;
+            }
+            set
+            {
+                this._code = value;
             }
         }
         public IPAddress IP
@@ -163,7 +174,7 @@ namespace IDNetSoftware
                 string user = "";
                 /*
                  * 
-                 * nombre=userName;
+                 * nombre=userName|code:123456789;
                  * 
                  * Ejemplo:
                  * nombre=lorenzo;
@@ -186,6 +197,33 @@ namespace IDNetSoftware
                 line = conFile.ReadLine();
             }
             conFile.Close();
+        }
+
+        /*
+         * Método estático para guardar el usuario en un archivo
+         * de configuración
+         * */
+        public static void SaveConf(Tuple<string,int> tupla)
+        {
+            //Obtenemos los campos
+            string username = tupla.Item1;
+            int code = tupla.Item2;
+
+            //Borramos el archivo si existe
+            if (File.Exists(Constants.ConfigFileInfoUser))
+            {
+                File.Delete(Constants.ConfigFileInfoUser);
+            }
+
+            //Creamos el archivo
+            File.Create(Constants.ConfigFileInfoUser);
+
+            TextWriter tw = new StreamWriter(Constants.ConfigFileInfoUser);
+
+            //Copiamos al archivo los campos
+            tw.WriteLine("nombre="+username+"|code:"+code+";");
+
+            tw.Close();
         }
 
     }

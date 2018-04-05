@@ -29,6 +29,7 @@ namespace IDNetSoftware
             if(username != "" && password != "" && this._remoteDatabase.CheckUser(username, password))
             {
                 MostrarMensaje(Constants.MYSQL_REMOTE_LOGIN_SUCCESS);
+                Usuario.SaveConf(this._remoteDatabase.SaveUserToFile(username));
                 MainWindow main = new MainWindow();
                 main.Show();
 

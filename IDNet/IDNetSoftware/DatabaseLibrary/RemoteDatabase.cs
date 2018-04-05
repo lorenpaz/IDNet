@@ -29,6 +29,7 @@ namespace DatabaseLibrary
          * */
         public bool CheckUser(string username, string password)
         {
+            Random r = new Random();
             bool ok = false;
             try
             {
@@ -36,7 +37,7 @@ namespace DatabaseLibrary
                 this._mysql = new MySqlConnection(this._connectionString);
                 this._mysql.Open();
 
-                //QUery
+                //Query
                 string query = Constants.MysqlRemoteSelect();
 
                 //Create Command
@@ -62,6 +63,25 @@ namespace DatabaseLibrary
                 //close Data Reader
                 dataReader.Close();
 
+                //Actualizamos el código de la nube
+                if(ok)
+                {
+                    //Random code
+                    int code = r.Next(5000);
+
+                    //Query
+                    query = Constants.MysqlRemoteUpdate();
+
+                    //Create Command
+                    cmd = new MySqlCommand();
+                    cmd.Connection = this._mysql;
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("username", username);
+                    cmd.Parameters.AddWithValue("code", code);
+
+                    //Execute command
+                    ok = cmd.ExecuteNonQuery() == 1;
+                }
                 //close Connection
                 this._mysql.Close();
 
@@ -78,7 +98,7 @@ namespace DatabaseLibrary
         public bool InsertUser(string username, string password)
         {
             bool ok = false;
-
+            Random r = new Random();
             try
             {
                 //Establecemos la conexión
@@ -91,13 +111,16 @@ namespace DatabaseLibrary
                 //Query
                 string query = Constants.MysqlRemoteInsert();
 
+                //Random code
+                int code = r.Next(5000);
+
                 //create command and assign the query and connection from the constructor
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = this._mysql;
                 cmd.CommandText = query;
                 cmd.Parameters.AddWithValue("username",username);
                 cmd.Parameters.AddWithValue("password",passwordBytes);
-
+                cmd.Parameters.AddWithValue("code",code);
                 //Execute command
                 ok = cmd.ExecuteNonQuery()==1;
 
@@ -110,6 +133,52 @@ namespace DatabaseLibrary
             }
 
             return ok;
+        }
+
+        /*
+         * Método público para guardar el usuario en un archivo
+         * */
+        public Tuple<string,int> SaveUserToFile(string username)
+        {
+            Tuple<string, int> tupla = null;
+            try
+            {
+                //Connection
+                this._mysql = new MySqlConnection(this._connectionString);
+                this._mysql.Open();
+
+                //Query
+                string query = Constants.MysqlRemoteSelect();
+
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = this._mysql;
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("username", username);
+
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and check password
+                while (dataReader.Read())
+                {
+                    string usuario = (String) dataReader["username"];
+                    int code = (int) dataReader["code"];
+                    tupla = new Tuple<string, int>(usuario,code);
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this._mysql.Close();
+
+            }
+            catch (MySqlException)
+            {
+
+            }
+            return tupla;
         }
     }
 }

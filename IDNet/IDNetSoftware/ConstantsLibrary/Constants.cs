@@ -55,7 +55,11 @@ namespace ConstantsLibraryS
             return "SELECT * FROM "+MYSQL_REMOTE_NAMETABLE+" WHERE username=@username";
         }
         public static string MysqlRemoteInsert(){
-            return "INSERT INTO " + MYSQL_REMOTE_NAMETABLE + "(username,password) VALUES(@username, @password)";
+            return "INSERT INTO " + MYSQL_REMOTE_NAMETABLE + "(username,password,code) VALUES(@username, @password,@code)";
+        }
+        public static string MysqlRemoteUpdate()
+        {
+            return "UPDATE " + MYSQL_REMOTE_NAMETABLE + " SET code=@code WHERE username=@username";
         }
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
         public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";

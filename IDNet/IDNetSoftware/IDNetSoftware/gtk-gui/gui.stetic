@@ -1076,6 +1076,19 @@ mongodb</property>
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
+          <widget class="Gtk.Label" id="labelTitulo">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Solicitud de consulta a una base de datos MySQL</property>
+            <property name="Justify">Center</property>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
             <property name="Spacing">6</property>
@@ -1279,7 +1292,7 @@ mongodb</property>
             </child>
           </widget>
           <packing>
-            <property name="Position">0</property>
+            <property name="Position">1</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -1341,6 +1354,19 @@ mongodb</property>
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
+        <child>
+          <widget class="Gtk.Label" id="labelTitulo">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Solicitud de consulta a una base de datos MongoDB</property>
+            <property name="Justify">Center</property>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
         <child>
           <widget class="Gtk.VBox" id="vbox2">
             <property name="MemberName" />
@@ -1581,7 +1607,7 @@ mongodb</property>
             </child>
           </widget>
           <packing>
-            <property name="Position">0</property>
+            <property name="Position">1</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -2221,7 +2247,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.LoginWindow" design-size="330 182">
+  <widget class="Gtk.Window" id="IDNetSoftware.LoginWindow" design-size="330 334">
     <property name="MemberName" />
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
@@ -2249,6 +2275,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
             <child>
               <widget class="Gtk.Image" id="imageIDNet">
                 <property name="MemberName" />
+                <property name="Pixbuf">resource:iconoSoftwareSmall.png</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
@@ -2401,7 +2428,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.RegisterWindow" design-size="393 217">
+  <widget class="Gtk.Window" id="IDNetSoftware.RegisterWindow" design-size="330 369">
     <property name="MemberName" />
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
@@ -2414,6 +2441,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           <widget class="Gtk.Label" id="labelRegistrarse">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Registro</property>
+            <property name="Justify">Center</property>
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -2425,6 +2453,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
         <child>
           <widget class="Gtk.Image" id="imageIDNet">
             <property name="MemberName" />
+            <property name="Pixbuf">resource:iconoSoftwareSmall.png</property>
           </widget>
           <packing>
             <property name="Position">1</property>

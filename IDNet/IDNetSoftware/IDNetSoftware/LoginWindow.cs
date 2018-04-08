@@ -60,7 +60,7 @@ namespace IDNetSoftware
 
         private void RedimensionarImagen()
         {
-         //   imageIDNet.Pixbuf.ScaleSimple(100, 500, InterpType.Bilinear);
+            imageIDNet.Pixbuf.ScaleSimple(50, 50, InterpType.Bilinear);
         }
     }
 }

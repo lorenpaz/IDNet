@@ -81,6 +81,12 @@
     <EmbeddedResource Include="resources\icons\select.png">
       <LogicalName>select.png</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\iconoSoftware.png">
+      <LogicalName>iconoSoftware.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\iconoSoftwareSmall.png">
+      <LogicalName>iconoSoftwareSmall.png</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -128,7 +134,6 @@
     <None Include="resources\icons\004-database-3.png" />
     <None Include="resources\icons\updateDatabase.png" />
     <None Include="resources\icons\006-database-2.png" />
-    <None Include="resources\icons\iconoSoftware.png" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -60,6 +60,7 @@ namespace IDNetSoftware
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.imageIDNet = new global::Gtk.Image();
 			this.imageIDNet.Name = "imageIDNet";
+			this.imageIDNet.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("iconoSoftware.png");
 			this.vbox3.Add(this.imageIDNet);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.imageIDNet]));
 			w2.Position = 1;
@@ -174,8 +175,8 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 330;
-			this.DefaultHeight = 182;
+			this.DefaultWidth = 512;
+			this.DefaultHeight = 646;
 			this.Show();
 			this.buttonRegister.Clicked += new global::System.EventHandler(this.OnButtonRegisterClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);

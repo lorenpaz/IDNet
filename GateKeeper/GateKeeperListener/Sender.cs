@@ -109,7 +109,6 @@ namespace GateKeeperListener
 					return false;
 				else
 					return true;
-
 			}
             catch (Exception)
 			{

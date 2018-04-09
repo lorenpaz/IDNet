@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using log4net;
 
+
 namespace GateKeeperListener
 {
 	// State object for reading client data asynchronously
@@ -24,7 +25,7 @@ namespace GateKeeperListener
     public class Listener
     {
         private ManualResetEvent allDone = new ManualResetEvent(false);
-		ILog log = LogManager.GetLogger(typeof(PeriodicAnnouncer));
+		ILog log = LogManager.GetLogger(typeof(Listener));
 
 		private  Queue<string> _msgQueue;
         private int _port;
@@ -66,10 +67,13 @@ namespace GateKeeperListener
 				{
 					// Set the event to nonsignaled state.
 					allDone.Reset();
-
 					// Start an asynchronous socket to listen for connections.
 
-					log.Info("Waiting for a connection...");
+					if (this._port == 11000)
+						log.Info("Esperando a un cliente para conectar...");
+                    else
+                        log.Info("Esperando a un GateKeeper para conectar...");
+                    
 					listener.BeginAccept(
 						new AsyncCallback(AcceptCallback),
 						listener);

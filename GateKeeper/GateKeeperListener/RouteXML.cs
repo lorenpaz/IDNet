@@ -7,10 +7,6 @@ namespace GateKeeperListener
 {
 	public class RouteXML
 	{
-		public RouteXML()
-		{
-		}
-
 		public static void merge(string content)
 		{
 			//Loads both, our routes.xml file and the routing information
@@ -20,103 +16,115 @@ namespace GateKeeperListener
 
 			XmlDocument routes = new XmlDocument();
 
-			FileStream stream = File.OpenRead("../../../Config/routes.xml");
+			FileStream stream = File.OpenRead(Constants.XMLROUTES);
 			routes.Load(stream);
 			stream.Close();
 
 			XmlNodeList d = doc.GetElementsByTagName("route");
 
-			foreach (XmlNode node in d)
-			{
-				//Load the routing information from the message received
-				String dir_dest = node.ChildNodes[0].InnerText;
-				String dir_hop = node.ChildNodes[1].InnerText;
-				String nombre = node.ChildNodes[2].InnerText;
-				int distance = Int32.Parse(node.ChildNodes[3].InnerText);
+            foreach (XmlNode node in d)
+            {
+                //Load the routing information from the message received
+                String dir_dest = node.ChildNodes[0].InnerText;
+                String dir_hop = node.ChildNodes[1].InnerText;
+                String nombre = node.ChildNodes[2].InnerText;
+                int distance = Int32.Parse(node.ChildNodes[3].InnerText);
 
-				XmlNodeList r = routes.GetElementsByTagName("route");
+                XmlNodeList r = routes.GetElementsByTagName("route");
 
-				/* If the distance to dir_dest through dir_hop is less than
-                 * the distance to dir_dest which is already store in our file.
-                 * We switch them onto our routes.xml file and update the value.
-                 * */
-				foreach (XmlNode route in r)
-				{
-					XmlNodeList existe = routes.SelectNodes("//route[d_node='" + dir_dest + "']");
+                XmlNodeList existe = routes.SelectNodes("//route[d_node='" + dir_dest + "']");
 
-					if (existe.Count > 0)
-					{
-
-						if (route.ChildNodes[0].InnerText == dir_dest)
-						{
-
-							if (Int32.Parse(route.LastChild.InnerText) > distance)
-							{
-								route.ChildNodes[0].InnerText = dir_dest;
-								route.ChildNodes[1].InnerText = dir_hop;
-								route.ChildNodes[2].InnerText = nombre;
-								route.ChildNodes[3].InnerText = distance.ToString();
-							}
-						}
-					}
-					else
-					{
-						AñadirATablaRutas(routes, dir_dest, dir_hop, distance, nombre, routes.DocumentElement);
-					}
+                if (existe.Count > 0)
+                {
+                    /* If the distance to dir_dest through dir_hop is less than
+                     * the distance to dir_dest which is already store in our file.
+                     * We switch them onto our routes.xml file and update the value.
+                     * */
+                    foreach (XmlNode route in r)
+                    {
+                        if (route.ChildNodes[0].InnerText == dir_dest)
+                        {
+                            if (Int32.Parse(route.LastChild.InnerText) > distance)
+                            {
+                                route.ChildNodes[0].InnerText = dir_dest;
+                                route.ChildNodes[1].InnerText = dir_hop;
+                                route.ChildNodes[2].InnerText = nombre;
+                                route.ChildNodes[3].InnerText = distance.ToString();
+                            }
+                        }
+                    }
 				}
+                else
+				    AñadirATablaRutas(routes, dir_dest, dir_hop, distance, nombre, routes.DocumentElement);
 			}
-
+            //Console.WriteLine(routes.InnerXml);
 			//Saves the file
-			routes.Save("../../../Config/routes.xml");
+			routes.Save(Constants.XMLROUTES);
 		}
 
 
-		public static void SendRoutingTables(Object source, System.Timers.ElapsedEventArgs e)
+		public static void SendRoutingTables()
 		{
 			//Siempre mandará un mensaje por el puerto 12000
 			Pathfinder p = new Pathfinder(true);
 
 			XmlDocument neighbours = new XmlDocument();
 
-			FileStream stream = File.OpenRead("../../../Config/neighbours.xml");
+            FileStream stream = File.OpenRead(Constants.XMLNEIGHBOURS);
 			neighbours.Load(stream);
 			stream.Close();
 
 			XmlDocument routes = new XmlDocument();
 
-			FileStream streamR = File.OpenRead("../../../Config/routes.xml");
+			FileStream streamR = File.OpenRead(Constants.XMLROUTES);
 			routes.Load(streamR);
 			streamR.Close();
 
 			XmlNodeList n = neighbours.GetElementsByTagName("node");
 			XmlNodeList r = routes.GetElementsByTagName("route");
 
-			XmlDocument table = new XmlDocument();
-
-			//Creamos el nodo routes
-			XmlElement elementRoot = table.CreateElement("routes");
-			table.AppendChild(elementRoot);
-
 			//Para cada gatekeeper vecino
 			foreach (XmlNode neigh in n)
 			{
+				XmlDocument table = new XmlDocument();
+
+				XmlElement root = table.CreateElement("root");
+                table.AppendChild(root);
+
+				IPHostEntry iphostentry = Dns.GetHostEntry(Dns.GetHostName());
+				IPAddress mi_ip = iphostentry.AddressList[0];
+
+				XmlElement source = table.CreateElement("source");
+				source.InnerText = mi_ip.ToString();
+				root.AppendChild(source);
+
 				//Por cada nodo de nuestra tabla
 				String dir_neighbour = neigh.InnerText;
+
+				XmlElement destination = table.CreateElement("destination");
+                destination.InnerText = dir_neighbour;
+				root.AppendChild(destination);
+                	
+				//Creamos el nodo routes
+                XmlElement routes_node = table.CreateElement("routes");
+				root.AppendChild(routes_node);
+
 				foreach (XmlNode route in r)
 				{
 					//Cargamos los datos de la ruta
 					String dir_dest = route.ChildNodes[0].InnerText;
-					String dir_hop = route.ChildNodes[1].InnerText;
+                    String dir_hop = mi_ip.ToString();
 					String nombre = route.ChildNodes[2].InnerText;
 					int distance = Int32.Parse(route.ChildNodes[3].InnerText) + 1;
 
 					//Si la ruta pasa por el vecino al que se lo vamos a mandar, no lo hacemos
-					if (dir_hop != dir_neighbour)
-					{
-						AñadirATablaRutas(table, dir_dest, dir_hop, distance, nombre, elementRoot);
-					}
+					//if (dir_hop != dir_neighbour)
+					//{
+						AñadirATablaRutas(table, dir_dest, dir_hop, distance, nombre, routes_node);
+					//}
 				}
-				p.ProcessMsg(table.ToString(), "");
+
+                p.ProcessMsg(table.InnerXml, "");
 			}
 		}
 
@@ -151,7 +159,7 @@ namespace GateKeeperListener
 		{
 			XmlDocument doc = new XmlDocument();
 
-			FileStream stream = File.OpenRead("../../../Config/routes.xml");
+			FileStream stream = File.OpenRead(Constants.XMLROUTES);
 			doc.Load(stream);
 			stream.Close();
 
@@ -160,11 +168,11 @@ namespace GateKeeperListener
 			return IPAddress.Parse(existe[0].ChildNodes[0].InnerText);
 		}
 
-		public static void PrepararRuta(string nom_cliente, string ip_cliente)
+		public static void PrepararRuta(string nom_cliente, string ip_cliente, string mi_ip)
 		{
 			XmlDocument doc = new XmlDocument();
 
-			FileStream stream = File.OpenRead("../../../Config/routes.xml");
+			FileStream stream = File.OpenRead(Constants.XMLROUTES);
 			doc.Load(stream);
 			stream.Close();
 
@@ -172,9 +180,9 @@ namespace GateKeeperListener
 
             XmlNodeList existe = doc.SelectNodes("//route[name='" + nom_cliente + "']");
 			if (existe[0] == null)
-				AñadirATablaRutas(doc, ip_cliente, "127.0.0.1", 0, nom_cliente, root);
+				AñadirATablaRutas(doc, ip_cliente, mi_ip, 0, nom_cliente, root);
 
-			doc.Save("../../../Config/routes.xml");
+			doc.Save(Constants.XMLROUTES);
 		}
 	}
 }

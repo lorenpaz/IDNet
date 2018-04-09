@@ -4,6 +4,8 @@ using System.Net;
 using System.Collections.Generic;
 using System.Xml;
 using System.IO;
+using log4net;
+using System.Linq;
 
 namespace GateKeeperListener
 {
@@ -12,16 +14,19 @@ namespace GateKeeperListener
         private int _port;
         //Key = name, Value = ip
         private Dictionary<String, IPAddress> _clienteDireccion;
-        private Dictionary<String, int> _clienteDistancia;
+        private List<String> _vecinos;
+		private Dictionary<String, int> _clienteDistancia;
+		ILog log = LogManager.GetLogger(typeof(Pathfinder));
 
-        public Pathfinder(bool cliente)
+		public Pathfinder(bool cliente)
         {
             if (cliente)
-                this._port = 13000;
+                this._port = 12000;
             else
-                this._port = 14000;
+                this._port = 11000;
 
             CargarClientes();
+            CargarVecinos();
         }
 
 		public Pathfinder(int port)
@@ -29,6 +34,7 @@ namespace GateKeeperListener
             this._port = port;
 
 			CargarClientes();
+            CargarVecinos();
 		}
 
         public String ProcessMsg(string content, String respuesta)
@@ -41,7 +47,9 @@ namespace GateKeeperListener
             //El cliente destino y origen del mensaje original
             String clienteDestino = xDoc.GetElementsByTagName("destination")[0].InnerText;
             String clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
-            respuesta = content;
+			String codigo = xDoc.GetElementsByTagName("source")[0].InnerText;
+
+			respuesta = content;
 
 			// Mis ips
 			String strHostName = Dns.GetHostName();
@@ -55,18 +63,27 @@ namespace GateKeeperListener
                 //Si recibo el mensaje de un cliente hacia mi mismo
                 if (clienteDestino == nIP && this._port == 14000)
                 {
-                    //Si es una nueva conexion la registramos en la tabla de rutas
-                    if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "010")
+					RemoteDatabase db = new RemoteDatabase();
+
+                    if (db.CheckCode(clienteOrigen, codigo))
                     {
-                        String code = xDoc.GetElementsByTagName("code")[0].InnerText;
-                        String ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;
-                        RouteXML.PrepararRuta(clienteOrigen, ip_origen);
+                        //Si es una nueva conexion la registramos en la tabla de rutas
+                        if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "010")
+                        {
+                            String code = xDoc.GetElementsByTagName("code")[0].InnerText;
+                            String ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;
+                            RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
+                        }
+                        else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
+                            respuesta = AnunciarNombresAlCliente(xDoc, content);
                     }
-                    else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
-                        respuesta = AnunciarNombresAlCliente(xDoc, content);
+                    else
+                    {
+                        log.Error("El cliente que se ha intentado conectar no es legítimo");
+                    }
                 }
                 //Si recibo un mensaje de un GK hacia mi mismo
-                else if (clienteDestino == nIP && this._port == 13000)
+                else if (clienteDestino == nIP && this._port == 12000)
                     RouteXML.merge(content);
                 else
                     esProtocolo = false;
@@ -74,16 +91,29 @@ namespace GateKeeperListener
 
             if (!esProtocolo){
 
-                if (this._clienteDireccion.ContainsKey(clienteDestino))
-                {
+                if (this._clienteDireccion.ContainsKey(clienteDestino)){
+                    
                     IPAddress ip_dest = _clienteDireccion[clienteDestino];
                     if (this._clienteDistancia[clienteDestino] == 0)
                         ip_dest = RouteXML.CargarIP(clienteDestino);
 
                     BindSocket(this._clienteDireccion[clienteDestino], content, clienteDestino);
                 }
-				else
-                    BindSocket(this._clienteDireccion[clienteOrigen], "No se encuentra ese vecino en tu OV", clienteOrigen);
+                else if (this._vecinos.Contains(clienteDestino)){
+                    
+                    var match = this._vecinos
+                                    .FirstOrDefault(stringToCheck => stringToCheck.Contains(clienteDestino));
+
+                    if (match != null)
+                        BindSocket(IPAddress.Parse(match), content, clienteOrigen);
+                    else
+                        log.Warn("Aviso de incoherencia con neighbours.xml: El " +
+                                  "vecino" + clienteDestino + "aparece en routes.xml" +
+                                  "pero no en neihbours.xml.");
+                }
+                else{
+                    log.Error("Destino no encontrado");
+                }
                 respuesta = "";
             }
 
@@ -107,6 +137,23 @@ namespace GateKeeperListener
             s.SendEP(msg, hostname, remoteEP);
         }
 
+        private void CargarVecinos()
+        {
+            this._vecinos = new List<String>();
+
+            XmlDocument neighbours = new XmlDocument();
+
+            FileStream stream = File.OpenRead(Constants.XMLNEIGHBOURS);
+			neighbours.Load(stream);
+			stream.Close();
+
+			XmlNodeList nodes = neighbours.GetElementsByTagName("node");
+
+			//Por cada nodo de nuestra tabla
+			foreach (XmlNode n in nodes)
+                this._vecinos.Add(n.InnerText);
+		}
+
 		private void CargarClientes()
 		{
 			this._clienteDireccion = new Dictionary<string, IPAddress>();
@@ -114,7 +161,7 @@ namespace GateKeeperListener
 			//Cargar la tabla de rutas porque recibo el nombre y no la ip
 			XmlDocument routes = new XmlDocument();
 
-            FileStream stream = File.OpenRead("../../../Config/routes.xml");
+            FileStream stream = File.OpenRead(Constants.XMLROUTES);
             routes.Load(stream);
             stream.Close();
 
@@ -133,11 +180,11 @@ namespace GateKeeperListener
 			}
 		}
 
-		private String AnunciarNombresAlCliente(XmlDocument xDoc, String content)
+		internal String AnunciarNombresAlCliente(XmlDocument xDoc, String content)
 		{
 			XmlDocument doc = new XmlDocument();
 
-			FileStream stream = File.OpenRead("../../../Config/routes.xml");
+			FileStream stream = File.OpenRead(Constants.XMLROUTES);
 			doc.Load(stream);
 			stream.Close();
 
@@ -149,21 +196,14 @@ namespace GateKeeperListener
             doc.DocumentElement.RemoveChild(existe[0]);
 
 			//Quitamos los hops
-			XmlNodeList hop = doc.GetElementsByTagName("dir_hop");
-			foreach (XmlNode h in hop)
-				doc.DocumentElement.RemoveChild(h);
+			XmlNodeList routes = doc.GetElementsByTagName("route");
+            foreach (XmlNode r in routes)
+            {
+                doc.DocumentElement.RemoveChild(doc.GetElementsByTagName("d_hop")[0]);
+                doc.DocumentElement.RemoveChild(doc.GetElementsByTagName("d_node")[0]);
+                doc.DocumentElement.RemoveChild(doc.GetElementsByTagName("distance")[0]);
+            }
 
-			//Quitamos las distancias
-			XmlNodeList distance = doc.GetElementsByTagName("distance");
-			foreach (XmlNode d in distance)
-				doc.DocumentElement.RemoveChild(d);
-
-			//Quitamos las direcciones
-			XmlNodeList address = doc.GetElementsByTagName("d_node");
-			foreach (XmlNode a in address)
-				doc.DocumentElement.RemoveChild(a);
-
-            //BindSocket(IPAddress.Parse(ip_dest), doc.ToString(), nombre);
             return doc.InnerXml;
 		}
 	}

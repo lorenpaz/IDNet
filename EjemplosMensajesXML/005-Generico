@@ -1,0 +1,39 @@
+<root>
+  <message_type>005</message_type>
+  <source>juan</source>
+  <destination>Lorenzo</destination>
+  <encripted>
+    <db_name>usuarios</db_name>
+    <db_type>mongodb</db_type>
+    <body>
+      <database>
+        <name>Nombre de la base de datos</name>
+        <colecciones>
+          <name>Nombre colección1</name>
+          <ejemploColeccion>
+            <nombre>Juan</nombre>
+            <apellidos>Mas</apellidos>
+            <telefono>
+              <casa>915472714</casa>
+              <movil>657229571</movil>
+            </telefono>
+          </ejemploColeccion>
+        </colecciones>
+        <colecciones>
+          <name>Nombre colección2</name>
+          <ejemploColeccion>
+            <nombre>Ana</nombre>
+            <apellidos>fernandez</apellidos>
+            <telefono>
+              <casa>915472613</casa>
+              <movil>722342774</movil>
+            </telefono>
+          </ejemploColeccion>
+        </colecciones>
+      </database>
+    </body>
+  </encripted>
+</root>
+
+
+//Todo el elemento 'encripted' está encriptado con clave simétrica.

@@ -1,7 +1,7 @@
 <root>
+	<message_type>003</message_type>
 	<source>Lorenzo</source>
 	<destination>Juan</destination>
-	<message_type>003</message_type>
 	<encripted>	
 		<db_name>usuarios</db_name>
 		<db_type>mysql</db_type>

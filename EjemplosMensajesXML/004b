@@ -3,8 +3,10 @@
 	<source>Juan</source>
 	<destination>Lorenzo</destination>
 	<encripted>
-		<key>vmofdmbfdmlmmofmhom</key>
-		<IV>FNOWNINR230UJ</IV>
+		<databases>
+			<database db_type="mysql">CiudadanosRegistrados</databases>
+			<database db_type="mongodb">Incidencias</databases>
+		</databases>
 	</encripted>
 </root>
 

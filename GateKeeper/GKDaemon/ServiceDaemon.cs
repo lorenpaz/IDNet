@@ -1,5 +1,4 @@
-﻿using System;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
 using log4net;
 
 namespace GKDaemon
@@ -26,14 +25,15 @@ namespace GKDaemon
 			log.Info("Service shutting down");
 			_scheduler.Shutdown();
 		}
-#if DEBUG
+
+        /*
 		public static void Main(string[] args)
 		{
 			ServiceDaemon serv = new ServiceDaemon();
 			serv.OnStart(new string[1]);
 			ServiceBase.Run(serv);
 		}
+		*/
 	}
-#endif
 }
 

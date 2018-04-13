@@ -49,7 +49,8 @@ namespace IDNetDaemon
                 serv.OnStart(new string[1]);
             ServiceBase.Run(serv);
 		}
+        #endif
 	}
-#endif
+
 }
 

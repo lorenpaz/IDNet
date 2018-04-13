@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GateKeeperListener", "GateK
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKDaemon", "GKDaemon\GKDaemon.csproj", "{E0B09AC3-21FD-46D6-A088-45A4378CC071}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "GKPackages", "GKPackages.mdproj", "{A882F089-DAB9-4833-82D4-44452365974B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -21,7 +19,5 @@ Global
 		{E0B09AC3-21FD-46D6-A088-45A4378CC071}.Debug|x86.Build.0 = Debug|x86
 		{E0B09AC3-21FD-46D6-A088-45A4378CC071}.Release|x86.ActiveCfg = Release|x86
 		{E0B09AC3-21FD-46D6-A088-45A4378CC071}.Release|x86.Build.0 = Release|x86
-		{A882F089-DAB9-4833-82D4-44452365974B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A882F089-DAB9-4833-82D4-44452365974B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

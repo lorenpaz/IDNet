@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH_NAME="IDNetDaemon/bin/Debug/"
+PATH_NAME="IDNetDaemon/bin/Release/"
 PROGRAM_NAME="IDNetDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
 

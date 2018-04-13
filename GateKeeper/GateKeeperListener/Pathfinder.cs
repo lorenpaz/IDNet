@@ -21,9 +21,9 @@ namespace GateKeeperListener
 		public Pathfinder(bool cliente)
         {
             if (cliente)
-                this._port = 12000;
+                this._port = Constants.PORT_CLIENT;
             else
-                this._port = 11000;
+                this._port = Constants.PORT_GATEKEEPER;
 
             CargarClientes();
             CargarVecinos();
@@ -39,7 +39,7 @@ namespace GateKeeperListener
 
         public String ProcessMsg(string content, String respuesta)
         {
-            bool esProtocolo = true;
+            bool esProtocolo = false;
             //parseamos el mensaje para pasar los parámetros de conexion
 			XmlDocument xDoc = new XmlDocument();
 			xDoc.LoadXml(content);
@@ -47,7 +47,7 @@ namespace GateKeeperListener
             //El cliente destino y origen del mensaje original
             String clienteDestino = xDoc.GetElementsByTagName("destination")[0].InnerText;
             String clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
-			String codigo = xDoc.GetElementsByTagName("source")[0].InnerText;
+			String codigo = xDoc.GetElementsByTagName("code")[0].InnerText;
 
 			respuesta = content;
 
@@ -61,32 +61,40 @@ namespace GateKeeperListener
 				nIP = ipaddress.ToString();
 
                 //Si recibo el mensaje de un cliente hacia mi mismo
-                if (clienteDestino == nIP && this._port == 14000)
+                if (clienteDestino == nIP && this._port == Constants.PORT_CLIENT)
                 {
-					RemoteDatabase db = new RemoteDatabase();
+                    RemoteDatabase db = new RemoteDatabase();
 
-                    if (db.CheckCode(clienteOrigen, codigo))
+                    //Si es una nueva conexion la registramos en la tabla de rutas
+                    if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "010")
                     {
-                        //Si es una nueva conexion la registramos en la tabla de rutas
-                        if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "010")
+                        String code = xDoc.GetElementsByTagName("code")[0].InnerText;
+                        String ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;
+                        RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
+                        esProtocolo = true;
+                    }
+                    else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
+                    {
+                        if (db.CheckCode(clienteOrigen, codigo))
                         {
-                            String code = xDoc.GetElementsByTagName("code")[0].InnerText;
-                            String ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;
-                            RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
-                        }
-                        else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
                             respuesta = AnunciarNombresAlCliente(xDoc, content);
+                            esProtocolo = true;
+                        }
+                        else
+                        {
+                            respuesta = "El cliente que se ha intentado conectar no es legítimo";
+                            log.Error(respuesta);
+                        }
                     }
-                    else
-                    {
-                        log.Error("El cliente que se ha intentado conectar no es legítimo");
-                    }
+
                 }
                 //Si recibo un mensaje de un GK hacia mi mismo
-                else if (clienteDestino == nIP && this._port == 12000)
+                else if (clienteDestino == nIP && this._port == Constants.PORT_GATEKEEPER)
+                {
                     RouteXML.merge(content);
-                else
-                    esProtocolo = false;
+                    esProtocolo = true;
+                }
+
 			}
 
             if (!esProtocolo){

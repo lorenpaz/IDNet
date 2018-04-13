@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PATH_NAME="IDNetDaemon/IDNetDaemon/bin/Release/"
-PROGRAM_NAME="IDNetDaemon"
+PATH_NAME="GKDaemon/bin/Release/"
+PROGRAM_NAME="GKDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
 LOG_FOLDER="logs"
 
@@ -21,12 +21,12 @@ stop()
 	        then
 			rm -rf ${LOCK_FILE}
 			rm -rf ${LOG_FOLDER}
-	                echo "IDNetDaemon stop"
+	                echo "GKDaemon stop"
 	        else
 	                echo "Error stop demon"
         fi
     else
-        echo "IDNetDaemon is not running"
+        echo "GKDaemon is not running"
     fi
 }
 
@@ -34,7 +34,7 @@ start()
 {
     echo "Arrancando el servicio "${PROGRAM_NAME}
     mono-service -l:${LOCK_FILE} ./${PATH_NAME}${PROGRAM_NAME}.exe
-    echo "Service ${PROGRAM_NAME} started"
+    echo "Done"
 }
 
 case $1 in

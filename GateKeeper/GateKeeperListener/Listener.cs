@@ -34,9 +34,9 @@ namespace GateKeeperListener
 		{
 			_msgQueue = new Queue<string>();
             if (cliente)
-                this._port = 11000;
+                this._port = Constants.PORT_CLIENT;
             else
-                this._port = 12000;
+                this._port = Constants.PORT_GATEKEEPER;
 		}
 
 #pragma warning disable RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
@@ -44,7 +44,7 @@ namespace GateKeeperListener
 #pragma warning restore RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         {
 			// Data buffer for incoming data.
-			byte[] bytes = new Byte[1024];
+			byte[] bytes = new Byte[4096];
 
 			// Establish the local endpoint for the socket.
 			// The DNS name of the computer
@@ -69,7 +69,7 @@ namespace GateKeeperListener
 					allDone.Reset();
 					// Start an asynchronous socket to listen for connections.
 
-					if (this._port == 11000)
+                    if (this._port == Constants.PORT_CLIENT)
 						log.Info("Esperando a un cliente para conectar...");
                     else
                         log.Info("Esperando a un GateKeeper para conectar...");
@@ -154,10 +154,10 @@ namespace GateKeeperListener
 		private String TratarMensaje(String respuesta)
 		{
             Pathfinder p;
-            if(this._port == 11000)
-			    p = new Pathfinder(false);
+            if(this._port == Constants.PORT_CLIENT)
+			    p = new Pathfinder(true);
             else
-				p = new Pathfinder(true);
+				p = new Pathfinder(false);
 
 			while (_msgQueue.Count > 0)
 				respuesta = p.ProcessMsg(_msgQueue.Dequeue(), respuesta);

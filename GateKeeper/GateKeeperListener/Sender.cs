@@ -39,7 +39,7 @@ namespace GateKeeperListener
 				handler.Close();
 
 			}
-			catch (Exception e)
+			catch (Exception )
 			{
 			}
 		}

@@ -66,7 +66,7 @@ namespace GateKeeperListener
 		public static void SendRoutingTables()
 		{
 			//Siempre mandará un mensaje por el puerto 12000
-			Pathfinder p = new Pathfinder(true);
+			Pathfinder p = new Pathfinder(false);
 
 			XmlDocument neighbours = new XmlDocument();
 

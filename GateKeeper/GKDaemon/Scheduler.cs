@@ -30,14 +30,17 @@ namespace GKDaemon
 
 		public void StartMyJob()
 		{
+            Log.Info("Inicializamos los Listener");
             Listener gk = new Listener(false);
             Listener cl = new Listener(true);
+
+            Log.Info("Inicializamos el anuncio periodico");
             PeriodicAnnouncer pa = new PeriodicAnnouncer();
 
             ThreadStart _ts1 = delegate { gk.StartListening(); };
-            Log.Info("Iniciado el servicio escuchando en el puerto 12000...");
+            Log.Info("Iniciado el servicio escuchando en el puerto "+Constants.PORT_GATEKEEPER+"...");
             ThreadStart _ts2 = delegate { cl.StartListening(); };
-            Log.Info("Iniciado el servicio escuchando en el puerto 11000...");
+            Log.Info("Iniciado el servicio escuchando en el puerto "+Constants.PORT_CLIENT+"...");
             ThreadStart _ts3 = delegate { pa.StartTimer(); };
             Log.Info("Iniciado el servicio de anuncio de rutas...");
 

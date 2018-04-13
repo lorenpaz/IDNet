@@ -42,11 +42,13 @@ namespace IDNetDaemon
 		void StartMyJob()
 		{
             //Registramos el demonio en el GateKeeper
+            log.Info("Registrando el cliente en el GateKeeper");
             RegisterClient register = new RegisterClient();
             if(register.comprobarConexion(Constants.GATEKEEPER))
                 register.StartClient(Constants.GATEKEEPER);
 
             //Empieza a escuchar el demonio
+            log.Info("Comienzamos a arrancar el servidor IDNetDaemon");
             Server s = new Server();
             s.StartListening();
 		}

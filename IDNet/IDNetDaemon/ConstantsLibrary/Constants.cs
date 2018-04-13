@@ -94,7 +94,7 @@ namespace ConstantsLibrary
         public static string MONGODB = "mongodb";
         public static string MYSQL = "mysql";
         public static string TEMPORAL_FILE_PATH = @"./temp_files/";
-        public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "/configuration");
+        public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "configuration");
         public static string CONFIG_FILE_INFO_USER = Path.Combine(CONFIG,@"info.conf");
         public static string CONF_BLACK_LIST = Path.Combine(CONFIG,@"blackList.conf");
         public static string CONF_DATABASES = Path.Combine(CONFIG,@"databases.conf");
@@ -110,7 +110,9 @@ namespace ConstantsLibrary
 		public static string ACKSCHEMA = "005";
 		public static string ACKSELECT = "006";
 
-        public static string GATEKEEPER = @"192.168.1.85";
+        //public static string GATEKEEPER = @"192.168.1.85";
+        //public static string GATEKEEPER = @"172.17.0.2";
+        public static string GATEKEEPER = @"192.168.1.49";
         public static int GATEKEEPER_PORT = 11000;
 
         public static Usuario usuario = new Usuario();

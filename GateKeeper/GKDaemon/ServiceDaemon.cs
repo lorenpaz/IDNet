@@ -26,14 +26,14 @@ namespace GKDaemon
 			_scheduler.Shutdown();
 		}
 
-        /*
+        #if DEBUG
 		public static void Main(string[] args)
 		{
 			ServiceDaemon serv = new ServiceDaemon();
 			serv.OnStart(new string[1]);
 			ServiceBase.Run(serv);
 		}
-		*/
+        #endif
 	}
 }
 

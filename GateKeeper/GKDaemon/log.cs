@@ -2,6 +2,8 @@
 using log4net;
 using log4net.Config;
 
+using GateKeeperListener;
+
 namespace GKDaemon
 {
     public static class Log
@@ -14,7 +16,7 @@ namespace GKDaemon
 			if (isConfigured)
 				return;
 
-            XmlConfigurator.Configure(new System.IO.FileInfo("./EventLogConfig.xml"));
+            XmlConfigurator.Configure(new System.IO.FileInfo(Constants.XMLLOG));
             isConfigured = true;
 		}
 

@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 
 using ConstantsLibraryS;
 using CriptoLibraryS;
+using System.Net;
 
 namespace DatabaseLibrary
 {
@@ -63,28 +64,6 @@ namespace DatabaseLibrary
                 //close Data Reader
                 dataReader.Close();
 
-                //Actualizamos el código de la nube
-                if(ok)
-                {
-                    //Random code
-                    int code = r.Next(5000);
-
-                    //Query
-                    query = Constants.MysqlRemoteUpdate();
-
-                    //Create Command
-                    cmd = new MySqlCommand();
-                    cmd.Connection = this._mysql;
-                    cmd.CommandText = query;
-                    cmd.Parameters.AddWithValue("username", username);
-                    cmd.Parameters.AddWithValue("code", code);
-
-                    //Execute command
-                    ok = cmd.ExecuteNonQuery() == 1;
-                }
-                //close Connection
-                this._mysql.Close();
-
             }catch(MySqlException ){
                 
             }
@@ -118,11 +97,12 @@ namespace DatabaseLibrary
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = this._mysql;
                 cmd.CommandText = query;
-                cmd.Parameters.AddWithValue("username",username);
-                cmd.Parameters.AddWithValue("password",passwordBytes);
-                cmd.Parameters.AddWithValue("code",code);
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", passwordBytes);
+                cmd.Parameters.AddWithValue("code", code);
+
                 //Execute command
-                ok = cmd.ExecuteNonQuery()==1;
+                ok = cmd.ExecuteNonQuery() == 1;
 
                 //close connection
                 this._mysql.Close();

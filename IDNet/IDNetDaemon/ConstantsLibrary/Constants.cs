@@ -122,7 +122,6 @@ namespace ConstantsLibrary
             return CONFIG + "publicKey" + source + ".pem";
         }
 
-
         /*
          * Método estático para borrar recursos
          * */

@@ -39,11 +39,10 @@ namespace ConstantsLibraryS
 
         public const string TYPE_MODIFY = @"type";
         public const string TYPE_DELETE = @"delete";
-
         public const string MYSQL_REMOTE_NAMEBBDD = @"IDNet";
         public const string MYSQL_REMOTE_SERVERBBDD = @"mysqlinstance.crfd5ylvvpz8.eu-west-2.rds.amazonaws.com";
         public const string MYSQL_REMOTE_NAMETABLE = @"usuariosIDNet";
-        public const string MYSQL_REMOTE = @"Server="+MYSQL_REMOTE_SERVERBBDD+";Database="+MYSQL_REMOTE_NAMEBBDD+";User ID=root;Password=admin1234;Pooling=false;";
+        public const string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
         public const string MYSQL_REMOTE_ERROR_INICIO_SESION = @"Usuario y/o contraseña no válidos.";
         public const string MYSQL_REMOTE_ERROR_REGISTRARSE_CONTRASEÑA = @"Fallo en la repetición de la contraseña.";
         public const string MYSQL_REMOTE_LOGIN_SUCCESS = @"Se ha iniciado correctamente.";
@@ -52,15 +51,17 @@ namespace ConstantsLibraryS
 
         public static string MysqlRemoteSelect()
         {
-            return "SELECT * FROM "+MYSQL_REMOTE_NAMETABLE+" WHERE username=@username";
+            return "SELECT * FROM " + MYSQL_REMOTE_NAMETABLE + " WHERE username=@username";
         }
-        public static string MysqlRemoteInsert(){
+        public static string MysqlRemoteInsert()
+        {
             return "INSERT INTO " + MYSQL_REMOTE_NAMETABLE + "(username,password,code) VALUES(@username, @password,@code)";
         }
         public static string MysqlRemoteUpdate()
         {
             return "UPDATE " + MYSQL_REMOTE_NAMETABLE + " SET code=@code WHERE username=@username";
         }
+
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
         public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";
         public const string NO_ERROR_MYSQL = @"There is no error in MYSQL Server";

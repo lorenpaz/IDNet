@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Gtk;
+using System.Diagnostics;
+using ConstantsLibraryS;
 
 namespace IDNetSoftware
 {
@@ -13,6 +15,7 @@ namespace IDNetSoftware
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build();
+
             labelInfoTFG.ModifyFg(StateType.Normal, new Gdk.Color(1, 1, 1));
             ThreadStart tStart = new ThreadStart(this.Cargando);
             Thread t = new Thread(tStart);
@@ -39,10 +42,19 @@ namespace IDNetSoftware
 
         private void NewWindow()
         {
-            //this._main = new MainWindow();
-            this._login = new LoginWindow();
-            this._login.Show();
+            if (!CheckIDNetDaemon())
+            {
+                this._login = new LoginWindow();
+                this._login.Show();
+            }
             this.Destroy();
+        }
+
+
+        private static bool CheckIDNetDaemon()
+        {
+            Process[] pname = Process.GetProcessesByName(Constants.IDNETDAEMON);
+            return pname.Length != 0;
         }
     }
 }

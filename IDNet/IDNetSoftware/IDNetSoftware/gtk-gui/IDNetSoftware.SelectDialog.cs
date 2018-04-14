@@ -4,6 +4,8 @@ namespace IDNetSoftware
 {
 	public partial class SelectDialog
 	{
+		private global::Gtk.Label labelTitulo;
+
 		private global::Gtk.HBox hbox1;
 
 		private global::Gtk.VBox vbox2;
@@ -53,6 +55,16 @@ namespace IDNetSoftware
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
+			this.labelTitulo = new global::Gtk.Label();
+			this.labelTitulo.Name = "labelTitulo";
+			this.labelTitulo.LabelProp = global::Mono.Unix.Catalog.GetString("Solicitud de consulta a una base de datos MySQL");
+			this.labelTitulo.Justify = ((global::Gtk.Justification)(2));
+			w1.Add(this.labelTitulo);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1[this.labelTitulo]));
+			w2.Position = 0;
+			w2.Expand = false;
+			w2.Fill = false;
+			// Container child dialog1_VBox.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
@@ -69,40 +81,40 @@ namespace IDNetSoftware
 			this.labelSelect.Name = "labelSelect";
 			this.labelSelect.LabelProp = global::Mono.Unix.Catalog.GetString("SELECT");
 			this.hbox3.Add(this.labelSelect);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.labelSelect]));
-			w2.Position = 0;
-			w2.Expand = false;
-			w2.Fill = false;
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.labelSelect]));
+			w3.Position = 0;
+			w3.Expand = false;
+			w3.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.comboboxSelect = global::Gtk.ComboBox.NewText();
 			this.comboboxSelect.Name = "comboboxSelect";
 			this.hbox3.Add(this.comboboxSelect);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.comboboxSelect]));
-			w3.Position = 1;
-			w3.Expand = false;
-			w3.Fill = false;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.comboboxSelect]));
+			w4.Position = 1;
+			w4.Expand = false;
+			w4.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.labelFrom = new global::Gtk.Label();
 			this.labelFrom.Name = "labelFrom";
 			this.labelFrom.LabelProp = global::Mono.Unix.Catalog.GetString("FROM");
 			this.hbox3.Add(this.labelFrom);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.labelFrom]));
-			w4.Position = 2;
-			w4.Expand = false;
-			w4.Fill = false;
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.labelFrom]));
+			w5.Position = 2;
+			w5.Expand = false;
+			w5.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.comboboxFrom = global::Gtk.ComboBox.NewText();
 			this.comboboxFrom.Name = "comboboxFrom";
 			this.hbox3.Add(this.comboboxFrom);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.comboboxFrom]));
-			w5.Position = 3;
-			w5.Expand = false;
-			w5.Fill = false;
-			this.vbox2.Add(this.hbox3);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox3]));
-			w6.Position = 0;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.comboboxFrom]));
+			w6.Position = 3;
 			w6.Expand = false;
 			w6.Fill = false;
+			this.vbox2.Add(this.hbox3);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox3]));
+			w7.Position = 0;
+			w7.Expand = false;
+			w7.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.hbox5 = new global::Gtk.HBox();
 			this.hbox5.Name = "hbox5";
@@ -116,23 +128,23 @@ namespace IDNetSoftware
 			this.labelWhere.Name = "labelWhere";
 			this.labelWhere.LabelProp = global::Mono.Unix.Catalog.GetString("WHERE");
 			this.hbox8.Add(this.labelWhere);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox8[this.labelWhere]));
-			w7.Position = 0;
-			w7.Expand = false;
-			w7.Fill = false;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox8[this.labelWhere]));
+			w8.Position = 0;
+			w8.Expand = false;
+			w8.Fill = false;
 			// Container child hbox8.Gtk.Box+BoxChild
 			this.comboboxWhere = global::Gtk.ComboBox.NewText();
 			this.comboboxWhere.Name = "comboboxWhere";
 			this.hbox8.Add(this.comboboxWhere);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox8[this.comboboxWhere]));
-			w8.Position = 1;
-			w8.Expand = false;
-			w8.Fill = false;
-			this.hbox5.Add(this.hbox8);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.hbox8]));
-			w9.Position = 0;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox8[this.comboboxWhere]));
+			w9.Position = 1;
 			w9.Expand = false;
 			w9.Fill = false;
+			this.hbox5.Add(this.hbox8);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.hbox8]));
+			w10.Position = 0;
+			w10.Expand = false;
+			w10.Fill = false;
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.hbox7 = new global::Gtk.HBox();
 			this.hbox7.Name = "hbox7";
@@ -141,10 +153,10 @@ namespace IDNetSoftware
 			this.comboboxWhereSymbols = global::Gtk.ComboBox.NewText();
 			this.comboboxWhereSymbols.Name = "comboboxWhereSymbols";
 			this.hbox7.Add(this.comboboxWhereSymbols);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox7[this.comboboxWhereSymbols]));
-			w10.Position = 0;
-			w10.Expand = false;
-			w10.Fill = false;
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox7[this.comboboxWhereSymbols]));
+			w11.Position = 0;
+			w11.Expand = false;
+			w11.Fill = false;
 			// Container child hbox7.Gtk.Box+BoxChild
 			this.entryWhere = new global::Gtk.Entry();
 			this.entryWhere.CanFocus = true;
@@ -152,16 +164,16 @@ namespace IDNetSoftware
 			this.entryWhere.IsEditable = true;
 			this.entryWhere.InvisibleChar = '•';
 			this.hbox7.Add(this.entryWhere);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox7[this.entryWhere]));
-			w11.Position = 1;
-			this.hbox5.Add(this.hbox7);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.hbox7]));
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox7[this.entryWhere]));
 			w12.Position = 1;
-			this.vbox2.Add(this.hbox5);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox5]));
+			this.hbox5.Add(this.hbox7);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.hbox7]));
 			w13.Position = 1;
-			w13.Expand = false;
-			w13.Fill = false;
+			this.vbox2.Add(this.hbox5);
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox5]));
+			w14.Position = 1;
+			w14.Expand = false;
+			w14.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox();
 			this.hbox2.Name = "hbox2";
@@ -171,39 +183,39 @@ namespace IDNetSoftware
 			this.labelOrderBy.Name = "labelOrderBy";
 			this.labelOrderBy.LabelProp = global::Mono.Unix.Catalog.GetString("ORDER BY");
 			this.hbox2.Add(this.labelOrderBy);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.labelOrderBy]));
-			w14.Position = 0;
-			w14.Expand = false;
-			w14.Fill = false;
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.labelOrderBy]));
+			w15.Position = 0;
+			w15.Expand = false;
+			w15.Fill = false;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.comboboxOrderBy = global::Gtk.ComboBox.NewText();
 			this.comboboxOrderBy.Name = "comboboxOrderBy";
 			this.hbox2.Add(this.comboboxOrderBy);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.comboboxOrderBy]));
-			w15.Position = 1;
-			w15.Expand = false;
-			w15.Fill = false;
-			this.vbox2.Add(this.hbox2);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-			w16.Position = 2;
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.comboboxOrderBy]));
+			w16.Position = 1;
 			w16.Expand = false;
 			w16.Fill = false;
-			this.hbox1.Add(this.vbox2);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
-			w17.Position = 0;
+			this.vbox2.Add(this.hbox2);
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+			w17.Position = 2;
 			w17.Expand = false;
 			w17.Fill = false;
-			w1.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(w1[this.hbox1]));
+			this.hbox1.Add(this.vbox2);
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
 			w18.Position = 0;
 			w18.Expand = false;
 			w18.Fill = false;
+			w1.Add(this.hbox1);
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(w1[this.hbox1]));
+			w19.Position = 1;
+			w19.Expand = false;
+			w19.Fill = false;
 			// Internal child IDNetSoftware.SelectDialog.ActionArea
-			global::Gtk.HButtonBox w19 = this.ActionArea;
-			w19.Name = "dialog1_ActionArea";
-			w19.Spacing = 10;
-			w19.BorderWidth = ((uint)(5));
-			w19.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w20 = this.ActionArea;
+			w20.Name = "dialog1_ActionArea";
+			w20.Spacing = 10;
+			w20.BorderWidth = ((uint)(5));
+			w20.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button();
 			this.buttonCancel.CanDefault = true;
@@ -213,9 +225,9 @@ namespace IDNetSoftware
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget(this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w20 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w19[this.buttonCancel]));
-			w20.Expand = false;
-			w20.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonCancel]));
+			w21.Expand = false;
+			w21.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button();
 			this.buttonOk.CanDefault = true;
@@ -225,10 +237,10 @@ namespace IDNetSoftware
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget(this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w19[this.buttonOk]));
-			w21.Position = 1;
-			w21.Expand = false;
-			w21.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonOk]));
+			w22.Position = 1;
+			w22.Expand = false;
+			w22.Fill = false;
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();

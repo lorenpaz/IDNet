@@ -16,7 +16,7 @@ namespace IDNetSoftware
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build();
-            RedimensionarImagen();
+
             this._remoteDatabase = new RemoteDatabase();
         }
 
@@ -29,7 +29,6 @@ namespace IDNetSoftware
             {
                 if(password == passwordR)
                 {
-
                     if(this._remoteDatabase.InsertUser(username,password))
                     {
                         MostrarMensaje(Constants.MYSQL_REMOTE_REGISTER_SUCCESS);
@@ -64,11 +63,6 @@ namespace IDNetSoftware
         private void MostrarMensaje(string mensaje)
         {
             labelState.Text = mensaje;
-        }
-
-        private void RedimensionarImagen()
-        {
-          //  imageIDNet.Pixbuf.ScaleSimple(100,500,InterpType.Bilinear);
         }
     }
 }

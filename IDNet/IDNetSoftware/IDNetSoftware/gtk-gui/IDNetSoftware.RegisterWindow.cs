@@ -52,6 +52,7 @@ namespace IDNetSoftware
 			this.labelRegistrarse = new global::Gtk.Label();
 			this.labelRegistrarse.Name = "labelRegistrarse";
 			this.labelRegistrarse.LabelProp = global::Mono.Unix.Catalog.GetString("Registro");
+			this.labelRegistrarse.Justify = ((global::Gtk.Justification)(2));
 			this.vbox4.Add(this.labelRegistrarse);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.labelRegistrarse]));
 			w1.Position = 0;
@@ -60,6 +61,7 @@ namespace IDNetSoftware
 			// Container child vbox4.Gtk.Box+BoxChild
 			this.imageIDNet = new global::Gtk.Image();
 			this.imageIDNet.Name = "imageIDNet";
+			this.imageIDNet.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("iconoSoftwareSmall.png");
 			this.vbox4.Add(this.imageIDNet);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.imageIDNet]));
 			w2.Position = 1;
@@ -193,8 +195,8 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 393;
-			this.DefaultHeight = 217;
+			this.DefaultWidth = 330;
+			this.DefaultHeight = 369;
 			this.Show();
 			this.buttonIniciarSesion.Clicked += new global::System.EventHandler(this.OnButtonIniciarSesionClicked);
 			this.buttonRegistrarse.Clicked += new global::System.EventHandler(this.OnButtonRegistrarseClicked);

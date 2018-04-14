@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
+
 using DatabaseLibrary;
 using ConstantsLibraryS;
 
-using Gdk;
 
 namespace IDNetSoftware
 {
@@ -14,7 +15,6 @@ namespace IDNetSoftware
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build();
-            RedimensionarImagen();
             this._remoteDatabase = new RemoteDatabase();
         }
 
@@ -30,6 +30,7 @@ namespace IDNetSoftware
             {
                 MostrarMensaje(Constants.MYSQL_REMOTE_LOGIN_SUCCESS);
                 Usuario.SaveConf(this._remoteDatabase.SaveUserToFile(username));
+                RunIDNetDaemon();
                 MainWindow main = new MainWindow();
                 main.Show();
 
@@ -58,9 +59,15 @@ namespace IDNetSoftware
             labelState.Text = mensaje;
         }
 
-        private void RedimensionarImagen()
+        private static void RunIDNetDaemon()
         {
-            imageIDNet.Pixbuf.ScaleSimple(50, 50, InterpType.Bilinear);
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C ./IDNetDaemonScript.sh";
+            process.StartInfo = startInfo;
+            process.Start();
         }
     }
 }

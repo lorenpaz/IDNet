@@ -12,6 +12,7 @@ namespace GKDaemon
 		{
 			ServiceName = "GKDaemon";
 			_scheduler = new Scheduler();
+
 		}
 
 		protected override void OnStart(string[] args)

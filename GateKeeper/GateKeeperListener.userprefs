@@ -1,6 +1,16 @@
 ﻿<Properties StartupConfiguration="{E0B09AC3-21FD-46D6-A088-45A4378CC071}|Default">
-  <MonoDevelop.Ide.Workbench />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GateKeeperListener/Constants.cs">
+    <Files>
+      <File FileName="GateKeeperListener/Pathfinder.cs" Line="219" Column="1" />
+      <File FileName="GKDaemon/log.cs" Line="34" Column="1" />
+      <File FileName="GateKeeperListener/Constants.cs" Line="7" Column="102" />
+      <File FileName="GKDaemon/Scheduler.cs" Line="42" Column="1" />
+      <File FileName="GKDaemon/DaemonServiceMain.cs" Line="13" Column="26" />
+      <File FileName="GKDaemon/ServiceDaemon.cs" Line="34" Column="26" />
+      <File FileName="GateKeeperListener/app.config" Line="9" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

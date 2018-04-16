@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace GateKeeperListener
 {
@@ -8,7 +7,7 @@ namespace GateKeeperListener
 		public static readonly string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Config");
         public static readonly string XMLROUTES = Path.Combine(CONFIG, @"routes.xml");
         public static readonly string XMLNEIGHBOURS = Path.Combine(CONFIG, @"neighbours.xml");
-        public static readonly string XMLLOG = Path.Combine(CONFIG,"EventLogConfig.xml");
+        public static readonly string XMLLOG = Path.Combine(CONFIG,@"EventLogConfig.xml");
         public static readonly string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" 
             + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
         private static readonly string MYSQL_REMOTE_NAMETABLE = @"usuariosIDNet";

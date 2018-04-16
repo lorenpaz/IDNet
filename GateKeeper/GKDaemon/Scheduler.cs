@@ -18,6 +18,7 @@ namespace GKDaemon
 			ISchedulerFactory factory = new StdSchedulerFactory();
             _scheduler = factory.GetScheduler().Result;
             _scheduler.Start();
+            Log.Configure();
 			StartMyJob();
 		}
 

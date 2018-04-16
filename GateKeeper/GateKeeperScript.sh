@@ -3,7 +3,7 @@
 PATH_NAME="GKDaemon/bin/Release/"
 PROGRAM_NAME="GKDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
-LOG_FOLDER="logs"
+LOG_FOLDER="logFiles"
 
 usage()
 {

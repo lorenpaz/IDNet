@@ -92,6 +92,9 @@
     <EmbeddedResource Include="resources\icons\iconoSoftwareSmall.png">
       <LogicalName>iconoSoftwareSmall.png</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\deleteDatabase.png">
+      <LogicalName>deleteDatabase.png</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -129,6 +132,8 @@
     <Compile Include="gtk-gui\IDNetSoftware.LoginWindow.cs" />
     <Compile Include="RegisterWindow.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.RegisterWindow.cs" />
+    <Compile Include="DeleteDatabaseDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.DeleteDatabaseDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

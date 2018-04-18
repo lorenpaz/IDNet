@@ -144,34 +144,35 @@ namespace DatabaseLibraryS
                 return false;
             }
 
-			if (!File.Exists(Constants.ConfigFileDatabases))
-			{
-                File.Create(Constants.ConfigFileDatabases);
-			}
-
-            using (StreamWriter w = File.AppendText(Constants.ConfigFileDatabases))
+            try
             {
-                if (usuarioDatabase == null)
-                    w.WriteLine(tipoBBDD + "*" + nombreBBDD + ";");
-                else
+                using (StreamWriter w = File.AppendText(Constants.ConfigFileDatabases))
                 {
-                    w.WriteLine(tipoBBDD + "*" + nombreBBDD + "|" + usuarioDatabase + "*" + passwordDatabase + ";");
+                    if (usuarioDatabase == null)
+                        w.WriteLine(tipoBBDD + "*" + nombreBBDD + ";");
+                    else
+                    {
+                        w.WriteLine(tipoBBDD + "*" + nombreBBDD + "|" + usuarioDatabase + "*" + passwordDatabase + ";");
+                    }
+
+                    if (this._databasesPropias.ContainsKey(tipoBBDD))
+                    {
+                        Tuple<string, string, string> tupla = new Tuple<string, string, string>(nombreBBDD, usuarioDatabase, passwordDatabase);
+                        this._databasesPropias[tipoBBDD].Add(tupla);
+                    }
+                    else
+                    {
+                        List<Tuple<string, string, string>> aux = new List<Tuple<string, string, string>>();
+                        Tuple<string, string, string> tupla = new Tuple<string, string, string>(nombreBBDD, usuarioDatabase, passwordDatabase);
+                        aux.Add(tupla);
+                        this._databasesPropias.Add(tipoBBDD, aux);
+                    }
+
+                    return true;
                 }
-
-				if (this._databasesPropias.ContainsKey(tipoBBDD))
-				{
-                    Tuple<string, string, string> tupla = new Tuple<string, string, string>(nombreBBDD, usuarioDatabase, passwordDatabase);
-					this._databasesPropias[tipoBBDD].Add(tupla);
-				}
-				else
-				{
-					List<Tuple<string, string, string>> aux = new List<Tuple<string, string, string>>();
-					Tuple<string, string, string> tupla = new Tuple<string, string, string>(nombreBBDD, usuarioDatabase, passwordDatabase);
-					aux.Add(tupla);
-					this._databasesPropias.Add(tipoBBDD, aux);
-				}
-
-                return true;
+            }catch(Exception){
+                
+                return false;
             }
         }
 

@@ -187,7 +187,7 @@ namespace IDNetSoftware
                     {
                         firstParam = false;
                     }
-                    else if(line[i] == '|')
+                    else if (line[i] == '|')
                     {
                         break;
                     }
@@ -207,7 +207,7 @@ namespace IDNetSoftware
          * Método estático para guardar el usuario en un archivo
          * de configuración
          * */
-        public static void SaveConf(Tuple<string,int> tupla)
+        public static void SaveConf(Tuple<string, int> tupla)
         {
             //Obtenemos los campos
             string username = tupla.Item1;
@@ -219,7 +219,7 @@ namespace IDNetSoftware
                 File.Delete(Constants.ConfigFileInfoUser);
             }
 
-            File.WriteAllText(Constants.ConfigFileInfoUser,"nombre=" + username + "|code:" + code + ";");
+            File.WriteAllText(Constants.ConfigFileInfoUser, "nombre=" + username + "|code:" + code + ";");
         }
 
     }
@@ -246,6 +246,9 @@ namespace IDNetSoftware
 
         //Dialogo de añadir BBDD
         AddDatabaseDialog _addDatabaseDialog;
+
+        //Dialogo de borrado BBDD
+        DeleteDatabaseDialog _deleteDatabaseDialog;
 
         //Dialogo de modificar BBDD
         ModifyDatabaseDialog _modifyDatabaseDialog;
@@ -282,7 +285,7 @@ namespace IDNetSoftware
 
         //Diccionario con claves públicas y simétricas de los clientes
         Dictionary<string, Tuple<RsaKeyParameters, SymmetricAlgorithm>> _keyPairClients;
-         
+
         /**
          * Constructor de la ventana
          * */
@@ -335,8 +338,10 @@ namespace IDNetSoftware
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_USUARIO, new CellRendererText(), "text", 0);
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_TIPOBBDD, new CellRendererText(), "text", 1);
                 treeviewDatabases.AppendColumn(Constants.TABLA_COLUMNA_NOMBREBBDD, new CellRendererText(), "text", 2);
-            }else{
-                
+            }
+            else
+            {
+
             }
         }
 
@@ -357,7 +362,7 @@ namespace IDNetSoftware
          * */
         private bool SolicitarVecinos()
         {
-              string msg, response;
+            string msg, response;
 
             /*  //Proceso el envio
               PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
@@ -474,12 +479,39 @@ namespace IDNetSoftware
          * */
         protected void OnAddDatabasePngActionActivated(object sender, EventArgs e)
         {
-            this._addDatabaseDialog = new AddDatabaseDialog(this._databases);
-            this._addDatabaseDialog.Run();
+            try
+            {
+                this._addDatabaseDialog = new AddDatabaseDialog(this._databases);
+                this._addDatabaseDialog.Run();
 
-            UpdateOwnDatabases();
+                UpdateOwnDatabases();
 
-            AdiccionBBDD(this._addDatabaseDialog.BBDD,this._addDatabaseDialog.Success);
+                AdiccionBBDD(this._addDatabaseDialog.BBDD, this._addDatabaseDialog.Success);
+            }
+            catch (Exception)
+            {
+                ErrorAdiccionBBDD(this._addDatabaseDialog.BBDD);
+            }
+        }
+
+        /*
+         * Método de acción del icono deleteBasededatos
+         * */
+        protected void OnDeleteDatabasePngActionActivated(object sender, EventArgs e)
+        {
+            try
+            {
+                this._deleteDatabaseDialog = new DeleteDatabaseDialog(this._databases);
+                this._deleteDatabaseDialog.Run();
+
+                UpdateOwnDatabases();
+
+                BorradoBBDD(this._deleteDatabaseDialog.BBDD, this._deleteDatabaseDialog.Success);
+            }
+            catch (Exception)
+            {
+                ErrorBorradoBBDD(this._deleteDatabaseDialog.BBDD);
+            }
         }
 
         /*
@@ -501,11 +533,37 @@ namespace IDNetSoftware
          * */
         protected void OnAddActionActivated(object sender, EventArgs e)
         {
-            this._addDatabaseDialog = new AddDatabaseDialog(this._databases);
-            this._addDatabaseDialog.Run();
+            try
+            {
+                this._addDatabaseDialog = new AddDatabaseDialog(this._databases);
+                this._addDatabaseDialog.Run();
 
-            UpdateOwnDatabases();
-            AdiccionBBDD(this._addDatabaseDialog.BBDD,this._addDatabaseDialog.Success);
+                UpdateOwnDatabases();
+                AdiccionBBDD(this._addDatabaseDialog.BBDD, this._addDatabaseDialog.Success);
+            }
+            catch (Exception)
+            {
+                ErrorAdiccionBBDD(this._addDatabaseDialog.BBDD);
+            }
+        }
+        /*
+         * Menú 'Base de datos' opción 'Borrar'
+         * */
+        protected void OnRemoveActionActivated(object sender, EventArgs e)
+        {
+            try
+            {
+                this._deleteDatabaseDialog = new DeleteDatabaseDialog(this._databases);
+                this._deleteDatabaseDialog.Run();
+
+                UpdateOwnDatabases();
+
+                BorradoBBDD(this._deleteDatabaseDialog.BBDD, this._deleteDatabaseDialog.Success);
+            }
+            catch (Exception)
+            {
+                ErrorBorradoBBDD(this._deleteDatabaseDialog.BBDD);
+            }
         }
 
         /*
@@ -593,14 +651,15 @@ namespace IDNetSoftware
             this._modifyDatabaseDialog.Run();
 
             UpdateOwnDatabases();
-            if(this._modifyDatabaseDialog.TypeTask == Constants.TYPE_MODIFY)
+            if (this._modifyDatabaseDialog.TypeTask == Constants.TYPE_MODIFY)
             {
-                ModifyBBDD(this._modifyDatabaseDialog.BBDD,this._modifyDatabaseDialog.Success);
-            }else if (this._modifyDatabaseDialog.TypeTask == Constants.TYPE_DELETE)
+                ModifyBBDD(this._modifyDatabaseDialog.BBDD, this._modifyDatabaseDialog.Success);
+            }
+            else if (this._modifyDatabaseDialog.TypeTask == Constants.TYPE_DELETE)
             {
                 DeleteBBDD(this._modifyDatabaseDialog.BBDD, this._modifyDatabaseDialog.Success);
             }
-           
+
         }
 
         /*
@@ -919,8 +978,7 @@ namespace IDNetSoftware
                 else
                     this.connectionPng.Sensitive = false;
 
-                this.addDatabasePngAction.Sensitive = false;
-                this.updateDatabasePngAction.Sensitive = false;
+                BotoneraBBDD(false);
             }
         }
 
@@ -1191,8 +1249,7 @@ namespace IDNetSoftware
                         this.schemaPngAction.Sensitive = true;
                     }
                 }
-                this.addDatabasePngAction.Sensitive = false;
-                this.updateDatabasePngAction.Sensitive = false;
+                BotoneraBBDD(false);
             }
         }
 
@@ -1297,7 +1354,19 @@ namespace IDNetSoftware
 
         private void AdiccionBBDD(List<string> bbdd, bool success)
         {
-            infoview.Buffer.Text += "\n" + Constants.AdiccionBBDD(bbdd,success);
+            infoview.Buffer.Text += "\n" + Constants.AdiccionBBDD(bbdd, success);
+        }
+        private void ErrorAdiccionBBDD(List<string> bbdd)
+        {
+            infoview.Buffer.Text += "\n" + Constants.ErrorAdiccionBBDD(bbdd);
+        }
+        private void BorradoBBDD(List<string> bbdd, bool success)
+        {
+            infoview.Buffer.Text += "\n" + Constants.BorradoBBDD(bbdd, success);
+        }
+        private void ErrorBorradoBBDD(List<string> bbdd)
+        {
+            infoview.Buffer.Text += "\n" + Constants.ErrorBorradoBBDD(bbdd);
         }
         private void ModifyBBDD(List<string> bbdd, bool success)
         {
@@ -1340,9 +1409,7 @@ namespace IDNetSoftware
         private void DesactivadoBotones()
         {
             this._conexionesActivas = 0;
-            this.connectionPng.Sensitive = false;
-            this.selectPngAction.Sensitive = false;
-            this.schemaPngAction.Sensitive = false;
+            BotoneraConexiones(false);
         }
 
         /*
@@ -1351,11 +1418,8 @@ namespace IDNetSoftware
         protected void OnTreeviewDatabasesPropiasButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
         {
             //Activamos/desactivamos los respectivos botones
-            connectionPng.Sensitive = false;
-            schemaPngAction.Sensitive = false;
-            selectPngAction.Sensitive = false;
-            addDatabasePngAction.Sensitive = true;
-            updateDatabasePngAction.Sensitive = true;
+            BotoneraConexiones(false);
+            BotoneraBBDD(true);
         }
 
         /*
@@ -1364,12 +1428,21 @@ namespace IDNetSoftware
         protected void OnInfoviewButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
         {
             //Activamos/desactivamos los respectivos botones
-            connectionPng.Sensitive = false;
-            schemaPngAction.Sensitive = false;
-            selectPngAction.Sensitive = false;
-            addDatabasePngAction.Sensitive = false;
-            updateDatabasePngAction.Sensitive = false;
+            BotoneraConexiones(false);
+            BotoneraBBDD(false);
         }
 
-    } 
+        private void BotoneraConexiones(bool activacion)
+        {
+            connectionPng.Sensitive = activacion;
+            schemaPngAction.Sensitive = activacion;
+            selectPngAction.Sensitive = activacion;
+        }
+        private void BotoneraBBDD(bool activacion)
+        {
+            addDatabasePngAction.Sensitive = activacion;
+            deleteDatabasePngAction.Sensitive = activacion;
+            updateDatabasePngAction.Sensitive = activacion;
+        }
+    }
 }

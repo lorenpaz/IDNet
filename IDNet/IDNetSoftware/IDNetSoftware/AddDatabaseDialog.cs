@@ -71,12 +71,12 @@ namespace IDNetSoftware
         private void Adiccion()
         {
             this._bbdd.Clear();
-            this._bbdd[0] = comboboxTipos.ActiveText;
-            this._bbdd[1] = entryNombreBBDD.Text;
+            this._bbdd.Add(comboboxTipos.ActiveText);
+            this._bbdd.Add(entryNombreBBDD.Text);
             if (entryUsername.Text != "")
             {
-                this._bbdd[2] = entryUsername.Text;
-                this._bbdd[3] = entryContrasenia.Text;
+                this._bbdd.Add(entryUsername.Text);
+                this._bbdd.Add(entryContrasenia.Text);
             }
         }
     }

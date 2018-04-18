@@ -46,6 +46,12 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action selectPngAction;
 
+		private global::Gtk.Action deleteDatabasePngAction;
+
+		private global::Gtk.Action BorrarAction;
+
+		private global::Gtk.Action removeAction;
+
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar2;
@@ -146,6 +152,14 @@ namespace IDNetSoftware
 			w1.Add(this.schemaPngAction, null);
 			this.selectPngAction = new global::Gtk.Action("selectPngAction", null, null, "select.png");
 			w1.Add(this.selectPngAction, null);
+			this.deleteDatabasePngAction = new global::Gtk.Action("deleteDatabasePngAction", null, null, "deleteDatabase.png");
+			w1.Add(this.deleteDatabasePngAction, null);
+			this.BorrarAction = new global::Gtk.Action("BorrarAction", global::Mono.Unix.Catalog.GetString("Borrar"), null, null);
+			this.BorrarAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Borrar");
+			w1.Add(this.BorrarAction, null);
+			this.removeAction = new global::Gtk.Action("removeAction", global::Mono.Unix.Catalog.GetString("Borrar"), null, "gtk-remove");
+			this.removeAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Borrar");
+			w1.Add(this.removeAction, null);
 			this.UIManager.InsertActionGroup(w1, 0);
 			this.AddAccelGroup(this.UIManager.AccelGroup);
 			this.WidthRequest = 700;
@@ -162,7 +176,7 @@ namespace IDNetSoftware
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar2'><menu name='ArchivoAction' action='ArchivoAction'><menuitem name='salirAction' action='salirAction'/></menu><menu name='BasesDeDatosAction' action='BasesDeDatosAction'><menuitem name='addAction' action='addAction'/></menu><menu name='OVAction' action='OVAction'><menuitem name='MostrarUsuariosAction' action='MostrarUsuariosAction'/><menuitem name='MensajesAction' action='MensajesAction'/></menu><menu name='AyudaAction' action='AyudaAction'><menuitem name='AcercaDeAction' action='AcercaDeAction'/><menuitem name='SimbologiaAction' action='SimbologiaAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><menubar name='menubar2'><menu name='ArchivoAction' action='ArchivoAction'><menuitem name='salirAction' action='salirAction'/></menu><menu name='BasesDeDatosAction' action='BasesDeDatosAction'><menuitem name='addAction' action='addAction'/><menuitem name='removeAction' action='removeAction'/></menu><menu name='OVAction' action='OVAction'><menuitem name='MostrarUsuariosAction' action='MostrarUsuariosAction'/><menuitem name='MensajesAction' action='MensajesAction'/></menu><menu name='AyudaAction' action='AyudaAction'><menuitem name='AcercaDeAction' action='AcercaDeAction'/><menuitem name='SimbologiaAction' action='SimbologiaAction'/></menu></menubar></ui>");
 			this.menubar2 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget("/menubar2")));
 			this.menubar2.Name = "menubar2";
 			this.vbox1.Add(this.menubar2);
@@ -171,7 +185,7 @@ namespace IDNetSoftware
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='connectionPng' action='connectionPng'/><toolitem name='schemaPngAction' action='schemaPngAction'/><toolitem name='selectPngAction' action='selectPngAction'/></toolbar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='deleteDatabasePngAction' action='deleteDatabasePngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='connectionPng' action='connectionPng'/><toolitem name='schemaPngAction' action='schemaPngAction'/><toolitem name='selectPngAction' action='selectPngAction'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -340,6 +354,8 @@ namespace IDNetSoftware
 			this.connectionPng.Activated += new global::System.EventHandler(this.OnConnectionPngAction1Activated);
 			this.schemaPngAction.Activated += new global::System.EventHandler(this.OnSchemaPngActionActivated);
 			this.selectPngAction.Activated += new global::System.EventHandler(this.OnSelectPngActionActivated);
+			this.deleteDatabasePngAction.Activated += new global::System.EventHandler(this.OnDeleteDatabasePngActionActivated);
+			this.removeAction.Activated += new global::System.EventHandler(this.OnRemoveActionActivated);
 			this.infoview.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnInfoviewButtonReleaseEvent);
 			this.treeviewDatabasesPropias.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesPropiasRowActivated);
 			this.treeviewDatabasesPropias.ButtonReleaseEvent += new global::Gtk.ButtonReleaseEventHandler(this.OnTreeviewDatabasesPropiasButtonReleaseEvent);

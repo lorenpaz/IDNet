@@ -30,44 +30,44 @@ namespace DatabaseLibrary
          * */
         public bool CheckUser(string username, string password)
         {
-            Random r = new Random();
-            bool ok = false;
-            try
-            {
-                //Connection
-                this._mysql = new MySqlConnection(this._connectionString);
-                this._mysql.Open();
+            /*  Random r = new Random();
+              bool ok = false;
+              try
+              {
+                  //Connection
+                  this._mysql = new MySqlConnection(this._connectionString);
+                  this._mysql.Open();
 
-                //Query
-                string query = Constants.MysqlRemoteSelect();
+                  //Query
+                  string query = Constants.MysqlRemoteSelect();
 
-                //Create Command
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = this._mysql;
-                cmd.CommandText = query;
-                cmd.Parameters.AddWithValue("username",username);
+                  //Create Command
+                  MySqlCommand cmd = new MySqlCommand();
+                  cmd.Connection = this._mysql;
+                  cmd.CommandText = query;
+                  cmd.Parameters.AddWithValue("username",username);
 
-                //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                  //Create a data reader and Execute the command
+                  MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                //Encriptamos la contraseña
-                byte[] passwordBytes = Cripto.EncryptSHA256(password);
+                  //Encriptamos la contraseña
+                  byte[] passwordBytes = Cripto.EncryptSHA256(password);
 
-                //Read the data and check password
-                while (dataReader.Read())
-                {
-                    string usuario = (String) dataReader["username"];
-                    byte[] passwordRemote = (byte[]) dataReader["password"];
-                    ok = passwordBytes.SequenceEqual(passwordRemote);
-                }
-                                                      
-                //close Data Reader
-                dataReader.Close();
+                  //Read the data and check password
+                  while (dataReader.Read())
+                  {
+                      string usuario = (String) dataReader["username"];
+                      byte[] passwordRemote = (byte[]) dataReader["password"];
+                      ok = passwordBytes.SequenceEqual(passwordRemote);
+                  }
 
-            }catch(MySqlException ){
-                
-            }
+                  //close Data Reader
+                  dataReader.Close();
 
+              }catch(MySqlException ){
+
+              }*/
+            bool ok = true;
             return ok;
         }
 
@@ -120,7 +120,7 @@ namespace DatabaseLibrary
          * */
         public Tuple<string,int> SaveUserToFile(string username)
         {
-            Tuple<string, int> tupla = null;
+           /* Tuple<string, int> tupla = null;
             try
             {
                 //Connection
@@ -151,13 +151,14 @@ namespace DatabaseLibrary
                 dataReader.Close();
 
                 //close Connection
-                this._mysql.Close();
+                this._mysql.Close();*/
+            Tuple<string,int> tupla = new Tuple<string, int>("Lorenzo", 3456789);
 
-            }
+           /* }
             catch (MySqlException)
             {
 
-            }
+            }*/
             return tupla;
         }
     }

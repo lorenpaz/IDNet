@@ -30,6 +30,8 @@ namespace IDNetSoftware
             iconosUsados.Add(Constants.ICONO_ADDATABASE);
             iconosUsados.Add(Constants.ICONO_UPDATEDATABASE);
             iconosUsados.Add(Constants.ICONO_CONNECTIONDATABASE);
+            iconosUsados.Add(Constants.ICONO_SCHEMADATABASE);
+            iconosUsados.Add(Constants.ICONO_SELECTDATABASE);
 
             Dictionary<string, Gdk.Pixbuf> imagenes = CargarImagenes(iconosUsados);
 
@@ -45,6 +47,14 @@ namespace IDNetSoftware
                         break;
                     case Constants.ICONO_CONNECTIONDATABASE:
                         this._symbolsView.AppendValues(a.Value, Constants.INFORMACION_ICONO_CONNECTIONDATABASE);
+                        break;
+                    case Constants.ICONO_SCHEMADATABASE:
+                        this._symbolsView.AppendValues(a.Value, Constants.INFORMACION_ICONO_SCHEMADATABASE);
+                        break;
+                    case Constants.ICONO_SELECTDATABASE:
+                        this._symbolsView.AppendValues(a.Value, Constants.INFORMACION_ICONO_SELECTDATABASE);
+                        break;
+                    default:
                         break;
                 }
 

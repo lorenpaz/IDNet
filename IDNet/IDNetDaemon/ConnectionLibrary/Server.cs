@@ -187,7 +187,7 @@ namespace ConnectionLibrary
 				handler.Close();
 
 			}   
-			catch (Exception e)
+			catch (Exception)
 			{
 			}
 		}

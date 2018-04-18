@@ -86,36 +86,40 @@ namespace DatabaseLibraryS
         private void ParseConf()
         {
             //Archivo a leer
-            StreamReader conFile = File.OpenText(Constants.ConfigFileNeighbours);
-            string line = conFile.ReadLine();
-
-            //Voy leyendo línea por línea
-            while (line != null)
+            if (File.Exists(Constants.ConfigFileNeighbours))
             {
-                int i = 0;
-                string name = "";
-                /*
-                 * 
-                 * nombreUsuario;
-                 * 
-                 * Ejemplo:
-                 * lorenzo;
-                 * 
-                 */
 
-                //Leemos el parámetro
-                while (line[i] != ';')
+                StreamReader conFile = File.OpenText(Constants.ConfigFileNeighbours);
+                string line = conFile.ReadLine();
+
+                //Voy leyendo línea por línea
+                while (line != null)
                 {
-                    name += line[i];
-                    i++;
-                }
+                    int i = 0;
+                    string name = "";
+                    /*
+                     * 
+                     * nombreUsuario;
+                     * 
+                     * Ejemplo:
+                     * lorenzo;
+                     * 
+                     */
 
-                if(!this._vecinosVO.Contains(name))
-                {
-                    this._vecinosVO.Add(name);
-                }
+                    //Leemos el parámetro
+                    while (line[i] != ';')
+                    {
+                        name += line[i];
+                        i++;
+                    }
 
-                line = conFile.ReadLine();
+                    if (!this._vecinosVO.Contains(name))
+                    {
+                        this._vecinosVO.Add(name);
+                    }
+
+                    line = conFile.ReadLine();
+                }
             }
         }
 
@@ -123,73 +127,76 @@ namespace DatabaseLibraryS
         private void ParseConfAdvanced()
         {
             //Archivo a leer
-            StreamReader conFile = File.OpenText(Constants.ConfigFileNeighboursDatabases);
-            string line = conFile.ReadLine();
-
-            //Inicializamos el atributo
-            this._miembrosOV = new Dictionary<string, Dictionary<string, List<string>>>();
-
-            //Voy leyendo línea por línea
-            while (line != null)
+            if (File.Exists(Constants.ConfigFileNeighboursDatabases))
             {
-                int i = 0;
-                bool param = true, param2 = true;
-                string name = "", tipoBBDD = "", nombreBBDD = "";
-                /*
-                 * 
-                 * nombreUsuario=database_type,database_name;
-                 * 
-                 * Ejemplo:
-                 * lorenzo=mongodb,empleados;
-                 * 
-                 */
+                StreamReader conFile = File.OpenText(Constants.ConfigFileNeighboursDatabases);
+                string line = conFile.ReadLine();
 
-                //Leemos el parámetro
-                while (line[i] != ';')
+                //Inicializamos el atributo
+                this._miembrosOV = new Dictionary<string, Dictionary<string, List<string>>>();
+
+                //Voy leyendo línea por línea
+                while (line != null)
                 {
-                    //Parseo para la obtención
-                    if (line[i] == '=')
-                        param = false;
-                    else if (line[i] == ',')
-                        param2 = false;
-                    else if (param)
-                        name += line[i];
-                    else if (!param && param2)
+                    int i = 0;
+                    bool param = true, param2 = true;
+                    string name = "", tipoBBDD = "", nombreBBDD = "";
+                    /*
+                     * 
+                     * nombreUsuario=database_type,database_name;
+                     * 
+                     * Ejemplo:
+                     * lorenzo=mongodb,empleados;
+                     * 
+                     */
+
+                    //Leemos el parámetro
+                    while (line[i] != ';')
                     {
-                        tipoBBDD += line[i];
-                    }
-                    else if (!param && !param2)
-                    {
-                        nombreBBDD += line[i];
+                        //Parseo para la obtención
+                        if (line[i] == '=')
+                            param = false;
+                        else if (line[i] == ',')
+                            param2 = false;
+                        else if (param)
+                            name += line[i];
+                        else if (!param && param2)
+                        {
+                            tipoBBDD += line[i];
+                        }
+                        else if (!param && !param2)
+                        {
+                            nombreBBDD += line[i];
+                        }
+
+                        i++;
                     }
 
-                    i++;
-                }
-
-                if (this._miembrosOV.ContainsKey(name))
-                {
-                    if (this._miembrosOV[name].ContainsKey(tipoBBDD))
+                    if (this._miembrosOV.ContainsKey(name))
                     {
-                        this._miembrosOV[name][tipoBBDD].Add(nombreBBDD);
+                        if (this._miembrosOV[name].ContainsKey(tipoBBDD))
+                        {
+                            this._miembrosOV[name][tipoBBDD].Add(nombreBBDD);
+                        }
+                        else
+                        {
+                            List<string> list = new List<string>();
+                            list.Add(nombreBBDD);
+                            this._miembrosOV[name].Add(tipoBBDD, list);
+                        }
                     }
                     else
                     {
+                        Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
+                        this._miembrosOV.Add(name, dict);
+
                         List<string> list = new List<string>();
                         list.Add(nombreBBDD);
                         this._miembrosOV[name].Add(tipoBBDD, list);
                     }
-                }
-                else
-                {
-                    Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
-                    this._miembrosOV.Add(name, dict);
 
-                    List<string> list = new List<string>();
-                    list.Add(nombreBBDD);
-                    this._miembrosOV[name].Add(tipoBBDD, list);
+                    line = conFile.ReadLine();
                 }
-
-                line = conFile.ReadLine();
             }
         }
     }

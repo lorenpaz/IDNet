@@ -77,7 +77,7 @@ namespace ConstantsLibraryS
         public const string SELECT = @"select";
 
         //public const string GATEKEEPER = @"127.0.0.1";
-        public const string GATEKEEPER = @"192.168.1.85";
+        public const string GATEKEEPER = @"192.168.1.56";
         public const int GATEKEEPER_PORT = 11000;
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
@@ -109,9 +109,13 @@ namespace ConstantsLibraryS
             "Si le notifica que no está disponible su base de datos, consulta el estado de su servidor de bases de datos junto con la información proporcionada para conectarse a aquella base de datos.";
         public const string INFORMACION_ICONO_CONNECTIONDATABASE = @"Icono para realizar la conexión con un vecino de la Organización Virtual. También, se puede realizar la conexión pulsando en una base de datos en el cuadro de la derecha del menu principal."+"\n"
             +"Una vez se haya conectado a un vecino, podrá realizar consultas a sus bases de datos.";
+        public const string INFORMACION_ICONO_SELECTDATABASE = @"Icono para realizar la consulta de la base de datos de un vecino de la Organización Virtual.";
+        public const string INFORMACION_ICONO_SCHEMADATABASE = @"Icono para solicitar el esquema de la base de datos de un vecino de la Organización Vitual.";
         public const string ICONO_ADDATABASE = @"../../resources/icons/addDatabase.png";
         public const string ICONO_UPDATEDATABASE = @"../../resources/icons/updateDatabase.png";
-        public const string ICONO_CONNECTIONDATABASE = @"../../resources/icons/databaseConnection.png";
+        public const string ICONO_CONNECTIONDATABASE = @"../../resources/icons/connection.png";
+        public const string ICONO_SELECTDATABASE = @"../../resources/icons/select.png";
+        public const string ICONO_SCHEMADATABASE = @"../../resources/icons/schema.png";
 
 
         public const string LINEA = @"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";

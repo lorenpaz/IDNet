@@ -23,6 +23,7 @@ namespace DatabaseLibraryS
 
 		public Databases()
 		{
+            this._databasesPropias = new Dictionary<string, List<Tuple<string, string, string>>>();
 			ParseConf();
 		}
 
@@ -41,72 +42,74 @@ namespace DatabaseLibraryS
 		//Lee del fichero de configuración
 		private void ParseConf()
 		{
-			//Archivo a leer
-            StreamReader conFile = File.OpenText(Constants.ConfigFileDatabases);
-			string line = conFile.ReadLine();
-			this._databasesPropias = new Dictionary<string, List<Tuple<string, string, string>>>();
+            //Archivo a leer
+            if (File.Exists(Constants.ConfigFileDatabases))
+            {
+                StreamReader conFile = File.OpenText(Constants.ConfigFileDatabases);
+                string line = conFile.ReadLine();
 
-			//Voy leyendo línea por línea
-			while (line != null)
-			{
-				int i = 0;
-				bool param = true, secondParam = false, thirdParam = false;
-				string parameter = "", valor = "", usuario = "", contrasenia = "";
-				/*
-                 * 
-                 * database_type=database_name;
-                 * 
-                 * Ejemplo:
-                 * mongodb*empleados|pepe*contrasenia;
-                 * 
-                 */
+                //Voy leyendo línea por línea
+                while (line != null)
+                {
+                    int i = 0;
+                    bool param = true, secondParam = false, thirdParam = false;
+                    string parameter = "", valor = "", usuario = "", contrasenia = "";
+                    /*
+                     * 
+                     * database_type=database_name;
+                     * 
+                     * Ejemplo:
+                     * mongodb*empleados|pepe*contrasenia;
+                     * 
+                     */
 
-				//Leemos el parámetro
-				while (line[i] != ';')
-				{
-					//Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-					if (line[i] == '*')
-					{
-						param = false;
-						if (secondParam)
-							thirdParam = true;
-					}
-					else if (line[i] == '|')
-					{
-						secondParam = true;
-						param = true;
-					}
-					else if (param && !secondParam && !thirdParam)
-						parameter += line[i];
-					else if (!param && !secondParam && !thirdParam)
-						valor += line[i];
-					else if (param && secondParam && !thirdParam)
-						usuario += line[i];
-					else if (thirdParam)
-						contrasenia += line[i];
-					i++;
-				}
-				if (usuario == "")
-					usuario = null;
-                if (contrasenia == "")
-                    contrasenia = null;
-                        
-				if (this._databasesPropias.ContainsKey(parameter))
-				{
-					Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
-					this._databasesPropias[parameter].Add(tupla);
-				}
-				else
-				{
-					List<Tuple<string, string, string>> aux = new List<Tuple<string, string, string>>();
-					Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
-					aux.Add(tupla);
-					this._databasesPropias.Add(parameter, aux);
-				}
+                    //Leemos el parámetro
+                    while (line[i] != ';')
+                    {
+                        //Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
+                        if (line[i] == '*')
+                        {
+                            param = false;
+                            if (secondParam)
+                                thirdParam = true;
+                        }
+                        else if (line[i] == '|')
+                        {
+                            secondParam = true;
+                            param = true;
+                        }
+                        else if (param && !secondParam && !thirdParam)
+                            parameter += line[i];
+                        else if (!param && !secondParam && !thirdParam)
+                            valor += line[i];
+                        else if (param && secondParam && !thirdParam)
+                            usuario += line[i];
+                        else if (thirdParam)
+                            contrasenia += line[i];
+                        i++;
+                    }
+                    if (usuario == "")
+                        usuario = null;
+                    if (contrasenia == "")
+                        contrasenia = null;
 
-				line = conFile.ReadLine();
-			}
-            conFile.Close();
+                    if (this._databasesPropias.ContainsKey(parameter))
+                    {
+                        Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+                        this._databasesPropias[parameter].Add(tupla);
+                    }
+                    else
+                    {
+                        List<Tuple<string, string, string>> aux = new List<Tuple<string, string, string>>();
+                        Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+                        aux.Add(tupla);
+                        this._databasesPropias.Add(parameter, aux);
+                    }
+
+                    line = conFile.ReadLine();
+                }
+                conFile.Close();
+            }
 		}
 
         /*
@@ -143,7 +146,7 @@ namespace DatabaseLibraryS
 
 			if (!File.Exists(Constants.ConfigFileDatabases))
 			{
-				throw new Exception("No hay archivo de configuración");
+                File.Create(Constants.ConfigFileDatabases);
 			}
 
             using (StreamWriter w = File.AppendText(Constants.ConfigFileDatabases))
@@ -292,11 +295,11 @@ namespace DatabaseLibraryS
             string usernameDatabase, string passwordDatabase){
             try
             {
-                if (databaseType == "mysql")
+                if (databaseType == Constants.MYSQL)
                 {
                     return ComprobacionMysql(databaseName, usernameDatabase, passwordDatabase);
                 }
-                else if (databaseType == "mongodb")
+                else if (databaseType == Constants.MONGODB)
                 {
                     return ComprobacionMongodb(databaseName, usernameDatabase, passwordDatabase);
                 }
@@ -336,10 +339,10 @@ namespace DatabaseLibraryS
 
                 check = true;
 
-			} catch (MySqlException ex)
+			} catch (MySqlException)
 			{
 				check = false;
-				switch (ex.Number)
+				/*switch (ex.Number)
 				{
 					//http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
 					case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
@@ -348,7 +351,7 @@ namespace DatabaseLibraryS
                         throw new Exception(Constants.ACCESS_DENIED_MYSQL);
 					default:
 						break;
-				}
+				}*/
 			}
 
             return check;
@@ -385,10 +388,10 @@ namespace DatabaseLibraryS
 				check = true;
 
 			}
-			catch (MySqlException ex)
+			catch (MySqlException)
 			{
 				check = false;
-				switch (ex.Number)
+				/*switch (ex.Number)
 				{
 					//http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
 					case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
@@ -397,7 +400,7 @@ namespace DatabaseLibraryS
 						throw new Exception(Constants.ACCESS_DENIED_MYSQL);
 					default:
 						break;
-				}
+				}*/
 			}
 
 			return check;

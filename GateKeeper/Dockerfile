@@ -11,6 +11,7 @@ ADD . .
 #RUN dpkg -i mono-runtime.deb
 #RUN dpkg -i mono-2.0-service.deb
 #RUN xbuild /p:Configuration=Release
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "nano"]
 #WORKDIR /GKDaemon
-CMD [ "mono-service", "./GKDaemon/bin/Release/GKDaemon.exe" ]
-#CMD ["ls","-a"]
+#ENTRYPOINT [ "mono-service", "./GKDaemon/bin/Release/GKDaemon.exe" ]

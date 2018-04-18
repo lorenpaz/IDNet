@@ -187,6 +187,10 @@ namespace IDNetSoftware
                     {
                         firstParam = false;
                     }
+                    else if(line[i] == '|')
+                    {
+                        break;
+                    }
                     else if (!firstParam)
                     {
                         user += line[i];
@@ -215,15 +219,7 @@ namespace IDNetSoftware
                 File.Delete(Constants.ConfigFileInfoUser);
             }
 
-            //Creamos el archivo
-            File.Create(Constants.ConfigFileInfoUser);
-
-            TextWriter tw = new StreamWriter(Constants.ConfigFileInfoUser);
-
-            //Copiamos al archivo los campos
-            tw.WriteLine("nombre="+username+"|code:"+code+";");
-
-            tw.Close();
+            File.WriteAllText(Constants.ConfigFileInfoUser,"nombre=" + username + "|code:" + code + ";");
         }
 
     }

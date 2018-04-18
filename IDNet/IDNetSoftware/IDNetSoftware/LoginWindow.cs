@@ -30,7 +30,7 @@ namespace IDNetSoftware
             {
                 MostrarMensaje(Constants.MYSQL_REMOTE_LOGIN_SUCCESS);
                 Usuario.SaveConf(this._remoteDatabase.SaveUserToFile(username));
-                RunIDNetDaemon();
+                //RunIDNetDaemon();
                 MainWindow main = new MainWindow();
                 main.Show();
 

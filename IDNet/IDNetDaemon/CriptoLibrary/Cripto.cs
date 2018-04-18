@@ -22,7 +22,6 @@ namespace CriptoLibrary
 {
     public class Cripto
     {
-      //  private Dictionary<string, SymmetricAlgorithm> _keyMap;
         static readonly ILog log = LogManager.GetLogger(typeof(Cripto));
 
 		RsaKeyParameters _publicKey;
@@ -291,68 +290,6 @@ namespace CriptoLibrary
 			// Replace the encryptedData element with the plaintext XML element.
 			exml.ReplaceData(encryptedElement, rgbOutput);
 		}
-
-		/*	//Comprueba el fichero de claves para el mensaje 001
-			public void CheckKey(string ip, SymmetricAlgorithm key)
-			{
-				ParseConf();
-
-				if (this._keyMap.ContainsKey(ip))
-				{
-					if (this._keyMap.Remove(ip))
-						this._keyMap.Add(ip, key);
-				}
-				else
-					this._keyMap.Add(ip, key);
-			}
-
-		//Lee del fichero de configuración
-		/*private void ParseConf()
-		{
-			//Archivo a leer
-			StreamReader conFile = File.OpenText(Constants.CONF_KEYS);
-			string line = conFile.ReadLine();
-            this._keyMap = new Dictionary<string, SymmetricAlgorithm>();
-
-			//Voy leyendo línea por línea
-			while (line != null)
-			{
-				int i = 0;
-				bool param = true;
-				string parameter = "", valor = "";
-				/*
-                 * 
-                 * ip=key;
-                 * 
-                 * Ejemplo:
-                 * 192.168.9.7=sauBIUBFuncd223;
-                 * 
-                 */
-
-		/*		//Leemos el parámetro
-				while (line[i] != ';')
-				{
-					//Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-					if (line[i] == '=')
-						param = false;
-					else if (param)
-						parameter += line[i];
-					else if (!param)
-						valor += line[i];
-
-					i++;
-				}
-                if (!this._keyMap.ContainsKey(parameter))
-                {
-                    this._keyMap.Add(parameter, SymmetricAlgorithm.Create(valor));
-                }
-                else
-                {
-                    this._keyMap[parameter] = SymmetricAlgorithm.Create(valor);
-                }
-				line = conFile.ReadLine();
-			}
-		}*/
 	}
 }
 

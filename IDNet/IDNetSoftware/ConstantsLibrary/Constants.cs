@@ -117,6 +117,10 @@ namespace ConstantsLibraryS
         public const string ICONO_SELECTDATABASE = @"../../resources/icons/select.png";
         public const string ICONO_SCHEMADATABASE = @"../../resources/icons/schema.png";
 
+        public static string PathClavePublica(string source)
+        {
+            return Path.Combine(CONFIG, "publicKey" + source + ".pem");
+        }
 
         public const string LINEA = @"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
         /*
@@ -149,16 +153,27 @@ namespace ConstantsLibraryS
         }
         public static string BorradoBBDD(List<string> bbdd, bool success)
         {
-            string borrado = success ? LINEA + "\n" + "Se ha borrado satisfactoriamente la base de datos '" + bbdd[1] + "' de tipo '" + bbdd[0] + "' " + "\n" + LINEA + "\n";
-            if(!success)
-                borrado += bbdd.Count == 0 ? "No hay bases de datos guardadas en IDNet." + "\n" + LINEA + "\n" :LINEA + "\n" + "No se ha podido borrar la base de datos de nuestra aplicación."+"\n"+"Revise los campos requeridos para el borrado de la base de datos." + "\n" + LINEA + "\n";
+            string borrado = "";
+            if(success){
+              borrado+= LINEA + "\n" + "Se ha borrado satisfactoriamente la base de datos '" + bbdd[1] + "' de tipo '" + bbdd[0] + "' " + "\n" + LINEA + "\n"; 
+            }
+            else{
+                borrado += bbdd.Count == 0 ? "No hay bases de datos guardadas en IDNet." + "\n" + LINEA + "\n" : LINEA + "\n" + "No se ha podido borrar la base de datos de nuestra aplicación." + "\n" + "Revise los campos requeridos para el borrado de la base de datos." + "\n" + LINEA + "\n";
+            }
             return borrado;
         }
         public static string ErrorBorradoBBDD(List<string> bbdd)
         {
             string borrado = "";
-            borrado += bbdd.Count != 0 ? LINEA + "\n" + "No se ha podido borrar la base de datos '" + bbdd[1] + "' de tipo '" + bbdd[0] + "' de nuestra aplicación." + "\n"; 
-            borrado += bbdd.Count == 0 ? LINEA + "\n" + "No se ha podido borrar la base de datos"+"\n"+"No hay bases de datos guardadas en IDNet."+"\n"+ LINEA + "\n":LINEA + "\n" + "No se ha podido borrar la base de datos" + "\n" +"Revise los permisos de creación de ficheros en su carpeta,"+"\n"+ "debido a que IDNet necesita poder crear/modificar/borrar sus archivos de configuración." + LINEA + "\n";
+            if (bbdd.Count != 0)
+            {
+                borrado = LINEA + "\n" + "No se ha podido borrar la base de datos '" + bbdd[1] + "' de tipo '" + bbdd[0] + "' de nuestra aplicación." + "\n"+ "Revise los permisos de creación de ficheros en su carpeta," + "\n" + "debido a que IDNet necesita poder crear/modificar/borrar sus archivos de configuración." + LINEA + "\n";  
+            }
+            else
+            {
+                borrado += LINEA + "\n" + "No se ha podido borrar la base de datos" + "\n" + "No hay bases de datos guardadas en IDNet." + "\n" + LINEA + "\n";
+            }
+
             return borrado;
         }
         public static string ModifyBBDD(List<string> bbdd, bool success)

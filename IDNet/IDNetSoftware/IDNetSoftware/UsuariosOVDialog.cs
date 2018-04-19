@@ -29,7 +29,7 @@ namespace IDNetSoftware
 
         private void AddValues()
         {
-            foreach(string vecino in this._neighbours.MiembrosOV.Keys)
+            foreach(string vecino in this._neighbours.VecinosVO)
             {
                 this._infoUsersView.AppendValues(vecino);
             }

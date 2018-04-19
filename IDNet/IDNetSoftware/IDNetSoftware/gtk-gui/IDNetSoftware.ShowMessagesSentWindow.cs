@@ -23,7 +23,8 @@ namespace IDNetSoftware
 			global::Stetic.Gui.Initialize(this);
 			// Widget IDNetSoftware.ShowMessagesSentWindow
 			this.Name = "IDNetSoftware.ShowMessagesSentWindow";
-			this.Title = global::Mono.Unix.Catalog.GetString("ShowMessagesSentWindow");
+			this.Title = global::Mono.Unix.Catalog.GetString("IDNetSoftware");
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			// Container child IDNetSoftware.ShowMessagesSentWindow.Gtk.Container+ContainerChild
 			this.vbox2 = new global::Gtk.VBox();

@@ -180,7 +180,7 @@ namespace PostBoxLibraryS
          * */
         private void AlmacenarClavePublica(XmlDocument xmlDoc)
         {
-			string path = Constants.CONFIG + "publicKey" + this._messageResponse.Source + ".pem";
+            string path = Constants.PathClavePublica(this._messageResponse.Source);
 			string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
             if (File.Exists(path))
                 File.Delete(path);

@@ -14,6 +14,7 @@ namespace DatabaseLibraryS
         //Diccionario usuario -> (tipoBBDD -> [nombreBBDD1,nombreBBDD2])
         private Dictionary<string, Dictionary<string, List<string>>> _miembrosOV;
 
+        //Lista de vecinos
         private List<string> _vecinosVO;
 
         public Dictionary<string, Dictionary<string, List<string>>> MiembrosOV

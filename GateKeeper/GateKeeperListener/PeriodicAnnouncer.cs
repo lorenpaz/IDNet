@@ -18,7 +18,7 @@ namespace GateKeeperListener
             while(true)
             {
                 RouteXML.SendRoutingTables();
-                Thread.Sleep(3000);
+                Thread.Sleep(Constants.TIME_TO_SLEEP);
             }
 		}
 	}

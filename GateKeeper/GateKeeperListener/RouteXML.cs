@@ -181,7 +181,8 @@ namespace GateKeeperListener
             XmlNodeList existe = doc.SelectNodes("//route[name='" + nom_cliente + "']");
 			if (existe[0] == null)
 				AñadirATablaRutas(doc, ip_cliente, mi_ip, 0, nom_cliente, root);
-
+				//AñadirATablaRutas(doc, ip_cliente, "127.0.0.1", 0, nom_cliente, root);
+                
 			doc.Save(Constants.XMLROUTES);
 		}
 	}

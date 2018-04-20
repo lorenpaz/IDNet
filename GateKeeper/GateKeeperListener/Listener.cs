@@ -34,9 +34,9 @@ namespace GateKeeperListener
 		{
 			_msgQueue = new Queue<string>();
             if (cliente)
-                this._port = Constants.PORT_CLIENT;
+				this._port = Constants.PORT_LISTENING_FROM_CLIENT;
             else
-                this._port = Constants.PORT_GATEKEEPER;
+				this._port = Constants.PORT_LISTENING_FROM_GATEKEEPER;
 		}
 
 #pragma warning disable RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
@@ -69,7 +69,7 @@ namespace GateKeeperListener
 					allDone.Reset();
 					// Start an asynchronous socket to listen for connections.
 
-                    if (this._port == Constants.PORT_CLIENT)
+                    if (this._port == Constants.PORT_LISTENING_FROM_CLIENT)
 						log.Info("Esperando a un cliente para conectar...");
                     else
                         log.Info("Esperando a un GateKeeper para conectar...");
@@ -154,7 +154,7 @@ namespace GateKeeperListener
 		private String TratarMensaje(String respuesta)
 		{
             Pathfinder p;
-            if(this._port == Constants.PORT_CLIENT)
+			if(this._port == Constants.PORT_LISTENING_FROM_CLIENT)
 			    p = new Pathfinder(true);
             else
 				p = new Pathfinder(false);

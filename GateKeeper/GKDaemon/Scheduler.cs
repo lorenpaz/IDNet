@@ -39,9 +39,9 @@ namespace GKDaemon
             PeriodicAnnouncer pa = new PeriodicAnnouncer();
 
             ThreadStart _ts1 = delegate { gk.StartListening(); };
-            Log.Info("Iniciado el servicio escuchando en el puerto "+Constants.PORT_GATEKEEPER+"...");
+            Log.Info("Iniciado el servicio escuchando en el puerto "+Constants.PORT_LISTENING_FROM_GATEKEEPER+"...");
             ThreadStart _ts2 = delegate { cl.StartListening(); };
-            Log.Info("Iniciado el servicio escuchando en el puerto "+Constants.PORT_CLIENT+"...");
+            Log.Info("Iniciado el servicio escuchando en el puerto "+Constants.PORT_LISTENING_FROM_CLIENT+"...");
             ThreadStart _ts3 = delegate { pa.StartTimer(); };
             Log.Info("Iniciado el servicio de anuncio de rutas...");
 

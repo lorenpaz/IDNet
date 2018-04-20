@@ -76,8 +76,9 @@ namespace IDNetSoftware
             }
             this._modified = false;
             this._success = false;
-            this._type = null;
+            this._type = Constants.CANCEL;
         }
+
 
 		protected void OnButtonCancelClicked(object sender, EventArgs e)
 		{
@@ -88,8 +89,6 @@ namespace IDNetSoftware
 		protected void OnButtonOkClicked(object sender, EventArgs e)
 		{
             this._type = Constants.TYPE_MODIFY;
-
-            Adiccion();
 
             if(entryUsuario.Text == "")
                 this._success = this._databases.ModifyDatabase(this._bbdd, comboboxTipos.ActiveText, entryBBDD.Text,null,null);
@@ -105,18 +104,6 @@ namespace IDNetSoftware
         protected void OnButtonCancelActivated(object sender, EventArgs e)
         {
             this.Destroy();
-        }
-
-        private void Adiccion()
-        {
-            this._bbdd.Clear();
-            this._bbdd[0] = comboboxTipos.ActiveText;
-            this._bbdd[1] = entryBBDD.Text;
-            if (entryUsuario.Text != "")
-            {
-                this._bbdd[2] = entryUsuario.Text;
-                this._bbdd[3] = entryPassword.Text;
-            }
         }
 
         /*

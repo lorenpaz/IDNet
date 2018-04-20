@@ -199,7 +199,7 @@ namespace DatabaseLibraryS
 
             foreach(string linea in lines)
             {
-                if(linea.Contains(bbdd[0]) && linea.Contains(bbdd[1]))
+                if(linea.StartsWith(bbdd[0] + "*" + bbdd[1] + "|") || linea.StartsWith(bbdd[0] + "*" + bbdd[1] + ";"))
                 {
                     lineExactly = linea;
                 }    
@@ -262,7 +262,7 @@ namespace DatabaseLibraryS
 
             foreach (string linea in lines)
             {
-                if (linea.Contains(bbdd[0]) && linea.Contains(bbdd[1]))
+                if (linea.StartsWith(bbdd[0]+"*"+bbdd[1]+"|") || linea.StartsWith(bbdd[0] + "*" + bbdd[1]+ ";"))
                 {
                     lineExactly = linea;
                 }

@@ -118,14 +118,14 @@ namespace PostBoxLibrary
 
             this._messageRecieve.parserStartRecievedMessage(xmlDoc);
 
-            if (this._messageRecieve.MessageType == "001a")
+            if (this._messageRecieve.MessageType == Constants.CONEXION_A)
             {
                 AlmacenarClavePublica(xmlDoc);
 				//Aquí iria una funcion para quitar el cifrado asimetrico
 				// cript.CheckKey(this._messageRecieve.Source, this._messageRecieve.Key);
 				respuesta = responderConexion();
             }
-            else if(this._messageRecieve.MessageType == "001b")
+            else if(this._messageRecieve.MessageType == Constants.CONEXION_B)
             {
                 this._publicKeyClient = keyPairClients[this._messageRecieve.Source].Item1;
                 DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
@@ -221,7 +221,6 @@ namespace PostBoxLibrary
 		{
             string path = Constants.PathClavePublica(this.MessageRecieve.Source);
             string publicKey = xmlDoc.DocumentElement.GetElementsByTagName("key")[0].InnerText;
-            File.Delete(path);
             File.WriteAllText(path, publicKey);
             this._publicKeyClient = Cripto.ImportPublicKey(path);
 		}
@@ -265,7 +264,7 @@ namespace PostBoxLibrary
                 doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlEncriptado;
 
 			}catch(Exception e){
-                log.Info("mensaje error:"+e.Message);
+                log.Info("Error producido:"+e.Message);
             }
 
 			return doc;
@@ -282,7 +281,7 @@ namespace PostBoxLibrary
                 Cripto.DecryptSymmetric(doc, this._symmetricKey);
             }catch(Exception e)
             {
-                log.Info("error producido:"+e.Message);
+                log.Info("Error producido:"+e.Message);
             }
 
 			return doc;

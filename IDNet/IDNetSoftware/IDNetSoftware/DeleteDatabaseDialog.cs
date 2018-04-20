@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DatabaseLibraryS;
 
+using DatabaseLibraryS;
+using ConstantsLibraryS;
 
 namespace IDNetSoftware
 {
@@ -15,6 +16,9 @@ namespace IDNetSoftware
 
         //Tarea con exito
         private bool _success;
+
+        //Atributo para saber cómo ha cerrado el diálogo
+        private string _typeOutPut;
 
         public List<String> BBDD
         {
@@ -41,6 +45,18 @@ namespace IDNetSoftware
             }
         }
 
+        public String TypeOutPut
+        {
+            get
+            {
+                return this._typeOutPut;
+            }
+            set
+            {
+                this._typeOutPut = value;
+            }
+        }
+
         public DeleteDatabaseDialog(Databases databases)
         {
             this.Build();
@@ -48,6 +64,7 @@ namespace IDNetSoftware
             this._databases = databases;
             this._bbdd = new List<string>();
             this._success = false;
+            this._typeOutPut = Constants.CANCEL;
         }
 
         protected void OnButtonOkClicked(object sender, EventArgs e)
@@ -57,6 +74,7 @@ namespace IDNetSoftware
                 Adiccion();
                 this._success = this._databases.DeleteDatabase(this._bbdd,comboboxTipos.ActiveText, entryNombreBBDD.Text, "","");
             }
+            this._typeOutPut = "Delete";
             this.Destroy();
         }
 

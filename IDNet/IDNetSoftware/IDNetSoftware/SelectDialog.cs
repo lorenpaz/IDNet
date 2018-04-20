@@ -56,7 +56,7 @@ namespace IDNetSoftware
             this._destination = destination;
             this._db_name = db_name;
             this._body = new XmlDocument();
-            this._typeOutPut = "Cancel";
+            this._typeOutPut = Constants.CANCEL;
 
             this._schema = schema;
 

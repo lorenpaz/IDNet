@@ -485,8 +485,8 @@ namespace IDNetSoftware
                 this._addDatabaseDialog.Run();
 
                 UpdateOwnDatabases();
-
-                AdiccionBBDD(this._addDatabaseDialog.BBDD, this._addDatabaseDialog.Success);
+                if (this._addDatabaseDialog.TypeOutPut != Constants.CANCEL)
+                    AdiccionBBDD(this._addDatabaseDialog.BBDD, this._addDatabaseDialog.Success);
             }
             catch (Exception)
             {
@@ -505,8 +505,8 @@ namespace IDNetSoftware
                 this._deleteDatabaseDialog.Run();
 
                 UpdateOwnDatabases();
-
-                BorradoBBDD(this._deleteDatabaseDialog.BBDD, this._deleteDatabaseDialog.Success);
+                if (this._deleteDatabaseDialog.TypeOutPut != Constants.CANCEL)
+                    BorradoBBDD(this._deleteDatabaseDialog.BBDD, this._deleteDatabaseDialog.Success);
             }
             catch (Exception)
             {
@@ -539,13 +539,15 @@ namespace IDNetSoftware
                 this._addDatabaseDialog.Run();
 
                 UpdateOwnDatabases();
-                AdiccionBBDD(this._addDatabaseDialog.BBDD, this._addDatabaseDialog.Success);
+                if (this._addDatabaseDialog.TypeOutPut != Constants.CANCEL)
+                    AdiccionBBDD(this._addDatabaseDialog.BBDD, this._addDatabaseDialog.Success);
             }
             catch (Exception)
             {
                 ErrorAdiccionBBDD(this._addDatabaseDialog.BBDD);
             }
         }
+
         /*
          * Menú 'Base de datos' opción 'Borrar'
          * */
@@ -557,8 +559,8 @@ namespace IDNetSoftware
                 this._deleteDatabaseDialog.Run();
 
                 UpdateOwnDatabases();
-
-                BorradoBBDD(this._deleteDatabaseDialog.BBDD, this._deleteDatabaseDialog.Success);
+                if (this._deleteDatabaseDialog.TypeOutPut != Constants.CANCEL)
+                    BorradoBBDD(this._deleteDatabaseDialog.BBDD, this._deleteDatabaseDialog.Success);
             }
             catch (Exception)
             {
@@ -978,7 +980,7 @@ namespace IDNetSoftware
                 else
                     this.connectionPng.Sensitive = false;
 
-                BotoneraBBDD(false);
+                BotoneraConexiones(false);
             }
         }
 
@@ -1249,7 +1251,6 @@ namespace IDNetSoftware
                         this.schemaPngAction.Sensitive = true;
                     }
                 }
-                BotoneraBBDD(false);
             }
         }
 
@@ -1429,7 +1430,6 @@ namespace IDNetSoftware
         {
             //Activamos/desactivamos los respectivos botones
             BotoneraConexiones(false);
-            BotoneraBBDD(false);
         }
 
         private void BotoneraConexiones(bool activacion)

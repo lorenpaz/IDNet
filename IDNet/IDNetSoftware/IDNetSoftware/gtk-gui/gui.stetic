@@ -2062,7 +2062,8 @@ mongodb</property>
   </widget>
   <widget class="Gtk.Window" id="IDNetSoftware.ShowMessagesSentWindow" design-size="532 300">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">ShowMessagesSentWindow</property>
+    <property name="Title" translatable="yes">IDNetSoftware</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
     <child>
       <widget class="Gtk.VBox" id="vbox2">

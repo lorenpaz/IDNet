@@ -102,6 +102,8 @@ namespace ConstantsLibrary
         public static string CONF_PRIVATE_KEY = Path.Combine(CONFIG, @"privateKeyDaemon.pem");
         public static string MENSAJE_REGISTRO = @"010";
         public static string CONEXION = "001";
+        public static string CONEXION_A = "001a";
+        public static string CONEXION_B = "001b";
 		public static string SCHEMA = "002";
 		public static string SELECT = "003";
 		public static string ACKCONEXION = "004";
@@ -119,7 +121,7 @@ namespace ConstantsLibrary
 
         public static string PathClavePublica(string source)
         {
-            return CONFIG + "publicKey" + source + ".pem";
+            return Path.Combine(CONFIG, "publicKey" + source + ".pem");
         }
 
         /*

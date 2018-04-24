@@ -24,7 +24,7 @@ namespace IDNetDaemon
             StdSchedulerFactory factory = new StdSchedulerFactory();
             _scheduler = factory.GetScheduler().Result;
 			_scheduler.Start();
-			StartMyJob();
+    			StartMyJob();
 		}
 
         /*

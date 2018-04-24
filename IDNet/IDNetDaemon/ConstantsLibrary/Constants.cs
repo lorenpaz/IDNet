@@ -42,6 +42,8 @@ namespace ConstantsLibrary
             ParseConf();
 
             //IP tuya
+            string aux = new WebClient().DownloadString("http://icanhazip.com");
+            this._ip = IPAddress.Parse(aux.Replace("\n", String.Empty));
             this._ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
         }
 
@@ -114,8 +116,8 @@ namespace ConstantsLibrary
 
         //IP en AWS
         //public static string GATEKEEPER = @"172.17.0.2";
-
-        public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
+        public static string GATEKEEPER = @"192.168.0.2";
+        //public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 
         public static int GATEKEEPER_PORT = 11000;
 

@@ -31,7 +31,7 @@ namespace ProcessLibrary
             XmlDocument xmlDoc = null;
             switch(m.MessageType)
              {
-                case(Constants.CONEXION_B):
+                case("001b"):
                     /* Security sec = new Security();
                      if (sec.checkBlackList(m.Source)) 
                         {
@@ -39,10 +39,10 @@ namespace ProcessLibrary
                         }*/
                     xmlDoc = GetInfoAllDatabases();
                      break;
-                case(Constants.SCHEMA):
+                case("002"):
                      xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
                     break;
-                case(Constants.SELECT):
+                case("003"):
                     xmlDoc = this._db.SelectRequest(m.Db_type,m.Db_name,m.Body);
                     break;
             }

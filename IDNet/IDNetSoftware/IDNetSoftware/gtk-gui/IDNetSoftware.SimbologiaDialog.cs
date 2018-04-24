@@ -19,7 +19,8 @@ namespace IDNetSoftware
 			global::Stetic.Gui.Initialize(this);
 			// Widget IDNetSoftware.SimbologiaDialog
 			this.Name = "IDNetSoftware.SimbologiaDialog";
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			// Internal child IDNetSoftware.SimbologiaDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";

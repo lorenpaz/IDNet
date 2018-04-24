@@ -153,12 +153,12 @@ namespace PluginsLibrary
             PluginMySQL mysql;
             switch(databaseType)
             {
-                case("mongodb"):
+                case(Constants.MONGODB):
                     mongo = new PluginMongo(databaseName);
                     xmldocument = Convertion.JsonToXml(mongo.EstructureRequest());
                     break;
 
-                case("mysql"):
+                case(Constants.MYSQL):
                     string username = getUser(databaseType, databaseName);
                     string password = getPassword(databaseType, databaseName);
 
@@ -182,12 +182,12 @@ namespace PluginsLibrary
             PluginMongo mongo;
 			switch (databaseType)
 			{
-				case ("mongodb"):
+                case (Constants.MONGODB):
 					mongo = new PluginMongo(databaseName);
 					xmldocument = Convertion.JsonToXml(mongo.SelectRequest(body));
 					break;
 
-				case ("mysql"):
+                case (Constants.MYSQL):
 					string username = getUser(databaseType, databaseName);
                     string password = getPassword(databaseType, databaseName);
 

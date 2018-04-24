@@ -24,8 +24,11 @@ namespace IDNetSoftware
 		{
 			global::Stetic.Gui.Initialize(this);
 			// Widget IDNetSoftware.ShowMessagesSentDialog
+			this.WidthRequest = 400;
 			this.Name = "IDNetSoftware.ShowMessagesSentDialog";
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.DefaultWidth = 500;
 			// Internal child IDNetSoftware.ShowMessagesSentDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";
@@ -48,6 +51,7 @@ namespace IDNetSoftware
 			w3.Position = 0;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.frame1 = new global::Gtk.Frame();
+			this.frame1.WidthRequest = 300;
 			this.frame1.Name = "frame1";
 			this.frame1.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child frame1.Gtk.Container+ContainerChild
@@ -57,6 +61,7 @@ namespace IDNetSoftware
 			// Container child GtkAlignment1.Gtk.Container+ContainerChild
 			this.labelCuerpo = new global::Gtk.Label();
 			this.labelCuerpo.Name = "labelCuerpo";
+			this.labelCuerpo.Wrap = true;
 			this.GtkAlignment1.Add(this.labelCuerpo);
 			this.frame1.Add(this.GtkAlignment1);
 			this.labelBody = new global::Gtk.Label();
@@ -95,8 +100,7 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 400;
-			this.DefaultHeight = 339;
+			this.DefaultHeight = 278;
 			this.Show();
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}

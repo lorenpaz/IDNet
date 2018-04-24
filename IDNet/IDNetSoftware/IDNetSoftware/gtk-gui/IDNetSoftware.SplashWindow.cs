@@ -22,6 +22,7 @@ namespace IDNetSoftware
 			this.Title = global::Mono.Unix.Catalog.GetString("Bienvenido al mundo IDNet!");
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.Resizable = false;
 			// Container child IDNetSoftware.SplashWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";
@@ -37,7 +38,7 @@ namespace IDNetSoftware
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.labelInfoTFG = new global::Gtk.Label();
 			this.labelInfoTFG.Name = "labelInfoTFG";
-			this.labelInfoTFG.LabelProp = global::Mono.Unix.Catalog.GetString("Trabajo de Fin de Grado en el grado de Ingeniería Informática\nAlumnos: Juan Mas A" +
+			this.labelInfoTFG.LabelProp = global::Mono.Unix.Catalog.GetString("Trabajo de Fin de Grado en el Grado en Ingeniería Informática\nAlumnos: Juan Mas A" +
 					"guilar y Lorenzo José de la Paz Suárez");
 			this.labelInfoTFG.Justify = ((global::Gtk.Justification)(2));
 			this.vbox1.Add(this.labelInfoTFG);
@@ -67,7 +68,7 @@ namespace IDNetSoftware
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 512;
-			this.DefaultHeight = 582;
+			this.DefaultHeight = 584;
 			this.Show();
 		}
 	}

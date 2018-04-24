@@ -44,6 +44,7 @@ namespace IDNetSoftware
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.Resizable = false;
 			// Container child IDNetSoftware.RegisterWindow.Gtk.Container+ContainerChild
 			this.vbox4 = new global::Gtk.VBox();
 			this.vbox4.Name = "vbox4";

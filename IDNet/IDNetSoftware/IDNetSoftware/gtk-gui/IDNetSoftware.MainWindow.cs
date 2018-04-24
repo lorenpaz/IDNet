@@ -56,7 +56,13 @@ namespace IDNetSoftware
 
 		private global::Gtk.MenuBar menubar2;
 
+		private global::Gtk.HBox hbox2;
+
 		private global::Gtk.Toolbar toolbar1;
+
+		private global::Gtk.VSeparator vseparator3;
+
+		private global::Gtk.Toolbar toolbar2;
 
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
 
@@ -185,16 +191,44 @@ namespace IDNetSoftware
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='deleteDatabasePngAction' action='deleteDatabasePngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/><toolitem name='connectionPng' action='connectionPng'/><toolitem name='schemaPngAction' action='schemaPngAction'/><toolitem name='selectPngAction' action='selectPngAction'/></toolbar></ui>");
+			this.hbox2 = new global::Gtk.HBox();
+			this.hbox2.Name = "hbox2";
+			this.hbox2.Spacing = 6;
+			// Container child hbox2.Gtk.Box+BoxChild
+			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='deleteDatabasePngAction' action='deleteDatabasePngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
-			this.toolbar1.IconSize = ((global::Gtk.IconSize)(6));
-			this.vbox1.Add(this.toolbar1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.toolbar1]));
-			w3.Position = 1;
-			w3.Expand = false;
-			w3.Fill = false;
+			this.toolbar1.ToolbarStyle = ((global::Gtk.ToolbarStyle)(0));
+			this.toolbar1.IconSize = ((global::Gtk.IconSize)(5));
+			this.hbox2.Add(this.toolbar1);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.toolbar1]));
+			w3.Position = 0;
+			// Container child hbox2.Gtk.Box+BoxChild
+			this.vseparator3 = new global::Gtk.VSeparator();
+			this.vseparator3.Name = "vseparator3";
+			this.hbox2.Add(this.vseparator3);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.vseparator3]));
+			w4.Position = 1;
+			w4.Expand = false;
+			w4.Fill = false;
+			// Container child hbox2.Gtk.Box+BoxChild
+			this.UIManager.AddUiFromString("<ui><toolbar name=\'toolbar2\'><toolitem name=\'connectionPng\' action=\'connectionPng" +
+					"\'/><toolitem name=\'schemaPngAction\' action=\'schemaPngAction\'/><toolitem name=\'se" +
+					"lectPngAction\' action=\'selectPngAction\'/></toolbar></ui>");
+			this.toolbar2 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar2")));
+			this.toolbar2.Name = "toolbar2";
+			this.toolbar2.ShowArrow = false;
+			this.toolbar2.ToolbarStyle = ((global::Gtk.ToolbarStyle)(0));
+			this.toolbar2.IconSize = ((global::Gtk.IconSize)(5));
+			this.hbox2.Add(this.toolbar2);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.toolbar2]));
+			w5.Position = 2;
+			this.vbox1.Add(this.hbox2);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox2]));
+			w6.Position = 1;
+			w6.Expand = false;
+			w6.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
@@ -209,8 +243,8 @@ namespace IDNetSoftware
 			this.infoview.AcceptsTab = false;
 			this.GtkScrolledWindow.Add(this.infoview);
 			this.vbox1.Add(this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.GtkScrolledWindow]));
-			w5.Position = 2;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.GtkScrolledWindow]));
+			w8.Position = 2;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
@@ -225,10 +259,10 @@ namespace IDNetSoftware
 			this.labelDatabases.Name = "labelDatabases";
 			this.labelDatabases.LabelProp = global::Mono.Unix.Catalog.GetString("Base de datos propias");
 			this.vbox7.Add(this.labelDatabases);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.labelDatabases]));
-			w6.Position = 0;
-			w6.Expand = false;
-			w6.Fill = false;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.labelDatabases]));
+			w9.Position = 0;
+			w9.Expand = false;
+			w9.Fill = false;
 			// Container child vbox7.Gtk.Box+BoxChild
 			this.GtkScrolledWindow2 = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow2.Name = "GtkScrolledWindow2";
@@ -239,11 +273,11 @@ namespace IDNetSoftware
 			this.treeviewDatabasesPropias.Name = "treeviewDatabasesPropias";
 			this.GtkScrolledWindow2.Add(this.treeviewDatabasesPropias);
 			this.vbox7.Add(this.GtkScrolledWindow2);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.GtkScrolledWindow2]));
-			w8.Position = 1;
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.GtkScrolledWindow2]));
+			w11.Position = 1;
 			this.hbox1.Add(this.vbox7);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox7]));
-			w9.Position = 0;
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox7]));
+			w12.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox3 = new global::Gtk.VBox();
 			this.vbox3.Name = "vbox3";
@@ -253,10 +287,10 @@ namespace IDNetSoftware
 			this.labelVecinosNombres.Name = "labelVecinosNombres";
 			this.labelVecinosNombres.LabelProp = global::Mono.Unix.Catalog.GetString("Vecinos VO");
 			this.vbox3.Add(this.labelVecinosNombres);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.labelVecinosNombres]));
-			w10.Position = 0;
-			w10.Expand = false;
-			w10.Fill = false;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.labelVecinosNombres]));
+			w13.Position = 0;
+			w13.Expand = false;
+			w13.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.GtkScrolledWindow3 = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow3.Name = "GtkScrolledWindow3";
@@ -267,13 +301,13 @@ namespace IDNetSoftware
 			this.treeviewNeighbours.Name = "treeviewNeighbours";
 			this.GtkScrolledWindow3.Add(this.treeviewNeighbours);
 			this.vbox3.Add(this.GtkScrolledWindow3);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.GtkScrolledWindow3]));
-			w12.Position = 1;
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.GtkScrolledWindow3]));
+			w15.Position = 1;
 			this.hbox1.Add(this.vbox3);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
-			w13.Position = 1;
-			w13.Expand = false;
-			w13.Fill = false;
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
+			w16.Position = 1;
+			w16.Expand = false;
+			w16.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox8 = new global::Gtk.VBox();
 			this.vbox8.Name = "vbox8";
@@ -283,10 +317,10 @@ namespace IDNetSoftware
 			this.labelVecinos.Name = "labelVecinos";
 			this.labelVecinos.LabelProp = global::Mono.Unix.Catalog.GetString("BBDD Vecinos");
 			this.vbox8.Add(this.labelVecinos);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.labelVecinos]));
-			w14.Position = 0;
-			w14.Expand = false;
-			w14.Fill = false;
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.labelVecinos]));
+			w17.Position = 0;
+			w17.Expand = false;
+			w17.Fill = false;
 			// Container child vbox8.Gtk.Box+BoxChild
 			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
@@ -297,14 +331,14 @@ namespace IDNetSoftware
 			this.treeviewDatabases.Name = "treeviewDatabases";
 			this.GtkScrolledWindow1.Add(this.treeviewDatabases);
 			this.vbox8.Add(this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.GtkScrolledWindow1]));
-			w16.Position = 1;
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.GtkScrolledWindow1]));
+			w19.Position = 1;
 			this.hbox1.Add(this.vbox8);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox8]));
-			w17.Position = 2;
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox8]));
+			w20.Position = 2;
 			this.vbox1.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
-			w18.Position = 3;
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+			w21.Position = 3;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar = new global::Gtk.Statusbar();
 			this.statusbar.Name = "statusbar";
@@ -315,24 +349,24 @@ namespace IDNetSoftware
 			this.conexionesLabel.Name = "conexionesLabel";
 			this.conexionesLabel.LabelProp = global::Mono.Unix.Catalog.GetString("0 conexiones activas");
 			this.statusbar.Add(this.conexionesLabel);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.conexionesLabel]));
-			w19.Position = 1;
-			w19.Expand = false;
-			w19.Fill = false;
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.conexionesLabel]));
+			w22.Position = 1;
+			w22.Expand = false;
+			w22.Fill = false;
 			// Container child statusbar.Gtk.Box+BoxChild
 			this.brandLabel = new global::Gtk.Label();
 			this.brandLabel.Name = "brandLabel";
 			this.brandLabel.LabelProp = global::Mono.Unix.Catalog.GetString("IDNet Software");
 			this.statusbar.Add(this.brandLabel);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.brandLabel]));
-			w20.Position = 2;
-			w20.Expand = false;
-			w20.Fill = false;
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.statusbar[this.brandLabel]));
+			w23.Position = 2;
+			w23.Expand = false;
+			w23.Fill = false;
 			this.vbox1.Add(this.statusbar);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar]));
-			w21.Position = 4;
-			w21.Expand = false;
-			w21.Fill = false;
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar]));
+			w24.Position = 4;
+			w24.Expand = false;
+			w24.Fill = false;
 			this.Add(this.vbox1);
 			if ((this.Child != null))
 			{

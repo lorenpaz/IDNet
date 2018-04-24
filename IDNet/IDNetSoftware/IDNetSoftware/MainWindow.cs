@@ -981,11 +981,12 @@ namespace IDNetSoftware
                     this.connectionPng.Sensitive = false;
 
                 BotoneraConexiones(false);
+                connectionPng.Sensitive = true;
             }
         }
 
         /*
-         * Método que realiza la misma función que el método OnTreeviewNeighboursRowActivated
+         * Método que realiza la misma función que el método OnTreeviewNeighboursRowActivated. BOTON CONEXIÓN
          * */
         protected void OnConnectionPngAction1Activated(object sender, EventArgs e)
         {
@@ -1050,7 +1051,7 @@ namespace IDNetSoftware
         }
 
         /*
-         * Método evento para solicitar esquema BBDD
+         * Método evento para solicitar esquema BBDD. BOTON ESQUEMA
          * */
         protected void OnSchemaPngActionActivated(object sender, EventArgs e)
         {
@@ -1134,7 +1135,7 @@ namespace IDNetSoftware
         }
 
         /*
-         * Método evento para solicitar consulta BBDD
+         * Método evento para solicitar consulta BBDD. BOTON SELECT
          * */
         protected void OnSelectPngActionActivated(object sender, EventArgs e)
         {
@@ -1251,6 +1252,8 @@ namespace IDNetSoftware
                         this.schemaPngAction.Sensitive = true;
                     }
                 }
+            }else{
+                BotoneraConexiones(false);
             }
         }
 

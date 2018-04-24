@@ -29,9 +29,13 @@ namespace IDNetSoftware
         private void CargarTreeView()
         {
             treeviewMessages.Model = this._messagesView;
-
-            AddValues();
-
+            try
+            {
+                AddValues();
+            }catch(Exception e)
+            {
+                var a = 0;
+            }
             //Añado las columnas
             treeviewMessages.AppendColumn(Constants.TABLA_COLUMNA_USUARIO_ORIGEN, new CellRendererText(), "text", 0);
             treeviewMessages.AppendColumn(Constants.TABLA_COLUMNA_USUARIO_DESTINO, new CellRendererText(), "text", 1);
@@ -50,15 +54,17 @@ namespace IDNetSoftware
                         PipeMessage p = dictMensaje.Value;
                         Message enviado = p.MessageRequest;
                         Message recibido = p.MessageResponse;
-                        this._messagesView.AppendValues(enviado.Source,enviado.Destination,enviado.MessageType,enviado.Db_type,enviado.Db_name);
-                        this._messagesView.AppendValues(recibido.Source, recibido.Destination, recibido.MessageType, recibido.Db_type, recibido.Db_name);
+                        this._messagesView.AppendValues(enviado.Source==null?"":enviado.Source,enviado.Destination== null ? "" : enviado.Destination,
+                                                        enviado.MessageType== null ? "" : enviado.MessageType,enviado.Db_type== null ? "" : enviado.Db_type,enviado.Db_name== null ? "" : enviado.Db_name);
+                        this._messagesView.AppendValues(recibido.Source== null ? "" : recibido.Source, recibido.Destination== null ? "" : recibido.Destination,
+                                                        recibido.MessageType== null ? "" : recibido.MessageType, recibido.Db_type== null ? "" : recibido.Db_type, recibido.Db_name== null ? "" : recibido.Db_name);
 
                         if(p.MessageRequestConexion != null)
                         {
                             Message enviadoConexion = p.MessageRequestConexion;
                             Message recibidoConexion = p.MessageResponseConexion;
-                            this._messagesView.AppendValues(enviadoConexion.Source, enviadoConexion.Destination, enviadoConexion.MessageType, enviadoConexion.Db_type, enviadoConexion.Db_name);
-                            this._messagesView.AppendValues(recibidoConexion.Source, recibidoConexion.Destination, recibidoConexion.MessageType, recibidoConexion.Db_type, recibidoConexion.Db_name);
+                            this._messagesView.AppendValues(enviadoConexion.Source== null ? "" : enviadoConexion.Source, enviadoConexion.Destination== null ? "" : enviadoConexion.Destination, enviadoConexion.MessageType== null ? "" : enviadoConexion.MessageType, enviadoConexion.Db_type== null ? "" : enviadoConexion.Db_type, enviadoConexion.Db_name== null ? "" : enviadoConexion.Db_name);
+                            this._messagesView.AppendValues(recibidoConexion.Source== null ? "" : recibidoConexion.Source, recibidoConexion.Destination== null ? "" : recibidoConexion.Destination, recibidoConexion.MessageType== null ? "" : recibidoConexion.MessageType, recibidoConexion.Db_type== null ? "" : enviadoConexion.Db_type, recibidoConexion.Db_name== null ? "" : recibidoConexion.Db_name);
                         }
                     }
                 }

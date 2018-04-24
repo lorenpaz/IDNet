@@ -21,7 +21,8 @@ namespace IDNetSoftware
 			global::Stetic.Gui.Initialize(this);
 			// Widget IDNetSoftware.ErrorServersDialog
 			this.Name = "IDNetSoftware.ErrorServersDialog";
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			// Internal child IDNetSoftware.ErrorServersDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";
@@ -84,7 +85,7 @@ namespace IDNetSoftware
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 328;
-			this.DefaultHeight = 177;
+			this.DefaultHeight = 201;
 			this.Show();
 			this.buttonOK.Clicked += new global::System.EventHandler(this.OnButtonOKClicked);
 		}

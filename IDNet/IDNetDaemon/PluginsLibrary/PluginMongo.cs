@@ -45,7 +45,12 @@ namespace PluginsLibrary
          * */
         public string EstructureRequest()
         {
-            MainAsync().Wait();
+            try
+            {
+                MainAsync().Wait();
+            }catch(Exception){
+                this._salida = "<error>Se ha producido un error en la solictud del esquema de la base de datos "+this._databaseName+"</error>";
+            }
             return this._salida;
         }
 
@@ -93,7 +98,14 @@ namespace PluginsLibrary
          * */
         public string SelectRequest(XmlNode body)
         {
-            SecondAsync(body).Wait();
+            try
+            {
+                SecondAsync(body).Wait();
+            }
+            catch (Exception)
+            {
+                this._salida = "<error>Se ha producido un error en la solictud de consulta de la base de datos " + this._databaseName + "</error>";
+            }
             return this._salida;
         }
 

@@ -33,7 +33,7 @@ namespace IDNetSoftware
             if (this._message.MessageType != Constants.MENSAJE_CONEXION_A && this._message.MessageType != Constants.MENSAJE_CONEXION_B &&
                 this._message.MessageType != Constants.MENSAJE_RESPUESTA_CONEXION_A && this._message.MessageType != Constants.MENSAJE_RESPUESTA_CONEXION_B)
             {
-                this._messageView = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
+                this._messageView = new ListStore(typeof(string), typeof(string), typeof(string),typeof(string), typeof(string));
 
                 //Añado las columnas
                 treeviewMessage.AppendColumn(Constants.TABLA_COLUMNA_USUARIO_ORIGEN, new CellRendererText(), "text", 0);
@@ -43,7 +43,7 @@ namespace IDNetSoftware
                 treeviewMessage.AppendColumn(Constants.TABLA_COLUMNA_NOMBREBBDD, new CellRendererText(), "text", 4);
 
                 this._messageView.AppendValues(this._message.Source, this._message.Destination, this._message.MessageType, this._message.Db_type, this._message.Db_name);
-                labelCuerpo.LabelProp = this._message.Body == null ? "No hay cuerpo del mensaje" : this._message.Body.InnerXml;
+                labelCuerpo.LabelProp = this._message.Body == null || this._message.Body.InnerXml == "" ? "No hay cuerpo del mensaje" : this._message.Body.InnerXml;
 
             }else{
                 this._messageView = new ListStore(typeof(string), typeof(string), typeof(string));

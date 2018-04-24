@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
-
-using MessageLibraryS;
+using System.Net;
 using System.Xml;
 using System.Collections.Generic;
+
+using MessageLibraryS;
+
 
 namespace ConstantsLibraryS
 {
@@ -76,8 +78,10 @@ namespace ConstantsLibraryS
         public const string CONNECTION = @"connection";
         public const string SELECT = @"select";
 
-        //public const string GATEKEEPER = @"127.0.0.1";
-        public const string GATEKEEPER = @"192.168.1.56";
+        public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
+
+        //IP del GK en AWS
+        //public const string GATEKEEPER = @"172.16.1.49";
         public const int GATEKEEPER_PORT = 11000;
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";

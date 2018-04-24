@@ -43,7 +43,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="IDNetSoftware.MainWindow" design-size="750 7000">
+  <widget class="Gtk.Window" id="IDNetSoftware.MainWindow" design-size="752 7000">
     <action-group name="Default">
       <action id="ArchivoAction">
         <property name="Type">Action</property>
@@ -223,20 +223,56 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Toolbar" id="toolbar1">
+          <widget class="Gtk.HBox" id="hbox2">
             <property name="MemberName" />
-            <property name="ShowArrow">False</property>
-            <property name="IconSize">Dialog</property>
-            <node name="toolbar1" type="Toolbar">
-              <node type="Toolitem" action="clearAction" />
-              <node type="Toolitem" action="addDatabasePngAction" />
-              <node type="Toolitem" action="deleteDatabasePngAction" />
-              <node type="Toolitem" action="updateDatabasePngAction" />
-              <node type="Toolitem" action="databaseConnectionPngAction" />
-              <node type="Toolitem" action="connectionPng" />
-              <node type="Toolitem" action="schemaPngAction" />
-              <node type="Toolitem" action="selectPngAction" />
-            </node>
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.Toolbar" id="toolbar1">
+                <property name="MemberName" />
+                <property name="ShowArrow">False</property>
+                <property name="ButtonStyle">Icons</property>
+                <property name="IconSize">Dnd</property>
+                <node name="toolbar1" type="Toolbar">
+                  <node type="Toolitem" action="clearAction" />
+                  <node type="Toolitem" action="addDatabasePngAction" />
+                  <node type="Toolitem" action="deleteDatabasePngAction" />
+                  <node type="Toolitem" action="updateDatabasePngAction" />
+                  <node type="Toolitem" action="databaseConnectionPngAction" />
+                </node>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.VSeparator" id="vseparator3">
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Toolbar" id="toolbar2">
+                <property name="MemberName" />
+                <property name="ShowArrow">False</property>
+                <property name="ButtonStyle">Icons</property>
+                <property name="IconSize">Dnd</property>
+                <node name="toolbar2" type="Toolbar">
+                  <node type="Toolitem" action="connectionPng" />
+                  <node type="Toolitem" action="schemaPngAction" />
+                  <node type="Toolitem" action="selectPngAction" />
+                </node>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="Position">1</property>
@@ -446,7 +482,8 @@
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.AddDatabaseDialog" design-size="400 300">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -668,7 +705,8 @@ mongodb</property>
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.ModifyDatabaseDialog" design-size="400 300">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">3</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -904,9 +942,10 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="IDNetSoftware.ErrorServersDialog" design-size="328 177">
+  <widget class="Gtk.Dialog" id="IDNetSoftware.ErrorServersDialog" design-size="328 201">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1092,7 +1131,8 @@ mongodb</property>
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.SelectDialog" design-size="605 300">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1371,7 +1411,8 @@ mongodb</property>
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.FindDialog" design-size="400 300">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1686,7 +1727,8 @@ mongodb</property>
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.ConnectionNeighboursDialog" design-size="400 300">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1791,7 +1833,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="IDNetSoftware.AcercadeDialog" design-size="631 114">
+  <widget class="Gtk.Dialog" id="IDNetSoftware.AcercadeDialog" design-size="607 108">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="DefaultWidth">200</property>
@@ -1883,7 +1925,8 @@ mongodb</property>
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.UsuariosOVDialog" design-size="233 300">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1914,7 +1957,6 @@ mongodb</property>
                 <child>
                   <widget class="Gtk.TreeView" id="treeviewUsuariosOV">
                     <property name="MemberName" />
-                    <property name="CanFocus">True</property>
                     <property name="ShowScrollbars">True</property>
                   </widget>
                 </child>
@@ -1959,9 +2001,12 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="IDNetSoftware.ShowMessagesSentDialog" design-size="400 339">
+  <widget class="Gtk.Dialog" id="IDNetSoftware.ShowMessagesSentDialog" design-size="596 276">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="WidthRequest">400</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
+    <property name="DefaultWidth">500</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1992,6 +2037,7 @@ mongodb</property>
             <child>
               <widget class="Gtk.Frame" id="frame1">
                 <property name="MemberName" />
+                <property name="WidthRequest">300</property>
                 <property name="ShadowType">None</property>
                 <child>
                   <widget class="Gtk.Alignment" id="GtkAlignment1">
@@ -2002,6 +2048,7 @@ mongodb</property>
                     <child>
                       <widget class="Gtk.Label" id="labelCuerpo">
                         <property name="MemberName" />
+                        <property name="Wrap">True</property>
                       </widget>
                     </child>
                   </widget>
@@ -2060,7 +2107,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.ShowMessagesSentWindow" design-size="532 300">
+  <widget class="Gtk.Window" id="IDNetSoftware.ShowMessagesSentWindow" design-size="522 383">
     <property name="MemberName" />
     <property name="Title" translatable="yes">IDNetSoftware</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
@@ -2138,7 +2185,8 @@ mongodb</property>
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.SimbologiaDialog" design-size="684 498">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -2213,11 +2261,12 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.SplashWindow" design-size="512 582">
+  <widget class="Gtk.Window" id="IDNetSoftware.SplashWindow" design-size="512 584">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Bienvenido al mundo IDNet!</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
+    <property name="Resizable">False</property>
     <child>
       <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
@@ -2236,7 +2285,7 @@ mongodb</property>
         <child>
           <widget class="Gtk.Label" id="labelInfoTFG">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Trabajo de Fin de Grado en el grado de Ingeniería Informática
+            <property name="LabelProp" translatable="yes">Trabajo de Fin de Grado en el Grado en Ingeniería Informática
 Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
             <property name="Justify">Center</property>
           </widget>
@@ -2277,6 +2326,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
+    <property name="Resizable">False</property>
     <child>
       <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
@@ -2288,7 +2338,8 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
             <child>
               <widget class="Gtk.Label" id="labelIniciarSesion">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Iniciar sesión</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Iniciar sesión&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
@@ -2458,6 +2509,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
+    <property name="Resizable">False</property>
     <child>
       <widget class="Gtk.VBox" id="vbox4">
         <property name="MemberName" />
@@ -2465,7 +2517,8 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
         <child>
           <widget class="Gtk.Label" id="labelRegistrarse">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Registro</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Registro&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
             <property name="Justify">Center</property>
           </widget>
           <packing>
@@ -2658,7 +2711,8 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
   </widget>
   <widget class="Gtk.Dialog" id="IDNetSoftware.DeleteDatabaseDialog" design-size="320 147">
     <property name="MemberName" />
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">

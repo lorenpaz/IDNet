@@ -53,7 +53,8 @@ namespace IDNetSoftware
 			global::Stetic.Gui.Initialize(this);
 			// Widget IDNetSoftware.FindDialog
 			this.Name = "IDNetSoftware.FindDialog";
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			// Internal child IDNetSoftware.FindDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";

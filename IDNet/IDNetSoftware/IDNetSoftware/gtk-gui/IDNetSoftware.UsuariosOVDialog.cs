@@ -19,7 +19,8 @@ namespace IDNetSoftware
 			global::Stetic.Gui.Initialize(this);
 			// Widget IDNetSoftware.UsuariosOVDialog
 			this.Name = "IDNetSoftware.UsuariosOVDialog";
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			// Internal child IDNetSoftware.UsuariosOVDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";
@@ -44,7 +45,6 @@ namespace IDNetSoftware
 			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
 			this.treeviewUsuariosOV = new global::Gtk.TreeView();
-			this.treeviewUsuariosOV.CanFocus = true;
 			this.treeviewUsuariosOV.Name = "treeviewUsuariosOV";
 			this.GtkScrolledWindow.Add(this.treeviewUsuariosOV);
 			this.vbox2.Add(this.GtkScrolledWindow);

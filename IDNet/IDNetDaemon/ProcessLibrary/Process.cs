@@ -2,7 +2,9 @@
 using PluginsLibrary;
 using MessageLibrary;
 using System.Xml;
+
 using SecurityLibrary;
+using ConstantsLibrary;
 
 namespace ProcessLibrary
 {
@@ -29,7 +31,7 @@ namespace ProcessLibrary
             XmlDocument xmlDoc = null;
             switch(m.MessageType)
              {
-                case("001b"):
+                case(Constants.CONEXION_B):
                     /* Security sec = new Security();
                      if (sec.checkBlackList(m.Source)) 
                         {
@@ -37,10 +39,10 @@ namespace ProcessLibrary
                         }*/
                     xmlDoc = GetInfoAllDatabases();
                      break;
-                case("002"):
+                case(Constants.SCHEMA):
                      xmlDoc = this._db.EstructureRequest(m.Db_type, m.Db_name);
                     break;
-                case("003"):
+                case(Constants.SELECT):
                     xmlDoc = this._db.SelectRequest(m.Db_type,m.Db_name,m.Body);
                     break;
             }

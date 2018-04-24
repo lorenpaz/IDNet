@@ -79,8 +79,8 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 532;
-			this.DefaultHeight = 300;
+			this.DefaultWidth = 522;
+			this.DefaultHeight = 211;
 			this.Show();
 			this.treeviewMessages.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewMessagesRowActivated);
 			this.buttonOK.Clicked += new global::System.EventHandler(this.OnButtonOKClicked);

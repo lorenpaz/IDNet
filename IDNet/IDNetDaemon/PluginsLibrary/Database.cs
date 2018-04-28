@@ -6,6 +6,8 @@ using System.Xml;
 using ConvertionLibrary;
 using ConstantsLibrary;
 using CriptoLibrary;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PluginsLibrary
 {
@@ -16,9 +18,25 @@ namespace PluginsLibrary
         //Diccionario tipoBBDD -> [(nombreBBDD1,usuario1,contrasenia1),
                                     //(nombreBBDD2,usuario2,contrasenia2)]
         private Dictionary<string, List<Tuple<string,string,string>>> _databases;
+        private RijndaelManaged _symmetric;
+
+        public RijndaelManaged Symmetric
+        {
+            get
+            {
+                return this._symmetric;
+            }
+            set
+            {
+                this._symmetric = value;
+            }
+        }
 
 		public Database()
 		{
+            this._symmetric = new RijndaelManaged();
+            this._symmetric.Key = Constants.SYMMETRIC_KEY;
+            this._symmetric.IV = Constants.SYMMETRIC_IV;
 			ParseConf();
 		}
 
@@ -55,7 +73,7 @@ namespace PluginsLibrary
                  * database_type=database_name;
                  * 
                  * Ejemplos:
-                 * mysql*usuarios|pepe*contrasenia;
+                 * mysql*usuarios|pepe*contraseniaEncriptada;
                  * mongodb*empleados;
                  * 
                  */
@@ -90,8 +108,8 @@ namespace PluginsLibrary
                     usuario = null;
                 if (contrasenia == "")
                     contrasenia = null;
-               /* else
-                    contrasenia = Cripto.DecryptString(contrasenia);*/
+                else
+                    contrasenia = Cripto.DecryptStringFromBytes(this._symmetric, Convert.FromBase64String(contrasenia));
                 if (this._databases.ContainsKey(parameter))
                 {
                     Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);

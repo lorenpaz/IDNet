@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace ConstantsLibrary
@@ -100,8 +101,13 @@ namespace ConstantsLibrary
         public static string CONFIG_FILE_INFO_USER = Path.Combine(CONFIG,@"info.conf");
         public static string CONF_BLACK_LIST = Path.Combine(CONFIG,@"blackList.conf");
         public static string CONF_DATABASES = Path.Combine(CONFIG,@"databases.conf");
+
         public static string CONF_PUBLIC_KEY = Path.Combine(CONFIG,@"publicKeyDaemon.pem");
         public static string CONF_PRIVATE_KEY = Path.Combine(CONFIG, @"privateKeyDaemon.pem");
+
+        public static byte[] SYMMETRIC_KEY = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");
+        public static byte[] SYMMETRIC_IV = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");
+
         public static string MENSAJE_REGISTRO = @"010";
         public static string CONEXION = "001";
         public static string CONEXION_A = "001a";

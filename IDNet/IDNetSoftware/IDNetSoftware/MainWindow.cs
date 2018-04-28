@@ -452,6 +452,7 @@ namespace IDNetSoftware
         private void GenerarParDeClaves()
         {
             this._claves = new Cripto();
+            this._databases.Symmetric = this._claves.SymmetricBBDD;
         }
 
         /*
@@ -488,8 +489,9 @@ namespace IDNetSoftware
                 if (this._addDatabaseDialog.TypeOutPut != Constants.CANCEL)
                     AdiccionBBDD(this._addDatabaseDialog.BBDD, this._addDatabaseDialog.Success);
             }
-            catch (Exception)
+            catch (Exception ee)
             {
+                string error = ee.StackTrace; 
                 ErrorAdiccionBBDD(this._addDatabaseDialog.BBDD);
             }
         }

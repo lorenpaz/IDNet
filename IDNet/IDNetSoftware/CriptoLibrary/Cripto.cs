@@ -25,6 +25,7 @@ namespace CriptoLibraryS
 
         RsaKeyParameters _publicKey;
         RsaKeyParameters _privateKey;
+        RijndaelManaged _symmetric;
 
 		public RsaKeyParameters PublicKey
 		{
@@ -49,6 +50,17 @@ namespace CriptoLibraryS
 				this._privateKey = value;
 			}
 		}
+        public RijndaelManaged SymmetricBBDD
+        {
+            get
+            {
+                return this._symmetric;
+            }
+            set
+            {
+                this._symmetric = value;
+            }
+        }
 
         public Cripto()
         {
@@ -63,6 +75,9 @@ namespace CriptoLibraryS
             ExportPublicKey(this._publicKey);
             ExportPrivateKey(this._privateKey);
 
+            this._symmetric = new RijndaelManaged();
+            this._symmetric.Key = Constants.SYMMETRIC_KEY;
+            this._symmetric.IV = Constants.SYMMETRIC_IV;
 		}
 		public static void ExportPublicKey(RsaKeyParameters publicKey)
 		{
@@ -266,6 +281,84 @@ namespace CriptoLibraryS
             SHA256 mySHA256 = SHA256Managed.Create();
 
             return mySHA256.ComputeHash(Encoding.UTF8.GetBytes(password));
+        }
+
+        public static byte[] EncryptStringToBytes(RijndaelManaged symmetric,string plainText)
+        {
+            // Check arguments.
+            if (plainText == null || plainText.Length <= 0)
+                throw new ArgumentNullException("plainText");
+
+            byte[] encrypted;
+            // Create an RijndaelManaged object
+            // with the specified key and IV.
+            using (RijndaelManaged rijAlg = new RijndaelManaged())
+            {
+                rijAlg.Key = symmetric.Key;
+                rijAlg.IV = symmetric.IV;
+
+                // Create a decrytor to perform the stream transform.
+                ICryptoTransform encryptor = rijAlg.CreateEncryptor(rijAlg.Key, rijAlg.IV);
+
+                // Create the streams used for encryption.
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+
+                            //Write all data to the stream.
+                            swEncrypt.Write(plainText);
+                        }
+                        encrypted = msEncrypt.ToArray();
+                    }
+                }
+            }
+
+
+            // Return the encrypted bytes from the memory stream.
+            return encrypted;
+
+        }
+
+        public static string DecryptStringFromBytes(RijndaelManaged symmetric, byte[] cipherText)
+        {
+            // Check arguments.
+            if (cipherText == null || cipherText.Length <= 0)
+                throw new ArgumentNullException("cipherText");
+
+            // Declare the string used to hold
+            // the decrypted text.
+            string plaintext = null;
+
+            // Create an RijndaelManaged object
+            // with the specified key and IV.
+            using (RijndaelManaged rijAlg = new RijndaelManaged())
+            {
+                rijAlg.Key = symmetric.Key;
+                rijAlg.IV = symmetric.IV;
+
+                // Create a decrytor to perform the stream transform.
+                ICryptoTransform decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV);
+
+                // Create the streams used for decryption.
+                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+
+                            // Read the decrypted bytes from the decrypting stream
+                            // and place them in a string.
+                            plaintext = srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+
+            }
+            return plaintext;
         }
 	}
 

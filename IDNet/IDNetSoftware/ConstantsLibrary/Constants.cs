@@ -5,7 +5,7 @@ using System.Xml;
 using System.Collections.Generic;
 
 using MessageLibraryS;
-
+using System.Linq;
 
 namespace ConstantsLibraryS
 {
@@ -21,6 +21,9 @@ namespace ConstantsLibraryS
 
         public static string CONF_PUBLIC_KEY = Path.Combine(CONFIG, @"publicKeyIDNet.pem");
         public static string CONF_PRIVATE_KEY = Path.Combine(CONFIG, @"privateKeyIDNet.pem");
+
+        public static byte[] SYMMETRIC_KEY = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");
+        public static byte[] SYMMETRIC_IV = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");
 
         public const string MONGODB = @"mongodb";
         public const string MYSQL = @"mysql";

@@ -52,7 +52,8 @@ namespace IDNetSoftware
 			// Container child vbox4.Gtk.Box+BoxChild
 			this.labelRegistrarse = new global::Gtk.Label();
 			this.labelRegistrarse.Name = "labelRegistrarse";
-			this.labelRegistrarse.LabelProp = global::Mono.Unix.Catalog.GetString("Registro");
+			this.labelRegistrarse.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Registro</b>");
+			this.labelRegistrarse.UseMarkup = true;
 			this.labelRegistrarse.Justify = ((global::Gtk.Justification)(2));
 			this.vbox4.Add(this.labelRegistrarse);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.labelRegistrarse]));

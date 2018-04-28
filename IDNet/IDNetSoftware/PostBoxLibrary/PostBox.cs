@@ -86,7 +86,7 @@ namespace PostBoxLibraryS
         //Constructor para conexión 001a
         public PostBox(string source, string destination, string tipoMensaje, Cripto keyPair)
 		{
-			this._process = new Process();
+            this._process = new Process();
 			this._messageRequest = new Message(source, destination, tipoMensaje);
 			this._messageResponse = new Message();
             this._keyPair = keyPair;
@@ -94,7 +94,7 @@ namespace PostBoxLibraryS
 		//Constructor para conexión 001b
         public PostBox(string source, string destination, string tipoMensaje, Cripto keyPair,RsaKeyParameters publicKeyClient,SymmetricAlgorithm key)
 		{
-			this._process = new Process();
+            this._process = new Process();
 			this._messageRequest = new Message(source, destination, tipoMensaje);
 			this._messageResponse = new Message();
 			this._keyPair = keyPair;

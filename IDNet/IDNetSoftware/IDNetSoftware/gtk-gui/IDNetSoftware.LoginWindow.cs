@@ -52,7 +52,8 @@ namespace IDNetSoftware
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.labelIniciarSesion = new global::Gtk.Label();
 			this.labelIniciarSesion.Name = "labelIniciarSesion";
-			this.labelIniciarSesion.LabelProp = global::Mono.Unix.Catalog.GetString("Iniciar sesión");
+			this.labelIniciarSesion.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Iniciar sesión</b>");
+			this.labelIniciarSesion.UseMarkup = true;
 			this.vbox3.Add(this.labelIniciarSesion);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.labelIniciarSesion]));
 			w1.Position = 0;

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 using ConstantsLibraryS;
-
+using CriptoLibraryS;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Data;
 using MySql.Data.MySqlClient;
 
 using System.Xml;
+using System.Security.Cryptography;
 
 namespace DatabaseLibraryS
 {
@@ -20,11 +22,32 @@ namespace DatabaseLibraryS
 		//Diccionario tipoBBDD -> [(nombreBBDD1,usuario1,contrasenia1),
 		//(nombreBBDD2,usuario2,contrasenia2)]
 		private Dictionary<string, List<Tuple<string, string, string>>> _databasesPropias;
+        private RijndaelManaged _symmetric;
 
-		public Databases()
+        public RijndaelManaged Symmetric
+        {
+            get
+            {
+                return this._symmetric;
+            }
+            set
+            {
+                this._symmetric = value;
+            }
+        }
+        public Databases()
+        {
+            this._databasesPropias = new Dictionary<string, List<Tuple<string, string, string>>>();
+            this._symmetric = new RijndaelManaged();
+            this._symmetric.Key = Constants.SYMMETRIC_KEY;
+            this._symmetric.IV = Constants.SYMMETRIC_IV;
+            ParseConf();
+        }
+        public Databases(RijndaelManaged symmetric)
 		{
             this._databasesPropias = new Dictionary<string, List<Tuple<string, string, string>>>();
-			ParseConf();
+            this._symmetric = symmetric;
+            ParseConf();
 		}
 
 		public Dictionary<string, List<Tuple<string, string, string>>> DatabasesPropias
@@ -59,7 +82,7 @@ namespace DatabaseLibraryS
                      * database_type=database_name;
                      * 
                      * Ejemplo:
-                     * mongodb*empleados|pepe*contrasenia;
+                     * mongodb*empleados|pepe*contraseniaEncriptada;
                      * 
                      */
 
@@ -91,7 +114,11 @@ namespace DatabaseLibraryS
                     if (usuario == "")
                         usuario = null;
                     if (contrasenia == "")
+                    {
                         contrasenia = null;
+                    }else{
+                        contrasenia = Cripto.DecryptStringFromBytes(this._symmetric,Convert.FromBase64String(contrasenia));    
+                    }
 
                     if (this._databasesPropias.ContainsKey(parameter))
                     {
@@ -152,7 +179,11 @@ namespace DatabaseLibraryS
                         w.WriteLine(tipoBBDD + "*" + nombreBBDD + ";");
                     else
                     {
-                        w.WriteLine(tipoBBDD + "*" + nombreBBDD + "|" + usuarioDatabase + "*" + passwordDatabase + ";");
+                        string content = tipoBBDD + "*" + nombreBBDD + "|" + usuarioDatabase + "*";
+                        byte[] passwordEncrypt = Cripto.EncryptStringToBytes(this._symmetric,passwordDatabase);
+                        w.Write(content);
+                        w.Write(Convert.ToBase64String(passwordEncrypt));
+                        w.WriteLine(";");
                     }
 
                     if (this._databasesPropias.ContainsKey(tipoBBDD))
@@ -211,7 +242,8 @@ namespace DatabaseLibraryS
                 lineToWrite = nuevoTipoBBDD + "*" + nuevoNombreBBDD + ";";
             else
             {
-                lineToWrite = nuevoTipoBBDD + "*" + nuevoNombreBBDD + "|" + nuevoUserDatabase + "*" + nuevoPasswordDatabase + ";";
+                byte[] passwordEncrypt = Cripto.EncryptStringToBytes(this._symmetric, nuevoPasswordDatabase);
+                lineToWrite = nuevoTipoBBDD + "*" + nuevoNombreBBDD + "|" + nuevoUserDatabase + "*" + Convert.ToBase64String(passwordEncrypt) + ";";
             }
             //Escribo en un archivo temporal mientras que leo
             using (StreamReader reader = new StreamReader(Constants.ConfigFileDatabases))
@@ -292,6 +324,9 @@ namespace DatabaseLibraryS
             return true;
         }
 
+        /*
+         * Método para comprobar el servidor
+         * */
         public bool ComprobacionServidor(string databaseType, string databaseName,
             string usernameDatabase, string passwordDatabase){
             try

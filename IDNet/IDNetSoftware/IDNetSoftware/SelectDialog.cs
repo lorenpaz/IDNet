@@ -345,6 +345,9 @@ namespace IDNetSoftware
             return orderby;
         }
 
+        /*
+         * Método privado para la creación del cuerpo del mensaje
+         * */
         private void CrearBody()
         {
             XmlDocument bodyDoc = new XmlDocument();

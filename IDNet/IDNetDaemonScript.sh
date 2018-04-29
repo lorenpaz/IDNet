@@ -23,6 +23,8 @@ stop()
 			rm -rf ${LOG_FOLDER}
 	                echo "IDNetDaemon stop"
 	        else
+			rm -rf ${LOCK_FILE}
+			rm -rf ${LOG_FOLDER}
 	                echo "Error stop demon"
         fi
     else

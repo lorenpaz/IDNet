@@ -65,7 +65,7 @@ namespace IDNetSoftware
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C ./IDNetDaemonScript.sh";
+            startInfo.Arguments = "/C ../../../../IDNetDaemonScript.sh";
             process.StartInfo = startInfo;
             process.Start();
         }

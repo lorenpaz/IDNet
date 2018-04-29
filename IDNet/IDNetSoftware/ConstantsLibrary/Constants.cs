@@ -264,7 +264,7 @@ namespace ConstantsLibraryS
             Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
             linea + "\n" +
            Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n" +
-           messageResponse.Db_type== MYSQL?Columna(NOMBRE_TABLA + body.TableCollection, linea.Length):Columna(NOMBRE_TABLA + messageResponse, linea.Length) + "\n";
+            messageResponse.Db_type== MYSQL?Columna(NOMBRE_TABLA + body.TableCollection, linea.Length):Columna(NOMBRE_COLECCION + body.TableCollection, linea.Length) + "\n";
 
             string rows = "";
             int cont=0;
@@ -595,12 +595,12 @@ namespace ConstantsLibraryS
             z.LoadXml(bodyRequest);
 
             //MYSQL
-            if(z.DocumentElement.GetElementsByTagName("db_type")[0].InnerText == Constants.MYSQL){
-                this._tableCollection = z.DocumentElement.GetElementsByTagName("body")[0].OwnerDocument.GetElementsByTagName("from")[0].InnerText;
+            if(z.DocumentElement.SelectSingleNode("from")!=null){
+                this._tableCollection = z.DocumentElement.GetElementsByTagName("from")[0].InnerText;
             }
             //MONGODB
-            else if(z.DocumentElement.GetElementsByTagName("db_type")[0].InnerText == Constants.MONGODB){
-                this._tableCollection = z.DocumentElement.GetElementsByTagName("body")[0].OwnerDocument.GetElementsByTagName("collection")[0].InnerText;
+            else if(z.DocumentElement.SelectSingleNode("collection") != null){
+                this._tableCollection = z.DocumentElement.GetElementsByTagName("collection")[0].InnerText;
             }else{
                 this._tableCollection = null;
             }

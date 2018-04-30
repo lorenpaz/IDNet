@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MessageLibrary</RootNamespace>
-    <AssemblyName>MessageLibrary</AssemblyName>
+    <RootNamespace>MessageLibraryS</RootNamespace>
+    <AssemblyName>MessageLibraryS</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

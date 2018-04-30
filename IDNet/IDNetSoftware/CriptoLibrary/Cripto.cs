@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using System.Collections.Generic;
+
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Xml;
@@ -12,7 +12,6 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
 
 using Org.BouncyCastle.Crypto.Engines;
-using Org.BouncyCastle.Crypto.Encodings;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Crypto.Parameters;

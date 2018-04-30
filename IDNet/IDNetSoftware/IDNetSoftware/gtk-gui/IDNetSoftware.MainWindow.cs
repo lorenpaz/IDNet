@@ -30,8 +30,6 @@ namespace IDNetSoftware
 
 		private global::Gtk.Action MostrarUsuariosAction;
 
-		private global::Gtk.Action databaseConnectionPngAction;
-
 		private global::Gtk.Action MensajesAction;
 
 		private global::Gtk.Action updateDatabasePngAction;
@@ -140,8 +138,6 @@ namespace IDNetSoftware
 			this.MostrarUsuariosAction = new global::Gtk.Action("MostrarUsuariosAction", global::Mono.Unix.Catalog.GetString("Mostrar usuarios"), null, null);
 			this.MostrarUsuariosAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Mostrar usuarios");
 			w1.Add(this.MostrarUsuariosAction, null);
-			this.databaseConnectionPngAction = new global::Gtk.Action("databaseConnectionPngAction", null, null, "databaseConnection.png");
-			w1.Add(this.databaseConnectionPngAction, null);
 			this.MensajesAction = new global::Gtk.Action("MensajesAction", global::Mono.Unix.Catalog.GetString("Mensajes "), null, null);
 			this.MensajesAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Mensajes ");
 			w1.Add(this.MensajesAction, null);
@@ -195,7 +191,7 @@ namespace IDNetSoftware
 			this.hbox2.Name = "hbox2";
 			this.hbox2.Spacing = 6;
 			// Container child hbox2.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='deleteDatabasePngAction' action='deleteDatabasePngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/><toolitem name='databaseConnectionPngAction' action='databaseConnectionPngAction'/></toolbar></ui>");
+			this.UIManager.AddUiFromString(@"<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='addDatabasePngAction' action='addDatabasePngAction'/><toolitem name='deleteDatabasePngAction' action='deleteDatabasePngAction'/><toolitem name='updateDatabasePngAction' action='updateDatabasePngAction'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/toolbar1")));
 			this.toolbar1.Name = "toolbar1";
 			this.toolbar1.ShowArrow = false;
@@ -241,7 +237,6 @@ namespace IDNetSoftware
 			this.infoview.Editable = false;
 			this.infoview.CursorVisible = false;
 			this.infoview.AcceptsTab = false;
-			this.infoview.WrapMode = ((global::Gtk.WrapMode)(2));
 			this.GtkScrolledWindow.Add(this.infoview);
 			this.vbox1.Add(this.GtkScrolledWindow);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.GtkScrolledWindow]));
@@ -382,7 +377,6 @@ namespace IDNetSoftware
 			this.clearAction.Activated += new global::System.EventHandler(this.OnClearActionActivated);
 			this.AcercaDeAction.Activated += new global::System.EventHandler(this.OnAcercaDeActionActivated);
 			this.MostrarUsuariosAction.Activated += new global::System.EventHandler(this.OnMostrarUsuariosActionActivated);
-			this.databaseConnectionPngAction.Activated += new global::System.EventHandler(this.OnDatabaseConnectionPngActionActivated);
 			this.MensajesAction.Activated += new global::System.EventHandler(this.OnMensajesEnviadosActionActivated);
 			this.updateDatabasePngAction.Activated += new global::System.EventHandler(this.OnUpdateDatabasePngActionActivated);
 			this.SimbologiaAction.Activated += new global::System.EventHandler(this.OnSimbologaActionActivated);

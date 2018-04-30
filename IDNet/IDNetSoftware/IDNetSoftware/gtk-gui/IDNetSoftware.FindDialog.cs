@@ -62,7 +62,8 @@ namespace IDNetSoftware
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
 			this.labelTitulo = new global::Gtk.Label();
 			this.labelTitulo.Name = "labelTitulo";
-			this.labelTitulo.LabelProp = global::Mono.Unix.Catalog.GetString("Solicitud de consulta a una base de datos MongoDB");
+			this.labelTitulo.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Solicitud de consulta a una base de datos MongoDB</b>");
+			this.labelTitulo.UseMarkup = true;
 			this.labelTitulo.Justify = ((global::Gtk.Justification)(2));
 			w1.Add(this.labelTitulo);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1[this.labelTitulo]));
@@ -168,6 +169,7 @@ namespace IDNetSoftware
 			this.checkbuttonProjection.CanFocus = true;
 			this.checkbuttonProjection.Name = "checkbuttonProjection";
 			this.checkbuttonProjection.Label = global::Mono.Unix.Catalog.GetString("Included in results");
+			this.checkbuttonProjection.Active = true;
 			this.checkbuttonProjection.DrawIndicator = true;
 			this.checkbuttonProjection.UseUnderline = true;
 			this.hbox3.Add(this.checkbuttonProjection);

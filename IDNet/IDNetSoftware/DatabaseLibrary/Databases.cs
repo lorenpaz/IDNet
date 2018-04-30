@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 using ConstantsLibraryS;
 using CriptoLibraryS;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Data;
 using MySql.Data.MySqlClient;
 
-using System.Xml;
 using System.Security.Cryptography;
 
 namespace DatabaseLibraryS

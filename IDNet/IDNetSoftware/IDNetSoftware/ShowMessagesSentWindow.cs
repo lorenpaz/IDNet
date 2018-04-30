@@ -32,9 +32,9 @@ namespace IDNetSoftware
             try
             {
                 AddValues();
-            }catch(Exception e)
+            }catch(Exception)
             {
-                var a = 0;
+
             }
             //Añado las columnas
             treeviewMessages.AppendColumn(Constants.TABLA_COLUMNA_USUARIO_ORIGEN, new CellRendererText(), "text", 0);

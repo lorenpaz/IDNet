@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ConstantsLibrary</RootNamespace>
-    <AssemblyName>ConstantsLibrary</AssemblyName>
+    <RootNamespace>ConstantsLibraryS</RootNamespace>
+    <AssemblyName>ConstantsLibraryS</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

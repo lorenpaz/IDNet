@@ -85,17 +85,6 @@ namespace IDNetSoftware
             }
         }*/
 
-        /*
-         * Método activado cuando se pulsa en la lista de BBDD de vecinos
-         * */
-        protected void OnTreeviewDatabasesRowActivated(object o, RowActivatedArgs args)
-        {
-            TreeIter it;
-            // this._infoBBDDView.GetIter(out it, args.Path);
-            this._rowActivated = args.Path;
-
-        }
-
         protected void OnButtonOkClicked(object sender, EventArgs e)
         {
             if (this._rowActivated != null)

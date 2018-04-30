@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using MySql.Data.MySqlClient;
 
 using ConstantsLibraryS;
 using CriptoLibraryS;
-using System.Net;
 
 namespace DatabaseLibrary
 {

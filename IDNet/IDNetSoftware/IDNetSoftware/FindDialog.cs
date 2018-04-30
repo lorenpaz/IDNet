@@ -147,7 +147,9 @@ namespace IDNetSoftware
          * */
         protected void OnCheckbuttonProjectionToggled(object sender, EventArgs e)
         {
-            this._activeProyections[comboboxProjection.ActiveText] = checkbuttonProjection.Active;
+            //Caso en el que al iniciar no haya ningún campo
+            if(comboboxProjection.ActiveText != null)
+                this._activeProyections[comboboxProjection.ActiveText] = checkbuttonProjection.Active;
         }
 
         /*

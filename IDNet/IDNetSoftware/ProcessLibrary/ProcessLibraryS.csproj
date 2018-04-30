@@ -30,10 +30,6 @@
     <Compile Include="Process.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MessageLibrary\MessageLibraryS.csproj">
-      <Project>{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}</Project>
-      <Name>MessageLibraryS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DatabaseLibrary\DatabaseLibraryS.csproj">
       <Project>{32EC6214-3022-4103-82E5-0E882F4497F8}</Project>
       <Name>DatabaseLibraryS</Name>

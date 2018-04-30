@@ -7,14 +7,11 @@ using ProcessLibraryS;
 using ConvertionLibraryS;
 using CriptoLibraryS;
 using ConstantsLibraryS;
-using DatabaseLibraryS;
+
 
 using System.Xml;
 using System.Security.Cryptography;
-using System.Collections.Generic;
 
-using Org.BouncyCastle.Crypto.Generators;
-using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Crypto.Parameters;
 
 namespace PostBoxLibraryS

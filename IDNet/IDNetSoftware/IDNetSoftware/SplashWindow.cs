@@ -8,7 +8,6 @@ namespace IDNetSoftware
 {
     public partial class SplashWindow : Gtk.Window
     {
-        MainWindow _main;
         LoginWindow _login;
 
         public SplashWindow() :

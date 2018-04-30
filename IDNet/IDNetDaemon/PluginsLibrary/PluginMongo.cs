@@ -102,8 +102,9 @@ namespace PluginsLibrary
             {
                 SecondAsync(body).Wait();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                string error = e.StackTrace;
                 this._salida = "<error>Se ha producido un error en la solictud de consulta de la base de datos " + this._databaseName + "</error>";
             }
             return this._salida;
@@ -134,18 +135,20 @@ namespace PluginsLibrary
             }
             documents = collection.Find(filter);
 
+            //Limit
             if (c.LimitTarget != null)
             {
                 documents = documents.Limit(Int32.Parse(c.LimitTarget));
             }
+
+            //Sort
             if (c.SortTarget != null)
             {
                 documents = documents.Sort(c.SortTarget);
             }
+            documents = documents.Project<BsonDocument>(c.ProjectionsTarget);
 
-            documents = documents.Project(c.ProjectionsTarget);
-
-            var documentsList = await documents.ToListAsync();
+            var documentsList = await documents.ToListAsync<BsonDocument>();
 
             if (documentsList.Count != 0)
             {
@@ -297,11 +300,15 @@ namespace PluginsLibrary
                 {
                     if (i == listAttributes.Count)
                     {
-                        this._proyectionsTarget += attribute.Name + ": " + attribute.Value + "}";
+                        if (attribute.Value != "0" || attribute.Name == "_id")
+                            this._proyectionsTarget += attribute.Name + ": " + attribute.Value + "}";
+                        else
+                            this._proyectionsTarget += "}";
                     }
                     else
                     {
-                        this._proyectionsTarget += attribute.Name + ": " + attribute.Value + ",";
+                        if(attribute.Value != "0" || attribute.Name == "_id")
+                            this._proyectionsTarget += attribute.Name + ": " + attribute.Value + ",";
                     }
                     i++;
                 }

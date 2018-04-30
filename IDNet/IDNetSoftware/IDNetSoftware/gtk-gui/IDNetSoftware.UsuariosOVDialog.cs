@@ -32,7 +32,8 @@ namespace IDNetSoftware
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.labelTitulo = new global::Gtk.Label();
 			this.labelTitulo.Name = "labelTitulo";
-			this.labelTitulo.LabelProp = global::Mono.Unix.Catalog.GetString("Usuarios Organización Virtual");
+			this.labelTitulo.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Usuarios Organización Virtual</b>");
+			this.labelTitulo.UseMarkup = true;
 			this.labelTitulo.Justify = ((global::Gtk.Justification)(2));
 			this.vbox2.Add(this.labelTitulo);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.labelTitulo]));

@@ -40,7 +40,8 @@ namespace IDNetSoftware
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.labelVecinos = new global::Gtk.Label();
 			this.labelVecinos.Name = "labelVecinos";
-			this.labelVecinos.LabelProp = global::Mono.Unix.Catalog.GetString("Vecinos OV");
+			this.labelVecinos.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Vecinos OV</b>");
+			this.labelVecinos.UseMarkup = true;
 			this.labelVecinos.Justify = ((global::Gtk.Justification)(2));
 			this.vbox3.Add(this.labelVecinos);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.labelVecinos]));
@@ -103,7 +104,6 @@ namespace IDNetSoftware
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
 			this.Show();
-			this.treeviewDatabases.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeviewDatabasesRowActivated);
 			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}

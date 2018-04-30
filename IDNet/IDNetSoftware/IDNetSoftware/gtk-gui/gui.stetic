@@ -4,7 +4,7 @@
     <images-root-path>..</images-root-path>
   </configuration>
   <import>
-    <widget-library name="../bin/Debug/IDNetSoftware.exe" internal="true" />
+    <widget-library name="../bin/Release/IDNetSoftware.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="addDatabase.png">
@@ -112,12 +112,6 @@
         <property name="Label" translatable="yes">Mostrar usuarios</property>
         <property name="ShortLabel" translatable="yes">Mostrar usuarios</property>
         <signal name="Activated" handler="OnMostrarUsuariosActionActivated" />
-      </action>
-      <action id="databaseConnectionPngAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">databaseConnection.png</property>
-        <signal name="Activated" handler="OnDatabaseConnectionPngActionActivated" />
       </action>
       <action id="MensajesAction">
         <property name="Type">Action</property>
@@ -237,7 +231,6 @@
                   <node type="Toolitem" action="addDatabasePngAction" />
                   <node type="Toolitem" action="deleteDatabasePngAction" />
                   <node type="Toolitem" action="updateDatabasePngAction" />
-                  <node type="Toolitem" action="databaseConnectionPngAction" />
                 </node>
               </widget>
               <packing>
@@ -1142,7 +1135,8 @@ mongodb</property>
         <child>
           <widget class="Gtk.Label" id="labelTitulo">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Solicitud de consulta a una base de datos MySQL</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Solicitud de consulta a una base de datos MySQL&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
             <property name="Justify">Center</property>
           </widget>
           <packing>
@@ -1422,7 +1416,8 @@ mongodb</property>
         <child>
           <widget class="Gtk.Label" id="labelTitulo">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Solicitud de consulta a una base de datos MongoDB</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Solicitud de consulta a una base de datos MongoDB&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
             <property name="Justify">Center</property>
           </widget>
           <packing>
@@ -1572,6 +1567,7 @@ mongodb</property>
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Label" translatable="yes">Included in results</property>
+                    <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
@@ -1746,7 +1742,8 @@ mongodb</property>
                 <child>
                   <widget class="Gtk.Label" id="labelVecinos">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Vecinos OV</property>
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Vecinos OV&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
                     <property name="Justify">Center</property>
                   </widget>
                   <packing>
@@ -1765,7 +1762,6 @@ mongodb</property>
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
-                        <signal name="RowActivated" handler="OnTreeviewDatabasesRowActivated" />
                       </widget>
                     </child>
                   </widget>
@@ -1851,7 +1847,8 @@ mongodb</property>
             <child>
               <widget class="Gtk.Label" id="labelTitulo">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">IDNet</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;IDNet&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
                 <property name="Justify">Center</property>
               </widget>
               <packing>
@@ -1940,7 +1937,8 @@ mongodb</property>
             <child>
               <widget class="Gtk.Label" id="labelTitulo">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Usuarios Organización Virtual</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Usuarios Organización Virtual&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
                 <property name="Justify">Center</property>
               </widget>
               <packing>

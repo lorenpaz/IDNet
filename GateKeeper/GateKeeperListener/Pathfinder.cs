@@ -41,7 +41,7 @@ namespace GateKeeperListener
             //El cliente destino y origen del mensaje original
             String clienteDestino = xDoc.GetElementsByTagName("destination")[0].InnerText;
             String clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
-			String codigo = xDoc.GetElementsByTagName("code")[0].InnerText;
+			//String codigo = xDoc.GetElementsByTagName("code")[0].InnerText;
 
 			respuesta = content;
 
@@ -69,6 +69,7 @@ namespace GateKeeperListener
                     }
                     else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
                     {
+						/*
                         if (db.CheckCode(clienteOrigen, codigo))
                         {
                             respuesta = AnunciarNombresAlCliente(xDoc, content);
@@ -79,6 +80,8 @@ namespace GateKeeperListener
                             respuesta = "El cliente que se ha intentado conectar no es legítimo";
                             log.Error(respuesta);
                         }
+                        */
+						respuesta = AnunciarNombresAlCliente(xDoc, content);
                     }               
                 }
                 //Si recibo un mensaje de un GK hacia mi mismo

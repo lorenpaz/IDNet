@@ -5,6 +5,7 @@ using Quartz.Impl;
 using System.Configuration;
 using ConnectionLibrary;
 using ConstantsLibrary;
+using System.IO;
 
 namespace IDNetDaemon
 {
@@ -52,5 +53,13 @@ namespace IDNetDaemon
             Server s = new Server();
             s.StartListening();
 		}
+
+        private static void CheckConfigurationFIle()
+        {
+            if (!Directory.Exists(Constants.CONFIG))
+            {
+                Directory.CreateDirectory(Constants.CONFIG);
+            }
+        }
     }
 }

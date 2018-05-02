@@ -4,7 +4,7 @@
     <images-root-path>..</images-root-path>
   </configuration>
   <import>
-    <widget-library name="../bin/Release/IDNetSoftware.exe" internal="true" />
+    <widget-library name="../bin/Debug/IDNetSoftware.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="addDatabase.png">

@@ -3,6 +3,7 @@ using System.Threading;
 using Gtk;
 using System.Diagnostics;
 using ConstantsLibraryS;
+using System.IO;
 
 namespace IDNetSoftware
 {
@@ -14,7 +15,7 @@ namespace IDNetSoftware
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build();
-
+            CheckConfigurationFile();
             labelInfoTFG.ModifyFg(StateType.Normal, new Gdk.Color(1, 1, 1));
             ThreadStart tStart = new ThreadStart(this.Cargando);
             Thread t = new Thread(tStart);
@@ -54,6 +55,14 @@ namespace IDNetSoftware
         {
             Process[] pname = Process.GetProcessesByName(Constants.IDNETDAEMON);
             return pname.Length != 0;
+        }
+
+        private static void CheckConfigurationFile()
+        {
+            if(!Directory.Exists(Constants.CONFIG))
+            {
+                Directory.CreateDirectory(Constants.CONFIG);
+            }
         }
     }
 }

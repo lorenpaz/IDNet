@@ -321,7 +321,7 @@ namespace IDNetSoftware
 			string msg, response;
 
 			//Proceso el envio
-            PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_ESQUEMA, this._db_name, this._db_type, this._body, this._connection.SymmetricKey);
+            PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_ESQUEMA, this._db_name, this._db_type, this._body, this._connection.SymmetricKey, this._keyPair);
 			msg = post.ProcesarEnvio();
 
 			//Creo el cliente y le envio el mensaje
@@ -364,7 +364,7 @@ namespace IDNetSoftware
                         break;
                     case Constants.MENSAJE_CONSULTA:
                         XmlNode bodyMessage = (XmlNode)this._selectDialog.Body;
-                        PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+                        PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey, this._keyPair);
                         msg = post.ProcesarEnvio();
 
                         //Creo el cliente y le envio el mensaje
@@ -411,7 +411,7 @@ namespace IDNetSoftware
 
                     case Constants.MENSAJE_CONSULTA:
                         XmlNode bodyMessage = (XmlNode)this._findDialog.Body;
-                        PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey);
+                        PostBox post = new PostBox(this._source, this._destination, Constants.MENSAJE_CONSULTA, this._db_name, this._db_type, bodyMessage, this._connection.SymmetricKey, this._keyPair);
 						msg = post.ProcesarEnvio();
 
 						//Creo el cliente y le envio el mensaje

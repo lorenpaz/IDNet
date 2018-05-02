@@ -86,10 +86,12 @@ namespace MessageLibrary
         public void parserStartRecievedMessage(XmlDocument doc)
         {
 			this._messageType = doc.DocumentElement.GetElementsByTagName("message_type")[0].InnerText;
-			this._source = doc.DocumentElement.GetElementsByTagName("source")[0].InnerText;
 			this._destination = doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText;          
         }
 
+        public void ParserSourceMessage(XmlDocument doc){
+            this._source = doc.DocumentElement.GetElementsByTagName("source")[0].InnerText;
+        }
 
         /**
          * Método para parsear un mensaje recibido como un XmlDocument

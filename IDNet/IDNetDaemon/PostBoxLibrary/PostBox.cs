@@ -120,6 +120,7 @@ namespace PostBoxLibrary
 
             if (this._messageRecieve.MessageType == Constants.CONEXION_A)
             {
+                this._messageRecieve.ParserSourceMessage(xmlDoc);
                 AlmacenarClavePublica(xmlDoc);
 				//Aquí iria una funcion para quitar el cifrado asimetrico
 				// cript.CheckKey(this._messageRecieve.Source, this._messageRecieve.Key);
@@ -127,6 +128,7 @@ namespace PostBoxLibrary
             }
             else if(this._messageRecieve.MessageType == Constants.CONEXION_B)
             {
+                this._messageRecieve.ParserSourceMessage(xmlDoc);
                 this._publicKeyClient = keyPairClients[this._messageRecieve.Source].Item1;
                 DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
                 AlmacenarClaveSimetrica(xmlDoc);
@@ -134,6 +136,10 @@ namespace PostBoxLibrary
             }
             else
             {
+                ///Source
+                xmlDoc = DesencriptarSourceAsimetrico(xmlDoc);
+                this._messageRecieve.ParserSourceMessage(xmlDoc);
+
                 string usuario = this._messageRecieve.Source;
                 this._publicKeyClient = keyPairClients[usuario].Item1;
                 this._symmetricKey = keyPairClients[usuario].Item2;
@@ -176,7 +182,11 @@ namespace PostBoxLibrary
             XmlDocument xmlDocRespuesta = this._messageResponse.createMessage();
 
             //Devolvemos la respesta en forma de string
-            xmlDocRespuesta = encriptarParteDelDocumentoSimetrico(xmlDocRespuesta);
+            xmlDocRespuesta = EncriptarParteDelDocumentoSimetrico(xmlDocRespuesta);
+
+            //Source encriptado
+            xmlDocRespuesta = EncriptarSourceAsimetrico(xmlDocRespuesta);
+
             respuesta = xmlDocRespuesta.InnerXml;
 
             return respuesta;
@@ -208,7 +218,7 @@ namespace PostBoxLibrary
                     this._messageResponse.Body = xmlDocBodyRespuesta as XmlNode;
                 }
                 XmlDocument xmlDocRespuesta = this._messageResponse.createMessageConexion();
-                encriptarParteDelDocumentoAsimetrico(xmlDocRespuesta);
+                EncriptarParteDelDocumentoAsimetrico(xmlDocRespuesta);
 				return xmlDocRespuesta.InnerXml;
             }
 
@@ -253,7 +263,7 @@ namespace PostBoxLibrary
         /*
          * Método para encriptar parte del documento de forma asimétrica
          * */
-		private XmlDocument encriptarParteDelDocumentoAsimetrico(XmlDocument doc)
+		private XmlDocument EncriptarParteDelDocumentoAsimetrico(XmlDocument doc)
 		{
 			string xmlAEncriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
 
@@ -290,13 +300,39 @@ namespace PostBoxLibrary
         /*
          * Método para encriptar parte del documento de forma simétrica
          * */
-		private XmlDocument encriptarParteDelDocumentoSimetrico(XmlDocument doc)
+		private XmlDocument EncriptarParteDelDocumentoSimetrico(XmlDocument doc)
 		{
-            log.Info(doc.InnerXml);
 			Cripto.EncryptSymmetric(doc, "encripted", this._symmetricKey);
-            log.Info(doc.InnerXml);
             return doc;
 		}
 
+        /*
+         * Método privado para encriptar el elemento <source>
+         * */
+        private XmlDocument EncriptarSourceAsimetrico(XmlDocument doc)
+        {
+            this._publicKeyClient = Cripto.ImportPublicKey(Constants.PathClavePublica(doc.DocumentElement.GetElementsByTagName("destination")[0].InnerText));
+
+            string xmlAEncriptar = doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml;
+
+            string xmlEncriptado = Cripto.Encryption(xmlAEncriptar, this._publicKeyClient);
+
+            doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml = xmlEncriptado;
+
+            return doc;
+        }
+        /*
+         * Método privado para desencriptar el elemento <source>
+         * */
+        private XmlDocument DesencriptarSourceAsimetrico(XmlDocument doc)
+        {
+            string xmlADesencriptar = doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml;
+
+            string xmlDesencriptado = Cripto.Decryption(Convert.FromBase64String(xmlADesencriptar), this._keyPair.PrivateKey);
+
+            doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml = xmlDesencriptado;
+
+            return doc;
+        }
 	}
 }

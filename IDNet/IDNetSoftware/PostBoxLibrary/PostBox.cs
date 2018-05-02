@@ -72,12 +72,14 @@ namespace PostBoxLibraryS
 
         //Constructor para mensajes (no conexion)
 		public PostBox(string source, string destination, string tipoMensaje, string db_name,
-                       string db_type, XmlNode body,SymmetricAlgorithm symmetricKey)
+                       string db_type, XmlNode body,SymmetricAlgorithm symmetricKey, Cripto keyPair)
 		{
 			this._process = new Process();
 			this._messageRequest = new Message(source, destination, tipoMensaje, db_name, db_type, body);
 			this._messageResponse = new Message();
             this._symmetricKey = symmetricKey;
+            this._keyPair = keyPair;
+            this._publicKeyClient = Cripto.ImportPublicKey(Constants.PathClavePublica(destination));
 		}
 
         //Constructor para conexión 001a
@@ -106,7 +108,10 @@ namespace PostBoxLibraryS
 		{
 			XmlDocument doc = this._messageRequest.createMessage();
 
-            doc = encriptarParteDelDocumentoSimetrico(doc);
+            doc = EncriptarParteDelDocumentoSimetrico(doc);
+
+            doc = EncriptarSourceAsimetrico(doc);
+                
             string respuesta = doc.InnerXml;
 
 			return respuesta;
@@ -126,7 +131,7 @@ namespace PostBoxLibraryS
             } //Sino 001b
             else{
                 XmlDocument doc = this._messageRequest.createMessageConnection(this._keyPair.PublicKeyString(),this._symmetricKey);
-                encriptarParteDelDocumentoAsimetrico(doc);
+                EncriptarParteDelDocumentoAsimetrico(doc);
                 return doc.InnerXml;
             }
 		}
@@ -138,6 +143,8 @@ namespace PostBoxLibraryS
 		{
 			//Convertimos el string a xml
 			XmlDocument xmlDoc = Convertion.stringToXml(response);
+
+            xmlDoc = DesencriptarSourceAsimetrico(xmlDoc);
 
             //Desencriptamos el mensaje
             DesencriptarParteDelDocumentoSimetrico(xmlDoc);
@@ -208,13 +215,11 @@ namespace PostBoxLibraryS
         /*
          * Método privado que encripta parte del documento con encriptación asimétrica
          * */
-        private XmlDocument encriptarParteDelDocumentoAsimetrico(XmlDocument doc)
+        private XmlDocument EncriptarParteDelDocumentoAsimetrico(XmlDocument doc)
         {
             string xmlAEncriptar = doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml;
 
             string xmlEncriptado = Cripto.Encryption(xmlAEncriptar,this._publicKeyClient);
-            Console.WriteLine("Key:"+Encoding.ASCII.GetString(this._symmetricKey.Key));
-            Console.Write("IV:"+this._symmetricKey.IV);
 
             doc.DocumentElement.GetElementsByTagName("encripted")[0].InnerXml = xmlEncriptado;
 
@@ -247,11 +252,38 @@ namespace PostBoxLibraryS
         /*
          * Método privado que encripta parte del documento con encriptación simétrica
          * */
-		private XmlDocument encriptarParteDelDocumentoSimetrico(XmlDocument doc)
+		private XmlDocument EncriptarParteDelDocumentoSimetrico(XmlDocument doc)
 		{
 			Cripto.EncryptSymmetric(doc, "encripted", this._symmetricKey);
 			return doc;
 		}
 
+        /*
+         * Método privado para encriptar el elemento <source>
+         * */
+        private XmlDocument EncriptarSourceAsimetrico(XmlDocument doc){
+
+            string xmlAEncriptar = doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml;
+
+            string xmlEncriptado = Cripto.Encryption(xmlAEncriptar, this._publicKeyClient);
+
+            doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml = xmlEncriptado;
+
+            return doc;
+        }
+        /*
+         * Método privado para desencriptar el elemento <source>
+         * */
+        private XmlDocument DesencriptarSourceAsimetrico(XmlDocument doc)
+        {
+            string xmlADesencriptar = doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml;
+
+            string xmlDesencriptado = Cripto.Decryption(Convert.FromBase64String(xmlADesencriptar), this._keyPair.PrivateKey);
+
+            doc.DocumentElement.GetElementsByTagName("source")[0].InnerXml = xmlDesencriptado;
+
+
+            return doc;
+        }
 	}
 }

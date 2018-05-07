@@ -13,6 +13,8 @@ using System.Collections.Generic;
 
 using Org.BouncyCastle.Crypto.Parameters;
 using System.Security.Cryptography;
+using PostBoxLibraryS;
+using ConnectionLibraryS;
 
 namespace IDNetSoftware
 {
@@ -364,7 +366,7 @@ namespace IDNetSoftware
         {
             string msg, response;
 
-            /*  //Proceso el envio
+              //Proceso el envio
               PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
                                          Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
               msg = post.ProcesarEnvio(this._user.IP.ToString());
@@ -378,11 +380,8 @@ namespace IDNetSoftware
                   post.ProcesarRespuesta(response);
                   return true;
               }
-              else
-              {
-                  return false;
-              }*/
-            return true;
+
+            return false;
         }
 
 

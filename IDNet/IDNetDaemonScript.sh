@@ -35,7 +35,7 @@ stop()
 start()
 {
     echo "Arrancando el servicio "${PROGRAM_NAME}
-    mono-service -l:${LOCK_FILE} ./${PATH_NAME}${PROGRAM_NAME}.exe
+    mono-service -l:${LOCK_FILE} -n:${PROGRAM_NAME} ./${PATH_NAME}${PROGRAM_NAME}.exe
     echo "Service ${PROGRAM_NAME} started"
 }
 

@@ -8,7 +8,7 @@ using ConvertionLibraryS;
 using ConstantsLibraryS;
 
 using System.Xml;
-
+using System.Text;
 
 namespace PostBoxLibraryS
 {
@@ -78,16 +78,17 @@ namespace PostBoxLibraryS
             {
                 File.Delete(Constants.ConfigFileNeighbours);
             }
-            File.Create(Constants.ConfigFileNeighbours);
 
-            TextWriter tw = new StreamWriter(Constants.ConfigFileNeighbours);
-
-            foreach(XmlElement vecino in xmlDoc.GetElementsByTagName("route"))
+            // Create the file.
+            using (FileStream fs = File.Create(Constants.ConfigFileNeighbours))
             {
-                tw.WriteLine(vecino.GetElementsByTagName("nombre")[0].InnerText);
-            }
+                foreach (XmlElement vecino in xmlDoc.GetElementsByTagName("route"))
+                {
+                    Byte[] info = new UTF8Encoding(true).GetBytes(vecino.GetElementsByTagName("name")[0].InnerText+";"+"\n");
 
-            tw.Close();
+                    fs.Write(info, 0, info.Length);
+                }
+            }
 
         }
 

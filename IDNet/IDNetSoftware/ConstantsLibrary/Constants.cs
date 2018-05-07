@@ -47,7 +47,8 @@ namespace ConstantsLibraryS
         public const string MYSQL_REMOTE_NAMEBBDD = @"IDNet";
         public const string MYSQL_REMOTE_SERVERBBDD = @"mysqlinstance.crfd5ylvvpz8.eu-west-2.rds.amazonaws.com";
         public const string MYSQL_REMOTE_NAMETABLE = @"usuariosIDNet";
-        public const string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
+        //public const string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
+        public const string MYSQL_REMOTE = @"Server=localhost;Database=IDNet;User ID=root;Password=1907;Pooling=false;";
         public const string MYSQL_REMOTE_ERROR_INICIO_SESION = @"Usuario y/o contraseña no válidos.";
         public const string MYSQL_REMOTE_ERROR_REGISTRARSE_CONTRASEÑA = @"Fallo en la repetición de la contraseña.";
         public const string MYSQL_REMOTE_LOGIN_SUCCESS = @"Se ha iniciado correctamente.";
@@ -81,8 +82,8 @@ namespace ConstantsLibraryS
         public const string CONNECTION = @"connection";
         public const string SELECT = @"select";
 
-        public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
-
+        // public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
+        public static string GATEKEEPER = @"192.168.43.156";
         //IP del GK en AWS
         //public const string GATEKEEPER = @"172.16.1.49";
         public const int GATEKEEPER_PORT = 11000;

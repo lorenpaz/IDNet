@@ -121,8 +121,8 @@ namespace ConstantsLibrary
 		public static string ACKSELECT = "006";
 
         //IP en AWS
-        //public static string GATEKEEPER = @"172.17.0.2";
-        public static string GATEKEEPER = @"192.168.0.2";
+        public static string GATEKEEPER = @"192.168.43.156";
+        //public static string GATEKEEPER = @"192.168.0.2";
         //public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 
         public static int GATEKEEPER_PORT = 11000;

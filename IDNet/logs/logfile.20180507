@@ -1,0 +1,24 @@
+﻿2018-05-07 19:11:40,601 INFO  IDNetDaemon.ServiceDaemon - Service starting
+2018-05-07 19:11:41,109 INFO  Quartz.Impl.StdSchedulerFactory - Default Quartz.NET properties loaded from embedded resource file
+2018-05-07 19:11:46,719 INFO  Quartz.Core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2018-05-07 19:11:46,734 INFO  Quartz.Core.QuartzScheduler - Quartz Scheduler v.3.0.2.0 created.
+2018-05-07 19:11:46,737 INFO  Quartz.Simpl.RAMJobStore - RAMJobStore initialized.
+2018-05-07 19:11:46,743 INFO  Quartz.Core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v3.0.2.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2018-05-07 19:11:46,743 INFO  Quartz.Impl.StdSchedulerFactory - Quartz scheduler 'DefaultQuartzScheduler' initialized
+2018-05-07 19:11:46,744 INFO  Quartz.Impl.StdSchedulerFactory - Quartz scheduler version: 3.0.2.0
+2018-05-07 19:11:46,762 INFO  Quartz.Core.QuartzScheduler - Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2018-05-07 19:11:47,509 INFO  IDNetDaemon.Scheduler - Registrando el cliente en el GateKeeper
+2018-05-07 19:11:47,518 INFO  IDNetDaemon.Scheduler - Registrado en el GateKeeper
+2018-05-07 19:11:47,534 INFO  ConnectionLibrary.RegisterClient - Mensaje enviado: <root><message_type>010</message_type><source>Lorenzo</source><ip>192.168.43.144</ip><destination>192.168.43.156</destination><code>0123456789</code></root>
+
+2018-05-07 19:12:02,288 INFO  ConnectionLibrary.RegisterClient - Mensaje recibido: <root><message_type>010</message_type><source>Lorenzo</source><ip>192.168.43.144</ip><destination>192.168.43.156</destination><code>0123456789</code></root>
+
+2018-05-07 19:12:02,293 INFO  IDNetDaemon.Scheduler - Comienzamos a arrancar el servidor IDNetDaemon
+2018-05-07 19:12:03,049 INFO  ConnectionLibrary.Server - Waiting for a connection...

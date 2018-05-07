@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Xml;
 using ConstantsLibrary;
+using log4net;
 
 namespace ConnectionLibrary
 {
@@ -11,6 +12,7 @@ namespace ConnectionLibrary
     {
         //Mensaje
         private XmlDocument _mensaje;
+        static readonly ILog log = LogManager.GetLogger(typeof(RegisterClient));
 
         /*
          * Constructor
@@ -89,6 +91,7 @@ namespace ConnectionLibrary
 
                     // Encode the data string into a byte array.
                     byte[] msg = Encoding.ASCII.GetBytes(this._mensaje.InnerXml);
+                    log.Info("Mensaje enviado: "+this._mensaje.InnerXml + "\n");
 
                     // Send the data through the socket.
                     int bytesSent = sender.Send(msg);
@@ -97,6 +100,9 @@ namespace ConnectionLibrary
                     int bytesRec = sender.Receive(respuesta);
                     Console.WriteLine("Echoed test = {0}",
                         Encoding.ASCII.GetString(respuesta, 0, bytesRec));
+
+                    log.Info("Mensaje recibido: "+Encoding.ASCII.GetString(respuesta,0,bytesRec)+"\n");
+
 
                     // Release the socket.
                     sender.Shutdown(SocketShutdown.Both);

@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 
 using ConstantsLibraryS;
 using CriptoLibraryS;
+using System.Linq;
 
 namespace DatabaseLibrary
 {
@@ -28,7 +29,7 @@ namespace DatabaseLibrary
          * */
         public bool CheckUser(string username, string password)
         {
-            /*  Random r = new Random();
+              Random r = new Random();
               bool ok = false;
               try
               {
@@ -64,8 +65,8 @@ namespace DatabaseLibrary
 
               }catch(MySqlException ){
 
-              }*/
-            bool ok = true;
+              }
+            //bool ok = true;
             return ok;
         }
 
@@ -118,7 +119,7 @@ namespace DatabaseLibrary
          * */
         public Tuple<string,int> SaveUserToFile(string username)
         {
-           /* Tuple<string, int> tupla = null;
+            Tuple<string, int> tupla = null;
             try
             {
                 //Connection
@@ -149,14 +150,14 @@ namespace DatabaseLibrary
                 dataReader.Close();
 
                 //close Connection
-                this._mysql.Close();*/
-            Tuple<string,int> tupla = new Tuple<string, int>("Lorenzo", 3456789);
+                this._mysql.Close();
+           // Tuple<string,int> tupla = new Tuple<string, int>("Lorenzo", 3456789);
 
-           /* }
+            }
             catch (MySqlException)
             {
 
-            }*/
+            }
             return tupla;
         }
     }

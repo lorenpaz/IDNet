@@ -53,7 +53,8 @@ namespace IDNetSoftware
 
         private static bool CheckIDNetDaemon()
         {
-            Process[] pname = Process.GetProcessesByName(Constants.IDNETDAEMON);
+            Process[] p = Process.GetProcesses();
+            Process[] pname = Process.GetProcessesByName("mono");
             return pname.Length != 0;
         }
 

@@ -82,6 +82,7 @@ namespace GateKeeperListener
                         }
                         */
 						respuesta = AnunciarNombresAlCliente(xDoc, content);
+						esProtocolo = true;
                     }               
                 }
                 //Si recibo un mensaje de un GK hacia mi mismo
@@ -179,13 +180,13 @@ namespace GateKeeperListener
 			//Por cada nodo de nuestra tabla
 			foreach (XmlNode route in r)
 			{
-				
                 //Cargamos d_hop que será la direccion de destino
 				String dir_dest = route.ChildNodes[1].InnerText;
                 //Cargamos el nombre
 				String nombre = route.ChildNodes[2].InnerText;
                 //Cargamos la distancia a ese nodo
 				String distancia = route.ChildNodes[3].InnerText;
+
 				this._clienteDireccion.Add(nombre, IPAddress.Parse(dir_dest));
 				this._clienteDistancia.Add(nombre, Int32.Parse(distancia));
 			}
@@ -210,11 +211,11 @@ namespace GateKeeperListener
 			XmlNodeList routes = doc.GetElementsByTagName("route");
             foreach (XmlNode r in routes)
             {
-                doc.DocumentElement.RemoveChild(doc.GetElementsByTagName("d_hop")[0]);
-                doc.DocumentElement.RemoveChild(doc.GetElementsByTagName("d_node")[0]);
-                doc.DocumentElement.RemoveChild(doc.GetElementsByTagName("distance")[0]);
+				r.RemoveChild(r.ChildNodes[1]);
+				r.RemoveChild(r.FirstChild);
+				r.RemoveChild(r.LastChild);            
             }
-
+            
             return doc.InnerXml;
 		}
 	}

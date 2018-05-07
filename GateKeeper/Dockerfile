@@ -12,7 +12,7 @@ ADD . .
 #RUN dpkg -i mono-2.0-service.deb
 #RUN xbuild /p:Configuration=Release
 #RUN ["apt-get", "update"]
-#RUN ["apt-get", "install", "nano"]
+#RUN ["apt-get", "install", "vim nano"]
 #WORKDIR /GKDaemon
 #ENTRYPOINT [ "mono-service", "./GKDaemon/bin/Release/GKDaemon.exe" ]
 

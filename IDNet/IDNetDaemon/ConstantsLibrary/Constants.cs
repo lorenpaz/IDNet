@@ -12,6 +12,7 @@ namespace ConstantsLibrary
     {
         private string _nombre;
         private IPAddress _ip;
+        private int _code;
         public string Nombre
         {
             get
@@ -34,7 +35,17 @@ namespace ConstantsLibrary
                 this._ip = value;
             }
         }
-
+        public int Code
+        {
+            get
+            {
+                return this._code;
+            }
+            set
+            {
+                this._code = value;
+            }
+        }
         /*
          * Constructor
          * */
@@ -45,7 +56,6 @@ namespace ConstantsLibrary
             //IP tuya
             string aux = new WebClient().DownloadString("http://icanhazip.com");
             this._ip = IPAddress.Parse(aux.Replace("\n", String.Empty));
-            this._ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
         }
 
         /*
@@ -69,6 +79,7 @@ namespace ConstantsLibrary
                  * 
                  * Ejemplo:
                  * nombre=lorenzo;
+                 * code=123456789;
                  * 
                  */
                 //Leemos el parámetro
@@ -81,7 +92,7 @@ namespace ConstantsLibrary
                     else if (!firstParam)
                     {
                         user += line[i];
-                    }
+                    }   
                     i++;
                 }
                 this._nombre = user;
@@ -121,7 +132,7 @@ namespace ConstantsLibrary
 		public static string ACKSELECT = "006";
 
         //IP en AWS
-        public static string GATEKEEPER = @"192.168.43.156";
+        public static string GATEKEEPER = @"18.130.70.74";
         //public static string GATEKEEPER = @"192.168.0.2";
         //public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 

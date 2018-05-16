@@ -170,9 +170,9 @@ namespace IDNetSoftware
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
-			this.Resizable = false;
-			this.DefaultWidth = 700;
-			this.DefaultHeight = 750;
+			this.AllowShrink = true;
+			this.DefaultWidth = 860;
+			this.DefaultHeight = 650;
 			// Container child IDNetSoftware.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";
@@ -247,7 +247,6 @@ namespace IDNetSoftware
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox7 = new global::Gtk.VBox();
-			this.vbox7.WidthRequest = 30;
 			this.vbox7.Name = "vbox7";
 			this.vbox7.Spacing = 6;
 			// Container child vbox7.Gtk.Box+BoxChild
@@ -295,6 +294,7 @@ namespace IDNetSoftware
 			this.treeviewNeighbours = new global::Gtk.TreeView();
 			this.treeviewNeighbours.CanFocus = true;
 			this.treeviewNeighbours.Name = "treeviewNeighbours";
+			this.treeviewNeighbours.EnableSearch = false;
 			this.GtkScrolledWindow3.Add(this.treeviewNeighbours);
 			this.vbox3.Add(this.GtkScrolledWindow3);
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.GtkScrolledWindow3]));
@@ -302,8 +302,6 @@ namespace IDNetSoftware
 			this.hbox1.Add(this.vbox3);
 			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
 			w16.Position = 1;
-			w16.Expand = false;
-			w16.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox8 = new global::Gtk.VBox();
 			this.vbox8.Name = "vbox8";

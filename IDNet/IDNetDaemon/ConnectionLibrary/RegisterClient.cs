@@ -17,15 +17,15 @@ namespace ConnectionLibrary
         /*
          * Constructor
          * */
-        public RegisterClient()
+        public RegisterClient(Usuario user)
         {
-            ConstruccionMensajeRegistro();
+            ConstruccionMensajeRegistro(user);
         }
 
         /*
          * Método privado para la construcción del mensaje de registro
          * */
-        private void ConstruccionMensajeRegistro()
+        private void ConstruccionMensajeRegistro(Usuario user)
         {
             this._mensaje = new XmlDocument();
 
@@ -47,7 +47,7 @@ namespace ConnectionLibrary
 
             //Creamos el elemento destino
             XmlNode ip = this._mensaje.CreateElement("ip");
-            ip.InnerText = Constants.usuario.IP.ToString();
+            ip.InnerText = user.IP.ToString();
             elementRoot.AppendChild(ip);
 
             //Creamos el elemento destino
@@ -57,7 +57,7 @@ namespace ConnectionLibrary
 
             //Creamos elemento code
             XmlNode code = this._mensaje.CreateElement("code");
-            code.InnerText = "0123456789";
+            code.InnerText = user.Code.ToString();
             elementRoot.AppendChild(code);
 
         }

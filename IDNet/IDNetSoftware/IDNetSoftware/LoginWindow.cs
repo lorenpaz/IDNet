@@ -30,7 +30,7 @@ namespace IDNetSoftware
             {
                 MostrarMensaje(Constants.MYSQL_REMOTE_LOGIN_SUCCESS);
                 Usuario.SaveConf(this._remoteDatabase.SaveUserToFile(username));
-                //RunIDNetDaemon();
+                RunIDNetDaemon();
                 MainWindow main = new MainWindow();
                 main.Show();
 
@@ -65,7 +65,7 @@ namespace IDNetSoftware
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C ./IDNetDaemonScript.sh";
+            startInfo.Arguments = "/C ../../../../IDNetDaemonScript.sh start";
             process.StartInfo = startInfo;
             process.Start();
         }

@@ -45,14 +45,13 @@ namespace GateKeeperListener
 
 			respuesta = content;
 
-			// Mis ips
-			String strHostName = Dns.GetHostName();
-            IPHostEntry iphostentry = Dns.GetHostEntry(strHostName);
+            //Mis ips
+            IPHostEntry iphostentry = Dns.GetHostEntry(Dns.GetHostName());
 
 			// Enumerate IP addresses
 			String  nIP;         
 			foreach (IPAddress ipaddress in iphostentry.AddressList){
-				nIP = ipaddress.ToString();
+                nIP = Constants.ipPublica.ToString();
 
                 //Si recibo el mensaje de un cliente hacia mi mismo
 				if (clienteDestino == nIP && this._origen == "CLIENTE")
@@ -69,8 +68,9 @@ namespace GateKeeperListener
                     }
                     else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
                     {
-						/*
-                        if (db.CheckCode(clienteOrigen, codigo))
+                        String code = xDoc.GetElementsByTagName("code")[0].InnerText;
+
+                        if (db.CheckCode(clienteOrigen, code))
                         {
                             respuesta = AnunciarNombresAlCliente(xDoc, content);
                             esProtocolo = true;
@@ -80,7 +80,7 @@ namespace GateKeeperListener
                             respuesta = "El cliente que se ha intentado conectar no es legítimo";
                             log.Error(respuesta);
                         }
-                        */
+
 						respuesta = AnunciarNombresAlCliente(xDoc, content);
 						esProtocolo = true;
                     }               

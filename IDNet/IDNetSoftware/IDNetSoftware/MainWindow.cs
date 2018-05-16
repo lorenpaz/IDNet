@@ -364,24 +364,25 @@ namespace IDNetSoftware
          * */
         private bool SolicitarVecinos()
         {
-            string msg, response;
+            /*  string msg, response;
 
-              //Proceso el envio
-              PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
-                                         Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
-              msg = post.ProcesarEnvio(this._user.IP.ToString());
+                //Proceso el envio
+                PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
+                                           Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
+                msg = post.ProcesarEnvio(this._user.IP.ToString());
 
-              //Creo el cliente y le envio el mensaje
-              Client c = new Client();
-              bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
-              if (conexion)
-              {
-                  response = c.StartClient(msg, Constants.GATEKEEPER);
-                  post.ProcesarRespuesta(response);
-                  return true;
-              }
+                //Creo el cliente y le envio el mensaje
+                Client c = new Client();
+                bool conexion = c.comprobarConexion(Constants.GATEKEEPER);
+                if (conexion)
+                {
+                    response = c.StartClient(msg, Constants.GATEKEEPER);
+                    post.ProcesarRespuesta(response);
+                    return true;
+                }
 
-            return false;
+              return false;*/
+            return true;
         }
 
 

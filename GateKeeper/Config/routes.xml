@@ -1,9 +1,3 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <routes>
-  <route>
-    <d_node>192.168.43.144</d_node>
-    <d_hop>192.168.43.156</d_hop>
-    <name>Lorenzo</name>
-    <distance>0</distance>
-  </route>
 </routes>

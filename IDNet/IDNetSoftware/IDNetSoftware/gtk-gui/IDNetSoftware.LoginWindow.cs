@@ -40,11 +40,13 @@ namespace IDNetSoftware
 			this.Title = global::Mono.Unix.Catalog.GetString("IDNet");
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.BorderWidth = ((uint)(24));
 			this.Resizable = false;
 			// Container child IDNetSoftware.LoginWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
+			this.vbox1.BorderWidth = ((uint)(3));
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.vbox3 = new global::Gtk.VBox();
 			this.vbox3.Name = "vbox3";
@@ -77,17 +79,17 @@ namespace IDNetSoftware
 			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Homogeneous = true;
-			this.hbox1.Spacing = 6;
+			this.hbox1.Spacing = -57;
+			this.hbox1.BorderWidth = ((uint)(3));
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.labelUsuario = new global::Gtk.Label();
 			this.labelUsuario.Name = "labelUsuario";
+			this.labelUsuario.Xalign = 0F;
 			this.labelUsuario.LabelProp = global::Mono.Unix.Catalog.GetString("Usuario:");
 			this.labelUsuario.Justify = ((global::Gtk.Justification)(2));
 			this.hbox1.Add(this.labelUsuario);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.labelUsuario]));
 			w4.Position = 0;
-			w4.Expand = false;
-			w4.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.entryUser = new global::Gtk.Entry();
 			this.entryUser.CanFocus = true;
@@ -101,23 +103,21 @@ namespace IDNetSoftware
 			this.vbox1.Add(this.hbox1);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
 			w6.Position = 1;
-			w6.Expand = false;
-			w6.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox();
 			this.hbox2.Name = "hbox2";
 			this.hbox2.Homogeneous = true;
-			this.hbox2.Spacing = 6;
+			this.hbox2.Spacing = -62;
+			this.hbox2.BorderWidth = ((uint)(4));
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.labelContrasenia = new global::Gtk.Label();
 			this.labelContrasenia.Name = "labelContrasenia";
+			this.labelContrasenia.Xalign = 0F;
 			this.labelContrasenia.LabelProp = global::Mono.Unix.Catalog.GetString("Contraseña:");
 			this.labelContrasenia.Justify = ((global::Gtk.Justification)(2));
 			this.hbox2.Add(this.labelContrasenia);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.labelContrasenia]));
 			w7.Position = 0;
-			w7.Expand = false;
-			w7.Fill = false;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.entryPassword = new global::Gtk.Entry();
 			this.entryPassword.CanFocus = true;
@@ -132,8 +132,6 @@ namespace IDNetSoftware
 			this.vbox1.Add(this.hbox2);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox2]));
 			w9.Position = 2;
-			w9.Expand = false;
-			w9.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox3 = new global::Gtk.HBox();
 			this.hbox3.Name = "hbox3";
@@ -170,15 +168,13 @@ namespace IDNetSoftware
 			this.vbox1.Add(this.hbox3);
 			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox3]));
 			w13.Position = 3;
-			w13.Expand = false;
-			w13.Fill = false;
 			this.Add(this.vbox1);
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 330;
-			this.DefaultHeight = 334;
+			this.DefaultWidth = 401;
+			this.DefaultHeight = 404;
 			this.Show();
 			this.buttonRegister.Clicked += new global::System.EventHandler(this.OnButtonRegisterClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);

@@ -179,9 +179,9 @@
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
-    <property name="Resizable">False</property>
-    <property name="DefaultWidth">700</property>
-    <property name="DefaultHeight">750</property>
+    <property name="AllowShrink">True</property>
+    <property name="DefaultWidth">860</property>
+    <property name="DefaultHeight">650</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <signal name="DestroyEvent" handler="OnDestroyEvent" />
     <child>
@@ -304,7 +304,6 @@
             <child>
               <widget class="Gtk.VBox" id="vbox7">
                 <property name="MemberName" />
-                <property name="WidthRequest">30</property>
                 <property name="Spacing">6</property>
                 <child>
                   <widget class="Gtk.Label" id="labelDatabases">
@@ -327,6 +326,7 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
+                        <property name="EnableSearch">False</property>
                         <signal name="RowActivated" handler="OnTreeviewDatabasesPropiasRowActivated" />
                         <signal name="ButtonReleaseEvent" handler="OnTreeviewDatabasesPropiasButtonReleaseEvent" />
                       </widget>
@@ -368,6 +368,7 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
+                        <property name="EnableSearch">False</property>
                         <signal name="RowActivated" handler="OnTreeviewNeighboursRowActivated" />
                         <signal name="ButtonReleaseEvent" handler="OnTreeviewNeighboursButtonReleaseEvent" />
                       </widget>
@@ -381,9 +382,7 @@
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
@@ -411,6 +410,7 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
+                        <property name="EnableSearch">False</property>
                         <signal name="RowActivated" handler="OnTreeviewDatabasesRowActivated" />
                         <signal name="ButtonReleaseEvent" handler="OnTreeviewDatabasesButtonReleaseEvent" />
                       </widget>
@@ -2259,7 +2259,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.SplashWindow" design-size="512 584">
+  <widget class="Gtk.Window" id="IDNetSoftware.SplashWindow" design-size="457 302">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Bienvenido al mundo IDNet!</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
@@ -2272,26 +2272,26 @@ mongodb</property>
         <child>
           <widget class="Gtk.Image" id="IDNetimage">
             <property name="MemberName" />
-            <property name="Pixbuf">resource:iconoIDNetSoftware</property>
+            <property name="Pixbuf">resource:iconoSoftwareSmall.png</property>
           </widget>
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">False</property>
-            <property name="Fill">False</property>
+            <property name="Expand">False</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.Label" id="labelInfoTFG">
             <property name="MemberName" />
+            <property name="Xpad">21</property>
+            <property name="Ypad">15</property>
             <property name="LabelProp" translatable="yes">Trabajo de Fin de Grado en el Grado en Ingeniería Informática
 Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
             <property name="Justify">Center</property>
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
         <child>
@@ -2319,16 +2319,18 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.LoginWindow" design-size="330 334">
+  <widget class="Gtk.Window" id="IDNetSoftware.LoginWindow" design-size="401 404">
     <property name="MemberName" />
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
+    <property name="BorderWidth">24</property>
     <property name="Resizable">False</property>
     <child>
       <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
         <property name="Spacing">6</property>
+        <property name="BorderWidth">3</property>
         <child>
           <widget class="Gtk.VBox" id="vbox3">
             <property name="MemberName" />
@@ -2370,18 +2372,18 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
             <property name="Homogeneous">True</property>
-            <property name="Spacing">6</property>
+            <property name="Spacing">-57</property>
+            <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.Label" id="labelUsuario">
                 <property name="MemberName" />
+                <property name="Xalign">0</property>
                 <property name="LabelProp" translatable="yes">Usuario:</property>
                 <property name="Justify">Center</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
@@ -2401,26 +2403,24 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           <packing>
             <property name="Position">1</property>
             <property name="AutoSize">False</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.HBox" id="hbox2">
             <property name="MemberName" />
             <property name="Homogeneous">True</property>
-            <property name="Spacing">6</property>
+            <property name="Spacing">-62</property>
+            <property name="BorderWidth">4</property>
             <child>
               <widget class="Gtk.Label" id="labelContrasenia">
                 <property name="MemberName" />
+                <property name="Xalign">0</property>
                 <property name="LabelProp" translatable="yes">Contraseña:</property>
                 <property name="Justify">Center</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
@@ -2440,9 +2440,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           </widget>
           <packing>
             <property name="Position">2</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
         <child>
@@ -2494,9 +2492,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           </widget>
           <packing>
             <property name="Position">3</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
       </widget>

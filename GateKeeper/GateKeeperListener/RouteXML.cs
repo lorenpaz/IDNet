@@ -91,8 +91,7 @@ namespace GateKeeperListener
 				XmlElement root = table.CreateElement("root");
                 table.AppendChild(root);
 
-				IPHostEntry iphostentry = Dns.GetHostEntry(Dns.GetHostName());
-				IPAddress mi_ip = iphostentry.AddressList[0];
+                IPAddress mi_ip = Constants.ipPublica;
 
 				XmlElement source = table.CreateElement("source");
 				source.InnerText = mi_ip.ToString();

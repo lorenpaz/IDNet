@@ -30,22 +30,22 @@ namespace IDNetSoftware
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.IDNetimage = new global::Gtk.Image();
 			this.IDNetimage.Name = "IDNetimage";
-			this.IDNetimage.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
+			this.IDNetimage.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("iconoSoftwareSmall.png");
 			this.vbox1.Add(this.IDNetimage);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.IDNetimage]));
 			w1.Position = 0;
-			w1.Fill = false;
+			w1.Expand = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.labelInfoTFG = new global::Gtk.Label();
 			this.labelInfoTFG.Name = "labelInfoTFG";
+			this.labelInfoTFG.Xpad = 21;
+			this.labelInfoTFG.Ypad = 15;
 			this.labelInfoTFG.LabelProp = global::Mono.Unix.Catalog.GetString("Trabajo de Fin de Grado en el Grado en Ingeniería Informática\nAlumnos: Juan Mas A" +
 					"guilar y Lorenzo José de la Paz Suárez");
 			this.labelInfoTFG.Justify = ((global::Gtk.Justification)(2));
 			this.vbox1.Add(this.labelInfoTFG);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.labelInfoTFG]));
 			w2.Position = 1;
-			w2.Expand = false;
-			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
@@ -67,8 +67,8 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 512;
-			this.DefaultHeight = 584;
+			this.DefaultWidth = 457;
+			this.DefaultHeight = 302;
 			this.Show();
 		}
 	}

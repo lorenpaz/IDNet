@@ -83,9 +83,9 @@ namespace ConstantsLibraryS
         public const string SELECT = @"select";
 
         // public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
-        public static string GATEKEEPER = @"192.168.43.156";
+        public static string GATEKEEPER = @"192.168.1.48";
         //IP del GK en AWS
-        //public const string GATEKEEPER = @"172.16.1.49";
+        //public const string GATEKEEPER = @"18.130.70.74";
         public const int GATEKEEPER_PORT = 11000;
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
@@ -130,7 +130,7 @@ namespace ConstantsLibraryS
             return Path.Combine(CONFIG, "publicKey" + source + ".pem");
         }
 
-        public const string LINEA = @"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+        public const string LINEA = @"-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
         /*
          * A partir de aquí vienen método y estructuras para mostrar los mensajes por pantalla 
          * */

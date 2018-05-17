@@ -59,6 +59,51 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Transactions" />
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\Facades\System.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration.Install">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Configuration.Install.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Design">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Drawing.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\Facades\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Transactions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.6.1-api\System.Xml.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

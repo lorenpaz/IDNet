@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{2AFCF10A-A1D7-4C86-91C0-F658FD0F7556}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PostBoxLibraryS</RootNamespace>
+    <AssemblyName>PostBoxLibraryS</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="PostBox.cs" />
+    <Compile Include="PostBoxGK.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConvertionLibrary\ConvertionLibraryS.csproj">
+      <Project>{2F0443FD-FFBF-49DA-8C28-11DA692FF5EA}</Project>
+      <Name>ConvertionLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MessageLibrary\MessageLibraryS.csproj">
+      <Project>{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}</Project>
+      <Name>MessageLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProcessLibrary\ProcessLibraryS.csproj">
+      <Project>{92FB5CB4-DA67-489F-899E-5DF8B845F4F4}</Project>
+      <Name>ProcessLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CriptoLibrary\CriptoLibraryS.csproj">
+      <Project>{5CB08C2F-ED6E-4A24-9C37-19179FCDC7E5}</Project>
+      <Name>CriptoLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibraryS.csproj">
+      <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
+      <Name>ConstantsLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseLibrary\DatabaseLibraryS.csproj">
+      <Project>{32EC6214-3022-4103-82E5-0E882F4497F8}</Project>
+      <Name>DatabaseLibraryS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Security" />
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\packages\BouncyCastle.Crypto.dll.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

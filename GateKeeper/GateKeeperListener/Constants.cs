@@ -29,13 +29,11 @@ namespace GateKeeperListener
 		//public static readonly int PORT_SENDING_TO_CLIENT = 13000;
 		//public static readonly int PORT_SENDING_TO_GATEKEEPER = 14000;
 
-        public static string MysqlRemoteSelect()
-        {
+        public static string MysqlRemoteSelect(){
 			return "SELECT * FROM " + MYSQL_REMOTE_NAMETABLE + " WHERE code=@code";
         }
 
-        public static IPAddress IpPublica()
-        {
+        public static IPAddress IpPublica(){
             string aux = new WebClient().DownloadString("http://icanhazip.com");
             return IPAddress.Parse(aux.Replace("\n", String.Empty));
         }

@@ -58,36 +58,43 @@ namespace GateKeeperListener
                 {
                     RemoteDatabase db = new RemoteDatabase();
 
-                    //Si es una nueva conexion la registramos en la tabla de rutas
-                    if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "010")
-                    {
-                        String code = xDoc.GetElementsByTagName("code")[0].InnerText;
-                        String ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;
-                        RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
+					//Si es una nueva conexion la registramos en la tabla de rutas
+					if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "010")
+					{
+						log.Info("Actualizando estado en la tabla de rutas del cliente '"+
+						         clienteOrigen +"'");
+						String code = xDoc.GetElementsByTagName("code")[0].InnerText;
+						String ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;
+						RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
+						log.Info(clienteOrigen + "ha realizado la conexión con exito.")
 						esProtocolo = true;
-                    }
+					}               
                     else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
                     {
                         String code = xDoc.GetElementsByTagName("code")[0].InnerText;
 
-                        if (db.CheckCode(clienteOrigen, code))
-                        {
-                            respuesta = AnunciarNombresAlCliente(xDoc, content);
-                            esProtocolo = true;
-                        }
+						if (db.CheckCode(clienteOrigen, code))
+						{
+							log.Info("Anunciando nombre al cliente '"+ clienteOrigen + "'");
+							respuesta = AnunciarNombresAlCliente(xDoc, content);
+						}
                         else
                         {
                             respuesta = "El cliente que se ha intentado conectar no es legítimo";
                             log.Error(respuesta);
                         }
 
+						esProtocolo = true;
+                        /*
 						respuesta = AnunciarNombresAlCliente(xDoc, content);
 						esProtocolo = true;
+						*/
                     }               
                 }
                 //Si recibo un mensaje de un GK hacia mi mismo
 				else if (clienteDestino == nIP && this._origen == "GATEKEEPER")
                 {
+					log.Info("Recibida tabla de rutas...actualizando rutas.")
                     RouteXML.merge(content);
 					esProtocolo = true;
                 }

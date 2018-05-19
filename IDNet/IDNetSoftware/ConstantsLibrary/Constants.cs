@@ -1,4 +1,5 @@
 ﻿using System;
+using Gdk;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -13,7 +14,7 @@ namespace ConstantsLibraryS
     public static class Constants
     {
         public const string IDNETDAEMON = @"IDNetDaemon";
-        public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"./configuration");
+        public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory+"../","configuration");
         public static string ConfigFileDatabases = Path.Combine(CONFIG, @"databases.conf");
         public static string ConfigFileNeighbours = Path.Combine(CONFIG, @"neighbours.conf");
         public static string ConfigFileNeighboursDatabases = Path.Combine(CONFIG, @"neighboursDatabases.conf");
@@ -69,11 +70,11 @@ namespace ConstantsLibraryS
         }
 
         public const string UNABLE_CONNECT_MYSQL_HOSTS = @"Unable to connect to any of the specified MYSQL hosts";
-        public const string ACCESS_DENIED_MYSQL = @"Access Denied: Check DB name, username, password";
-        public const string NO_ERROR_MYSQL = @"There is no error in MYSQL Server";
+        public const string ACCESS_DENIED_MYSQL = @"Acceso denegado: comprueba el nombre de la BBDD,el nombre de usuario, la contraseña...";
+        public const string NO_ERROR_MYSQL = @"No hay errores a la hora de conectar al servidor MySQL";
 
-        public const string UNABLE_CONNECT_MONGODB = @"Check your MongoDB Server";
-        public const string NO_ERROR_MONGODB = @"There is not error in MongoDB Server";
+        public const string UNABLE_CONNECT_MONGODB = @"Comprueba el servidor MongoDB, ya que no se ha podido realizar la conexión.";
+        public const string NO_ERROR_MONGODB = @"NO hay errores en el servidor MongoDB";
         public const string LOCALHOST_MONGODB = @"mongodb://localhost";
 
         public const string ERROR_CONNECTION = @"No se ha podido realizar la conexión con el vecino";
@@ -82,8 +83,8 @@ namespace ConstantsLibraryS
         public const string CONNECTION = @"connection";
         public const string SELECT = @"select";
 
-        // public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
-        public static string GATEKEEPER = @"192.168.1.48";
+         public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
+        //public static string GATEKEEPER = @"192.168.1.48";
         //IP del GK en AWS
         //public const string GATEKEEPER = @"18.130.70.74";
         public const int GATEKEEPER_PORT = 11000;
@@ -95,7 +96,7 @@ namespace ConstantsLibraryS
         public const string TABLA_COLUMNA_TIPOBBDD = @"Tipo BBDD";
         public const string TABLA_COLUMNA_TIPO_MENSAJE = @"Tipo Mensaje";
         public const string TABLA_COLUMNA_NOMBREBBDD = @"Nombre BBDD";
-        public const string TABLA_COLUMNA_FUNCIONA = @"Funciona";
+        public const string TABLA_COLUMNA_FUNCIONA = @"Disponible";
         public const string TABLA_COLUMNA_ICONOS = @"Símbolos";
         public const string TABLA_COLUMNA_EXPLICACION = @"Significado";
 
@@ -111,26 +112,42 @@ namespace ConstantsLibraryS
         public const string MENSAJE_RESPUESTA_CONEXION_A = "004a";
         public const string MENSAJE_RESPUESTA_CONEXION_B = "004b";
 
-        public const string INFORMACION_ICONO_ADDATABASE = @"Icono para añadir una base de datos con su información, con el fin de que los vecinos puedan realizar consultas a su base de datos."+
+        public const string INFORMACION_ICONO_ADDDATABASE = @"Icono para añadir una base de datos con su información, con el fin de que los vecinos puedan realizar consultas a su base de datos."+"\n"+
+            "Durante la inserción de la base de datos, se le informará de la información que debe de adquirir para añadir la base de datos (nombre,tipo de base de datos,usuario y contraseña)";
+        public const string INFORMACION_ICONO_DELETEDATABASE = @"Icono para borrar una base de datos con su información, con el fin de que los vecinos puedan realizar consultas a su base de datos."+"\n" +
             "Durante la inserción de la base de datos, se le informará de la información que debe de adquirir para añadir la base de datos (nombre,tipo de base de datos,usuario y contraseña)";
         public const string INFORMACION_ICONO_UPDATEDATABASE = @"Icono para actualizar el estado de las bases de datos."+"\n"+"Los estados en los que se puede encontrar una base de datos propia son los siguientes: Disponible y No disponible."+"\n"+
-            "Si le notifica que no está disponible su base de datos, consulta el estado de su servidor de bases de datos junto con la información proporcionada para conectarse a aquella base de datos.";
-        public const string INFORMACION_ICONO_CONNECTIONDATABASE = @"Icono para realizar la conexión con un vecino de la Organización Virtual. También, se puede realizar la conexión pulsando en una base de datos en el cuadro de la derecha del menu principal."+"\n"
+            "Si le notifica que no está disponible su base de datos, consulta el estado de su servidor de bases de datos junto con la información"+"\n"+" proporcionada para conectarse a aquella base de datos.";
+        public const string INFORMACION_ICONO_CONNECTIONDATABASE = @"Icono para realizar la conexión con un vecino de la Organización Virtual."+"\n"+" También, se puede realizar la conexión pulsando en una base de datos en el cuadro de la derecha del menu principal."+"\n"
             +"Una vez se haya conectado a un vecino, podrá realizar consultas a sus bases de datos.";
         public const string INFORMACION_ICONO_SELECTDATABASE = @"Icono para realizar la consulta de la base de datos de un vecino de la Organización Virtual.";
         public const string INFORMACION_ICONO_SCHEMADATABASE = @"Icono para solicitar el esquema de la base de datos de un vecino de la Organización Vitual.";
-        public const string ICONO_ADDATABASE = @"../../resources/icons/addDatabase.png";
-        public const string ICONO_UPDATEDATABASE = @"../../resources/icons/updateDatabase.png";
-        public const string ICONO_CONNECTIONDATABASE = @"../../resources/icons/connection.png";
-        public const string ICONO_SELECTDATABASE = @"../../resources/icons/select.png";
-        public const string ICONO_SCHEMADATABASE = @"../../resources/icons/schema.png";
+        public const string INFORMACION_ICONO_WARNINGDATABASE = @"Icono mostrado para informar al usuario de posibles problemas en los servidores de las bases de datos MySQL y/o MOngoDB.";
+
+
+        public const string ADDDATABASE = @"addDatabase.png";
+        public const string UPDATEDATABASE = @"updateDatabase.png";
+        public const string DELETEDATABASE = @"deleteDatabase.png";
+        public const string WARNINGDATABASE = @"warningDatabase.png";
+        public const string CONNECTIONDATABASE = @"connection.png";
+        public const string SELECTDATABASE = @"select.png";
+        public const string SCHEMADATABASE = @"schema";
+
+        public static string ICONOS = Path.Combine(CONFIG, @"./iconos");
+        public static string ICONO_ADDDATABASE = Path.Combine(ICONOS,"addDatabase.png");
+        public static string ICONO_UPDATEDATABASE = Path.Combine(ICONOS,"updateDatabase.png");
+        public static string ICONO_DELETEDATABASE = Path.Combine(ICONOS, "deleteDatabase.png");
+        public static string ICONO_CONNECTIONDATABASE = Path.Combine(ICONOS,@"connection.png");
+        public static string ICONO_SELECTDATABASE = Path.Combine(ICONOS,@"select.png");
+        public static string ICONO_SCHEMADATABASE = Path.Combine(ICONOS,@"schema.png");
+        public static string ICONO_WARNINGDATABASE = Path.Combine(ICONOS,@"warningDatabase.png");
 
         public static string PathClavePublica(string source)
         {
-            return Path.Combine(CONFIG, "publicKey" + source + ".pem");
+            return Path.Combine(CONFIG, "publicKeyVecino" + source + ".pem");
         }
 
-        public const string LINEA = @"-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+        public const string LINEA = @"---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
         /*
          * A partir de aquí vienen método y estructuras para mostrar los mensajes por pantalla 
          * */
@@ -302,9 +319,9 @@ namespace ConstantsLibraryS
             string stado = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
             Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
             linea + "\n" + linea + "\n" +
-            Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
+            NOMBRE_BASE_DE_DATOS + messageResponse.Db_name + "\n" +
             linea + "\n" +
-           Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
+            TIPO_BASE_DE_DATOS + messageResponse.Db_type + "\n";
 
             if (body.Error)
             {
@@ -313,16 +330,24 @@ namespace ConstantsLibraryS
             else
             {
                 string tables = "";
-                foreach (Table t in body.Tables)
+                if (body.Tables.Count == 0)
                 {
-                    tables += "--" + NOMBRE_TABLA + t.Name + "\n";
-                    tables += TABLA_COLUMNAS_CAMPOS + "\n";
-                    foreach (Col c in t.Cols)
-                    {
-                        tables += ColumnaTabla(c.Name, c.Type) + "\n";
-                    }
-                    tables += TABLA_COLUMNAS + "\n";
+                    tables += "No hay tablas en la base de datos"+"\n";
                 }
+                else
+                {
+                    foreach (Table t in body.Tables)
+                    {
+                        tables += "--" + NOMBRE_TABLA + t.Name + "\n";
+                        tables += TABLA_COLUMNAS_CAMPOS + "\n";
+                        foreach (Col c in t.Cols)
+                        {
+                            tables += ColumnaTabla(c.Name, c.Type) + "\n";
+                        }
+                        tables += TABLA_COLUMNAS + "\n";
+                    }
+                }
+
                 return stado + tables;
             }
         }
@@ -339,9 +364,9 @@ namespace ConstantsLibraryS
                 Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
                 linea + "\n" +
                  Columna(" ", LENGTH_TABLE_VIEW, ' ') + "\n" +
-                Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
+                NOMBRE_BASE_DE_DATOS + messageResponse.Db_name + "\n" +
                 linea + "\n" +
-               Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n";
+                TIPO_BASE_DE_DATOS + messageResponse.Db_type + "\n";
 
             if (body.Error)
             {
@@ -350,16 +375,23 @@ namespace ConstantsLibraryS
             else
             {
                 string collections = "";
-                foreach (Collection c in body.Collections)
+                if (body.Collections.Count == 0)
                 {
-                    collections += "--" + NOMBRE_COLECCION + c.Name + "\n";
-                    collections += TABLA_COLUMNAS_CAMPOS + "\n";
-                    foreach (Field co in c.Fields)
+                    collections += "No hay colecciones en la base de datos" + "\n";
+                }
+                else
+                {
+                    foreach (Collection c in body.Collections)
                     {
-                        //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
-                        collections += ColumnaTabla(co.Name, co.Type) + "\n";
+                        collections += "--" + NOMBRE_COLECCION + c.Name + "\n";
+                        collections += TABLA_COLUMNAS_CAMPOS + "\n";
+                        foreach (Field co in c.Fields)
+                        {
+                            //tables += NOMBRE_COLUMNA + c.Name + "-"+TIPO_COLUMNA +c.Type + "\n";
+                            collections += ColumnaTabla(co.Name, co.Type) + "\n";
+                        }
+                        collections += TABLA_COLUMNAS + "\n";
                     }
-                    collections += TABLA_COLUMNAS + "\n";
                 }
                 return status + collections;
             }

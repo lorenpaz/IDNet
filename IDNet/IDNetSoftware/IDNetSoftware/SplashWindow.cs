@@ -25,13 +25,14 @@ namespace IDNetSoftware
         public void Cargando()
         {
             progressbar.Pulse();
-            Thread.Sleep(1000);
+            Thread.Sleep(750);
             progressbar.Pulse();
-            Thread.Sleep(1000);
+            Thread.Sleep(750);
             progressbar.Pulse();
-            Thread.Sleep(1000);
+            Thread.Sleep(750);
             progressbar.Pulse();
-
+            Thread.Sleep(750);
+            progressbar.Pulse();
             Gtk.Application.Invoke(
                 delegate (object sender, EventArgs args)
                 {

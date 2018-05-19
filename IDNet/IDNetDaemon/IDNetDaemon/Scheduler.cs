@@ -25,7 +25,9 @@ namespace IDNetDaemon
             StdSchedulerFactory factory = new StdSchedulerFactory();
             _scheduler = factory.GetScheduler().Result;
 			_scheduler.Start();
-    			StartMyJob();
+            log.Info("Directorio configuration:" + Constants.CONFIG);
+
+    		StartMyJob();
 		}
 
         /*
@@ -46,7 +48,7 @@ namespace IDNetDaemon
             log.Info("Registrando el cliente en el GateKeeper");
             Usuario user = new Usuario();
             RegisterClient register = new RegisterClient(user);
-
+            log.Info("Comprobando la conexión con el GateKeeper");
             if (register.comprobarConexion(Constants.GATEKEEPER))
             {
                 log.Info("Registrado en el GateKeeper");

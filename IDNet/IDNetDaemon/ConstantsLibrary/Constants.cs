@@ -71,15 +71,14 @@ namespace ConstantsLibrary
             while (line != null)
             {
                 int i = 0;
-                bool firstParam = true;
-                string user = "";
+                bool firstParam = false, secondParam = false;
+                string user = "", codigo = "";
                 /*
                  * 
-                 * nombre=userName;
+                 * nombre=userName|code:codigoNumerico;
                  * 
                  * Ejemplo:
-                 * nombre=lorenzo;
-                 * code=123456789;
+                 * nombre=lorenzo|code:123456789;
                  * 
                  */
                 //Leemos el parámetro
@@ -87,15 +86,28 @@ namespace ConstantsLibrary
                 {
                     if (line[i] == '=')
                     {
+                        firstParam = true;
+                    }
+                     else if(line[i] == '|')
+                    {
                         firstParam = false;
                     }
-                    else if (!firstParam)
+                    else if (line[i] == ':')
+                    {
+                        secondParam = true;
+                    }
+                    else if (firstParam)
                     {
                         user += line[i];
-                    }   
+                    }
+                    else if (secondParam)
+                    {
+                        codigo += line[i];
+                    }
                     i++;
                 }
                 this._nombre = user;
+                this._code = Int32.Parse(codigo);
                 line = conFile.ReadLine();
             }
             conFile.Close();
@@ -107,7 +119,6 @@ namespace ConstantsLibrary
     {
         public static string MONGODB = "mongodb";
         public static string MYSQL = "mysql";
-        public static string TEMPORAL_FILE_PATH = @"./temp_files/";
         public static string CONFIG = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "configuration");
         public static string CONFIG_FILE_INFO_USER = Path.Combine(CONFIG,@"info.conf");
         public static string CONF_BLACK_LIST = Path.Combine(CONFIG,@"blackList.conf");
@@ -132,8 +143,8 @@ namespace ConstantsLibrary
 		public static string ACKSELECT = "006";
 
         //IP en AWS
-        public static string GATEKEEPER = @"18.130.70.74";
-        //public static string GATEKEEPER = @"192.168.0.2";
+        //public static string GATEKEEPER = @"18.130.70.74";
+        public static string GATEKEEPER = @"192.168.100.102";
         //public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 
         public static int GATEKEEPER_PORT = 11000;

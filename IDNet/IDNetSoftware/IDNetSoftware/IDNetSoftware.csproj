@@ -97,6 +97,9 @@
     <EmbeddedResource Include="resources\icons\deleteDatabase.png">
       <LogicalName>deleteDatabase.png</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\warningDatabase.png">
+      <LogicalName>warningDatabase.png</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -143,7 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\icons\group.png" />
-    <None Include="resources\icons\004-database-3.png" />
     <None Include="resources\icons\updateDatabase.png" />
     <None Include="resources\icons\006-database-2.png" />
     <None Include="packages.config" />

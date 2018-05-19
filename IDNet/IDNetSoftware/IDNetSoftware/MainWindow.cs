@@ -172,14 +172,14 @@ namespace IDNetSoftware
             while (line != null)
             {
                 int i = 0;
-                bool firstParam = true;
-                string user = "";
+                bool firstParam = false, secondParam = false;
+                string user = "", codigo = "";
                 /*
                  * 
-                 * nombre=userName|code:123456789;
+                 * nombre=userName|code:codigoNumerico;
                  * 
                  * Ejemplo:
-                 * nombre=lorenzo;
+                 * nombre=lorenzo|code:123456789;
                  * 
                  */
                 //Leemos el parámetro
@@ -187,19 +187,28 @@ namespace IDNetSoftware
                 {
                     if (line[i] == '=')
                     {
+                        firstParam = true;
+                    }
+                    else if(line[i] == '|')
+                    {
                         firstParam = false;
                     }
-                    else if (line[i] == '|')
+                    else if (line[i] == ':')
                     {
-                        break;
+                        secondParam = true;
                     }
-                    else if (!firstParam)
+                    else if (firstParam)
                     {
                         user += line[i];
+                    }
+                    else if(secondParam)
+                    {
+                        codigo += line[i];
                     }
                     i++;
                 }
                 this._nombre = user;
+                this._code = Int32.Parse(codigo);
                 line = conFile.ReadLine();
             }
             conFile.Close();

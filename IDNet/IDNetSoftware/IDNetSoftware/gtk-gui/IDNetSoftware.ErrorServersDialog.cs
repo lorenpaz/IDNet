@@ -6,6 +6,8 @@ namespace IDNetSoftware
 	{
 		private global::Gtk.VBox vbox2;
 
+		private global::Gtk.Image imageWarning;
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
 
 		private global::Gtk.TextView textviewErrorMysql;
@@ -32,6 +34,15 @@ namespace IDNetSoftware
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
+			this.imageWarning = new global::Gtk.Image();
+			this.imageWarning.Name = "imageWarning";
+			this.imageWarning.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("warningDatabase.png");
+			this.vbox2.Add(this.imageWarning);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.imageWarning]));
+			w2.Position = 0;
+			w2.Expand = false;
+			w2.Fill = false;
+			// Container child vbox2.Gtk.Box+BoxChild
 			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -44,8 +55,8 @@ namespace IDNetSoftware
 			this.textviewErrorMysql.Justification = ((global::Gtk.Justification)(2));
 			this.GtkScrolledWindow.Add(this.textviewErrorMysql);
 			this.vbox2.Add(this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.GtkScrolledWindow]));
-			w3.Position = 0;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.GtkScrolledWindow]));
+			w4.Position = 1;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
@@ -56,19 +67,20 @@ namespace IDNetSoftware
 			this.textviewErrorMongoDB.Editable = false;
 			this.textviewErrorMongoDB.CursorVisible = false;
 			this.textviewErrorMongoDB.AcceptsTab = false;
+			this.textviewErrorMongoDB.Justification = ((global::Gtk.Justification)(2));
 			this.GtkScrolledWindow1.Add(this.textviewErrorMongoDB);
 			this.vbox2.Add(this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.GtkScrolledWindow1]));
-			w5.Position = 1;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.GtkScrolledWindow1]));
+			w6.Position = 2;
 			w1.Add(this.vbox2);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
-			w6.Position = 0;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
+			w7.Position = 0;
 			// Internal child IDNetSoftware.ErrorServersDialog.ActionArea
-			global::Gtk.HButtonBox w7 = this.ActionArea;
-			w7.Name = "dialog1_ActionArea";
-			w7.Spacing = 10;
-			w7.BorderWidth = ((uint)(5));
-			w7.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w8 = this.ActionArea;
+			w8.Name = "dialog1_ActionArea";
+			w8.Spacing = 10;
+			w8.BorderWidth = ((uint)(5));
+			w8.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOK = new global::Gtk.Button();
 			this.buttonOK.CanDefault = true;
@@ -77,15 +89,15 @@ namespace IDNetSoftware
 			this.buttonOK.UseUnderline = true;
 			this.buttonOK.Label = global::Mono.Unix.Catalog.GetString("_OK");
 			this.AddActionWidget(this.buttonOK, 0);
-			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonOK]));
-			w8.Expand = false;
-			w8.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w9 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w8[this.buttonOK]));
+			w9.Expand = false;
+			w9.Fill = false;
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 328;
-			this.DefaultHeight = 201;
+			this.DefaultHeight = 271;
 			this.Show();
 			this.buttonOK.Clicked += new global::System.EventHandler(this.OnButtonOKClicked);
 		}

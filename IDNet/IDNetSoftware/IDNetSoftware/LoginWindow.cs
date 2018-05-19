@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Diagnostics;
 
 using DatabaseLibrary;
@@ -30,6 +31,7 @@ namespace IDNetSoftware
             {
                 MostrarMensaje(Constants.MYSQL_REMOTE_LOGIN_SUCCESS);
                 Usuario.SaveConf(this._remoteDatabase.SaveUserToFile(username));
+
                 RunIDNetDaemon();
                 MainWindow main = new MainWindow();
                 main.Show();
@@ -64,10 +66,12 @@ namespace IDNetSoftware
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C ../../../../IDNetDaemonScript.sh start";
+            startInfo.FileName = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory+"../","IDNetDaemonScript.sh");
+            startInfo.UseShellExecute = false;
+            startInfo.Arguments = "start";
             process.StartInfo = startInfo;
             process.Start();
+            process.WaitForExit();
         }
     }
 }

@@ -342,50 +342,52 @@ namespace DatabaseLibraryS
             return false;
         }
 
-		/*
-         * Método para comprobar que está el servidor MYSQL activo
-         * */
-		public bool ComprobacionMysql()
+		
+        /*
+ * Método para comprobar que está el servidor MYSQL activo
+ * */
+        public bool ComprobacionMysql()
         {
             bool check = false;
 
-			//Control de errores
+            //Control de errores
             if (!this._databasesPropias.ContainsKey(Constants.MYSQL))
-			{
-				return false;
-			}
+            {
+                return false;
+            }
 
-			//Primera base de datos con mysql
+            //Primera base de datos con mysql
             string db_name = this._databasesPropias[Constants.MYSQL][0].Item1;
 
             string connection;
-            if(this._databasesPropias[Constants.MYSQL][0].Item2 == null)
+            if (this._databasesPropias[Constants.MYSQL][0].Item2 == null)
                 connection = "Server=localhost;Database=" + db_name + ";Pooling=false;";
             else
-				connection = "Server=localhost;Database=" + db_name + 
-                    ";User ID="+this._databasesPropias[Constants.MYSQL][0].Item2 +
-                                    ";Password="+this._databasesPropias[Constants.MYSQL][0].Item3 +";Pooling=false;";
-			try
+                connection = "Server=localhost;Database=" + db_name +
+                    ";User ID=" + this._databasesPropias[Constants.MYSQL][0].Item2 +
+                                    ";Password=" + this._databasesPropias[Constants.MYSQL][0].Item3 + ";Pooling=false;";
+            try
             {
                 MySqlConnection dbcon = new MySqlConnection(connection);
                 dbcon.Open();
 
                 check = true;
 
-			} catch (MySqlException)
-			{
-				check = false;
-				/*switch (ex.Number)
-				{
-					//http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
-					case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
+            }
+            catch (MySqlException)
+            {
+                check = false;
+                /*switch (ex.Number)
+                {
+                    //http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
+                    case 1042: // Unable to connect to any of the specified MySQL hosts (Check Server,Port)
                         throw new Exception(Constants.UNABLE_CONNECT_MYSQL_HOSTS);
-					case 0: // Access denied (Check DB name,username,password)
+                    case 0: // Access denied (Check DB name,username,password)
                         throw new Exception(Constants.ACCESS_DENIED_MYSQL);
-					default:
-						break;
-				}*/
-			}
+                    default:
+                        break;
+                }*/
+            }
 
             return check;
         }

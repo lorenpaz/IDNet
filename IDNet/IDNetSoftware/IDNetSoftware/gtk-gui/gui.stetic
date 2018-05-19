@@ -4,7 +4,7 @@
     <images-root-path>..</images-root-path>
   </configuration>
   <import>
-    <widget-library name="../bin/Debug/IDNetSoftware.exe" internal="true" />
+    <widget-library name="../bin/Release/IDNetSoftware.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="addDatabase.png">
@@ -180,7 +180,7 @@
     <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
     <property name="AllowShrink">True</property>
-    <property name="DefaultWidth">860</property>
+    <property name="DefaultWidth">910</property>
     <property name="DefaultHeight">650</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <signal name="DestroyEvent" handler="OnDestroyEvent" />
@@ -935,7 +935,7 @@ mongodb</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="IDNetSoftware.ErrorServersDialog" design-size="328 201">
+  <widget class="Gtk.Dialog" id="IDNetSoftware.ErrorServersDialog" design-size="328 271">
     <property name="MemberName" />
     <property name="Icon">resource:iconoIDNetSoftware</property>
     <property name="WindowPosition">Center</property>
@@ -949,6 +949,18 @@ mongodb</property>
           <widget class="Gtk.VBox" id="vbox2">
             <property name="MemberName" />
             <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.Image" id="imageWarning">
+                <property name="MemberName" />
+                <property name="Pixbuf">resource:warningDatabase.png</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
             <child>
               <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
                 <property name="MemberName" />
@@ -966,7 +978,7 @@ mongodb</property>
                 </child>
               </widget>
               <packing>
-                <property name="Position">0</property>
+                <property name="Position">1</property>
                 <property name="AutoSize">True</property>
               </packing>
             </child>
@@ -982,11 +994,12 @@ mongodb</property>
                     <property name="CursorVisible">False</property>
                     <property name="AcceptsTab">False</property>
                     <property name="Text" translatable="yes" />
+                    <property name="Justification">Center</property>
                   </widget>
                 </child>
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">2</property>
                 <property name="AutoSize">True</property>
               </packing>
             </child>

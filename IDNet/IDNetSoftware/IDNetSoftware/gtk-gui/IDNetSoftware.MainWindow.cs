@@ -171,7 +171,7 @@ namespace IDNetSoftware
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource("iconoIDNetSoftware");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.AllowShrink = true;
-			this.DefaultWidth = 860;
+			this.DefaultWidth = 910;
 			this.DefaultHeight = 650;
 			// Container child IDNetSoftware.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
@@ -266,6 +266,7 @@ namespace IDNetSoftware
 			this.treeviewDatabasesPropias = new global::Gtk.TreeView();
 			this.treeviewDatabasesPropias.CanFocus = true;
 			this.treeviewDatabasesPropias.Name = "treeviewDatabasesPropias";
+			this.treeviewDatabasesPropias.EnableSearch = false;
 			this.GtkScrolledWindow2.Add(this.treeviewDatabasesPropias);
 			this.vbox7.Add(this.GtkScrolledWindow2);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.GtkScrolledWindow2]));
@@ -323,6 +324,7 @@ namespace IDNetSoftware
 			this.treeviewDatabases = new global::Gtk.TreeView();
 			this.treeviewDatabases.CanFocus = true;
 			this.treeviewDatabases.Name = "treeviewDatabases";
+			this.treeviewDatabases.EnableSearch = false;
 			this.GtkScrolledWindow1.Add(this.treeviewDatabases);
 			this.vbox8.Add(this.GtkScrolledWindow1);
 			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.GtkScrolledWindow1]));

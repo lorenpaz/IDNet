@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gtk;
+using System.IO;
 using ConstantsLibraryS;
 using System.Resources;
 
@@ -24,10 +25,13 @@ namespace IDNetSoftware
             AddValues();
         }
 
-        private void AddValues()
+        public void AddValues()
         {
             List<string> iconosUsados = new List<string>();
-            iconosUsados.Add(Constants.ICONO_ADDATABASE);
+
+            iconosUsados.Add(Constants.ICONO_ADDDATABASE);
+            iconosUsados.Add(Constants.ICONO_DELETEDATABASE);
+            iconosUsados.Add(Constants.ICONO_WARNINGDATABASE);
             iconosUsados.Add(Constants.ICONO_UPDATEDATABASE);
             iconosUsados.Add(Constants.ICONO_CONNECTIONDATABASE);
             iconosUsados.Add(Constants.ICONO_SCHEMADATABASE);
@@ -39,19 +43,25 @@ namespace IDNetSoftware
             {
                 switch(a.Key)
                 {
-                    case Constants.ICONO_ADDATABASE:
-                        this._symbolsView.AppendValues(a.Value,Constants.INFORMACION_ICONO_ADDATABASE);
+                    case Constants.ADDDATABASE:
+                        this._symbolsView.AppendValues(a.Value,Constants.INFORMACION_ICONO_ADDDATABASE);
                         break;
-                    case Constants.ICONO_UPDATEDATABASE:
+                    case Constants.DELETEDATABASE:
+                        this._symbolsView.AppendValues(a.Value,Constants.INFORMACION_ICONO_DELETEDATABASE);
+                        break;
+                    case Constants.UPDATEDATABASE:
                         this._symbolsView.AppendValues(a.Value, Constants.INFORMACION_ICONO_UPDATEDATABASE);
                         break;
-                    case Constants.ICONO_CONNECTIONDATABASE:
+                    case Constants.WARNINGDATABASE:
+                        this._symbolsView.AppendValues(a.Value,Constants.INFORMACION_ICONO_WARNINGDATABASE);
+                        break;
+                    case Constants.CONNECTIONDATABASE:
                         this._symbolsView.AppendValues(a.Value, Constants.INFORMACION_ICONO_CONNECTIONDATABASE);
                         break;
-                    case Constants.ICONO_SCHEMADATABASE:
+                    case Constants.SCHEMADATABASE:
                         this._symbolsView.AppendValues(a.Value, Constants.INFORMACION_ICONO_SCHEMADATABASE);
                         break;
-                    case Constants.ICONO_SELECTDATABASE:
+                    case Constants.SELECTDATABASE:
                         this._symbolsView.AppendValues(a.Value, Constants.INFORMACION_ICONO_SELECTDATABASE);
                         break;
                     default:
@@ -67,7 +77,30 @@ namespace IDNetSoftware
             Dictionary<string, Gdk.Pixbuf> p = new Dictionary<string, Gdk.Pixbuf>();
             foreach(string path in iconosUsados)
             {
-                p.Add(path,CargarImagen(path));
+                string val = "";
+                if(path.Contains(Constants.ADDDATABASE)){
+                    val = Constants.ADDDATABASE;
+                }else if (path.Contains(Constants.DELETEDATABASE))
+                {
+                    val = Constants.DELETEDATABASE;
+                }else if (path.Contains(Constants.UPDATEDATABASE))
+                {
+                    val = Constants.UPDATEDATABASE;
+                }else if (path.Contains(Constants.WARNINGDATABASE))
+                {
+                    val = Constants.WARNINGDATABASE;
+                }
+                else if (path.Contains(Constants.CONNECTIONDATABASE))
+                {
+                    val = Constants.CONNECTIONDATABASE;
+                }else if (path.Contains(Constants.SCHEMADATABASE))
+                {
+                    val = Constants.SCHEMADATABASE;
+                }else if (path.Contains(Constants.SELECTDATABASE))
+                {
+                    val = Constants.SELECTDATABASE;
+                }
+                p.Add(val,CargarImagen(path));
             }
             return p;
         }
@@ -75,7 +108,9 @@ namespace IDNetSoftware
         private Gdk.Pixbuf CargarImagen(string path)
         {
             var buffer = System.IO.File.ReadAllBytes(path);
-           return  new Gdk.Pixbuf(buffer);
+            Gdk.Pixbuf image = new Gdk.Pixbuf(buffer);
+            image = image.ScaleSimple(32, 32,Gdk.InterpType.Tiles);
+            return  image;
         }
 
         protected void OnButtonOkClicked(object sender, EventArgs e)

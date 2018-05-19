@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{E446BCAE-263D-4019-A3EF-A1DBDD061D25}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>IDNetSoftware</RootNamespace>
+    <AssemblyName>IDNetSoftware</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="gtk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="glib-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>glib-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="glade-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="pango-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="atk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="Mono.Posix" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\packages\BouncyCastle.Crypto.dll.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gtk-gui\gui.stetic">
+      <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\databaseConnection.png">
+      <LogicalName>databaseConnection.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\addDatabase.png">
+      <LogicalName>addDatabase.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\user.png">
+      <LogicalName>user.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\FInL.png">
+      <LogicalName>iconoIDNetSoftware</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\updateDatabase.png">
+      <LogicalName>updateDatabase.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\connection.png">
+      <LogicalName>connection.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\schema.png">
+      <LogicalName>schema.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\select.png">
+      <LogicalName>select.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\iconoSoftware.png">
+      <LogicalName>iconoSoftware.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\iconoSoftwareSmall.png">
+      <LogicalName>iconoSoftwareSmall.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\icons\deleteDatabase.png">
+      <LogicalName>deleteDatabase.png</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="AddDatabaseDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.AddDatabaseDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.MainWindow.cs" />
+    <Compile Include="ModifyDatabaseDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ModifyDatabaseDialog.cs" />
+    <Compile Include="ErrorServersDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ErrorServersDialog.cs" />
+    <Compile Include="ConnectionDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ConnectionDialog.cs" />
+    <Compile Include="SelectDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.SelectDialog.cs" />
+    <Compile Include="FindDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.FindDialog.cs" />
+    <Compile Include="ConnectionNeighboursDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ConnectionNeighboursDialog.cs" />
+    <Compile Include="AcercadeDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.AcercadeDialog.cs" />
+    <Compile Include="UsuariosOVDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.UsuariosOVDialog.cs" />
+    <Compile Include="ShowMessagesSentDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentDialog.cs" />
+    <Compile Include="ShowMessagesSentWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.ShowMessagesSentWindow.cs" />
+    <Compile Include="SimbologiaDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.SimbologiaDialog.cs" />
+    <Compile Include="SplashWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.SplashWindow.cs" />
+    <Compile Include="LoginWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.LoginWindow.cs" />
+    <Compile Include="RegisterWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.RegisterWindow.cs" />
+    <Compile Include="DeleteDatabaseDialog.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.DeleteDatabaseDialog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resources\" />
+    <Folder Include="resources\icons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\icons\group.png" />
+    <None Include="resources\icons\004-database-3.png" />
+    <None Include="resources\icons\updateDatabase.png" />
+    <None Include="resources\icons\006-database-2.png" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseLibrary\DatabaseLibraryS.csproj">
+      <Project>{32EC6214-3022-4103-82E5-0E882F4497F8}</Project>
+      <Name>DatabaseLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConnectionLibrary\ConnectionLibraryS.csproj">
+      <Project>{E6E207AF-6328-45BF-B6AB-5340F6E74453}</Project>
+      <Name>ConnectionLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PostBoxLibrary\PostBoxLibraryS.csproj">
+      <Project>{2AFCF10A-A1D7-4C86-91C0-F658FD0F7556}</Project>
+      <Name>PostBoxLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProcessLibrary\ProcessLibraryS.csproj">
+      <Project>{92FB5CB4-DA67-489F-899E-5DF8B845F4F4}</Project>
+      <Name>ProcessLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MessageLibrary\MessageLibraryS.csproj">
+      <Project>{0AE50AD7-DE9E-49EF-8658-E2AEA7ECBDC4}</Project>
+      <Name>MessageLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibraryS.csproj">
+      <Project>{DFFC7CD1-B082-4E1D-97F0-CC761DCF6E78}</Project>
+      <Name>ConstantsLibraryS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CriptoLibrary\CriptoLibraryS.csproj">
+      <Project>{5CB08C2F-ED6E-4A24-9C37-19179FCDC7E5}</Project>
+      <Name>CriptoLibraryS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

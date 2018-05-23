@@ -249,7 +249,7 @@ namespace MessageLibraryS
         /*
          * Mensaje para la creación de un mesaje para solicitar los vecinos
          * */
-        public XmlDocument createMessageNeighbour(string ip)
+        public XmlDocument createMessageNeighbour(int codigo, string ip)
         {
             XmlDocument xmlDoc = new XmlDocument();
             XmlElement root = xmlDoc.DocumentElement;
@@ -278,6 +278,9 @@ namespace MessageLibraryS
             destination.InnerText = this._destination;
             elementRoot.AppendChild(destination);
 
+            XmlNode code = xmlDoc.CreateElement("code");
+            code.InnerText = codigo.ToString();
+            elementRoot.AppendChild(code);
             return xmlDoc;
         }
 

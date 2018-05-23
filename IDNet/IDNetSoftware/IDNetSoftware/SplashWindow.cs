@@ -43,20 +43,9 @@ namespace IDNetSoftware
 
         private void NewWindow()
         {
-            if (!CheckIDNetDaemon())
-            {
-                this._login = new LoginWindow();
-                this._login.Show();
-            }
+            this._login = new LoginWindow();
+            this._login.Show();
             this.Destroy();
-        }
-
-
-        private static bool CheckIDNetDaemon()
-        {
-            Process[] p = Process.GetProcesses();
-            Process[] pname = Process.GetProcessesByName("mono");
-            return pname.Length != 0;
         }
 
         private static void CheckConfigurationFile()

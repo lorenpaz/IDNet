@@ -23,6 +23,8 @@ namespace PostBoxLibraryS
         //Mensaje de respuesta
         Message _messageResponse;
 
+        Usuario _usuario;
+
         public Message MessageRequest
         {
             get
@@ -41,10 +43,11 @@ namespace PostBoxLibraryS
 
 
         //Constructor para conexión al GK
-        public PostBoxGK(string source, string destination, string tipoMensaje)
+        public PostBoxGK(Usuario user, string destination, string tipoMensaje)
         {
+            this._usuario = user;
             this._process = new Process();
-            this._messageRequest = new Message(source, destination,Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
+            this._messageRequest = new Message(user.Nombre, destination,Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
             this._messageResponse = new Message();
         }
 
@@ -53,7 +56,7 @@ namespace PostBoxLibraryS
         */
         public string ProcesarEnvio(string ip)
         {
-            XmlDocument doc = this._messageRequest.createMessageNeighbour(ip);
+            XmlDocument doc = this._messageRequest.createMessageNeighbour(this._usuario.Code,ip);
             return doc.InnerXml;
         }
 

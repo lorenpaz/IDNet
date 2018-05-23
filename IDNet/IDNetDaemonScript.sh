@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH_NAME="IDNetDaemon/IDNetDaemon/bin/Release/"
+PATH_NAME="Release/"
 PROGRAM_NAME="IDNetDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
 LOG_FOLDER="logs"
@@ -35,7 +35,7 @@ stop()
 start()
 {
     echo "Arrancando el servicio "${PROGRAM_NAME}
-    mono-service -l:${LOCK_FILE} -n:${PROGRAM_NAME} ./${PATH_NAME}${PROGRAM_NAME}.exe
+     /usr/bin/mono-service -l:${LOCK_FILE} -n:${PROGRAM_NAME} ./${PATH_NAME}${PROGRAM_NAME}.exe
     echo "Service ${PROGRAM_NAME} started"
 }
 

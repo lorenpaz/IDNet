@@ -10,6 +10,128 @@ using MessageLibraryS;
 
 namespace ConstantsLibraryS
 {
+    public class Usuario
+    {
+        private string _nombre;
+        private IPAddress _ip;
+        private int _code;
+        public string Nombre
+        {
+            get
+            {
+                return this._nombre;
+            }
+            set
+            {
+                this._nombre = value;
+            }
+        }
+        public int Code
+        {
+            get
+            {
+                return this._code;
+            }
+            set
+            {
+                this._code = value;
+            }
+        }
+        public IPAddress IP
+        {
+            get
+            {
+                return this._ip;
+            }
+            set
+            {
+                this._ip = value;
+            }
+        }
+
+        public Usuario()
+        {
+            ParseConf();
+
+            //IP tuya
+            string aux = new WebClient().DownloadString("http://icanhazip.com");
+            this._ip = IPAddress.Parse(aux.Replace("\n", String.Empty));
+        }
+
+        //Lee del fichero de configuración
+        private void ParseConf()
+        {
+            //Archivo a leer
+            StreamReader conFile = File.OpenText(Constants.ConfigFileInfoUser);
+            string line = conFile.ReadLine();
+
+            //Voy leyendo línea por línea
+            while (line != null)
+            {
+                int i = 0;
+                bool firstParam = false, secondParam = false;
+                string user = "", codigo = "";
+                /*
+                 * 
+                 * nombre=userName|code:codigoNumerico;
+                 * 
+                 * Ejemplo:
+                 * nombre=lorenzo|code:123456789;
+                 * 
+                 */
+                //Leemos el parámetro
+                while (line[i] != ';')
+                {
+                    if (line[i] == '=')
+                    {
+                        firstParam = true;
+                    }
+                    else if (line[i] == '|')
+                    {
+                        firstParam = false;
+                    }
+                    else if (line[i] == ':')
+                    {
+                        secondParam = true;
+                    }
+                    else if (firstParam)
+                    {
+                        user += line[i];
+                    }
+                    else if (secondParam)
+                    {
+                        codigo += line[i];
+                    }
+                    i++;
+                }
+                this._nombre = user;
+                this._code = Int32.Parse(codigo);
+                line = conFile.ReadLine();
+            }
+            conFile.Close();
+        }
+
+        /*
+         * Método estático para guardar el usuario en un archivo
+         * de configuración
+         * */
+        public static void SaveConf(Tuple<string, int> tupla)
+        {
+            //Obtenemos los campos
+            string username = tupla.Item1;
+            int code = tupla.Item2;
+
+            //Borramos el archivo si existe
+            if (File.Exists(Constants.ConfigFileInfoUser))
+            {
+                File.Delete(Constants.ConfigFileInfoUser);
+            }
+
+            File.WriteAllText(Constants.ConfigFileInfoUser, "nombre=" + username + "|code:" + code + ";");
+        }
+
+    }
+
     //Clase con las constantes
     public static class Constants
     {
@@ -29,8 +151,8 @@ namespace ConstantsLibraryS
         public const string MONGODB = @"mongodb";
         public const string MYSQL = @"mysql";
 
-        public const string SOLICITUD_CONEXION = @"Solicitud de conexion de base de datos";
-        public const string RESPUESTA_CONEXION = @"Respuesta a la solicitud de conexion de base de datos";
+        public const string SOLICITUD_CONEXION = @"Solicitud de conexión de base de datos";
+        public const string RESPUESTA_CONEXION = @"Respuesta a la solicitud de conexión de base de datos";
 
         public const string SOLICITUD_ESQUEMA = @"Solicitud de esquema de base de datos";
         public const string RESPUESTA_ESQUEMA = @"Respuesta a la solicitud de esquema de la base de datos";
@@ -48,8 +170,8 @@ namespace ConstantsLibraryS
         public const string MYSQL_REMOTE_NAMEBBDD = @"IDNet";
         public const string MYSQL_REMOTE_SERVERBBDD = @"mysqlinstance.crfd5ylvvpz8.eu-west-2.rds.amazonaws.com";
         public const string MYSQL_REMOTE_NAMETABLE = @"usuariosIDNet";
-        //public const string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
-        public const string MYSQL_REMOTE = @"Server=localhost;Database=IDNet;User ID=root;Password=1907;Pooling=false;";
+        public const string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
+        //public const string MYSQL_REMOTE = @"Server=localhost;Database=IDNet;User ID=root;Password=1907;Pooling=false;";
         public const string MYSQL_REMOTE_ERROR_INICIO_SESION = @"Usuario y/o contraseña no válidos.";
         public const string MYSQL_REMOTE_ERROR_REGISTRARSE_CONTRASEÑA = @"Fallo en la repetición de la contraseña.";
         public const string MYSQL_REMOTE_LOGIN_SUCCESS = @"Se ha iniciado correctamente.";
@@ -83,10 +205,10 @@ namespace ConstantsLibraryS
         public const string CONNECTION = @"connection";
         public const string SELECT = @"select";
 
-         public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
+         //public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
         //public static string GATEKEEPER = @"192.168.1.48";
         //IP del GK en AWS
-        //public const string GATEKEEPER = @"18.130.70.74";
+        public const string GATEKEEPER = @"18.130.70.74";
         public const int GATEKEEPER_PORT = 11000;
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
@@ -279,10 +401,10 @@ namespace ConstantsLibraryS
             string stado = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
            Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
             linea + "\n" + linea + "\n" +
-            Columna(NOMBRE_BASE_DE_DATOS + messageResponse.Db_name, linea.Length) + "\n" +
+            NOMBRE_BASE_DE_DATOS + messageResponse.Db_name+ linea + "\n" +
             linea + "\n" +
-           Columna(TIPO_BASE_DE_DATOS + messageResponse.Db_type, linea.Length) + "\n" +
-            messageResponse.Db_type== MYSQL?Columna(NOMBRE_TABLA + body.TableCollection, linea.Length):Columna(NOMBRE_COLECCION + body.TableCollection, linea.Length) + "\n";
+           TIPO_BASE_DE_DATOS + messageResponse.Db_type + linea + "\n" +
+            messageResponse.Db_type== MYSQL? NOMBRE_TABLA + body.TableCollection + linea :NOMBRE_COLECCION + body.TableCollection +linea + "\n";
 
             string rows = "";
             int cont=0;
@@ -294,7 +416,8 @@ namespace ConstantsLibraryS
             {
                 foreach (Row r in body.Rows)
                 {
-                    rows += "ROW " + cont + "\n";
+                    rows = linea+"\n";
+                    rows += "Fila " + cont + "\n";
                     foreach (KeyValuePair<string, object> attr in r.Attributes)
                     {
                         rows += MostrarValorFirst(messageResponse.Db_type,attr) + "\n";
@@ -305,7 +428,7 @@ namespace ConstantsLibraryS
             }
             rows += "\n";
 
-                return stado + rows;
+                return stado + rows + LINEA;
         }
 
         /*
@@ -348,7 +471,7 @@ namespace ConstantsLibraryS
                     }
                 }
 
-                return stado + tables;
+                return stado + tables + LINEA;
             }
         }
 
@@ -393,7 +516,7 @@ namespace ConstantsLibraryS
                         collections += TABLA_COLUMNAS + "\n";
                     }
                 }
-                return status + collections;
+                return status + collections + LINEA;
             }
             
         }

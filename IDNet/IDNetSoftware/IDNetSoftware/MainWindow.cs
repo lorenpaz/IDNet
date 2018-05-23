@@ -114,126 +114,6 @@ namespace IDNetSoftware
             }
         }
     }
-    public class Usuario
-    {
-        private string _nombre;
-        private IPAddress _ip;
-        private int _code;
-        public string Nombre
-        {
-            get
-            {
-                return this._nombre;
-            }
-            set
-            {
-                this._nombre = value;
-            }
-        }
-        public int Code
-        {
-            get
-            {
-                return this._code;
-            }
-            set
-            {
-                this._code = value;
-            }
-        }
-        public IPAddress IP
-        {
-            get
-            {
-                return this._ip;
-            }
-            set
-            {
-                this._ip = value;
-            }
-        }
-
-        public Usuario()
-        {
-            ParseConf();
-
-            //IP tuya
-            this._ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
-        }
-
-        //Lee del fichero de configuración
-        private void ParseConf()
-        {
-            //Archivo a leer
-            StreamReader conFile = File.OpenText(Constants.ConfigFileInfoUser);
-            string line = conFile.ReadLine();
-
-            //Voy leyendo línea por línea
-            while (line != null)
-            {
-                int i = 0;
-                bool firstParam = false, secondParam = false;
-                string user = "", codigo = "";
-                /*
-                 * 
-                 * nombre=userName|code:codigoNumerico;
-                 * 
-                 * Ejemplo:
-                 * nombre=lorenzo|code:123456789;
-                 * 
-                 */
-                //Leemos el parámetro
-                while (line[i] != ';')
-                {
-                    if (line[i] == '=')
-                    {
-                        firstParam = true;
-                    }
-                    else if(line[i] == '|')
-                    {
-                        firstParam = false;
-                    }
-                    else if (line[i] == ':')
-                    {
-                        secondParam = true;
-                    }
-                    else if (firstParam)
-                    {
-                        user += line[i];
-                    }
-                    else if(secondParam)
-                    {
-                        codigo += line[i];
-                    }
-                    i++;
-                }
-                this._nombre = user;
-                this._code = Int32.Parse(codigo);
-                line = conFile.ReadLine();
-            }
-            conFile.Close();
-        }
-
-        /*
-         * Método estático para guardar el usuario en un archivo
-         * de configuración
-         * */
-        public static void SaveConf(Tuple<string, int> tupla)
-        {
-            //Obtenemos los campos
-            string username = tupla.Item1;
-            int code = tupla.Item2;
-
-            //Borramos el archivo si existe
-            if (File.Exists(Constants.ConfigFileInfoUser))
-            {
-                File.Delete(Constants.ConfigFileInfoUser);
-            }
-
-            File.WriteAllText(Constants.ConfigFileInfoUser, "nombre=" + username + "|code:" + code + ";");
-        }
-
-    }
 
     public partial class MainWindow : Gtk.Window
     {
@@ -373,10 +253,10 @@ namespace IDNetSoftware
          * */
         private bool SolicitarVecinos()
         {
-            /*  string msg, response;
+              string msg, response;
 
                 //Proceso el envio
-                PostBoxGK post = new PostBoxGK(this._user.Nombre, Constants.GATEKEEPER,
+                PostBoxGK post = new PostBoxGK(this._user, Constants.GATEKEEPER,
                                            Constants.MENSAJE_CONSULTA_BBDD_VECINOS);
                 msg = post.ProcesarEnvio(this._user.IP.ToString());
 
@@ -390,8 +270,8 @@ namespace IDNetSoftware
                     return true;
                 }
 
-              return false;*/
-            return true;
+              return false;
+          //  return true;
         }
 
 

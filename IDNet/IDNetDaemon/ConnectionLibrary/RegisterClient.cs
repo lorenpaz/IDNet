@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net.Sockets;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Xml;
 using ConstantsLibrary;
@@ -19,7 +19,9 @@ namespace ConnectionLibrary
          * */
         public RegisterClient(Usuario user)
         {
+            log.Info("Construyendo el mensaje 010...");
             ConstruccionMensajeRegistro(user);
+            log.Info("Mensaje 010 a enviar:"+this._mensaje.InnerXml);
         }
 
         /*
@@ -75,7 +77,7 @@ namespace ConnectionLibrary
             try
             {
                 // Establish the remote endpoint for the socket.
-                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), 11000);
+                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), Constants.GATEKEEPER_PORT);
 
                 // Create a TCP/IP  socket.
                 Socket sender = new Socket(AddressFamily.InterNetwork,
@@ -135,25 +137,26 @@ namespace ConnectionLibrary
          * */
         public bool comprobarConexion(string hostName)
         {
-            // Connect to a remote device.
-            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), 11000);
+               log.Info("Configurando endpoint...:"+hostName+"Puerto:"+Constants.GATEKEEPER_PORT);
+               // Connect to a remote device.
+               IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(hostName), Constants.GATEKEEPER_PORT);
+               log.Info("Creando socket...");
+               // Create a TCP/IP  socket.
+               Socket sender = new Socket(AddressFamily.InterNetwork,
+                   SocketType.Stream, ProtocolType.Tcp);
 
-            // Create a TCP/IP  socket.
-            Socket sender = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream, ProtocolType.Tcp);
-
-            // Connect the socket to the remote endpoint. Catch any errors.
-            try
-            {
-                sender.Connect(remoteEP);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-        }
+               // Connect the socket to the remote endpoint. Catch any errors.
+               try
+               {
+                   sender.Connect(remoteEP);
+                   return true;
+               }
+               catch (Exception e)
+               {
+                   log.Info("Error conexión:"+e.Message);
+                   return false;
+               }
+         }
 
     }
 }

@@ -31,8 +31,10 @@ namespace IDNetSoftware
             {
                 MostrarMensaje(Constants.MYSQL_REMOTE_LOGIN_SUCCESS);
                 Usuario.SaveConf(this._remoteDatabase.SaveUserToFile(username));
-
-                RunIDNetDaemon();
+                if (!CheckIDNetDaemon())
+                {
+                    RunIDNetDaemon();
+                }
                 MainWindow main = new MainWindow();
                 main.Show();
 
@@ -63,15 +65,23 @@ namespace IDNetSoftware
 
         private static void RunIDNetDaemon()
         {
+            Console.WriteLine("Arrancamos INetDaemon");
+            Console.WriteLine("Ruta:"+System.AppDomain.CurrentDomain.BaseDirectory + "../");
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory+"../","IDNetDaemonScript.sh");
+            startInfo.WorkingDirectory = System.AppDomain.CurrentDomain.BaseDirectory+ "../";
+            startInfo.FileName = "./IDNetDaemonScript.sh start";
             startInfo.UseShellExecute = false;
-            startInfo.Arguments = "start";
-            process.StartInfo = startInfo;
-            process.Start();
+            process = Process.Start(startInfo);
             process.WaitForExit();
+        }
+
+        private static bool CheckIDNetDaemon()
+        {
+            Process[] p = Process.GetProcesses();
+            Process[] pname = Process.GetProcessesByName("mono-sgen");
+
+            return pname.Length != 0;
         }
     }
 }

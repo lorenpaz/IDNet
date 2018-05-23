@@ -31,7 +31,6 @@
     <Compile Include="RegisterClient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\..\packages\BouncyCastle.Crypto.dll.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
@@ -41,6 +40,7 @@
       <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

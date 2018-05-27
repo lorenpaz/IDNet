@@ -22,9 +22,9 @@ namespace GateKeeperListener
 		public Pathfinder(bool cliente)
 		{
 			if (cliente)
-				this._origen = "CLIENTE";
+				this._origen = Constants.CLIENTE;
 			else
-				this._origen = "GATEKEEPER";
+				this._origen = Constants.GATEKEEPER;
 
 			this._port = Constants.PORT_SENDING_TO_CLIENT;
 			CargarClientes();
@@ -34,14 +34,30 @@ namespace GateKeeperListener
         public String ProcessMsg(string content, String respuesta)
         {
             bool esProtocolo = false;
-            //parseamos el mensaje para pasar los parámetros de conexion
 			XmlDocument xDoc = new XmlDocument();
-			xDoc.LoadXml(content);
 
-            //El cliente destino y origen del mensaje original
-            String clienteDestino = xDoc.GetElementsByTagName("destination")[0].InnerText;
-            String clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
-			//String codigo = xDoc.GetElementsByTagName("code")[0].InnerText;
+			//parseamos el mensaje para pasar los parámetros de conexion
+
+			try{
+				xDoc.LoadXml(content);
+			}
+			catch(Exception e){
+				log.Fatal("Message XML structure malformed: " + e.Message + "--> " + e.StackTrace, e);
+				return "";
+			}
+
+			String clienteDestino = "", clienteOrigen = "", codigo = "", ip_origen = "";
+			//El cliente destino y origen del mensaje original
+			try{
+				clienteDestino = xDoc.GetElementsByTagName("destination")[0].InnerText;
+				clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
+				codigo = xDoc.GetElementsByTagName("code")[0].InnerText;
+				ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;            
+			}
+			catch(Exception e){
+				log.Fatal("Message Fields malformed: " + e.Message + ": " + e.StackTrace, e);
+				return "";
+			}
 
 			respuesta = content;
 
@@ -54,7 +70,7 @@ namespace GateKeeperListener
                 nIP = Constants.ipPublica.ToString();
 
                 //Si recibo el mensaje de un cliente hacia mi mismo
-				if (clienteDestino == nIP && this._origen == "CLIENTE")
+				if (clienteDestino == nIP && this._origen == Constants.CLIENTE)
                 {
                     RemoteDatabase db = new RemoteDatabase();
 
@@ -63,38 +79,28 @@ namespace GateKeeperListener
 					{
 						log.Info("Actualizando estado en la tabla de rutas del cliente '"+
 						         clienteOrigen +"'");
-						String code = xDoc.GetElementsByTagName("code")[0].InnerText;
-						String ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;
+						
 						RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
-						log.Info(clienteOrigen + "ha realizado la conexión con exito.")
+
+						log.Info(clienteOrigen + "ha realizado la conexión con exito.");
 						esProtocolo = true;
 					}               
-                    else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")
-                    {
-                        String code = xDoc.GetElementsByTagName("code")[0].InnerText;
-
-						if (db.CheckCode(clienteOrigen, code))
-						{
+                    else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")                    {
+						if (db.CheckCode(clienteOrigen, codigo)){
 							log.Info("Anunciando nombre al cliente '"+ clienteOrigen + "'");
 							respuesta = AnunciarNombresAlCliente(xDoc, content);
 						}
-                        else
-                        {
+                        else{
                             respuesta = "El cliente que se ha intentado conectar no es legítimo";
                             log.Error(respuesta);
                         }
 
 						esProtocolo = true;
-                        /*
-						respuesta = AnunciarNombresAlCliente(xDoc, content);
-						esProtocolo = true;
-						*/
                     }               
                 }
                 //Si recibo un mensaje de un GK hacia mi mismo
-				else if (clienteDestino == nIP && this._origen == "GATEKEEPER")
-                {
-					log.Info("Recibida tabla de rutas...actualizando rutas.")
+				else if (clienteDestino == nIP && this._origen == Constants.GATEKEEPER){
+					log.Info("Recibida tabla de rutas...actualizando rutas.");
                     RouteXML.merge(content);
 					esProtocolo = true;
                 }
@@ -202,7 +208,7 @@ namespace GateKeeperListener
 		internal String AnunciarNombresAlCliente(XmlDocument xDoc, String content)
 		{
 			XmlDocument doc = new XmlDocument();
-
+            
 			FileStream stream = File.OpenRead(Constants.XMLROUTES);
 			doc.Load(stream);
 			stream.Close();

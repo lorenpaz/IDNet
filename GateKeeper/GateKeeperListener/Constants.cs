@@ -25,10 +25,13 @@ namespace GateKeeperListener
         public static readonly int PORT_LISTENING_FROM_GATEKEEPER = 12000;
 		public static readonly int PORT_SENDING_TO_GATEKEEPER = 12000;
 		public static readonly int PORT_SENDING_TO_CLIENT = 11000;
-        //FOR LOCAL DEBUGGING
+		//FOR LOCAL DEBUGGING PURPOUSES
 		//public static readonly int PORT_SENDING_TO_CLIENT = 13000;
 		//public static readonly int PORT_SENDING_TO_GATEKEEPER = 14000;
 
+		public static readonly string GATEKEEPER = "GATEKEEPER";
+		public static readonly string CLIENTE = "CLIENTE"; 
+        
         public static string MysqlRemoteSelect(){
 			return "SELECT * FROM " + MYSQL_REMOTE_NAMETABLE + " WHERE code=@code";
         }

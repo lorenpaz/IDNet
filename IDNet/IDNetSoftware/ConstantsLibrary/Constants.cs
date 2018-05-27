@@ -170,8 +170,8 @@ namespace ConstantsLibraryS
         public const string MYSQL_REMOTE_NAMEBBDD = @"IDNet";
         public const string MYSQL_REMOTE_SERVERBBDD = @"mysqlinstance.crfd5ylvvpz8.eu-west-2.rds.amazonaws.com";
         public const string MYSQL_REMOTE_NAMETABLE = @"usuariosIDNet";
-        public const string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
-        //public const string MYSQL_REMOTE = @"Server=localhost;Database=IDNet;User ID=root;Password=1907;Pooling=false;";
+        //public const string MYSQL_REMOTE = @"Server=" + MYSQL_REMOTE_SERVERBBDD + ";Database=" + MYSQL_REMOTE_NAMEBBDD + ";User ID=root;Password=admin1234;Pooling=false;";
+        public const string MYSQL_REMOTE = @"Server=localhost;Database=IDNet;User ID=root;Password=1907;Pooling=false;";
         public const string MYSQL_REMOTE_ERROR_INICIO_SESION = @"Usuario y/o contraseña no válidos.";
         public const string MYSQL_REMOTE_ERROR_REGISTRARSE_CONTRASEÑA = @"Fallo en la repetición de la contraseña.";
         public const string MYSQL_REMOTE_LOGIN_SUCCESS = @"Se ha iniciado correctamente.";
@@ -205,10 +205,10 @@ namespace ConstantsLibraryS
         public const string CONNECTION = @"connection";
         public const string SELECT = @"select";
 
-         //public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
+         public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
         //public static string GATEKEEPER = @"192.168.1.48";
         //IP del GK en AWS
-        public const string GATEKEEPER = @"18.130.70.74";
+        //public const string GATEKEEPER = @"18.130.70.74";
         public const int GATEKEEPER_PORT = 11000;
 
         public const string TABLA_COLUMNA_VECINOS_VO = @"Vecinos";
@@ -400,11 +400,11 @@ namespace ConstantsLibraryS
 
             string stado = "Status: " + messageResponse.MessageType + " " + Constants.RESPUESTA_ESQUEMA + "\n" +
            Constants.USUARIO_RESPUESTA + messageResponse.Source + "\n" +
-            linea + "\n" + linea + "\n" +
-            NOMBRE_BASE_DE_DATOS + messageResponse.Db_name+ linea + "\n" +
+           linea + "\n" +
+            NOMBRE_BASE_DE_DATOS + messageResponse.Db_name + "\n" +
             linea + "\n" +
            TIPO_BASE_DE_DATOS + messageResponse.Db_type + linea + "\n" +
-            messageResponse.Db_type== MYSQL? NOMBRE_TABLA + body.TableCollection + linea :NOMBRE_COLECCION + body.TableCollection +linea + "\n";
+            messageResponse.Db_type== MYSQL? NOMBRE_TABLA + body.TableCollection + linea :NOMBRE_COLECCION + body.TableCollection + "\n";
 
             string rows = "";
             int cont=0;
@@ -416,7 +416,7 @@ namespace ConstantsLibraryS
             {
                 foreach (Row r in body.Rows)
                 {
-                    rows = linea+"\n";
+                    rows += linea+"\n";
                     rows += "Fila " + cont + "\n";
                     foreach (KeyValuePair<string, object> attr in r.Attributes)
                     {
@@ -673,7 +673,7 @@ namespace ConstantsLibraryS
 
         public BodyRespuesta002MongoDB(string body)
         {
-            _collections = new List<Collection>();
+            this._collections = new List<Collection>();
 
             XmlDocument x = new XmlDocument();
             x.LoadXml(body);

@@ -43,6 +43,8 @@ namespace IDNetSoftware
 			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
 			this.treeviewMessage = new global::Gtk.TreeView();
+			this.treeviewMessage.WidthRequest = 500;
+			this.treeviewMessage.HeightRequest = 250;
 			this.treeviewMessage.CanFocus = true;
 			this.treeviewMessage.Name = "treeviewMessage";
 			this.GtkScrolledWindow.Add(this.treeviewMessage);
@@ -100,7 +102,7 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultHeight = 276;
+			this.DefaultHeight = 355;
 			this.Show();
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}

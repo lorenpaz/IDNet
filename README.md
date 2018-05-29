@@ -3,7 +3,7 @@
 <!--[Creative](http://startbootstrap.com/template-overviews/creative/) is a one page creative theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).-->
 IDNet es un framework de conexión P2P de bases de datos distribuidas e independientes.
 
-[icono IDNet](Web/img/iconoIDNet.png) 
+[icono IDNet](Web/img/iconoIDNetPequeño.png) 
 [![Licencia Github](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackrockDigital/startbootstrap-creative/master/LICENSE)
 ## Resumen
 

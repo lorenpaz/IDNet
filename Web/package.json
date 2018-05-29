@@ -1,8 +1,8 @@
 {
-    "title": "Creative",
-    "name": "startbootstrap-creative",
+    "title": "IDNet",
+    "name": "IDNet TFG",
     "version": "4.0.0-beta.2",
-    "description": "Creative is a stylish one page HTML theme for Bootstrap.",
+    "description": "Framework de conexión P2P de bases de datos distribuidas e independientes",
     "keywords": [
         "css",
         "sass",
@@ -11,19 +11,16 @@
         "theme",
         "template"
     ],
-    "homepage": "https://startbootstrap.com/template-overviews/creative",
-    "bugs": {
-        "url": "https://github.com/BlackrockDigital/startbootstrap-creative/issues",
-        "email": "feedback@startbootstrap.com"
-    },
+    "homepage": "https://github.com/lorenpaz/IDNet/tree/gh-pages/",
     "license": "MIT",
-    "author": "Start Bootstrap",
+    "author": "Lorenzo José de la Paz Suárez y Juan Mas Aguilar",
     "contributors": [
-        "David Miller (http://davidmiller.io/)"
+        "Lorenzo José de la Paz Suárez (https://github.com/lorenpaz)",
+ "Juan Mas Aguilar (https://github.com/masju96)"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/BlackrockDigital/startbootstrap-creative.git"
+        "url": "https://github.com/lorenpaz/IDNet.git"
     },
     "dependencies": {
         "bootstrap": "^4.0.0-beta.2",

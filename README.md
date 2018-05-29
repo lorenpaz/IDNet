@@ -1,15 +1,53 @@
-# [IDNet]
+# IDNet
 
 <!--[Creative](http://startbootstrap.com/template-overviews/creative/) is a one page creative theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).-->
-IDNet es un framework de conexión Peer-To-Peer de bases de datos distribuidas e independientes.
+IDNet es un framework de conexión P2P de bases de datos distribuidas e independientes.
 
+[![Licencia Github](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackrockDigital/startbootstrap-creative/master/LICENSE)
 ## Resumen
 
-<!--[![Creative Preview](https://startbootstrap.com/assets/img/templates/creative.jpg)](https://blackrockdigital.github.io/startbootstrap-creative/) -->
+“IDNet” es un framework consistente en la creación de una red de conexión Peer-to-Peer
+(P2P) para conectar bases de datos independientes y distribuidas, es decir, sin necesidad de
+discriminar la estructura interna de la misma y sin estar centralizadas las bases de datos.
+El prototipo está diseñado con el objetivo de soportar la creación de Organizaciones Vir-
+tuales, en las cuáles los usuarios pueden obtener información de las bases de datos de sus
+vecinos, pudiendo realizar consultas a la base de datos vecina. La información sensible trans-
+mitida entre los vecinos se encuentra securizada mediante una capa de seguridad inherente
+al framework.
+La red P2P está implementada mediante contenedores Docker en Cloud mediante el pro-
+veedor Amazon Web Services, aportándonos elasticidad y capacidad de respuesta a la misma.
 
-**[View Live Preview](https://blackrockdigital.github.io/startbootstrap-creative/)**
+<!--[![Creative Preview](https://startbootstrap.com/assets/img/templates/creative.jpg)](https://blackrockdigital.github.io/startbootstrap-creative/) 
 
-## Estado del proyecto
+**[View Live Preview](https://blackrockdigital.github.io/startbootstrap-creative/)**-->
+
+## Descripción general
+
+IDNet es, a priori, un modelo de red que permite conectar bases de datos e intercambiar
+querys de forma anónima y segura. Sus principales bazas son el uso de criptografía simétrica
+y asimétrica así como la implementación de protocolos propios de conexión y enrutado.
+La red está organizada con una topología P2P que permite el anonimato y aumenta la
+seguridad de las comunicaciones. Del mismo modo, está implementada para favorecer el
+uso de “Organizaciones Virtuales”, un concepto que permitirá a IDNet establecer ámbitos
+privados. Todo ello soportado sobre una estructura en cloud.
+
+### Ventajas
+
+IDNet conlleva una serie de ventajas:
+* Distribución Geográfica. IDNet permite que dos bases de datos se puedan comuni-
+car independientemente de dónde se sitúen físicamente. El uso de AWS favorece está
+“independencia” geográfica.
+* Arquitectura de la Base de Datos. A través de IDNet, dos bases de datos pueden
+comunicarse independientemente de la arquitectura interna que usen o de la represen-
+tación de los propios datos.
+* Seguridad de las comunicaciones. Los datos intercambiados pueden ser de un nivel
+de sensibilidad extremadamente alto. Por ello, IDNet se vale de técnicas de cifrado
+simétrico y asimétrico para asegurar la privacidad de los datos y la legitimidad de las
+comunicaciones.
+* Anonimato de los nodos. Los nodos Cliente no son conscientes nunca de las direc-
+ciones IP del resto de nodos, esto se asegura con un sistema eficaz de alias.
+
+
 <!--
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackrockDigital/startbootstrap-creative/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/startbootstrap-creative.svg)](https://www.npmjs.com/package/startbootstrap-creative)
@@ -17,7 +55,7 @@ IDNet es un framework de conexión Peer-To-Peer de bases de datos distribuidas e
 [![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-creative/status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-creative)
 [![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-creative/dev-status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-creative?type=dev)-->
 
-## Descargar e instalación
+## Descarga e instalación
 <!--
 To begin using this template, choose one of the following options to get started:
 * [Download the latest release on Start Bootstrap](https://startbootstrap.com/template-overviews/creative/)
@@ -29,11 +67,11 @@ To begin using this template, choose one of the following options to get started
 
 ### Uso básico
 
-After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
+
 
 ### Uso avanzado
 
-After installation, run `npm install` and then run `gulp dev` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+
 <!--
 #### Gulp Tasks
 
@@ -54,6 +92,11 @@ You can hire Start Bootstrap to create a custom build of any template, or create
 -->
 ## Sobre nosotros
 
+Los integrantes del presente Trabajo de Fin de Grado en Ingeniería Informática son:
+* ![Lorenzo José de la Paz Suárez](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
+
+*  ![Juan Mas Aguilar](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
 <!--Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
 
 * https://startbootstrap.com

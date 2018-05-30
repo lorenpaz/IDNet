@@ -1,515 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>IDNet</title>
+  <title>IDNet</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="Web/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="Web/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom fonts for this template -->
-    <link href="Web/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+  <!-- Custom fonts for this template -->
+  <link href="Web/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+    rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
+    rel='stylesheet' type='text/css'>
 
-    <!-- Plugin CSS -->
-    <link href="Web/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <!-- Plugin CSS -->
+  <link href="Web/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="Web/css/creative.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="Web/css/creative.css" rel="stylesheet">
 
-  </head>
+</head>
 
-  <body id="page-top">
+<body id="page-top">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Trabajo de Fin de Grado</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#proyecto">Nuestro proyecto</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#informacion">Resumen</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#ejemplos">Ejemplos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Quiénes Somos</a>
-            </li>
-          </ul>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Trabajo de Fin de Grado</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#proyecto">Resumen</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#informacion">Descripción General</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#ejemplos">Ejemplos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Quiénes Somos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white d-flex">
+    <div class="container my-auto">
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <h1 class="text-uppercase">
+            <strong>IDNet</strong>
+          </h1>
+          <hr>
+        </div>
+        <div class="col-lg-8 mx-auto">
+          <p class="text-faded mb-5">Framework de conexión P2P de bases de datos distribuidas e independientes</p>
+          <a class="btn btn-primary btn-xs js-scroll-trigger" href="#proyecto">Conoce más nuestro trabajo</a>
         </div>
       </div>
-    </nav>
+    </div>
+  </header>
 
-    <header class="masthead text-center text-white d-flex">
-      <div class="container my-auto">
-        <div class="row">
-          <div class="col-lg-10 mx-auto">
-            <h1 class="text-uppercase">
-              <strong>IDNet</strong>
-            </h1>
-            <hr>
+  <section class="bg-primary" id="proyecto">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="section-heading text-white">Resumen</h2>
+          <hr class="light my-4">
+          <p class="text-faded mb-4">“IDNet” es un framework consistente en la creación de una red de conexión Peer-to-Peer(P2P) para conectar bases
+            de datos independientes y distribuidas, es decir, sin necesidad de discriminar la estructura interna de la misma
+            y sin estar centralizadas las bases de datos. El prototipo está diseñado con el objetivo de soportar la creación
+            de Organizaciones Vir- tuales, en las cuáles los usuarios pueden obtener información de las bases de datos de
+            sus vecinos, pudiendo realizar consultas a la base de datos vecina. La información sensible trans- mitida entre
+            los vecinos se encuentra securizada mediante una capa de seguridad inherente al framework. La red P2P está implementada
+            mediante contenedores Docker en Cloud mediante el pro- veedor Amazon Web Services, aportándonos elasticidad y
+            capacidad de respuesta a la misma.</p>
+          <a class="btn btn-light btn-xl js-scroll-trigger" href="#informacion">Más información!</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="informacion">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading">Descripción general</h2>
+          <hr class="my-4">
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="service-box mt-5 mx-auto">
+            <i class="fa fa-4x fa-database text-primary mb-3 sr-icons"></i>
+            <h3 class="mb-3">Bases de datos</h3>
+            <p class="text-muted mb-0">Intercambio de información entre bases de datos relacionales -MySQL- y no relacionales -MongoDB-</p>
           </div>
-          <div class="col-lg-8 mx-auto">
-            <p class="text-faded mb-5">Framework de conexión P2P de bases de datos distribuidas e independientes</p>
-            <a class="btn btn-primary btn-xs js-scroll-trigger" href="#proyecto">Conoce más nuestro trabajo</a>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="service-box mt-5 mx-auto">
+            <i class="fa fa-4x fa-connectdevelop text-primary mb-3 sr-icons"></i>
+            <h3 class="mb-3">Peer-to-Peer</h3>
+            <p class="text-muted mb-0">Los nodos GateKeeper forman un prototipo de red P2P anónimizada y securizada</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="service-box mt-5 mx-auto">
+            <i class="fa fa-4x fa-sitemap text-primary mb-3 sr-icons"></i>
+            <h3 class="mb-3">Organizaciones Virtuales</h3>
+            <p class="text-muted mb-0">Puestas las bases para el soporte de Organizaciones Virtuales</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="service-box mt-5 mx-auto">
+            <i class="fa fa-4x fa-cloud text-primary mb-3 sr-icons"></i>
+            <h3 class="mb-3">Cloud y Docker</h3>
+            <p class="text-muted mb-0">Los nodos GateKeeper se encuentran desplegados en contenedores Docker en la nube</p>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </section>
 
-    <section class="bg-primary" id="proyecto">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-white">Resumen</h2>
-            <hr class="light my-4">
-            <p class="text-faded mb-4">“IDNet” es un framework consistente en la creación de una red de conexión Peer-to-Peer(P2P) para conectar bases de datos independientes y distribuidas, es decir, sin necesidad de
-discriminar la estructura interna de la misma y sin estar centralizadas las bases de datos.
-El prototipo está diseñado con el objetivo de soportar la creación de Organizaciones Vir-
-tuales, en las cuáles los usuarios pueden obtener información de las bases de datos de sus
-vecinos, pudiendo realizar consultas a la base de datos vecina. La información sensible trans-
-mitida entre los vecinos se encuentra securizada mediante una capa de seguridad inherente
-al framework.
-La red P2P está implementada mediante contenedores Docker en Cloud mediante el pro-
-veedor Amazon Web Services, aportándonos elasticidad y capacidad de respuesta a la misma.</p>
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="#informacion">Más información!</a>
-          </div>
-        </div>
-      </div>
-    </section>
+  <section class="bg-dark text-white">
+    <div class="container text-center">
+      <h2 class="mb-4">Nuestro código fuente</h2>
+      <a class="btn btn-light btn-xl sr-button" href="https://github.com/lorenpaz/IDNet/tree/master">¡Accede ahora!</a>
+    </div>
+  </section>
 
-    <section id="informacion">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2 class="section-heading">Descripción general</h2>
-            <hr class="my-4">
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">Nuestros intereses</h3>
-              <p class="text-muted mb-0">El por qué a nuestra elección del proyecto</p>
+  <section class="p-0" id="ejemplos">
+    <div class="container-fluid p-0">
+      <div class="row no-gutters popup-gallery">
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/PantallaPrincipal.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/PantallaPrincipal.png" alt="Pantalla principal">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Pantalla principal
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">Nuestros datos</h3>
-              <p class="text-muted mb-0">Podrás obtener toda la información relacionada con los datos que hemos estudiado</p>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/adiccionBBDD.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/adiccionBBDD.png" alt="Imagen de la adicción de una base de datos a la aplicación">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Adicción de una base de datos a la aplicación
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-heart text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">Nuestro diseño</h3>
-              <p class="text-muted mb-0">En este apartado explicamos de manera detallada el diseño de nuestro programa</p>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/borradoBBDD.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/borradoBBDD.png" alt="Imagen del borrado de una base de datos a la aplicación">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Borrado de una base de datos a la aplicación
+                </div>
+              </div>
             </div>
-          </div>
-           <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">¿Cómo usarla?</h3>
-              <p class="text-muted mb-0">Explicación del uso de nuestro programa</p>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/establecerConexion.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/establecerConexion.png" alt="Imagen del establecimiento de una conexión">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Establecimiento de una conexión
+                </div>
+              </div>
             </div>
-          </div>
-       </div>
-      </div>
-    </section>
-
-    <section class="bg-dark text-white">
-      <div class="container text-center">
-        <h2 class="mb-4">NUestro código fuente</h2>
-        <a class="btn btn-light btn-xl sr-button" href="https://github.com/lorenpaz/IDNet/tree/master">¡Accede ahora!</a>
-      </div>
-    </section>
-
-    <section class="p-0" id="ejemplos">
-      <div class="container-fluid p-0">
-        <div class="row no-gutters popup-gallery">
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/numeroDeAtaquesPorAño.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/numeroDeAtaquesPorAño.png" alt="Estudio número de ataques por año a nivel global">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Estudio sobre el número de ataques por año a nivel global
-                  </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/resCon.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/resCon.png" alt="Imagen del resultado del establecimiento de la conexión">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Resultado del establecimiento de la conexión
                 </div>
               </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/20paisesMasAtacados.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/20paisesMasAtacados.png" alt="Los 20 países más atacados">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Estudio de los 20 países más atacados
-                  </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/solicitudEsquemaBBDD.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/solicitudEsquemaBBDD.png" alt="Imagen de la solicitud del esquema de una base de datos">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Solicitud del esquema de una base de datos de un vecino
                 </div>
               </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/VictimasDeAtaquesTerroristas.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/VictimasDeAtaquesTerroristas.png" alt="Estudio del número de víctimas a nivel global">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Estudio del número de víctimas a nivel global
-                  </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/seleccionBBDD.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/seleccionBBDD.png" alt="Imagen del resultado de la solicitud del esquema de una base de datos de un vecino">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Resultado de la solicitud del esquema de una base de datos de un vecino
                 </div>
               </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/EstudioPaisesAtacadosSpain.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/EstudioPaisesAtacadosSpain.png" alt="Estudio sobre las armas más comunes">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Evolución del número de ataques en España
-                  </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/definirConsulta.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/definirConsulta.png" alt="Consulta realizada a la base de datos de un vecino">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Consulta realizada a la base de datos de un vecino
                 </div>
               </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/GruposMasAgresivos.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/GruposMasAgresivos.png" alt="Estudio sobre los grupos más agresivos">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Estudio sobre los grupos más agresivos
-                  </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/usuariosOV.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/usuariosOV.png" alt="Imagen de la vista de los usuarios que pertenecen a la Organización Virtual">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                  Vista de los usuarios que pertenecen a la Organización Virtual
                 </div>
               </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/EstudioCiudadesAtacadasMadrid.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/EstudioCiudadesAtacadasMadrid.png" alt="Evolución del número de ataques en Madrid">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Evolución del número de ataques en Madrid
-                  </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/dialogomensajeria001a.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/dialogomensajeria001a.png" alt="Imagen de un mensaje 001a transmitido por la red">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                    Mensaje 001a transmitido por la red
                 </div>
               </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/20ciudadesMasAtacadas.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/20ciudadesMasAtacadas.png" alt="Las 20 ciudades más atacadas">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Las 20 ciudades más atacadas
-                  </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="Web/img/portfolio/fullsize/ejemploMensajeria006.png">
+            <img class="img-fluid" src="Web/img/portfolio/thumbnails/ejemploMensajeria006.png" alt="Imagen de un mensaje 006 transmitido por la red">
+            <div class="portfolio-box-caption">
+              <div class="portfolio-box-caption-content">
+                <div class="project-category text-faded">
+                  Ejemplo
+                </div>
+                <div class="project-name">
+                    Mensaje 006 transmitido por la red
                 </div>
               </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/20paisesMenosAtacados.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/20paisesMenosAtacados.png" alt="Los 20 países menos atacados">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Los 20 países menos atacados
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/20ciudadesMenosAtacadas.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/20ciudadesMenosAtacadas.png" alt="Las 20 ciudades menos atacadas">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Las 20 ciudades menos atacadas
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/EstudioArmasMasComunes.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/EstudioArmasMasComunes.png" alt="Los tipos de arma más comunes">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Los tipos de arma más comunes
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/EstudioCiudadesAtacadasPorDecadas.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/EstudioCiudadesAtacadasPorDecadas.png" alt="Las 5 ciudades más atacadas por década (desde 1970 hasta 2016)">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                    Las 5 ciudades más atacadas por década (desde 1970 hasta 2016)
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/EstudioPaisesAtacadosPorDecadas.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/EstudioPaisesAtacadosPorDecadas.png" alt="Los 5 países más atacados por década (desde 1970 hasta 2016)">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                   Los 5 países más atacados por década (desde 1970 hasta 2016)
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/GruposMasAgresivosPorCiudad.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/GruposMasAgresivosPorCiudad.png" alt="Grupos terroristas más agresivos en Madrid">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                   Grupos terroristas más agresivos en Madrid
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/GruposMasAgresivosPorPais.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/GruposMasAgresivosPorPais.png" alt="Grupos terroristas más agresivos en España">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                   Grupos terroristas más agresivos en España
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/ObjetivosMasComunes.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/ObjetivosMasComunes.png" alt="Objetivos más comunes de ataques terroristas">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                   Objetivos más comunes de ataques terroristas
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/VictimasPorPais.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/VictimasPorPais.png" alt="Objetivos más comunes de ataques terroristas">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                   Número de victimas por país (aquellos con mayor número de victimas)
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-	  <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="Web/img/portfolio/fullsize/VictimasDeAtaquesTerroristas.png">
-              <img class="img-fluid" src="Web/img/portfolio/thumbnails/VictimasDeAtaquesTerroristas.png" alt="Numero de victimas de ataques terroristas">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Ejemplo
-                  </div>
-                  <div class="project-name">
-                   Número de victimas de ataques terroristas
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
 
-    <section id="documentacion">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading">Documentación</h2>
-            <hr class="my-8">
-          </div>
+  <section id="documentacion">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="section-heading">Documentación</h2>
+          <hr class="my-8">
         </div>
-        <div class="row rowDocumentacion">
-		<h3>Nuestros intereses</h3>
-		<div>Partiendo de un trabajo sobre el aprovechamiento de los recursos del Cloud Computing y el Big Data nos hemos interesado por conocer el estado del terrorismo en los últimos años. Nuestro objetivo va más allá de un sencillo resumen estadístico sino que pretendemos demostrar y evidenciar el potencial de estas nuevas tecnologías. En particular, con estos resultados queremos demostrar la capacidad de extraer tendencias terroristas. Con más datos y recursos de procesamiento se podría mejorar exponencialmente el estudio, previsión y los mecanismos de prevención contra estos terribles eventos.</b></div>
-	</div>
-        <div class="row rowDocumentacion">
-		<h3>Nuestros datos</h3>
-		<div>Los datos son información sobre <b>ataques terroristas ocurridos entre 1970 y 2016.</b>Provienen de una base de datos global disponible en la página web Kaggle. Podéis acceder a ella a través de este <a href="https://www.kaggle.com/START-UMD/gtd">enlace</a>.</div>
-        </div>
-        <div class="row rowDocumentacion">
-        	<h3>Nuestro diseño</h3>
-		<div>Nos hemos centrado en la extracción de datos de un fichero csv que se puede descargar de la página web mencionada anteriormente. En éĺ, aparecen registros de los ataques terroristas llevados a cabo desde 1970 hasta la actualidad (2016). El fichero tiene más de 100 campos y más de 170.000 entradas. En cuanto a nuestra herramienta, consiste en un solo script de Python a través del cual se pueden pedir diversos estudios sobre el csv previamente mencionado. Para mayor comodidad, hemos desarrollado una copia del script que, en vez de generar los resultados en otro archivo csv los muestra a través de una gráfica. Actualmente la herramienta realiza más de 15 estudios distintos, algunos de los cuáles están mostrados en la sección anterior. Para extraer los datos utilizamos Spark, más concretamente los Dataframe que la librería pypspark.sql ofrece.No obstante, para la realización de las gráficas, dichos Dataframes son traducidos a Dataframes de la librería pandas y representados gráficamente por la librería de Python matplotlib. Spark se ha ejecutado montado encima de una máquina virtual Ubuntu en Amazon Web Services. </div>
-        </div>
-        <div class="row rowDocumentacion">
-        	<h3>¿Cómo usarla?</h3>
-		<div><p>Una vez realizada la descarga, ejecutar el archivo python con spark 
-			previamente instalado. Por argumento deberá introducir el estudio que 
-			quiere realizar. Los estudios que hemos realizado son los siguientes: <br></p>
-			<ul>
-				<li>Número de ataques por año</li>
-				<li>Países más atacados</li>
-				<li>Países menos atacados</li>
-				<li>Ciudades más atacadas</li>
-				<li>Ciudades menos atacadas</li>
-				<li>Número de ataques ocurridos en un país concreto</li>
-				<li>Número de ataques ocurridos en una ciudad concreta</li>
-				<li>Países más atacados por década</li>
-				<li>Ciudades más atacadas por década</li>
-				<li>Tipos de armas más comunes</li>
-				<li>Grupos terroristas más agresivos</li>
-				<li>Grupos terroristas que más han atacado un país</li>
-				<li>Grupos terroristas que más han atacado una ciudad</li>
-				<li>Estudio de víctimas</li>
-				<li>Tipo de armas más común por grupo</li>
-				<li>Objetivo más común</li>
-			</ul>
-		</div>
-        </div>
-	<div class="row rowDocumentacion">
-			<h3>¿Qué mejoraríamos?</h3>
-			<div>Algunas de las mejoras que incluiríamos a la aplicación sería aumentar el número de consultas para extraer una mejor información de los datos y poder desarrollar un estudio más amplio.
-				A partir de esta información obtenida hacer estudio de predicciones para poder prevenir o predecir algún ataque en el futuro.
-				
-			</div>
-        </div>    
       </div>
-    </section>
-
-    <section class="bg-primary" id="contact">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-white">Quiénes somos</h2>
-            <hr class="my-4">
-            <p class="mb-5 text-white">Integrantes del Trabajo de Fin de Grado en Ingeniería Informática bajo el título 'IDNet' de la Facultad de Informática de la Universidad Complutense de Madrid y bajo la dirección de José Luis Vázquez-Poletti </p>
-          </div>
+      <div class="row rowDocumentacion">
+        <h3>Bases de datos</h3>
+        <div></b>
         </div>
-	<div class="row">
-		<ul class="list-group" id="contact-list">
-                    <li class="list-group-item">
-                        <div class="col-xs-12 col-sm-3">
-                            <img src="Web/img/Lorenzo.jpg" alt="Lorenzo Jose de la Paz" class="img-responsive img-circle" />
-                        </div>
-                        <div class="col-xs-12 col-sm-9">
-                            <span class="name">Lorenzo José de la Paz</span><br/>
-                            <span class="fa fa-comments text-muted c-info" data-toggle="tooltip" title="lorenpaz@ucm.es"></span>
-                            <span class="visible-xs"> <span class="text-muted">lorenpaz@ucm.es</span><br/></span>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="col-xs-12 col-sm-3">
-                            <img src="Web/img/Juan.jpg" alt="Juan Mas" class="img-responsive img-circle" />
-                        </div>
-                        <div class="col-xs-12 col-sm-9">
-                            <span class="name">Juan Mas</span><br/>
-                            <span class="fa fa-comments text-muted c-info" data-toggle="tooltip" title="jumas@ucm.es"></span>
-                            <span class="visible-xs"> <span class="text-muted">jumas@ucm.es</span><br/></span>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                </ul>  
-	</div>
       </div>
-    </section>
+      <div class="row rowDocumentacion">
+        <h3>Peer-to-Peer</h3>
+        <div></div>
+      </div>
+      <div class="row rowDocumentacion">
+        <h3>Organizaciones Virtuales</h3>
+        <div>
+          Una Organización Virtual es un conjunto de individuos independientes que comparten información a través de una red. Hemos
+          realizado un prototipo de Organización Virtual. Las bases para el despliegue de Organizaciones Virtuales en una
+          continuación del proyecto están aseguradas.
+        </div>
+      </div>
+      <div class="row rowDocumentacion">
+        <h3>Cloud y Docker</h3>
+        <div>
+          <p>Los nodos desplegados en contenedores Docker en la nube -hemos elegido Amazon Web Services- se asemejan a la siguiente
+            imagen:
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="Web/vendor/jquery/jquery.min.js"></script>
-    <script src="Web/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <img src="Web/img/redIDNet.gif" alt="Imagen de la red IDNet" />
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Plugin JavaScript -->
-    <script src="Web/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="Web/vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="Web/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <section class="bg-primary" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="section-heading text-white">Quiénes somos</h2>
+          <hr class="my-4">
+          <p class="mb-5 text-white">Integrantes del Trabajo de Fin de Grado en Ingeniería Informática bajo el título 'IDNet' de la Facultad de Informática
+            de la Universidad Complutense de Madrid y bajo la dirección de José Luis Vázquez-Poletti </p>
+        </div>
+      </div>
+      <div class="row">
+        <ul class="list-group" id="contact-list">
+          <li class="list-group-item">
+            <div class="col-xs-12 col-sm-3">
+              <img id="lorenzo" src="Web/img/Lorenzo.png" alt="Lorenzo Jose de la Paz" class="img-responsive img-circle" />
+            </div>
+            <div class="col-xs-12 col-sm-9">
+              <span class="name">Lorenzo José de la Paz Suárez</span>
+              <br/>
+              <span class="fa fa-comments text-muted c-info" data-toggle="tooltip" title="lorenpaz@ucm.es"></span>
+              <span class="visible-xs">
+                <span class="text-muted">lorenpaz@ucm.es</span>
+                <br/>
+              </span>
+            </div>
+            <div class="clearfix"></div>
+          </li>
+          <li class="list-group-item">
+            <div class="col-xs-12 col-sm-3">
+              <img src="Web/img/Juan.png" alt="Juan Mas" class="img-responsive img-circle" />
+            </div>
+            <div class="col-xs-12 col-sm-9">
+              <span class="name">Juan Mas Aguilar</span>
+              <br/>
+              <span class="fa fa-comments text-muted c-info" data-toggle="tooltip" title="jumas@ucm.es"></span>
+              <span class="visible-xs">
+                <span class="text-muted">jumas@ucm.es</span>
+                <br/>
+              </span>
+            </div>
+            <div class="clearfix"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <!-- Custom scripts for this template -->
-    <script src="Web/js/creative.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="Web/vendor/jquery/jquery.min.js"></script>
+  <script src="Web/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  </body>
+  <!-- Plugin JavaScript -->
+  <script src="Web/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="Web/vendor/scrollreveal/scrollreveal.min.js"></script>
+  <script src="Web/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="Web/js/creative.min.js"></script>
+
+</body>
 
 </html>

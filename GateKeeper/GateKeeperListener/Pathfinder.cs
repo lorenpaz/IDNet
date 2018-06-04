@@ -93,6 +93,7 @@ namespace GateKeeperListener
                         else{
                             respuesta = "El cliente que se ha intentado conectar no es legítimo";
                             log.Error(respuesta);
+			    return "";
                         }
 
 						esProtocolo = true;

@@ -253,7 +253,7 @@ namespace IDNetSoftware
          * */
         private bool SolicitarVecinos()
         {
-            /*  string msg, response;
+              string msg, response;
 
                 //Proceso el envio
                 PostBoxGK post = new PostBoxGK(this._user, Constants.GATEKEEPER,
@@ -270,8 +270,8 @@ namespace IDNetSoftware
                     return true;
                 }
 
-              return false;*/
-            return true;
+              return false;
+            //return true;
         }
 
 

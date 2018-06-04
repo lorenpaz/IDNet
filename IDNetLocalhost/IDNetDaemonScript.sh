@@ -30,13 +30,15 @@ stop()
         fi
     else
         echo "IDNetDaemon is not running"
+	rm -rf ${LOCK_FILE}
+	rm -rf ${LOG_FOLDER}
     fi
 }
 
 start()
 {
     PATH="$(pwd)/${PATH_NAME}${PROGRAM_NAME}"
-    echo "\n Arrancando el servicio "${PROGRAM_NAME} " desde el directorio: "$PATH
+    echo "Arrancando el servicio "${PROGRAM_NAME} " desde el directorio: "$PATH
      /usr/bin/mono-service -l:${LOCK_FILE} -n:${PROGRAM_NAME} ${PATH}.exe
     echo "Service ${PROGRAM_NAME} started"
 }

@@ -29,6 +29,8 @@ stop()
         fi
     else
         echo "IDNetDaemon is not running"
+	rm -rf ${LOCK_FILE}
+	rm -rf ${LOG_FOLDER}
     fi
 }
 

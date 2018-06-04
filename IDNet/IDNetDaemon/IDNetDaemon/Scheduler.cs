@@ -49,13 +49,13 @@ namespace IDNetDaemon
             Usuario user = new Usuario();
             RegisterClient register = new RegisterClient(user);
             log.Info("Comprobando la conexión con el GateKeeper");
-            if (register.comprobarConexion(Constants.GATEKEEPER))
+           /* if (register.comprobarConexion(Constants.GATEKEEPER))
             {
                 log.Info("Registrado en el GateKeeper");
                 register.StartClient(Constants.GATEKEEPER);
             }else{
                 log.Info("No se ha registrado el cliente en el GaTeKeeper");
-            }
+            }*/
             //Empieza a escuchar el demonio
             log.Info("Comienzamos a arrancar el servidor IDNetDaemon");
             Server s = new Server();

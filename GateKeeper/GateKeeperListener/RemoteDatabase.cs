@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using MySql.Data.MySqlClient;
 using log4net;
 
@@ -30,6 +30,7 @@ namespace GateKeeperListener
 		{
 			Random r = new Random();
 			bool ok = false;
+            string codigo = null;
 			try
 			{
 				//Connection
@@ -53,7 +54,7 @@ namespace GateKeeperListener
 				while (dataReader.Read())
 				{
 					string usuario = (String)dataReader["username"];
-					string codigo = (String)dataReader["code"];
+					codigo = (String)dataReader["code"];
                     ok = codigo.Equals(code);
 				}
 
@@ -65,7 +66,11 @@ namespace GateKeeperListener
 			}
 			catch (MySqlException)
 			{
-                log.Error("Ha habido un error con la comprobación del código de seguridad");
+                log.Error("Ha habido un error con la comprobacion del codigo de seguridad");
+                if(codigo != null)
+                {
+                    log.Error("Codigo recibido:"+code+".Codigo legitimo:"+codigo);
+                }
 			}
 
 			return ok;

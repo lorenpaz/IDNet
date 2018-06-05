@@ -2,7 +2,7 @@
 
 IDNet es un framework de conexión P2P de bases de datos distribuidas e independientes.
 
-[icono IDNet](/iconoIDNet.png)
+![icono IDNet](/iconoIDNet.png)
 
 “IDNet” es un framework consistente en la creación de una red de conexión Peer-to-Peer
 (P2P) para conectar bases de datos independientes y distribuidas, es decir, sin necesidad de

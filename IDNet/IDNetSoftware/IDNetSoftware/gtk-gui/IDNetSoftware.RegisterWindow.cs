@@ -73,16 +73,16 @@ namespace IDNetSoftware
 			this.hbox4 = new global::Gtk.HBox();
 			this.hbox4.Name = "hbox4";
 			this.hbox4.Homogeneous = true;
-			this.hbox4.Spacing = 6;
+			this.hbox4.Spacing = -57;
+			this.hbox4.BorderWidth = ((uint)(3));
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.labelUsuario = new global::Gtk.Label();
 			this.labelUsuario.Name = "labelUsuario";
 			this.labelUsuario.LabelProp = global::Mono.Unix.Catalog.GetString("Usuario:");
+			this.labelUsuario.Justify = ((global::Gtk.Justification)(2));
 			this.hbox4.Add(this.labelUsuario);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.labelUsuario]));
 			w3.Position = 0;
-			w3.Expand = false;
-			w3.Fill = false;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.entryUser = new global::Gtk.Entry();
 			this.entryUser.CanFocus = true;
@@ -92,6 +92,7 @@ namespace IDNetSoftware
 			this.hbox4.Add(this.entryUser);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.entryUser]));
 			w4.Position = 1;
+			w4.Fill = false;
 			this.vbox4.Add(this.hbox4);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hbox4]));
 			w5.Position = 2;
@@ -101,16 +102,16 @@ namespace IDNetSoftware
 			this.hbox5 = new global::Gtk.HBox();
 			this.hbox5.Name = "hbox5";
 			this.hbox5.Homogeneous = true;
-			this.hbox5.Spacing = 6;
+			this.hbox5.Spacing = -57;
+			this.hbox5.BorderWidth = ((uint)(3));
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.labelContrasenia = new global::Gtk.Label();
 			this.labelContrasenia.Name = "labelContrasenia";
 			this.labelContrasenia.LabelProp = global::Mono.Unix.Catalog.GetString("Contraseña:");
+			this.labelContrasenia.Justify = ((global::Gtk.Justification)(2));
 			this.hbox5.Add(this.labelContrasenia);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.labelContrasenia]));
 			w6.Position = 0;
-			w6.Expand = false;
-			w6.Fill = false;
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.entryPassword = new global::Gtk.Entry();
 			this.entryPassword.CanFocus = true;
@@ -121,25 +122,24 @@ namespace IDNetSoftware
 			this.hbox5.Add(this.entryPassword);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.entryPassword]));
 			w7.Position = 1;
+			w7.Fill = false;
 			this.vbox4.Add(this.hbox5);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hbox5]));
 			w8.Position = 3;
-			w8.Expand = false;
-			w8.Fill = false;
 			// Container child vbox4.Gtk.Box+BoxChild
 			this.hbox7 = new global::Gtk.HBox();
 			this.hbox7.Name = "hbox7";
 			this.hbox7.Homogeneous = true;
-			this.hbox7.Spacing = 6;
+			this.hbox7.Spacing = -57;
+			this.hbox7.BorderWidth = ((uint)(3));
 			// Container child hbox7.Gtk.Box+BoxChild
 			this.labelRContrasenia = new global::Gtk.Label();
 			this.labelRContrasenia.Name = "labelRContrasenia";
 			this.labelRContrasenia.LabelProp = global::Mono.Unix.Catalog.GetString("Repetir contraseña:");
+			this.labelRContrasenia.Justify = ((global::Gtk.Justification)(2));
 			this.hbox7.Add(this.labelRContrasenia);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox7[this.labelRContrasenia]));
 			w9.Position = 0;
-			w9.Expand = false;
-			w9.Fill = false;
 			// Container child hbox7.Gtk.Box+BoxChild
 			this.entryPasswordR = new global::Gtk.Entry();
 			this.entryPasswordR.CanFocus = true;
@@ -150,6 +150,7 @@ namespace IDNetSoftware
 			this.hbox7.Add(this.entryPasswordR);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox7[this.entryPasswordR]));
 			w10.Position = 1;
+			w10.Fill = false;
 			this.vbox4.Add(this.hbox7);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hbox7]));
 			w11.Position = 4;
@@ -159,6 +160,7 @@ namespace IDNetSoftware
 			this.hbox6 = new global::Gtk.HBox();
 			this.hbox6.Name = "hbox6";
 			this.hbox6.Spacing = 6;
+			this.hbox6.BorderWidth = ((uint)(11));
 			// Container child hbox6.Gtk.Box+BoxChild
 			this.buttonIniciarSesion = new global::Gtk.Button();
 			this.buttonIniciarSesion.CanFocus = true;
@@ -197,8 +199,8 @@ namespace IDNetSoftware
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 330;
-			this.DefaultHeight = 369;
+			this.DefaultWidth = 425;
+			this.DefaultHeight = 397;
 			this.Show();
 			this.buttonIniciarSesion.Clicked += new global::System.EventHandler(this.OnButtonIniciarSesionClicked);
 			this.buttonRegistrarse.Clicked += new global::System.EventHandler(this.OnButtonRegistrarseClicked);

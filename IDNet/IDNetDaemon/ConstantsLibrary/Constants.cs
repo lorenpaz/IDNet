@@ -143,7 +143,7 @@ namespace ConstantsLibrary
 		public static string ACKSELECT = "006";
 
         //IP en AWS
-        public const string GATEKEEPER = @"18.130.70.74";
+        public const string GATEKEEPER = @"35.178.12.59";
         //public static string GATEKEEPER = @"192.168.100.102";
         //public static string GATEKEEPER = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 

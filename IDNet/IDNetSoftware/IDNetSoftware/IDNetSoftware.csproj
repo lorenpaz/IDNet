@@ -139,6 +139,8 @@
     <Compile Include="gtk-gui\IDNetSoftware.RegisterWindow.cs" />
     <Compile Include="DeleteDatabaseDialog.cs" />
     <Compile Include="gtk-gui\IDNetSoftware.DeleteDatabaseDialog.cs" />
+    <Compile Include="LaunchIDNetDaemonWindow.cs" />
+    <Compile Include="gtk-gui\IDNetSoftware.LaunchIDNetDaemonWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />

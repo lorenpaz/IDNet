@@ -1,44 +1,26 @@
-Limpiar el proyecto antes de subirlo a Github please
-------------------------------------------------------------------
-ARRANCAR DAEMON:
+# IDNet
 
-- Abrir terminal en la carpeta IDNet/IDNetDaemon/IDNetDaemon/bin/debug
+IDNet es un framework de conexión P2P de bases de datos distribuidas e independientes.
 
-- Ejecutar el script que aparece:
-./IDNetDaemonScript.sh start
+[icono IDNet](/iconoIDNet.png)
 
-- Comprobar que está operativo: ps a
-- Ver la carpeta logs con la información. 
-- La carpeta log se crea cuando se lanza el demonio
+“IDNet” es un framework consistente en la creación de una red de conexión Peer-to-Peer
+(P2P) para conectar bases de datos independientes y distribuidas, es decir, sin necesidad de
+discriminar la estructura interna de la misma y sin estar centralizadas las bases de datos.
+El prototipo está diseñado con el objetivo de soportar la creación de Organizaciones Vir-
+tuales, en las cuáles los usuarios pueden obtener información de las bases de datos de sus
+vecinos, pudiendo realizar consultas a la base de datos vecina. La información sensible trans-
+mitida entre los vecinos se encuentra securizada mediante una capa de seguridad inherente
+al framework.
+La red P2P está implementada mediante contenedores Docker en Cloud mediante el pro-
+veedor Amazon Web Services, aportándonos elasticidad y capacidad de respuesta a la misma.
 
-- Terminar daemon:
-./IDNetDaemonScript.sh stop
+##Normas de uso
+
+Dentro de las carpetas IDNet-AWS-Nodo1 y IDNet-AWS-Nodo1 se encuentran los archivos de arranque para lanzar IDNetSoftware junto con IDNetDaemon a sus respectivos nodos en Amazon Web Services, en los cuáles se ejecuta el código del nodo GateKeeper.
+
+Por otro lado, en las carpetas IDNetSoftware, IDNetDaemon y GateKeeper se encuentran los códigos fuentes, tanto del nodo cliente (IDNetSoftware y IDNetDaemon) como el nodo GateKeeper.
+
+##Web de soporte
+En el siguiente link [icono IDNet](http://lorenpaz.github.io/IDNet) se encuentra la web con la información sobre el proyecto.
  
-ADVERTENCIA: si por algún casual NO ves el demonio corriendo, haz: rm /tmp/IDNetDaemon.lock
-A veces me ha pasado eso, debido a que HAY ERRORES por algún lado
-
-Cosas que funcionan:
-- Contesta al cliente PruebaClient.exe
-- Caso 005
-
-Cosas que le faltan:
-- Los SELECT hacerlos en código
-- Usuario ponga su usuario y contraseña de la bbdd. Para mongodb (por defecto no hay) y para mysql
-- EL servidor y el cliente actuen con SSL. Ahora son sockets normales
-- Los casos 004 y 006. 
-Entre otras cosas jaja
--------------------------------------------------------------
-PruebaClient.exe
-
-Es una prueba que envia un mensaje de tipo 002 con origen,destino,tipoBBDD,nombreBBDD,etc
-Funciona! Lo probé con mysql (debe de estar corriendo el demonio, y la contraseña de la BBDD debes de ponerla en el código como la mía está ahora, en PluginMysql)
-
-Corres el demonio, lanzas el cliente y verás en el log que aparece la respuesta!
------------------------------------------------------------------
-IDNETSOFTWARE
-- Funciona añadir una base de datos. Con el icono que hay en la barra  o en el menú bar Bases de datos-Añadir.
-- FUnciona modificar la base de datos
-- Checkea que los servidores MongoDB y Mysql están encendidos
-- AÑadido diálogo de error en los servidores y diálogo de conexión en las bases de datos de los neighbours
-
-

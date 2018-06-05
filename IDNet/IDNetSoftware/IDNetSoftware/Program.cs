@@ -8,7 +8,6 @@ namespace IDNetSoftware
         public static void Main(string[] args)
         {
             Application.Init();
-            Console.WriteLine("Directorio configuration:"+Constants.CONFIG);
             SplashWindow splash = new SplashWindow();
             splash.Show();
             Application.Run();

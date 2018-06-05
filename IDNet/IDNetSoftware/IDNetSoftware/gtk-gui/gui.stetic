@@ -2513,7 +2513,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="IDNetSoftware.RegisterWindow" design-size="330 369">
+  <widget class="Gtk.Window" id="IDNetSoftware.RegisterWindow" design-size="425 397">
     <property name="MemberName" />
     <property name="Title" translatable="yes">IDNet</property>
     <property name="Icon">resource:iconoIDNetSoftware</property>
@@ -2553,17 +2553,17 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           <widget class="Gtk.HBox" id="hbox4">
             <property name="MemberName" />
             <property name="Homogeneous">True</property>
-            <property name="Spacing">6</property>
+            <property name="Spacing">-57</property>
+            <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.Label" id="labelUsuario">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">Usuario:</property>
+                <property name="Justify">Center</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
@@ -2575,7 +2575,8 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
           </widget>
@@ -2590,17 +2591,17 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           <widget class="Gtk.HBox" id="hbox5">
             <property name="MemberName" />
             <property name="Homogeneous">True</property>
-            <property name="Spacing">6</property>
+            <property name="Spacing">-57</property>
+            <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.Label" id="labelContrasenia">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">Contraseña:</property>
+                <property name="Justify">Center</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
@@ -2613,32 +2614,31 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
           </widget>
           <packing>
             <property name="Position">3</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.HBox" id="hbox7">
             <property name="MemberName" />
             <property name="Homogeneous">True</property>
-            <property name="Spacing">6</property>
+            <property name="Spacing">-57</property>
+            <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.Label" id="labelRContrasenia">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">Repetir contraseña:</property>
+                <property name="Justify">Center</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
@@ -2651,7 +2651,8 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
           </widget>
@@ -2666,6 +2667,7 @@ Alumnos: Juan Mas Aguilar y Lorenzo José de la Paz Suárez</property>
           <widget class="Gtk.HBox" id="hbox6">
             <property name="MemberName" />
             <property name="Spacing">6</property>
+            <property name="BorderWidth">11</property>
             <child>
               <widget class="Gtk.Button" id="buttonIniciarSesion">
                 <property name="MemberName" />
@@ -2857,6 +2859,178 @@ mongodb</property>
           </widget>
           <packing>
             <property name="Position">1</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Window" id="IDNetSoftware.LaunchIDNetDaemonWindow" design-size="747 268">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">LaunchIDNetDaemonWindow</property>
+    <property name="Icon">resource:iconoIDNetSoftware</property>
+    <property name="WindowPosition">Center</property>
+    <child>
+      <widget class="Gtk.VBox" id="vbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.Label" id="labelInfoArranque">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Necesita arrancar IDNetDaemon.
+ Siga las siguientes intrucciones:&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+            <property name="Justify">Center</property>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="labelText1">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Abre la línea de comandos y ejecute el siguiente comando:</property>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="entryFirst">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">False</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HSeparator" id="hseparator2">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="Position">3</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label3">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">A continuación, lance el demonio mediante el siguiente comando:</property>
+          </widget>
+          <packing>
+            <property name="Position">4</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="entrySecond">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">False</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="Position">5</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HSeparator" id="hseparator1">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="Position">6</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="labelExplicacion">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Mediante los comandos ejecutados, estamos lanzando el demonio de IDNet, 
+el cuál permite a los usuarios de la Organización Virtual la conexión a nosotros
+y con ello,  a nuestras bases de datos.</property>
+          </widget>
+          <packing>
+            <property name="Position">7</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HSeparator" id="hseparator3">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="Position">8</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Homogeneous">True</property>
+            <property name="Spacing">6</property>
+            <property name="BorderWidth">3</property>
+            <child>
+              <widget class="Gtk.Button" id="buttonSalir">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">TextOnly</property>
+                <property name="Label" translatable="yes">Salir</property>
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnButtonSalirClicked" />
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="buttonOK">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">TextOnly</property>
+                <property name="Label" translatable="yes">OK</property>
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnButtonOKClicked" />
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">9</property>
+            <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>

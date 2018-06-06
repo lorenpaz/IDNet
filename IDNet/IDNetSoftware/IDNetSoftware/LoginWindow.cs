@@ -31,8 +31,15 @@ namespace IDNetSoftware
                 MostrarMensaje(Constants.MYSQL_REMOTE_LOGIN_SUCCESS);
                 Usuario.SaveConf(this._remoteDatabase.SaveUserToFile(username));
 
-                LaunchIDNetDaemonWindow launchDaemon = new LaunchIDNetDaemonWindow();
-                launchDaemon.Show();
+                //Si está lanzado el demonio
+                if (!CheckIDNetDaemon())
+                {
+                    LaunchIDNetDaemonWindow launchDaemon = new LaunchIDNetDaemonWindow();
+                    launchDaemon.Show();
+                }else{
+                    MainWindow main = new MainWindow();
+                    main.Show();
+                }
                 this.Destroy();
             }else{
                 MostrarMensaje(Constants.MYSQL_REMOTE_ERROR_INICIO_SESION);

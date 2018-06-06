@@ -4,6 +4,7 @@ PATH_NAME="IDNetDaemon/"
 PROGRAM_NAME="IDNetDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
 LOG_FOLDER="logs"
+DAEMON_PEM="configuration/*Daemon.pem"
 
 usage()
 {
@@ -21,10 +22,12 @@ stop()
 	        then
 			rm -rf ${LOCK_FILE}
 			rm -rf ${LOG_FOLDER}
+			rm -rf ${DAEMON_PEM}
 	                echo "IDNetDaemon stop"
 	        else
 			rm -rf ${LOCK_FILE}
 			rm -rf ${LOG_FOLDER}
+			rm -rf ${DAEMON_PEM}
 	                echo "Error stop demon"
         fi
     else

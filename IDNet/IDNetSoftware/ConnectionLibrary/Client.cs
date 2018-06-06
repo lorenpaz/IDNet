@@ -40,7 +40,7 @@ namespace ConnectionLibraryS
 
                     Console.WriteLine("Socket connected to {0}",
                         sender.RemoteEndPoint.ToString());
-
+                    Console.WriteLine("Mensaje a enviar:"+mensaje);
                     // Encode the data string into a byte array.
                     byte[] msg = Encoding.ASCII.GetBytes(mensaje);
 

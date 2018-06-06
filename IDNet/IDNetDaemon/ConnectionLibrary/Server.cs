@@ -63,7 +63,7 @@ namespace ConnectionLibrary
            // IPAddress ipLocal
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, Constants.GATEKEEPER_PORT);
 
-			// Create a TCP/IP socket.
+            // Create a TCP/IP socket.
 			Socket listener = new Socket(AddressFamily.InterNetwork,
 				SocketType.Stream, ProtocolType.Tcp);
 

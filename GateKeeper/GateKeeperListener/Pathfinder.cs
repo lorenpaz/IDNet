@@ -157,8 +157,9 @@ namespace GateKeeperListener
 				SocketType.Stream, ProtocolType.Tcp);
 
             Sender s = new Sender(sender);
-
+            log.Info("Enviando mensaje a la IP:"+hostname);
             s.SendEP(msg, hostname, remoteEP);
+            log.Info("Mensaje enviado a la IP:" + hostname);
         }
 
         private void CargarVecinos()

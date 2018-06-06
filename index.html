@@ -49,6 +49,9 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#ejemplos">Ejemplos</a>
           </li>
+		    <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#documentacion">Documentación</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">Quiénes Somos</a>
           </li>
@@ -327,12 +330,23 @@
       </div>
       <div class="row rowDocumentacion">
         <h3>Bases de datos</h3>
-        <div></b>
+        <div>
+          <p>
+            Nos centramos en la comunicación entre bases de datos independientes. En esta primera versión, hemos creado un entorno que es capac
+            de comunicar bases de datos de dos tipos distintos: MySQL y MongoDB.
+            
+            Nuestra aplicación permite crear componentes que compatibilicen cualquier tipo de BBDD con nuestra red de comunicación. Traducimos dinámicamente
+            la información a formato XML y JSON para transmitir la información de una BBDD al cliente que la solicita. 
+          </p>
         </div>
       </div>
       <div class="row rowDocumentacion">
         <h3>Peer-to-Peer</h3>
-        <div></div>
+        <div>
+          <p>
+            Las redes P2P son aquellas que implementan una topología en la que todos los nodos son, al mismo tiempo, cliente y servidor. Nuestra estructura implementa  preccisamente eso, favoreciendo la individualidad y anónimato de los agentes envueltos en la comunicación.
+          </p>
+        </div>
       </div>
       <div class="row rowDocumentacion">
         <h3>Organizaciones Virtuales</h3>
@@ -347,8 +361,9 @@
         <div>
           <p>Los nodos desplegados en contenedores Docker en la nube -hemos elegido Amazon Web Services- se asemejan a la siguiente
             imagen:
-
-            <img src="Web/img/redIDNet.gif" alt="Imagen de la red IDNet" />
+            <div class="container-fluid container-gif">
+              <img class="gif" src="Web/img/redIDNet.gif" alt="Imagen de la red IDNet" />  
+            </div>
           </p>
         </div>
       </div>

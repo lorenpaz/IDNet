@@ -260,3 +260,7 @@ strong {
   -o-transform: rotate(-0deg);
   transform: rotate(-0deg); 
 }
+
+.container-gif > .gif {
+	margin: 0 auto;
+}

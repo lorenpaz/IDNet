@@ -30,7 +30,7 @@ namespace GateKeeperListener
 		{
 			Random r = new Random();
 			bool ok = false;
-            string codigo = null;
+			string codigo = null;
 			try
 			{
 				//Connection
@@ -54,7 +54,7 @@ namespace GateKeeperListener
 				while (dataReader.Read())
 				{
 					string usuario = (String)dataReader["username"];
-					codigo = (String)dataReader["code"];
+					codigo = dataReader["code"].ToString();
                     ok = codigo.Equals(code);
 				}
 

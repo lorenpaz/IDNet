@@ -186,8 +186,7 @@ namespace GateKeeperListener
 				AñadirATablaRutas(doc, ip_cliente, mi_ip, 0, nom_cliente, root);
 			else
 			{
-				XmlNode p = existe[0].ParentNode;
-				p.RemoveChild(0);
+				XmlNode p = existe[0].ParentNode.RemoveChild(existe[0]);            
 				AñadirATablaRutas(doc, ip_cliente, mi_ip, 0, nom_cliente, root);
 			}
 

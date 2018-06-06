@@ -1,5 +1,11 @@
 ﻿<Properties StartupConfiguration="{E0B09AC3-21FD-46D6-A088-45A4378CC071}|Default">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GateKeeperListener/RouteXML.cs">
+    <Files>
+      <File FileName="GateKeeperListener/Pathfinder.cs" Line="122" Column="40" />
+      <File FileName="GateKeeperListener/RemoteDatabase.cs" Line="57" Column="6" />
+      <File FileName="GateKeeperListener/RouteXML.cs" Line="185" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

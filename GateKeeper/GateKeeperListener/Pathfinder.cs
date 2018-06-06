@@ -51,8 +51,6 @@ namespace GateKeeperListener
 			try{
 				clienteDestino = xDoc.GetElementsByTagName("destination")[0].InnerText;
 				clienteOrigen = xDoc.GetElementsByTagName("source")[0].InnerText;
-				codigo = xDoc.GetElementsByTagName("code")[0].InnerText;
-				ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;            
 			}
 			catch(Exception e){
 				log.Fatal("Message Fields malformed: " + e.Message + ": " + e.StackTrace, e);
@@ -79,13 +77,15 @@ namespace GateKeeperListener
 					{
 						log.Info("Actualizando estado en la tabla de rutas del cliente '"+
 						         clienteOrigen +"'");
-						
-						RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
+
+						ip_origen = xDoc.GetElementsByTagName("ip")[0].InnerText;            
+                        RouteXML.PrepararRuta(clienteOrigen, ip_origen, nIP);
 
 						log.Info(clienteOrigen + "ha realizado la conexión con exito.");
 						esProtocolo = true;
 					}               
                     else if (xDoc.GetElementsByTagName("message_type")[0].InnerText == "011")                    {
+						codigo = xDoc.GetElementsByTagName("code")[0].InnerText;
 						if (db.CheckCode(clienteOrigen, codigo)){
 							log.Info("Anunciando nombre al cliente '"+ clienteOrigen + "'");
 							respuesta = AnunciarNombresAlCliente(xDoc, content);
@@ -119,6 +119,7 @@ namespace GateKeeperListener
 					if (this._clienteDistancia[clienteDestino] == 0)
 						ip_dest = RouteXML.CargarIP(clienteDestino);
 
+					log.Info("Enviando a " + ip_dest);
                     BindSocket(ip_dest, content, clienteDestino);
                 }
                 else if (this._vecinos.Contains(clienteDestino)){

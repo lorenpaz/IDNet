@@ -119,7 +119,7 @@ namespace GateKeeperListener
 					if (this._clienteDistancia[clienteDestino] == 0)
 						ip_dest = RouteXML.CargarIP(clienteDestino);
 
-					log.Info("Enviando a " + ip_dest);
+                    log.Info("Enviando a " + ip_dest + "al puerto "+this._port);
                     BindSocket(ip_dest, content, clienteDestino);
                 }
                 else if (this._vecinos.Contains(clienteDestino)){

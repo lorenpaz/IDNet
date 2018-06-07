@@ -22,5 +22,5 @@ Dentro de las carpetas IDNet-AWS-Nodo1 y IDNet-AWS-Nodo1 se encuentran los archi
 Por otro lado, en las carpetas IDNetSoftware, IDNetDaemon y GateKeeper se encuentran los códigos fuentes, tanto del nodo cliente (IDNetSoftware y IDNetDaemon) como el nodo GateKeeper.
 
 ## Web de soporte
-En el siguiente link [icono IDNet](http://lorenpaz.github.io/IDNet) se encuentra la web con la información sobre el proyecto.
+En el siguiente [link](http://lorenpaz.github.io/IDNet) se encuentra la web con la información sobre el proyecto.
  

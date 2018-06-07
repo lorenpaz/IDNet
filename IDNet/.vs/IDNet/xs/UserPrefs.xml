@@ -1,4 +1,4 @@
-﻿<Properties StartupConfiguration="{94C5BB1B-BF80-4EF3-AA38-03FCF37D9645}|Default">
+﻿<Properties StartupConfiguration="{E446BCAE-263D-4019-A3EF-A1DBDD061D25}|Default">
   <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -7,6 +7,5 @@
   <MonoDevelop.Ide.ItemProperties.IDNetSoftware.IDNetSoftware PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.IDNetDaemon.IDNetDaemon PreferredExecutionTarget="MonoDevelop.Default" />
-  <AuthorInfo Name="Lorenzo Jose de la Paz" Email="lorenpaz@ucm.es" Copyright="TFG" Company="TFG" Trademark="TFG" />
   <MultiItemStartupConfigurations />
 </Properties>

@@ -118,7 +118,9 @@ namespace GateKeeperListener
                     //Si resulta que la distancia es 0 usamos la d_node
 					if (this._clienteDistancia[clienteDestino] == 0)
 						ip_dest = RouteXML.CargarIP(clienteDestino);
-
+                    else
+                        this._port = Constants.PORT_SENDING_TO_GATEKEEPER; 
+                    
                     log.Info("Enviando a " + ip_dest + "al puerto "+this._port);
                     BindSocket(ip_dest, content, clienteDestino);
                 }

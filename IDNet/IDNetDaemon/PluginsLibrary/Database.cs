@@ -57,75 +57,80 @@ namespace PluginsLibrary
          * */
 		private void ParseConf()
 		{
-            //Archivo a leer
-            StreamReader conFile = File.OpenText(Constants.CONF_DATABASES);
-            string line = conFile.ReadLine();
-            this._databases = new Dictionary<string, List<Tuple<string, string, string>>>();
-
-            //Voy leyendo línea por línea
-            while (line != null)
+            if (File.Exists(Constants.CONF_DATABASES))
             {
-                int i = 0;
-                bool param = true, secondParam = false, thirdParam = false;
-                string parameter = "", valor = "",usuario="",contrasenia="";
-                /*
-                 * 
-                 * database_type=database_name;
-                 * 
-                 * Ejemplos:
-                 * mysql*usuarios|pepe*contraseniaEncriptada;
-                 * mongodb*empleados;
-                 * 
-                 */
+                //Archivo a leer
+                StreamReader conFile = File.OpenText(Constants.CONF_DATABASES);
+                string line = conFile.ReadLine();
+                this._databases = new Dictionary<string, List<Tuple<string, string, string>>>();
 
-                //Leemos el parámetro
-                while (line[i] != ';')
+                //Voy leyendo línea por línea
+                while (line != null)
                 {
-                    //Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
-                    if (line[i] == '*')
+                    int i = 0;
+                    bool param = true, secondParam = false, thirdParam = false;
+                    string parameter = "", valor = "", usuario = "", contrasenia = "";
+                    /*
+                     * 
+                     * database_type=database_name;
+                     * 
+                     * Ejemplos:
+                     * mysql*usuarios|pepe*contraseniaEncriptada;
+                     * mongodb*empleados;
+                     * 
+                     */
+
+                    //Leemos el parámetro
+                    while (line[i] != ';')
                     {
-                        param = false;
-                        if (secondParam)
-                            thirdParam = true;
+                        //Ignoramos el igual y lo usamos como marca que separa el parámetro de su valor
+                        if (line[i] == '*')
+                        {
+                            param = false;
+                            if (secondParam)
+                                thirdParam = true;
+                        }
+                        else if (line[i] == '|')
+                        {
+                            secondParam = true;
+                            param = true;
+                        }
+                        else if (param && !secondParam && !thirdParam)
+                            parameter += line[i];
+                        else if (!param && !secondParam && !thirdParam)
+                            valor += line[i];
+                        else if (param && secondParam && !thirdParam)
+                            usuario += line[i];
+                        else if (thirdParam)
+                            contrasenia += line[i];
+                        i++;
                     }
-                    else if (line[i] == '|')
+
+                    if (usuario == "")
+                        usuario = null;
+                    if (contrasenia == "")
+                        contrasenia = null;
+                    else
+                        contrasenia = Cripto.DecryptStringFromBytes(this._symmetric, Convert.FromBase64String(contrasenia));
+                    if (this._databases.ContainsKey(parameter))
                     {
-                        secondParam = true;
-                        param = true;
+                        Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+                        this._databases[parameter].Add(tupla);
                     }
-                    else if (param && !secondParam && !thirdParam)
-                        parameter += line[i];
-                    else if (!param && !secondParam && !thirdParam)
-                        valor += line[i];
-                    else if (param && secondParam && !thirdParam)
-                        usuario += line[i];
-                    else if (thirdParam)
-                        contrasenia += line[i];
-                    i++;
-                }
+                    else
+                    {
+                        List<Tuple<string, string, string>> aux = new List<Tuple<string, string, string>>();
+                        Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
+                        aux.Add(tupla);
+                        this._databases.Add(parameter, aux);
+                    }
 
-				if (usuario == "")
-                    usuario = null;
-                if (contrasenia == "")
-                    contrasenia = null;
-                else
-                    contrasenia = Cripto.DecryptStringFromBytes(this._symmetric, Convert.FromBase64String(contrasenia));
-                if (this._databases.ContainsKey(parameter))
-                {
-                    Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
-                    this._databases[parameter].Add(tupla);
+                    line = conFile.ReadLine();
                 }
-                else
-                {
-                    List<Tuple<string,string,string>> aux = new List<Tuple<string, string, string>>();
-					Tuple<string, string, string> tupla = new Tuple<string, string, string>(valor, usuario, contrasenia);
-					aux.Add(tupla);
-                    this._databases.Add(parameter, aux);
-                }
-
-                line = conFile.ReadLine();
+                conFile.Close();
+            }else{
+                this._databases = new Dictionary<string, List<Tuple<string, string, string>>>();
             }
-            conFile.Close();
 		}
 
         /*

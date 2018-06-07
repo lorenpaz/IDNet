@@ -3,10 +3,14 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 
+using log4net;
+
 namespace GateKeeperListener
 {
     public class Sender
     {
+        ILog log = LogManager.GetLogger(typeof(Sender));
+
         private Socket sender;
 
         public Sender(Socket s)
@@ -59,8 +63,7 @@ namespace GateKeeperListener
 				{
 					sender.Connect(remoteEP);
 
-					Console.WriteLine("Socket connected to {0}",
-						sender.RemoteEndPoint.ToString());
+                    log.Debug("Socket connected to "+sender.RemoteEndPoint.ToString());
 
 					// Encode the data string into a byte array.
 					byte[] msg = Encoding.ASCII.GetBytes(mensaje);
@@ -70,9 +73,13 @@ namespace GateKeeperListener
 
 					// Receive the response from the remote device.
 					int bytesRec = sender.Receive(respuesta);
-					Console.WriteLine("Echoed test = {0}",
-						Encoding.ASCII.GetString(respuesta, 0, bytesRec));
+                    log.Debug("Echoed received = "+Encoding.ASCII.GetString(respuesta, 0, bytesRec));
 
+                    if (remoteEP.Port == Constants.PORT_SENDING_TO_CLIENT)
+                    {
+                        Pathfinder pathfinder = new Pathfinder(true);
+                        pathfinder.ProcessMsg(Encoding.ASCII.GetString(respuesta, 0, bytesRec),"");
+                    }
 					// Release the socket.
 					sender.Shutdown(SocketShutdown.Both);
 					sender.Close();

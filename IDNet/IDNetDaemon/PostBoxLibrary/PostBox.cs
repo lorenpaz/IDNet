@@ -128,17 +128,11 @@ namespace PostBoxLibrary
             }
             else if(this._messageRecieve.MessageType == Constants.CONEXION_B)
             {
-                log.Debug("Before ParserSourceMessage");
                 this._messageRecieve.ParserSourceMessage(xmlDoc);
-                log.Debug("Post ParserSourceMessage");
                 this._publicKeyClient = keyPairClients[this._messageRecieve.Source].Item1;
-                log.Debug("Before DesencriptarAsimetrico");
                 DesencriptarParteDelDocumentoAsimetrico(xmlDoc);
-                log.Debug("After ParserSourceMessage");
                 AlmacenarClaveSimetrica(xmlDoc);
-                log.Debug("Before responderConexion()");
                 respuesta = responderConexion();
-                log.Debug("After responderConexion()");
             }
             else
             {

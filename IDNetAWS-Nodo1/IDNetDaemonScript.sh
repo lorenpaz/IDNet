@@ -5,6 +5,7 @@ PROGRAM_NAME="IDNetDaemon"
 LOCK_FILE="/tmp/"${PROGRAM_NAME}".lock"
 LOG_FOLDER="logs"
 DAEMON_PEM="configuration/*Daemon.pem"
+DAEMON_NEIGHBOURS="configuration/publicKeyNeighbour*"
 
 usage()
 {
@@ -23,11 +24,13 @@ stop()
 			rm -rf ${LOCK_FILE}
 			rm -rf ${LOG_FOLDER}
 			rm -rf ${DAEMON_PEM}
+			rm -rf ${DAEMON_NEIGHBOURS}
 	                echo "IDNetDaemon stop"
 	        else
 			rm -rf ${LOCK_FILE}
 			rm -rf ${LOG_FOLDER}
 			rm -rf ${DAEMON_PEM}
+			rm -rf ${DAEMON_NEIGHBOURS}
 	                echo "Error stop demon"
         fi
     else

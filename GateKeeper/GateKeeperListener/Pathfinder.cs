@@ -122,7 +122,7 @@ namespace GateKeeperListener
                         this._port = Constants.PORT_SENDING_TO_GATEKEEPER; 
                     
                     log.Info("Enviando a " + ip_dest + "al puerto "+this._port);
-                    BindSocket(ip_dest, content, clienteDestino);
+                    respuesta = BindSocket(ip_dest, content, clienteDestino);
                 }
                 else if (this._vecinos.Contains(clienteDestino)){
                     //Si resulta que la dirección de destino es un GK vecino
@@ -136,17 +136,17 @@ namespace GateKeeperListener
                         log.Warn("Aviso de incoherencia con neighbours.xml: El " +
                                   "vecino" + clienteDestino + "aparece en routes.xml" +
                                   "pero no en neihbours.xml.");
+                    respuesta = "";
                 }
                 else{
                     log.Error("Destino no encontrado");
                 }
-                respuesta = "";
             }
 
             return respuesta;
         }
 
-        public void BindSocket(IPAddress ip, string msg, string hostname)
+        public String BindSocket(IPAddress ip, string msg, string hostname)
         {
 			// Establish the remote endpoint for the socket.
 			// This example uses port 12000 on the local computer.
@@ -160,8 +160,9 @@ namespace GateKeeperListener
 
             Sender s = new Sender(sender);
             log.Info("Enviando mensaje a la IP:"+hostname);
-            s.SendEP(msg, hostname, remoteEP);
+            String response = s.SendEP(msg, hostname, remoteEP);
             log.Info("Mensaje enviado a la IP:" + hostname);
+            return response;
         }
 
         private void CargarVecinos()

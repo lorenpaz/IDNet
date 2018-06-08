@@ -143,11 +143,10 @@ namespace ConnectionLibrary
 					new AsyncCallback(ReadCallback), state);
 				}
                 log.Debug("Recieved:"+content);
-                log.Debug("Before PostBox");
+
                 PostBox post = new PostBox(_keyPair);
-                log.Debug("After PostBox");
+
                 string respuesta = post.procesar(content,_keyPairClients);
-                log.Debug("After post.procesar");
 
                 if(!this._keyPairClients.ContainsKey(post.MessageRecieve.Source))
                 {

@@ -153,7 +153,7 @@ namespace ConstantsLibrary
 
         public static string PathClavePublica(string source)
         {
-            return Path.Combine(CONFIG, "publicKey" + source + ".pem");
+            return Path.Combine(CONFIG, "publicKeyNeighbour" + source + ".pem");
         }
 
         /*

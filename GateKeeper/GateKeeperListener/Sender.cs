@@ -75,11 +75,6 @@ namespace GateKeeperListener
 					int bytesRec = sender.Receive(respuesta);
                     log.Debug("Echoed received = "+Encoding.ASCII.GetString(respuesta, 0, bytesRec));
 
-                    if (remoteEP.Port == Constants.PORT_SENDING_TO_CLIENT)
-                    {
-                        Pathfinder pathfinder = new Pathfinder(true);
-                        pathfinder.ProcessMsg(Encoding.ASCII.GetString(respuesta, 0, bytesRec),"");
-                    }
 					// Release the socket.
 					sender.Shutdown(SocketShutdown.Both);
 					sender.Close();
